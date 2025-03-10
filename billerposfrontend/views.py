@@ -17,3 +17,10 @@ def brand(request):
 
 def tax(request):
     return render(request,'tax.html')
+
+def Paymentmode(request):
+    return render(request,'Paymentmode.html')
+
+def Paymentterms(request):
+    return render(request,'Paymentterms.html')
+

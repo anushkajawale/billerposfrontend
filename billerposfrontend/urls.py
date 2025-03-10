@@ -24,7 +24,10 @@ urlpatterns = [
     path('register/', views.register),
     path('category/',views.category),
     path('brand/',views.brand),
-    path('tax/',views.tax)
+    path('tax/',views.tax),
+    path('Paymentmode',views.Paymentmode),
+    path('Paymentterms',views.Paymentterms),
+
     
 
 ]
