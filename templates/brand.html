@@ -7,11 +7,11 @@
         <div class="card-header">
           <div class="d-flex justify-content-between">
             <h3>
-              Category List
+              Brand List
             </h3>
             <div class="text-right">
               <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                data-bs-whatever="@mdo"><i class="nav-icon fas fa-plus"></i>Add Category</button>
+                data-bs-whatever="@mdo"><i class="nav-icon fas fa-plus"></i>Add Brand</button>
             </div>
           </div>
         </div>
@@ -21,9 +21,8 @@
               <thead class="table-success">
                 <tr>
                   <th>Sr.No</th>
-                  <th>Category Name</th>
-                  <th>Category Img</th>
-                  <th>Banner Img</th>
+                  <th>Brand Name</th>
+                  <th>Brand Img</th>
                   <th>Action</th>
 
                 </tr>
@@ -32,8 +31,7 @@
                 <tr>
                   <td> </td>
                   <td> </td>
-                  <td> <img style="width:50px; height:50px;" src="" alt=""></td>
-                  <td><img style="width:50px; height:50px;" src="" alt=""></td>
+                  <td> <img style="width:50px; height:50px;" src="" alt=""></td>                 
                   <td>
                     <a href="/editcategory/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcategory"
                     data-bs-whatever="@mdo">
@@ -58,26 +56,22 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Brand</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
           <div class="row mb-3">
-            <div class="col-12">
-              <label for="CategoryName" class="form-label"> Category Name</label>
+            <div class="col">
+              <label for="CategoryName" class="form-label"> Brand Name</label>
               <input type="text" class="form-control" id="CategoryName" name="categoryName" required>
             </div>
             
           </div>
           <div class="row">
-            <div class="col-6 ">             
-              <label for="CategoryImg" class="form-label"> Category Img</label>
+            <div class="col">             
+              <label for="CategoryImg" class="form-label"> Brand Img</label>
               <input type="file" class="form-control" id="CategoryName" name="categoryName" style="height: 150px; width: 200px;">
-            </div>
-            <div class="col-6">
-              <label for="CategoryBanner" class="form-label"> Category Banner</label>
-              <input type="file" class="form-control" id="CategoryBanner" name="categoryBanner" style="height: 150px; width: 200px;">
             </div>
           </div>
         </div>
@@ -95,26 +89,22 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit Brand</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
           <div class="row mb-3">
             <div class="col-12">
-              <label for="CategoryName" class="form-label"> Category Name</label>
+              <label for="CategoryName" class="form-label">Brand Name</label>
               <input type="text" class="form-control" id="CategoryName" name="categoryName" required>
             </div>
             
           </div>
           <div class="row">
             <div class="col-6 ">             
-              <label for="CategoryImg" class="form-label"> Category Img</label>
+              <label for="CategoryImg" class="form-label"> Brand Img</label>
               <input type="file" class="form-control" id="CategoryName" name="categoryName" style="height: 150px; width: 200px;">
-            </div>
-            <div class="col-6">
-              <label for="CategoryBanner" class="form-label"> Category Banner</label>
-              <input type="file" class="form-control" id="CategoryBanner" name="categoryBanner" style="height: 150px; width: 200px;">
             </div>
           </div>
         </div>

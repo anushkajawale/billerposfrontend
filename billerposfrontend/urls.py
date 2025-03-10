@@ -22,6 +22,9 @@ urlpatterns = [
     path('index/', views.index),
     path('login/', views.login),
     path('register/', views.register),
+    path('category/',views.category),
+    path('brand/',views.brand),
+    path('tax/',views.tax)
     
 
 ]
