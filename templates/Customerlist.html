@@ -1,65 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+{% extends 'index.html' %}
+{% block content %}
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  </head>
-  <body>
-    <button
-      type="button"
-      class="btn btn-success"
-      data-bs-toggle="modal"
-      data-bs-target="#exampleModal"
-      data-bs-whatever="@mdo"
-    >
-      Customer
-    </button>
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="card  border border-success">
+        <div class="card-header">
+          <div class="d-flex justify-content-between">
+            <h3>
+              CustomerGroup List
+            </h3>
+            <div class="text-right">
+              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                data-bs-whatever="@mdo"><i class="nav-icon fas fa-plus"></i>Add CustomerGroup</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body ">
+          <div class="table-responsive">
+            <table class="table table-bordered text-center ">
+              <thead class="table-success">
+                <tr>
+                  <th>Sr.No</th>
+                  <th>Customer Name</th>
+                  <th>Action</th>
 
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add CustomerGroup</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="mb-3">
-                <label for="customergroup-name" class="col-form-label"
-                  >CustomerGroup Name</label
-                >
-                <input type="text" class="form-control" id="customergroup-name" placeholder="CustomerGroup Name"/>
-              </div>
-              
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-success">Save</button>
+                </tr>
+              </thead>
+              <tbody class="table-hover">
+                <tr>
+                  <td> </td>
+                  <td> </td>
+                  <td>
+                    <a href="/editcustomer/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcustomer"
+                    data-bs-whatever="@mdo">
+                      <i class="fa fa-pen"></i>
+                      </a>
+        
+                      <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
+                data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
+                    
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
-  </body>
-</html>
+  </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add CustomerGroup</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="suppliergroup-name" class="col-form-label">CustomerGroup Name</label>
+            <input type="text" class="form-control" id="customergroup-name" placeholder="CustomerGroup Name" />
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-success">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

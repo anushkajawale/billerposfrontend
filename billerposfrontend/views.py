@@ -17,3 +17,9 @@ def brand(request):
 
 def tax(request):
     return render(request,'tax.html')
+
+def Customerlist(request):
+    return render(request, 'Customerlist.html')
+
+def Supplierlist(request):
+    return render(request,'Supplierlist.html')
