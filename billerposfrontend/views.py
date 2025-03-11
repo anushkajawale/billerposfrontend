@@ -18,6 +18,16 @@ def brand(request):
 def tax(request):
     return render(request,'tax.html')
 
+
+def AddUnit(request):
+    return render(request,'AddUnit.html')
+
+def AddExpenses(request):
+    return render(request,'AddExpenses.html')
+
+def AddOtherCharge(request):
+    return render(request,'AddOtherCharge.html')
+
 def Customerlist(request):
     return render(request, 'Customerlist.html')
 
@@ -29,4 +39,5 @@ def Paymentmode(request):
 
 def Paymentterms(request):
     return render(request,'Paymentterms.html')
+
 

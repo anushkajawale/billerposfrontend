@@ -26,16 +26,13 @@ urlpatterns = [
     path('brand/',views.brand),
     path('tax/',views.tax),
 
+    path('AddUnit/',views.AddUnit),
+    path('AddExpenses/',views.AddExpenses),
+    path('AddOtherCharge/',views.AddOtherCharge),
+
+
     path('Customerlist/',views.Customerlist),
     path('Supplierlist/',views.Supplierlist),
     path('Paymentmode/',views.Paymentmode),
     path('Paymentterms/',views.Paymentterms),
-
-
-
-   
-
-
-    
-
 ]
