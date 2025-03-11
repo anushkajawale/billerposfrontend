@@ -25,14 +25,14 @@ urlpatterns = [
     path('category/',views.category),
     path('brand/',views.brand),
     path('tax/',views.tax),
-<<<<<<< HEAD
+
     path('Customerlist/',views.Customerlist),
-    path('Supplierlist/',views.Supplierlist)
-=======
+    path('Supplierlist/',views.Supplierlist),
+
     path('Paymentmode',views.Paymentmode),
     path('Paymentterms',views.Paymentterms),
 
->>>>>>> 4a68c6203ab3fb82dce04d98938f08f2600461a7
+
     
 
 ]

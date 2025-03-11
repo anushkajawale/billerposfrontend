@@ -18,17 +18,16 @@ def brand(request):
 def tax(request):
     return render(request,'tax.html')
 
-<<<<<<< HEAD
 def Customerlist(request):
     return render(request, 'Customerlist.html')
 
 def Supplierlist(request):
     return render(request,'Supplierlist.html')
-=======
+
 def Paymentmode(request):
     return render(request,'Paymentmode.html')
 
 def Paymentterms(request):
     return render(request,'Paymentterms.html')
 
->>>>>>> 4a68c6203ab3fb82dce04d98938f08f2600461a7
+
