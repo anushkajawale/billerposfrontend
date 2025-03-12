@@ -1,0 +1,130 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="card  border border-success">
+        <div class="card-header">
+          <div class="d-flex justify-content-between">
+            <h3>
+               Add Charge Name
+            </h3>
+            <div class="text-right">
+              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                data-bs-whatever="@mdo"><i class="nav-icon fas fa-plus"></i>Other Charge Name</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body ">
+          <div class="table-responsive">
+            <table class="table table-bordered text-center ">
+              <thead class="table-success">
+                <tr>
+                  <th>Sr.No</th>
+                  <th>Charge Name</th>
+                  <th>Action</th>
+
+                </tr>
+              </thead>
+              <tbody class="table-hover">
+                <tr>
+                  <td> </td>
+                  <td> </td>
+                  <td>
+                    <a href="/editcharge/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcustomer"
+                    data-bs-whatever="@mdo">
+                      <i class="fa fa-pen"></i>
+                      </a>
+        
+                      <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
+                data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
+                    
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 2200px;" hight="2200px">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+    <h4 class="mb-4">Add Other Charge</h4>
+
+    <div class="row mb-3 align-items-end">
+        <!-- Other Charge Name -->
+        <div class="col-md-8">
+            <label class="form-label fw-bold">Other Charge Name</label>
+            <input type="text" class="form-control" placeholder="Enter.......">
+        </div>
+
+        <!-- Types of Charges -->
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Types of Charges</label>
+            <div class="d-flex gap-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="chargeType" id="plus">
+                    <label class="form-check-label" for="plus">(+)</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="chargeType" id="minus">
+                    <label class="form-check-label" for="minus">(-)</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Amount of Charges -->
+    <div class="mb-3">
+        <label class="form-label fw-bold">Amount of Charges</label>
+        <div class="d-flex gap-3">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="amountType" id="absolute">
+                <label class="form-check-label" for="absolute">Absolute</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="amountType" id="qty">
+                <label class="form-check-label" for="qty">QTY</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="amountType" id="percentage">
+                <label class="form-check-label" for="percentage">Percentage</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Amount Fields -->
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Apply On</label>
+            <input type="text" class="form-control" placeholder="Enter....">
+        </div>
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Amount</label>
+            <input type="text" class="form-control" placeholder="Enter....">
+        </div>
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Amount</label>
+            <input type="text" class="form-control" placeholder="Enter....">
+        </div>
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Amount</label>
+            <input type="text" class="form-control" placeholder="Enter....">
+        </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="d-flex justify-content-end gap-2 mt-4">
+        <button class="btn btn-danger">Close</button>
+        <button class="btn btn-primary">Save</button>
+    </div>
+</div>
+
+
+{% endblock %}
