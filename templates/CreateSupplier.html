@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Supplier</title>
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Add Supplier</h4>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="row g-3">
+                        <!-- Supplier Name -->
+                        <div class="col-md-6">
+                            <label class="form-label">Supplier Name *</label>
+                            <input type="text" class="form-control" placeholder="Supplier Name" required>
+                        </div>
+                        <!-- Mobile No -->
+                        <div class="col-md-6">
+                            <label class="form-label">Mobile No.</label>
+                            <input type="text" class="form-control" placeholder="Mobile No">
+                        </div>
+                        <!-- Email -->
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" placeholder="Email">
+                        </div>
+                        <!-- GST No -->
+                        <div class="col-md-6">
+                            <label class="form-label">GST No.</label>
+                            <input type="text" class="form-control" placeholder="GST No">
+                        </div>
+                        <!-- PAN No -->
+                        <div class="col-md-6">
+                            <label class="form-label">PAN No.</label>
+                            <input type="text" class="form-control" placeholder="PAN No">
+                        </div>
+                        <!-- Opening Balance -->
+                        <div class="col-md-6">
+                            <label class="form-label">Opening Balance</label>
+                            <input type="text" class="form-control" placeholder="Opening Balance">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Group Type</label>
+                            <select class="form-select">
+                                <option>General</option>
+                                <option>Wholesale</option>
+                                <option>Retail</option>
+                            </select>
+                        </div>
+                        <!-- Billing Address -->
+                        <div class="col-md-6">
+                            <label class="form-label">Billing Address</label>
+                            <input type="text" class="form-control" placeholder="Enter billing address">
+                        </div>
+
+                        <!-- Shipping Address -->
+                        <div class="col-md-6">
+                            <label class="form-label">Shipping Address</label>
+                            <input type="text" class="form-control" placeholder="Enter shipping address">
+                        </div>
+                        <!-- City -->
+                        <div class="col-md-6">
+                            <label class="form-label">City</label>
+                            <input type="text" class="form-control" placeholder="City">
+                        </div>
+
+
+                        <!-- Group Type -->
+
+                        <!-- Credit Limit -->
+                        <div class="col-md-6">
+                            <label class="form-label">Credit Limit</label>
+                            <input type="text" class="form-control" placeholder="Credit Limit">
+                        </div>
+                        <!-- Credit Period -->
+                        <div class="col-md-6">
+                            <label class="form-label">Credit Period (Days)</label>
+                            <input type="text" class="form-control" placeholder="Credit Period (Days)">
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="reset" class="btn btn-secondary">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
