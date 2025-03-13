@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from billerposfrontend import views
-urlpatterns = [
+urlpatterns =   [
     path('admin/', admin.site.urls),
     path('index/', views.index),
     path('login/', views.login),
@@ -28,11 +28,14 @@ urlpatterns = [
 
     path('AddUnit/',views.AddUnit),
     path('AddExpenses/',views.AddExpenses),
-    path('AddOtherCharge/',views.AddOtherCharge)
+    path('AddOtherCharge/',views.AddOtherCharge),
 
 
     path('Customerlist/',views.Customerlist),
     path('Supplierlist/',views.Supplierlist),
     path('Paymentmode/',views.Paymentmode),
     path('Paymentterms/',views.Paymentterms),
+    path('EmploymentAdvInfo/',views.EmploymentAdvInfo)
+
+    
 ]
