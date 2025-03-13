@@ -35,4 +35,5 @@ urlpatterns = [
     path('Supplierlist/',views.Supplierlist),
     path('Paymentmode/',views.Paymentmode),
     path('Paymentterms/',views.Paymentterms),
+    path('RewardPoints/',views.RewardPoints)
 ]
