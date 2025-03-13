@@ -40,4 +40,11 @@ def Paymentmode(request):
 def Paymentterms(request):
     return render(request,'Paymentterms.html')
 
+def employee(request):
+    return render(request,'employee.html')
+
+
+
+
+
 
