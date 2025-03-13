@@ -41,3 +41,5 @@ def Paymentterms(request):
     return render(request,'Paymentterms.html')
 
 
+
+

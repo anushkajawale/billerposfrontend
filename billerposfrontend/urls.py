@@ -34,8 +34,7 @@ urlpatterns =   [
     path('Customerlist/',views.Customerlist),
     path('Supplierlist/',views.Supplierlist),
     path('Paymentmode/',views.Paymentmode),
-    path('Paymentterms/',views.Paymentterms),
-    path('EmploymentAdvInfo/',views.EmploymentAdvInfo)
-
+    path('Paymentterms/',views.Paymentterms)
+    
     
 ]
