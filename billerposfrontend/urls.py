@@ -32,6 +32,9 @@ urlpatterns = [
     path('Supplierlist/',views.Supplierlist),
     path('Paymentmode/',views.Paymentmode),
     path('Paymentterms/',views.Paymentterms),
-    path('employee/',views.employee),
+    path('RewardPoints/',views.RewardPoints),
+    path('Employee/',views.Employee)
    
 ]
+
+   
