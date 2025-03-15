@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from category.models import Category
 
 def index (request):
     return render(request,"index.html")
@@ -10,7 +11,13 @@ def register (request):
     return render(request,"register.html")
 
 def category(request):
-    return render(request,'category.html')
+
+    categorydata = Category.objects.all() 
+
+    data={
+        "list":categorydata
+    }   
+    return render(request,'category.html',data)
 
 def brand(request):
     return render(request,'brand.html')
