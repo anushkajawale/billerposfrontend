@@ -1,0 +1,212 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="card  border border-success">
+          <div class="card-header">
+            <div class="d-flex justify-content-between">
+              <h3>
+                Products List
+              </h3>
+              <div class="text-right">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal"
+                  data-bs-whatever="@mdo"><i class="nav-icon fas fa-plus"></i>Add Product</button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body ">
+            <div class="table-responsive">
+              <table class="table table-bordered text-center ">
+                <thead class="table-success">
+                  <tr>
+                    <th>Sr.No</th>
+                    <th>Category Name</th>
+                    <th>Category Img</th>
+                    <th>Banner Img</th>
+                    <th>Action</th>
+  
+                  </tr>
+                </thead>
+                <tbody class="table-hover">
+                  <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td> <img style="width:50px; height:50px;" src="" alt=""></td>
+                    <td><img style="width:50px; height:50px;" src="" alt=""></td>
+                    <td>
+                      <a href="/editproduct/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal"
+                        data-bs-target="#editcategory" data-bs-whatever="@mdo">
+                        <i class="fa fa-pen"></i>
+                      </a>
+  
+                      <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
+                  data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
+  
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProductModalLabel">Add Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="productTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="primary-tab" data-bs-toggle="tab" data-bs-target="#primary" type="button" role="tab">Primary Information</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="ecommerce-tab" data-bs-toggle="tab" data-bs-target="#ecommerce" type="button" role="tab">Ecommerce</button>
+                    </li>
+                </ul>
+                <div class="tab-content mt-3">
+                    <div class="tab-pane fade show active" id="primary" role="tabpanel">
+                        <form>
+                            <div class="row mb-3">
+                                <div class="col-4">
+                                    <label class="form-label">Product Name *</label>
+                                    <input type="text" class="form-control" placeholder="Enter Product Name">
+                                </div>
+                                <div class="col-4">
+                                    <label class="form-label">Marathi Name</label>
+                                    <input type="text" class="form-control" placeholder="Enter Product Marathi Name">
+                                </div>
+                                <div class="col-4">
+                                    <label class="form-label">HSN Code</label>
+                                    <input type="text" class="form-control" placeholder="Enter HSN Code">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-3">
+                                    <label class="form-label">Category</label>
+                                    <select class="form-select">
+                                        <option selected>General</option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="form-label">Brand</label>
+                                    <select class="form-select">
+                                        <option selected>General</option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="form-label">Tax %</label>
+                                    <input type="number" class="form-control" value="0">
+                                </div>
+                                <div class="col-3">
+                                    <label class="form-label">Tax Type</label>
+                                    <select class="form-select">
+                                        <option selected>Inclusive Tax</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-3">
+                                    <label class="form-label">Primary Unit</label>
+                                    <select class="form-select">
+                                        <option selected>NoS</option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="form-label">Alternate Unit</label>
+                                    <select class="form-select">
+                                        <option selected>NoS</option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="form-label">Conversion Factor</label>
+                                    <input type="text" class="form-control" placeholder="Enter Conversion Factor">
+                                </div>
+                                <div class="col-3">
+                                    <label class="form-label"> Unit Price Per</label>   
+                                    <select class="form-select">
+                                        <option selected>NOS</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <table  border="1" style="width: 100%;">
+                                    
+                                        <tr>
+                                            <td>Barcode</td>
+                                            <th>QR Code</th>
+                                            <th>MRP</th>
+                                            <th>Sale</th>
+                                            <th>Credit</th>
+                                            <th>Purchase </th>
+                                            <th>Wholesaler</th>
+                                            <th>Distributor </th>
+                                            <th>Op_Qty</th>
+                                            <th>Op_Value</th>
+                                            <th>Mfg Date</th>
+                                            <th>Exp Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    
+                                    
+                                        <tr>
+                                            <tbody>
+                                            <td><input type="text" class="" style="width: 80px; "></td>
+                                            <td><input type="text" class="" style="width: 80px; border: none; border-right: 2px solid black;"></td>
+                                            <td><input type="text" class="" style="width: 80px; border: none; border-right: 2px solid black;"></td>
+                                            <td><input type="text" class="" style="width: 80px; border: none; border-right: 2px solid black;"></td>
+                                            <td><input type="text" class="" style="width: 80px; border: none; border-right: 2px solid black;"></td>
+                                            <td><input type="text" class="" style="width: 80px; border: none; border-right: 2px solid black;"></td>
+                                            <td><input type="text" class="" style="width: 80px; border: none; border-right: 2px solid black;"></td>
+                                            <td><input type="text" class="" style="width: 80px; border: none; border-right: 2px solid black;"></td>
+                                            <td><input type="text" class="" style="width: 80px; border: none; border-right: 2px solid black;"></td>
+                                            <td><input type="text" class="" style="width: 80px; border: none; border-right: 2px solid black;"></td>
+                                            <td><input type="date" class="" style="width: 80px; border: none; border-right: 2px solid black;"></td>
+                                            <td><input type="date" class="" style="width: 80px; border: none; border-right: 2px solid black;"></td>
+                                            <td><button class="btn btn-success btn-sm" onclick="copyRow(this)">+</button>
+                                                <button class="btn btn-danger btn-sm" onclick="removeRow(this)">X</button>
+                                            </td>
+                                        </tbody>
+                                        </tr>
+                                
+                                </table>
+                            </div>
+                        
+                        </form>
+                    </div>
+                      <div class="tab-pane fade" id="ecommerce" role="tabpanel">
+                        <p>Content for Ecommerce tab.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function copyRow(button) {
+        let table = document.getElementById("productTable").getElementsByTagName('tbody')[0];
+        let row = button.closest("tr");
+        let clone = row.cloneNode(true);
+        table.appendChild(clone);
+    }
+
+    function removeRow(button) {
+        let row = button.closest("tr");
+        let table = document.getElementById("productTable").getElementsByTagName('tbody')[0];
+        if (table.rows.length > 1) {
+            row.remove();
+        }
+    }
+</script>
+  {% endblock %}    

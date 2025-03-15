@@ -24,6 +24,10 @@ def Customerlist(request):
 def Supplierlist(request):
     return render(request,'Supplierlist.html')
 
+def productslist(request):
+    return render(request,'productlist.html')
+    
+
 def Paymentmode(request):
     return render(request,'Paymentmode.html')
 
