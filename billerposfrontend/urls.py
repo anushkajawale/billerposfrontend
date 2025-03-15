@@ -37,4 +37,6 @@ urlpatterns =   [
     path('Paymentterms/',views.Paymentterms)
     
     
+    
+    
 ]
