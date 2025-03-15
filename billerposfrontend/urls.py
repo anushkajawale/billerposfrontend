@@ -30,17 +30,26 @@ urlpatterns = [
     path('tax/',views.tax),
     path('products/',views.productslist),
 
+    path('AddUnit/',views.AddUnit),
+    path('AddExpenses/',views.AddExpenses),
+    path('AddOtherCharge/',views.AddOtherCharge),
     path('Customerlist/',views.Customerlist),
     path('Supplierlist/',views.Supplierlist),
+    path('Paymentmode/',views.Paymentmode),
 
-    path('Paymentmode',views.Paymentmode),
-    path('Paymentterms',views.Paymentterms),
+    path('Paymentterms/',views.Paymentterms),
+    path('RewardPoints/',views.RewardPoints),
+    path('Employee/',views.Employee),
+   
+]
 
 
     
+    
+    
 
-]
 
+ 
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
