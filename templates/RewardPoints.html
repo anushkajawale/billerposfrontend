@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Range Input Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px #aaa;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            width: 150px;
+        }
+        button {
+            padding: 8px 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .actions {
+            color: red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Set Range</h2>
+    <input type="number" id="minRange" placeholder="Set Min Range">
+    <input type="number" id="maxRange" placeholder="Set Max Range">
+    <input type="number" id="points" placeholder="Points">
+    <button onclick="addToList()">Add to List</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Min Range</th>
+                <th>Max Range</th>
+                <th>Points</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="dataList">
+            <tr>
+                <td>100</td>
+                <td>101</td>
+                <td>10</td>
+                <td>
+                    <span class="actions" onclick="editRow(this)">✏️</span> 
+                    <span class="actions" onclick="deleteRow(this)">🗑️</span>
+                </td>
+            </tr>
+            <tr>
+                <td>102</td>
+                <td>1000</td>
+                <td>12</td>
+                <td>
+                    <span class="actions" onclick="editRow(this)">✏️</span> 
+                    <span class="actions" onclick="deleteRow(this)">🗑️</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function addToList() {
+        let min = document.getElementById("minRange").value;
+        let max = document.getElementById("maxRange").value;
+        let points = document.getElementById("points").value;
+
+        if (min && max && points) {
+            let table = document.getElementById("dataList");
+            let row = table.insertRow();
+            row.innerHTML = `
+                <td>${min}</td>
+                <td>${max}</td>
+                <td>${points}</td>
+                <td>
+                    <span class="actions" onclick="editRow(this)">✏️</span> 
+                    <span class="actions" onclick="deleteRow(this)">🗑️</span>
+                </td>
+            `;
+            document.getElementById("minRange").value = "";
+            document.getElementById("maxRange").value = "";
+            document.getElementById("points").value = "";
+        } else {
+            alert("Please fill all fields!");
+        }
+    }
+
+    function deleteRow(element) {
+        element.parentElement.parentElement.remove();
+    }
+
+    function editRow(element) {
+        let row = element.parentElement.parentElement;
+        document.getElementById("minRange").value = row.cells[0].innerText;
+        document.getElementById("maxRange").value = row.cells[1].innerText;
+        document.getElementById("points").value = row.cells[2].innerText;
+        row.remove();
+    }
+</script>
+
+</body>
+</html>

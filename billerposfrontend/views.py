@@ -40,6 +40,9 @@ def Paymentmode(request):
 def Paymentterms(request):
     return render(request,'Paymentterms.html')
 
+def RewardPoints(request):
+    return render(request,'RewardPoints.html')
+
 
 
 
