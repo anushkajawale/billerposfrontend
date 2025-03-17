@@ -1,5 +1,11 @@
 from django.shortcuts import render,redirect,HttpResponse
+from django.shortcuts import render
+
+from Paymentmode.models import Paymentmode
+from Paymentterms.models import Paymentterms
 from category.models import Category
+from supplier.models import Supplier
+from customer.models import Customer
 
 def index (request):
     return render(request,"index.html")
@@ -88,20 +94,34 @@ def AddOtherCharge(request):
     return render(request,'AddOtherCharge.html')
 
 def Customerlist(request):
-    return render(request, 'Customerlist.html')
+    # customerData = Customer.objects.all()
+    # data ={
+    #     "customer":customerData
+    # }  
+    
+    return render(request, 'Customergroup.html')
+
 
 def Supplierlist(request):
     return render(request,'Supplierlist.html')
+ 
+def Paymenttermslist(request):
+    listdata = Paymentterms.objects.all()
+    data = {
+        "list":listdata
+    }
+    return render(request,'Paymentterms.html',data)
+
+def supplierlist(request):
+    supplierData = Supplier.objects.all()
+    data ={
+        "supplier":supplierData
+    }  
+    return render(request,"Supplierlist.html",data) 
 
 def productslist(request):
     return render(request,'productlist.html')
     
-
-def Paymentmode(request):
-    return render(request,'Paymentmode.html')
-
-def Paymentterms(request):
-    return render(request,'Paymentterms.html')
 
 
 def Employee(request):
@@ -110,6 +130,44 @@ def Employee(request):
 def RewardPoints(request):
     return render(request,'RewardPoints.html')
 
+def Customer(request):
+    return render(request,'Customers.html')
 
+def Supplier(request):
+    return render(request,'Suppliers.html')
+
+
+from Unit.models import Unit
+def AddUnit(request):
+    list = Unit.objects.all()
+    data = {
+        "list":list
+    }
+    return render(request,'AddUnit.html',data)
+
+from Expenses.models import Expenses
+def AddExpenses(request):
+    list = Expenses.objects.all()
+    data = {
+        "list":list
+    }
+    return render(request,'AddExpenses.html',data)
+
+
+
+from OtherCharge.models import OtherCharge
+def AddOtherCharge(request):
+    listdata = OtherCharge.objects.all()
+    data = {
+        "list":listdata
+    }
+    return render(request,'AddOtherCharge.html',data)
+
+def paymentmodelist(request):
+    listdata = Paymentmode.objects.all()
+    data = {
+        "list":listdata
+    }
+    return render(request,'paymentmode.html',data)
 
 

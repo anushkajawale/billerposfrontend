@@ -38,12 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'supplier',
+    'customer',
     'category',
-
     'Paymentmode',
     'Unit',
     'Expenses',
-    'OtherCharge'
+    'OtherCharge',
+    'Paymentterms'
 ]
     
 

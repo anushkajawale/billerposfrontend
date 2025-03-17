@@ -21,16 +21,18 @@
             <table class="table table-bordered text-center ">
               <thead class="table-success">
                 <tr>
-                  <th>Sr.No</th>
-                  <th>Unit Name</th>
-                  <th>Action</th>
+                  <th>UNIT ID</th>
+                  <th>UNIT NAME</th>
+                  <th>ACTION</th>
 
                 </tr>
               </thead>
+              {% for i in list%}
               <tbody class="table-hover">
                 <tr>
-                  <td> </td>
-                  <td> </td>
+                  <td>   {{i.unit_id}} </td>
+                  
+                  <td> {{i.unit_name}} </td>
                   <td>
                     <a href="/editunit/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcustomer"
                     data-bs-whatever="@mdo">
@@ -43,6 +45,7 @@
                   </td>
                 </tr>
               </tbody>
+              {% endfor %}
             </table>
           </div>
         </div>
