@@ -30,9 +30,8 @@ urlpatterns =   [
     path('AddOtherCharge/',views.AddOtherCharge),
     path('Customerlist/',views.Customerlist),
     path('Supplierlist/',views.Supplierlist),
-    path('Paymentmode/',views.Paymentmode),
-
-    path('Paymentterms/',views.Paymentterms),
+    path('paymentmode/',views.paymentmodelist),
+    path('Paymentterms/',views.Paymenttermslist),
     path('RewardPoints/',views.RewardPoints),
     path('Employee/',views.Employee),
    

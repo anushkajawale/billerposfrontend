@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from Paymentmode.models import Paymentmode
+from Paymentterms.models import Paymentterms
+
 
 def index (request):
     return render(request,"index.html")
@@ -33,12 +36,13 @@ def Customerlist(request):
 
 def Supplierlist(request):
     return render(request,'Supplierlist.html')
-
-def Paymentmode(request):
-    return render(request,'Paymentmode.html')
-
-def Paymentterms(request):
-    return render(request,'Paymentterms.html')
+ 
+def Paymenttermslist(request):
+    listdata = Paymentterms.objects.all()
+    data = {
+        "list":listdata
+    }
+    return render(request,'Paymentterms.html',data)
 
 
 def Employee(request):
@@ -48,5 +52,11 @@ def RewardPoints(request):
     return render(request,'RewardPoints.html')
 
 
+def paymentmodelist(request):
+    listdata = Paymentmode.objects.all()
+    data = {
+        "list":listdata
+    }
+    return render(request,'paymentmode.html',data)
 
 
