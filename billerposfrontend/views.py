@@ -70,11 +70,6 @@ def productslist(request):
     return render(request,'productlist.html')
     
 
-def Paymentmode(request):
-    return render(request,'Paymentmode.html')
-
-def Paymentterms(request):
-    return render(request,'Paymentterms.html')
 
 def Employee(request):
     return render(request,'Employee.html')
