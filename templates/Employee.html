@@ -1,0 +1,347 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="card  border border-success">
+        <div class="card-header">
+          <div class="d-flex justify-content-between">
+            <h3>
+              Add Employee
+            </h3>
+            <div class="text-right">
+              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEmployeeModal"
+                data-bs-whatever="@mdo"><i class="nav-icon fas fa-plus"></i>Add Employee</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body ">
+          <div class="table-responsive">
+            <table class="table table-bordered text-center ">
+              <thead class="table-success">
+                <tr>
+                  <th>Sr.No</th>
+                  <th>Employee Name</th>
+                  <th>Action</th>
+
+                </tr>
+              </thead>
+              <tbody class="table-hover">
+                <tr>
+                  <td> </td>
+                  <td> </td>
+                  <td>
+                    <a href="/editcustomer/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcustomer"
+                    data-bs-whatever="@mdo">
+                      <i class="fa fa-pen"></i>
+                      </a>
+        
+                      <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
+                data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
+                    
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEmployeeModalLabel">Add Employee </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="employeeTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="primary-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab">Basic Information</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="ecommerce-tab" data-bs-toggle="tab" data-bs-target="#advance" type="button" role="tab">Employment Advance Information</button>
+                    </li>
+                </ul>
+                <div class="tab-content mt-3">
+                    <div class="tab-pane fade show active" id="basic" role="tabpanel">
+                        <form>
+                            <div class="row mb-3">
+                                <div class="col-4">
+                                    <label class="form-label">First Name *</label>
+                                    <input type="text" class="form-control" placeholder="Enter First Name">
+                                </div>
+                                <div class="col-4">
+                                    <label class="form-label">Middle Name</label>
+                                    <input type="text" class="form-control" placeholder="Enter Middle Name">
+                                </div>
+                                <div class="col-4">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" placeholder="Last Name">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-4">
+                                    <label class="form-label">Date Of Birth</label>
+                                    <input type="date"  class="form-control">
+                                </div>
+                                <div class="col-4">
+                                    <label class="form-label">Gender</label>
+                                    <div class="d-flex gap-2">
+                                        <button type="button" class="btn btn-outline-primary">Male</button>
+                                        <button type="button" class="btn btn-outline-primary">Female</button>
+                                        <button type="button" class="btn btn-outline-primary">Other</button>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="card mt-3">
+                                <div class="card-header bg-info text-white">Contact Information</div>
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Address (Home / Current)</label>
+                                            <input type="text" class="form-control" placeholder="Address">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Mobile Number</label>
+                                            <input type="text" class="form-control" placeholder="Mobile Number">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Email Address</label>
+                                            <input type="email" class="form-control" placeholder="Email Address">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <!-- Education & Qualifications -->
+                            <div class="card mt-3">
+                                <div class="card-header bg-info text-white">Education and Qualifications</div>
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <label class="form-label">Highest Education Level Attained</label>
+                                            <input type="text" class="form-control" placeholder="Highest Education">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Institutions Attended</label>
+                                            <input type="text" class="form-control" placeholder="Institution Attended">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Degrees Earned</label>
+                                            <input type="text" class="form-control" placeholder="Degree Earned">
+                                        </div>
+                                    </div>
+                
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Certifications or Licenses</label>
+                                            <input type="text" class="form-control" placeholder="Certification">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mt-3">
+                                <div class="card-header bg-info text-white">Leave and Time Off</div>
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <label class="form-label">Vacation Leave Balance</label>
+                                            <input type="text" class="form-control" placeholder="Middle Name">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Sick Leave Balance</label>
+                                            <input type="text" class="form-control" placeholder="Mobile Number">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Types of leaves</label>
+                                            <input type="text" class="form-control" placeholder="Leave Type">
+                                        </div>
+                                    </div>
+                        
+                                </div>
+                            </div>
+
+                            <div class="card mt-3">
+                                <div class="card-header bg-info text-white">Compensation Details</div>
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <label class="form-label">Salary (Home / Current) </label>
+                                            <input type="text" class="form-control" placeholder="Salary">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Pay Frequency </label>
+                                            <input type="text" class="form-control" placeholder="Pay Frequency">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Account Number</label>
+                                            <input type="text" class="form-control" placeholder="Account Number">
+                                        </div>
+                                        <div class="col-md-4 mt-3">
+                                            <label class="form-label">IFSC Code</label>
+                                            <input type="text" class="form-control" placeholder="IFSC Code">
+                                        </div>
+                                        <div class="col-md-4 mt-3">
+                                            <label class="form-label">Account Holder Namer</label>
+                                            <input type="text" class="form-control" placeholder="Account Holder Namer">
+                                        </div>
+                                    </div>
+                        
+                                </div>
+                            </div>
+                    
+                        </form>
+                    </div>
+
+                     
+                    <div class="tab-pane fade" id="advance" role="tabpanel">
+                        <form>
+                            <h5>Employment Details</h5>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Employee ID</label>
+                                    <input type="text" class="form-control" placeholder="Employee ID">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Job Title</label>
+                                    <input type="text" class="form-control" placeholder="Job Title">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Department</label>
+                                    <input type="text" class="form-control" placeholder="Employee Department">
+                                </div>
+                            </div>
+    
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Employment Status</label>
+                                    <input type="text" class="form-control" placeholder="Employment Status">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Hire Date</label>
+                                    <input type="date"  class="form-control" >
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Termination Date (if applicable)</label>
+                                    <input type="date"  class="form-control" >
+                                </div>
+                            </div>
+    
+                           
+            <div class="card mt-3">
+                <div class="card-header bg-info text-white">Emergency Contact</div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+
+                                    <label class="form-label">Name</label>
+                                    <input type="text" class="form-control" placeholder="Enter Name">
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="form-label">Relationship</label>
+                                    <input type="text" class="form-control" placeholder="Relationship">
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4">
+                                    <label class="form-label">Phone Number</label>
+                                    <input type="text" class="form-control" placeholder="Mobile Number">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                          
+            <div class="card mt-3">
+                <div class="card-header bg-info text-white">Department</div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+
+                                    <label class="form-label">Name</label>
+                                    <input type="text" class="form-control" placeholder="Middle Name">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Date of Birth</label>
+                                    <input type="date" class="form-control" >
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4">
+                                    <label class="form-label">Relationship (Spouse, Child, etc.)</label>
+                                    <input type="text" class="form-control" placeholder="Email Address">
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+    
+                    <div class="card mt-3">
+                        <div class="card-header bg-info text-white">Work History</div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+        
+                                            <label class="form-label">Previous Employees</label>
+                                            <input type="text" class="form-control" placeholder="Previous Employees">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Job Titles</label>
+                                            <input type="text" class="form-control" placeholder="Job Titles">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Responsibilities</label>
+                                            <input type="text" class="form-control" placeholder="Job Responsibilities">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+    
+    
+                               
+                            <div class="card mt-3">
+                                <div class="card-header bg-info text-white">Documents and Attachments</div>
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                                <label class="form-label">Resume</label>
+                                                <input type="text" class="form-control" placeholder="Resume">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">ID</label>
+                                                <input type="text" class="form-control" placeholder="ID">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Certification</label>
+                                                <input type="text" class="form-control" placeholder="Certification">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                                       
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+    
+           
+                    </div>
+               
+        
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+        {% endblock %}

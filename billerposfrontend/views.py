@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from category.models import Category
 
 def index (request):
     return render(request,"index.html")
@@ -10,7 +11,13 @@ def register (request):
     return render(request,"register.html")
 
 def category(request):
-    return render(request,'category.html')
+
+    categorydata = Category.objects.all() 
+
+    data={
+        "list":categorydata
+    }   
+    return render(request,'category.html',data)
 
 def brand(request):
     return render(request,'brand.html')
@@ -38,11 +45,19 @@ def supplierlist(request):
     }  
     return render(request,"Supplierlist.html",data) 
 
+def productslist(request):
+    return render(request,'productlist.html')
+    
+
 def Paymentmode(request):
     return render(request,'Paymentmode.html')
 
 def Paymentterms(request):
     return render(request,'Paymentterms.html')
+
+
+def Employee(request):
+    return render(request,'Employee.html')
 
 def RewardPoints(request):
     return render(request,'RewardPoints.html')
@@ -52,6 +67,8 @@ def Customer(request):
 
 def Supplier(request):
     return render(request,'Suppliers.html')
+
+
 
 
 
