@@ -16,8 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from billerposfrontend import settings
+from django.conf.urls.static import static
 from billerposfrontend import views
-urlpatterns =   [
+
+urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', views.index),
     path('login/', views.login),
@@ -25,21 +28,32 @@ urlpatterns =   [
     path('category/',views.category),
     path('brand/',views.brand),
     path('tax/',views.tax),
+    path('products/',views.productslist),
+
     path('AddUnit/',views.AddUnit),
     path('AddExpenses/',views.AddExpenses),
     path('AddOtherCharge/',views.AddOtherCharge),
     path('Customerlist/',views.Customerlist),
-    path('Supplierlist/',views.Supplierlist),
+    path('Supplierlist/',views.supplierlist),
     path('Paymentmode/',views.Paymentmode),
 
     path('Paymentterms/',views.Paymentterms),
     path('RewardPoints/',views.RewardPoints),
+    path('Customers/',views.Customer),
+    path('Suppliers/',views.Supplier),
+
+    
     path('Employee/',views.Employee),
    
 ]
 
+
     
     
     
 
 
+ 
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from category.models import Category
+from supplier.models import Supplier
 
 def index (request):
     return render(request,"index.html")
@@ -10,7 +12,13 @@ def register (request):
     return render(request,"register.html")
 
 def category(request):
-    return render(request,'category.html')
+
+    categorydata = Category.objects.all() 
+
+    data={
+        "list":categorydata
+    }   
+    return render(request,'category.html',data)
 
 def brand(request):
     return render(request,'brand.html')
@@ -29,10 +37,18 @@ def AddOtherCharge(request):
     return render(request,'AddOtherCharge.html')
 
 def Customerlist(request):
-    return render(request, 'Customerlist.html')
+    return render(request, 'Customergroup.html')
 
-def Supplierlist(request):
-    return render(request,'Supplierlist.html')
+def supplierlist(request):
+    supplierData = Supplier.objects.all()
+    data ={
+        "supplier":supplierData
+    }  
+    return render(request,"Supplierlist.html",data) 
+
+def productslist(request):
+    return render(request,'productlist.html')
+    
 
 def Paymentmode(request):
     return render(request,'Paymentmode.html')
@@ -46,6 +62,14 @@ def Employee(request):
 
 def RewardPoints(request):
     return render(request,'RewardPoints.html')
+
+def Customer(request):
+    return render(request,'Customers.html')
+
+def Supplier(request):
+    return render(request,'Suppliers.html')
+
+
 
 
 
