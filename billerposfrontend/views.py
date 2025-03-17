@@ -29,10 +29,14 @@ def AddOtherCharge(request):
     return render(request,'AddOtherCharge.html')
 
 def Customerlist(request):
-    return render(request, 'Customerlist.html')
+    return render(request, 'Customergroup.html')
 
-def Supplierlist(request):
-    return render(request,'Supplierlist.html')
+def supplierlist(request):
+    supplierData = Supplier.objects.all()
+    data ={
+        "supplier":supplierData
+    }  
+    return render(request,"Supplierlist.html",data) 
 
 def Paymentmode(request):
     return render(request,'Paymentmode.html')
@@ -42,5 +46,13 @@ def Paymentterms(request):
 
 def RewardPoints(request):
     return render(request,'RewardPoints.html')
+
+def Customer(request):
+    return render(request,'Customers.html')
+
+def Supplier(request):
+    return render(request,'Suppliers.html')
+
+
 
 

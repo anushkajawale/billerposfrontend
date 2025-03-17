@@ -32,8 +32,12 @@ urlpatterns = [
 
 
     path('Customerlist/',views.Customerlist),
-    path('Supplierlist/',views.Supplierlist),
+    path('Supplierlist/',views.supplierlist),
     path('Paymentmode/',views.Paymentmode),
     path('Paymentterms/',views.Paymentterms),
-    path('RewardPoints/',views.RewardPoints)
+    path('RewardPoints/',views.RewardPoints),
+    path('Customers/',views.Customer),
+    path('Suppliers/',views.Supplier),
+
+    
 ]
