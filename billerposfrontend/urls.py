@@ -27,7 +27,7 @@ urlpatterns = [
     path('register/', views.register),
     path('category/',views.category),
     path('insertcategory/',views.insertcategory),
-    path('editcategory/<id>',views.editcategory),
+    path('editcategory/<id>/',views.editcategory),
     path('updatecategory/',views.updatecategory),
     path('brand/',views.brand),
     path('tax/',views.tax),

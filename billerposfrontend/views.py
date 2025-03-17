@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,HttpResponse
 from django.shortcuts import render
-
+from django.http import JsonResponse
 from Paymentmode.models import Paymentmode
 from Paymentterms.models import Paymentterms
 from category.models import Category
@@ -25,15 +25,21 @@ def category(request):
     }   
     return render(request,'category.html',data)
 
-def editcategory(request,id):
-    categorydata=Category.objects.get(category_id=id)
-      
+def editcategory(request, id):
+    try:
+        categorydata = Category.objects.get(category_id=id)
+        edit = {
+            'editcategory': {
+                'category_id': categorydata.category_id,
+                'category_name': categorydata.category_name,  # Adjust field names based on your model
+                'category_img':  categorydata.category_img.url if categorydata.category_img else None,  # Adjust field names based on your model
+                'category_bannerimg':   categorydata.category_bannerimg.url if categorydata.category_bannerimg else None,  
+            }
+        }
+        return JsonResponse(edit)
+    except Category.DoesNotExist:
+        return JsonResponse({'error': 'Category not found'}, status=404)
 
-
-    edit={
-        'editcategory':categorydata
-    }
-    return render(request,'category.html',edit)
 
 
 
@@ -61,8 +67,8 @@ def insertcategory(request):
 
 def updatecategory(request):
     if request.method =="POST":
-        category_id=request.POST.get("categoryId")
-        category_name=request.POST.get("categoryName")
+        category_id=request.POST.get("category_id")
+        category_name=request.POST.get("categoryName")  
         category_img=request.FILES.get("categoryimg")
         category_bannerimg=request.FILES.get("categoryBanner") 
 
@@ -94,12 +100,12 @@ def AddOtherCharge(request):
     return render(request,'AddOtherCharge.html')
 
 def Customerlist(request):
-    # customerData = Customer.objects.all()
-    # data ={
-    #     "customer":customerData
-    # }  
+    customerData = Customer.objects.all()
+    data ={
+        "customer":customerData
+    }  
     
-    return render(request, 'Customergroup.html')
+    return render(request, 'Customergroup.html',data)
 
 
 def Supplierlist(request):
