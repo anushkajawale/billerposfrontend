@@ -28,29 +28,29 @@
 
                 </tr>
               </thead>
+              {% for i in list %}
               <tbody class="table-hover">
                 <tr>
-                  {% for i in list %}
                   <td>{{ i.category_id }} </td>
                   <td>{{ i.category_name }}</td>
                   <td> <img style="width:50px; height:50px;" src="/media/{{ i.category_img }}" alt="/media/{{ i.category_img }}"></td>
                   <td><img style="width:50px; height:50px;" src="/media/{{ i.category_bannerimg }}" alt="/media/{{ i.category_bannerimg }}">
 
                   </td>
-                  {% endfor %}
                   <td>
-                    <a href="/editcategory/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#editcategory" data-bs-whatever="@mdo">
+                    <button type="button" class="btn btn-sm mx-1 btn-outline-success" onclick="loadEditModal({{ i.category_id }})">
                       <i class="fa fa-pen"></i>
-                    </a>
-
-                    <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
-                data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
-
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                  </button>
+                  
+                  
+                  <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
+                  data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
+                  
+                </td>
+              </tr>
+            </tbody>
+            {% endfor %}
+          </table>
           </div>
         </div>
       </div>
@@ -67,6 +67,8 @@
       </div>
       <div class="modal-body">
         <div class="container-fluid">
+          <form action="/insertcategory/" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
           <div class="row mb-3">
             <div class="col-12">
               <label for="CategoryName" class="form-label"> Category Name</label>
@@ -77,7 +79,7 @@
           <div class="row">
             <div class="col-6 ">
               <label for="CategoryImg" class="form-label"> Category Img</label>
-              <input type="file" class="form-control" id="CategoryName" name="categoryName"
+              <input type="file" class="form-control" id="CategoryImg" name="categoryimg"
                 style="height: 150px; width: 200px;">
             </div>
             <div class="col-6">
@@ -85,19 +87,21 @@
               <input type="file" class="form-control" id="CategoryBanner" name="categoryBanner"
                 style="height: 150px; width: 200px;">
             </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Save</button>
+            </div>
           </div>
+        </form>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success">Save</button>
-      </div>
+      
     </div>
   </div>
 </div>
 
 
-<div class="modal fade" id="editcategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -106,31 +110,39 @@
       </div>
       <div class="modal-body">
         <div class="container-fluid">
+          <form action="/updatecategory/" action="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% for i in editcategory %}
           <div class="row mb-3">
             <div class="col-12">
               <label for="CategoryName" class="form-label"> Category Name</label>
-              <input type="text" class="form-control" id="CategoryName" name="categoryName" required>
+              <input type="text" class="form-control" id="CategoryName" name="categoryName" value="{{ i.category_name }}"  required>
+              <input type="hidden" class="form-control" id="CategoryId" name="categoryId" value="{{ i.category_id }}" >
+              
             </div>
 
           </div>
           <div class="row">
             <div class="col-6 ">
               <label for="CategoryImg" class="form-label"> Category Img</label>
-              <input type="file" class="form-control" id="CategoryName" name="categoryName"
+              <input type="file" class="form-control" id="CategoryImg" name="categoryimg" value="{{ i.category_img }}"
                 style="height: 150px; width: 200px;">
             </div>
             <div class="col-6">
               <label for="CategoryBanner" class="form-label"> Category Banner</label>
-              <input type="file" class="form-control" id="CategoryBanner" name="categoryBanner"
+              <input type="file" class="form-control" id="CategoryBanner" name="categoryBanner" value="{{ i.category_bannerimg }}"
                 style="height: 150px; width: 200px;">
             </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Save</button>
+            </div>
           </div>
+          {% endfor %}
+        </form>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success">Save</button>
-      </div>
+     
     </div>
   </div>
 </div>
@@ -231,6 +243,19 @@
     </div>
   </div>
 </div> -->
+<script>
+  function loadEditModal(categoryId) {
+    fetch(`/editcategory/${categoryId}/`)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('editModalContent').innerHTML = html;
+            var editModal = new bootstrap.Modal(document.getElementById('editCategoryModal'));
+            editModal.show();
+        })
+        .catch(error => console.error('Error loading modal content:', error));
+}
+
+</script>
 
 
 {% endblock %}
