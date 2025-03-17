@@ -70,7 +70,29 @@ def Supplier(request):
     return render(request,'Suppliers.html')
 
 
+from Unit.models import Unit
+def AddUnit(request):
+    list = Unit.objects.all()
+    data = {
+        "list":list
+    }
+    return render(request,'AddUnit.html',data)
+
+from Expenses.models import Expenses
+def AddExpenses(request):
+    list = Expenses.objects.all()
+    data = {
+        "list":list
+    }
+    return render(request,'AddExpenses.html',data)
 
 
 
+from OtherCharge.models import OtherCharge
+def AddOtherCharge(request):
+    listdata = OtherCharge.objects.all()
+    data = {
+        "list":listdata
+    }
+    return render(request,'AddOtherCharge.html',data)
 
