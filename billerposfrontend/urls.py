@@ -41,8 +41,6 @@ urlpatterns = [
     path('RewardPoints/',views.RewardPoints),
     path('Customers/',views.Customer),
     path('Suppliers/',views.Supplier),
-
-    
     path('Employee/',views.Employee),
    
 ]
