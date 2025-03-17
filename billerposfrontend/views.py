@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from category.models import Category
 from supplier.models import Supplier
-from customer.models import customer
+from customer.models import Customer
 
 def index (request):
     return render(request,"index.html")
@@ -38,6 +38,11 @@ def AddOtherCharge(request):
     return render(request,'AddOtherCharge.html')
 
 def Customerlist(request):
+    # customerData = Customer.objects.all()
+    # data ={
+    #     "customer":customerData
+    # }  
+    
     return render(request, 'Customergroup.html')
 
 def supplierlist(request):
