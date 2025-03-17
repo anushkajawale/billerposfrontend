@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from category.models import Category
 from supplier.models import Supplier
+from customer.models import customer
 
 def index (request):
     return render(request,"index.html")
@@ -68,6 +69,8 @@ def Customer(request):
 
 def Supplier(request):
     return render(request,'Suppliers.html')
+
+
 
 
 
