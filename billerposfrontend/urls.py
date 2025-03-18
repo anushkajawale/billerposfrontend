@@ -26,6 +26,9 @@ urlpatterns = [
     path('login/', views.login),
     path('register/', views.register),
     path('category/',views.category),
+    path('insertcategory/',views.insertcategory),
+    path('editcategory/<id>/',views.editcategory),
+    path('updatecategory/',views.updatecategory),
     path('brand/',views.brand),
     path('tax/',views.tax),
     path('products/',views.productslist),
@@ -34,27 +37,23 @@ urlpatterns = [
     path('AddExpenses/',views.AddExpenses),
     path('AddOtherCharge/',views.AddOtherCharge),
     path('Customerlist/',views.Customerlist),
+
     path('insertcustomergroup/',views.insertcustomergroup),
 
    
-    path('Supplierlist/',views.supplierlist),
-    path('Paymentmode/',views.Paymentmode),
 
-    path('Paymentterms/',views.Paymentterms),
+    path('Supplierlist/',views.Supplierlist),
+    path('paymentmode/',views.paymentmodelist),
+    path('Paymentterms/',views.Paymenttermslist),
+    path('Supplierlist/',views.supplierlist),
+   
     path('RewardPoints/',views.RewardPoints),
     path('Customerpage/',views.Customerpage),
     path('Supplier/',views.Supplierpage),
     path('Employee/',views.Employee),
+    path('Roles/',views.Roleslist),
    
 ]
-
-
-    
-    
-    
-
-
- 
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

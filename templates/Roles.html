@@ -1,0 +1,86 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="card  border border-success">
+        <div class="card-header">
+          <div class="d-flex justify-content-between">
+            <h3>
+              Role
+            </h3>
+            <div class="text-right">
+              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                data-bs-whatever="@mdo"><i class="nav-icon fas fa-plus"></i>Role</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body ">
+          <div class="table-responsive">
+            <table class="table table-bordered text-center ">
+              <thead class="table-success">
+                <tr>
+                  <th>#</th>
+                  <th>Role Name</th>
+                  <th>Action</th>
+
+                </tr>
+              </thead>
+              <tbody class="table-hover">
+                {% for i in list %}
+                <tr>
+                  <td>{{ i.Roles_id}}</td>
+                  <td>{{ i.Roles_name}}</td>
+                  <td>
+                    <a href="/editcustomer/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcustomer"
+                    data-bs-whatever="@mdo">
+                      <i class="fa fa-pen"></i>
+                      </a>
+        
+                      <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
+                data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
+                    
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Role</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <h5 class="modal-title" id="exampleModalLabel">Export</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <h5 class="modal-title" id="exampleModalLabel">PDF</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="customergroup-name" class="col-form-label">Role Name</label>
+            <input type="text" class="form-control" id="Role-name" placeholder="Role name" />
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-success">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

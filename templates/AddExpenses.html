@@ -27,10 +27,11 @@
 
                 </tr>
               </thead>
+              {% for i in list%}
               <tbody class="table-hover">
                 <tr>
-                  <td> </td>
-                  <td> </td>
+                  <td>{{i.expenses_id}} </td>
+                  <td> {{i.expenses_name}}</td>
                   <td>
                     <a href="/editexpenses/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcustomer"
                     data-bs-whatever="@mdo">
@@ -43,6 +44,7 @@
                   </td>
                 </tr>
               </tbody>
+              {% endfor %}
             </table>
           </div>
         </div>

@@ -45,7 +45,9 @@ INSTALLED_APPS = [
     'Paymentmode',
     'Unit',
     'Expenses',
-    'OtherCharge'
+    'OtherCharge',
+    'Paymentterms',
+    'Roles',
 ]
     
 
