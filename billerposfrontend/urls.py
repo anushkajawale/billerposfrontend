@@ -45,6 +45,7 @@ urlpatterns = [
     path('Customers/',views.Customer),
     path('Suppliers/',views.Supplier),
     path('Employee/',views.Employee),
+    path('Roles/',views.Roleslist),
    
 ]
 
