@@ -27,7 +27,7 @@ urlpatterns = [
     path('register/', views.register),
     path('category/',views.category),
     path('insertcategory/',views.insertcategory),
-    path('editcategory/<id>',views.editcategory),
+    path('editcategory/<id>/',views.editcategory),
     path('updatecategory/',views.updatecategory),
     path('brand/',views.brand),
     path('tax/',views.tax),
@@ -40,8 +40,7 @@ urlpatterns = [
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
     path('Supplierlist/',views.supplierlist),
-    path('Paymentmode/',views.Paymentmode),
-    path('Paymentterms/',views.Paymentterms),
+   
     path('RewardPoints/',views.RewardPoints),
     path('Customers/',views.Customer),
     path('Suppliers/',views.Supplier),
