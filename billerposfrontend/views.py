@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from category.models import Category
 from supplier.models import Supplier
 from customer.models import Customer
+# from customergroup.models import Customergroup
 
 def index (request):
     return render(request,"index.html")
@@ -38,12 +39,27 @@ def AddOtherCharge(request):
     return render(request,'AddOtherCharge.html')
 
 def Customerlist(request):
-    # customerData = Customer.objects.all()
-    # data ={
-    #     "customer":customerData
-    # }  
+     customerData = Customer.objects.all()
+     data ={
+         "customer":customerData
+     }  
     
-    return render(request, 'Customergroup.html')
+     return render(request, 'Customergroup.html',data)
+
+def insertcustomergroup(request):
+    if request.method=='POST':
+        customergroup=request.POST.get('customergroupname')
+
+        # insertquery=Customergroup(
+        # customergroup_name=customergroup
+        # )  
+
+        # insertquery.save() 
+        return redirect("/Customerlist/")
+    else:
+        return render(request,'Customergroup.html') 
+
+
 
 def supplierlist(request):
     supplierData = Supplier.objects.all()
@@ -69,10 +85,10 @@ def Employee(request):
 def RewardPoints(request):
     return render(request,'RewardPoints.html')
 
-def Customer(request):
+def Customerpage(request):
     return render(request,'Customers.html')
 
-def Supplier(request):
+def Supplierpage(request):
     return render(request,'Suppliers.html')
 
 

@@ -29,18 +29,21 @@ urlpatterns = [
     path('brand/',views.brand),
     path('tax/',views.tax),
     path('products/',views.productslist),
-
+    
     path('AddUnit/',views.AddUnit),
     path('AddExpenses/',views.AddExpenses),
     path('AddOtherCharge/',views.AddOtherCharge),
     path('Customerlist/',views.Customerlist),
+    path('insertcustomergroup/',views.insertcustomergroup),
+
+   
     path('Supplierlist/',views.supplierlist),
     path('Paymentmode/',views.Paymentmode),
 
     path('Paymentterms/',views.Paymentterms),
     path('RewardPoints/',views.RewardPoints),
-    path('Customers/',views.Customer),
-    path('Suppliers/',views.Supplier),
+    path('Customerpage/',views.Customerpage),
+    path('Supplier/',views.Supplierpage),
     path('Employee/',views.Employee),
    
 ]
