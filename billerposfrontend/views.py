@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from category.models import Category
 from supplier.models import Supplier
 from customer.models import Customer
-# from customergroup.models import Customergroup
+from Customergroup.models import Customergroup
 from django.shortcuts import render,redirect,HttpResponse
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -10,7 +10,7 @@ from Paymentmode.models import Paymentmode
 from Paymentterms.models import Paymentterms
 from category.models import Category
 from supplier.models import Supplier
-from customer.models import Customer
+from Suppliergroup.models import Suppliergroup
 from Roles.models import Roles
 
 
@@ -106,8 +106,8 @@ def AddExpenses(request):
 def AddOtherCharge(request):
     return render(request,'AddOtherCharge.html')
 
-def Customerlist(request):
-     customerData = Customer.objects.all()
+def Customergrouplist(request):
+     customerData = Customergroup.objects.all()
      data ={
          "customer":customerData
      }  
@@ -116,28 +116,40 @@ def Customerlist(request):
 
 def insertcustomergroup(request):
     if request.method=='POST':
-        customergroup=request.POST.get('customergroupname')
+         customergroup=request.POST.get('customergroupname')
 
-        # insertquery=Customergroup(
-        # customergroup_name=customergroup
-        # )  
+         insertquery=Customergroup(
+         customergroup_name=customergroup
+         )  
 
-        # insertquery.save() 
-        return redirect("/Customerlist/")
+         insertquery.save() 
+         return redirect("/Customerlist/")
     else:
         return render(request,'Customergroup.html') 
 
 
-    customerData = Customer.objects.all()
-    data ={
-        "customer":customerData
-    }  
+def Suppliergrouplist(request):
+     supplierData = Suppliergroup.objects.all()
+     data ={
+         "supplier":supplierData
+     }  
     
-    return render(request, 'Customergroup.html',data)
+     return render(request, 'Supplierlist.html',data)
+
+def insertsuppliergroup(request):
+    if request.method=='POST':
+         suppliergroup=request.POST.get('suppliergroupname')
+
+         insertquery=Suppliergroup(
+         suppliergroup_name=suppliergroup
+         )  
+
+         insertquery.save() 
+         return redirect("/Supplierlist/")
+    else:
+        return render(request,'Supplier.html')
 
 
-def Supplierlist(request):
-    return render(request,'Supplierlist.html')
  
 def Paymenttermslist(request):
     listdata = Paymentterms.objects.all()
@@ -146,12 +158,7 @@ def Paymenttermslist(request):
     }
     return render(request,'Paymentterms.html',data)
 
-def supplierlist(request):
-    supplierData = Supplier.objects.all()
-    data ={
-        "supplier":supplierData
-    }  
-    return render(request,"Supplierlist.html",data) 
+
 
 def productslist(request):
     return render(request,'productlist.html')

@@ -27,22 +27,13 @@
 
                 </tr>
               </thead>
-              {% for i in list %}
+              {% for i in customer %}
 
               <tbody class="table-hover">
                 <tr>
-                  <td>{{ i.customer_id}} </td>
-                  <td>{{ i.customer_name}} </td>
-                  <td>
-                    <a href="/editcustomer/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcustomer"
-                    data-bs-whatever="@mdo">
-                      <i class="fa fa-pen"></i>
-                      </a>
-        
-                      <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
-                data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
-                    
-                  </td>
+                  <td>{{ i.customergroup_id}} </td>
+                  <td>{{ i.customergroup_name}} </td>
+                  
                   <td>
                     <button type="button" class="btn btn-sm mx-1 btn-outline-success" onclick="loadEditModal('{{ i.customer_id}}')">
                       <i class="fa fa-pen"></i>

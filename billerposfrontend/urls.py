@@ -36,16 +36,17 @@ urlpatterns = [
     path('AddUnit/',views.AddUnit),
     path('AddExpenses/',views.AddExpenses),
     path('AddOtherCharge/',views.AddOtherCharge),
-    path('Customerlist/',views.Customerlist),
+    path('Customerlist/',views.Customergrouplist),
 
     path('insertcustomergroup/',views.insertcustomergroup),
+    path('insertsuppliergroup/',views.insertsuppliergroup),
 
    
 
-    path('Supplierlist/',views.Supplierlist),
+    path('Supplierlist/',views.Suppliergrouplist),
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
-    path('Supplierlist/',views.supplierlist),
+    
    
     path('RewardPoints/',views.RewardPoints),
     path('Customerpage/',views.Customerpage),
