@@ -1,16 +1,10 @@
 from django.shortcuts import render,redirect
-from category.models import Category
-from supplier.models import Supplier
-from customer.models import Customer
 from Customergroup.models import Customergroup
-from django.shortcuts import render,redirect,HttpResponse
 from django.shortcuts import render
 from django.http import JsonResponse
 from Paymentmode.models import Paymentmode
 from Paymentterms.models import Paymentterms
 from category.models import Category
-from supplier.models import Supplier
-from customer.models import Customer
 from brand.models import Brand
 from Suppliergroup.models import Suppliergroup
 from Roles.models import Roles
@@ -48,7 +42,6 @@ def editcategory(request, id):
         return JsonResponse(edit)
     except Category.DoesNotExist:
         return JsonResponse({'error': 'Category not found'}, status=404)
-
 
 
 
