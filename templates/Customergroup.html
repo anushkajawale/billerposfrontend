@@ -27,21 +27,20 @@
 
                 </tr>
               </thead>
+              {% for i in customer %}
+
               <tbody class="table-hover">
                 <tr>
-                  <td> </td>
-                  <td> </td>
+                  <td>{{ i.customergroup_id}} </td>
+                  <td>{{ i.customergroup_name}} </td>
+                  
                   <td>
-                    <a href="/editcustomer/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcustomer"
-                    data-bs-whatever="@mdo">
+                    <button type="button" class="btn btn-sm mx-1 btn-outline-success" onclick="loadEditModal('{{ i.customer_id}}')">
                       <i class="fa fa-pen"></i>
-                      </a>
-        
-                      <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
-                data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
-                    
+                    </button>
                   </td>
                 </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
@@ -57,21 +56,22 @@
         <h5 class="modal-title" id="exampleModalLabel">Add CustomerGroup</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <form action="/insertcustomergroup/" method="post">
+        {% csrf_token  %}
       <div class="modal-body">
-        <form>
           <div class="mb-3">
-            <label for="suppliergroup-name" class="col-form-label">CustomerGroup Name</label>
-            <input type="text" class="form-control" id="customergroup-name" placeholder="CustomerGroup Name" />
+            <label for="customerGroup-name" class="col-form-label">CustomerGroup Name</label>
+            <input type="text" class="form-control" id="customergroup_name" name="customergroupname" placeholder="CustomerGroup Name" />
           </div>
 
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
-        <button type="button" class="btn btn-success">Save</button>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" name="submit" class="btn btn-success">Save</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

@@ -40,13 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'supplier',
     'customer',
+    'Customergroup',
+    'Suppliergroup',
     'category',
     'brand',
     'Paymentmode',
     'Unit',
     'Expenses',
     'OtherCharge',
-    'Paymentterms'
+    'Paymentterms',
+    'Roles',
 ]
     
 

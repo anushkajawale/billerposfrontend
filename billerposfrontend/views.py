@@ -1,3 +1,8 @@
+from django.shortcuts import render,redirect
+from category.models import Category
+from supplier.models import Supplier
+from customer.models import Customer
+from Customergroup.models import Customergroup
 from django.shortcuts import render,redirect,HttpResponse
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -7,6 +12,9 @@ from category.models import Category
 from supplier.models import Supplier
 from customer.models import Customer
 from brand.models import Brand
+from Suppliergroup.models import Suppliergroup
+from Roles.models import Roles
+
 
 def index (request):
     return render(request,"index.html")
@@ -157,17 +165,50 @@ def AddExpenses(request):
 def AddOtherCharge(request):
     return render(request,'AddOtherCharge.html')
 
-def Customerlist(request):
-    customerData = Customer.objects.all()
-    data ={
-        "customer":customerData
-    }  
+def Customergrouplist(request):
+     customerData = Customergroup.objects.all()
+     data ={
+         "customer":customerData
+     }  
     
-    return render(request, 'Customergroup.html',data)
+     return render(request, 'Customergroup.html',data)
+
+def insertcustomergroup(request):
+    if request.method=='POST':
+         customergroup=request.POST.get('customergroupname')
+
+         insertquery=Customergroup(
+         customergroup_name=customergroup
+         )  
+
+         insertquery.save() 
+         return redirect("/Customerlist/")
+    else:
+        return render(request,'Customergroup.html') 
 
 
-def Supplierlist(request):
-    return render(request,'Supplierlist.html')
+def Suppliergrouplist(request):
+     supplierData = Suppliergroup.objects.all()
+     data ={
+         "supplier":supplierData
+     }  
+    
+     return render(request, 'Supplierlist.html',data)
+
+def insertsuppliergroup(request):
+    if request.method=='POST':
+         suppliergroup=request.POST.get('suppliergroupname')
+
+         insertquery=Suppliergroup(
+         suppliergroup_name=suppliergroup
+         )  
+
+         insertquery.save() 
+         return redirect("/Supplierlist/")
+    else:
+        return render(request,'Supplier.html')
+
+
  
 def Paymenttermslist(request):
     listdata = Paymentterms.objects.all()
@@ -176,12 +217,7 @@ def Paymenttermslist(request):
     }
     return render(request,'Paymentterms.html',data)
 
-def supplierlist(request):
-    supplierData = Supplier.objects.all()
-    data ={
-        "supplier":supplierData
-    }  
-    return render(request,"Supplierlist.html",data) 
+
 
 def productslist(request):
     return render(request,'productlist.html')
@@ -194,10 +230,10 @@ def Employee(request):
 def RewardPoints(request):
     return render(request,'RewardPoints.html')
 
-def Customer(request):
+def Customerpage(request):
     return render(request,'Customers.html')
 
-def Supplier(request):
+def Supplierpage(request):
     return render(request,'Suppliers.html')
 
 
@@ -234,4 +270,11 @@ def paymentmodelist(request):
     }
     return render(request,'paymentmode.html',data)
 
+
+def Roleslist(request):
+    listdata = Roles.objects.all()
+    data = {
+        'list':listdata
+    }
+    return render(request,'Roles.html',data)
 

@@ -36,19 +36,27 @@ urlpatterns = [
     path('updatebrand/',views.updatebrand),
     path('tax/',views.tax),
     path('products/',views.productslist),
+    
     path('AddUnit/',views.AddUnit),
     path('AddExpenses/',views.AddExpenses),
     path('AddOtherCharge/',views.AddOtherCharge),
-    path('Customerlist/',views.Customerlist),
-    path('Supplierlist/',views.Supplierlist),
+    path('Customerlist/',views.Customergrouplist),
+
+    path('insertcustomergroup/',views.insertcustomergroup),
+    path('insertsuppliergroup/',views.insertsuppliergroup),
+
+   
+
+    path('Supplierlist/',views.Suppliergrouplist),
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
-    path('Supplierlist/',views.supplierlist),
+    
    
     path('RewardPoints/',views.RewardPoints),
-    path('Customers/',views.Customer),
-    path('Suppliers/',views.Supplier),
+    path('Customerpage/',views.Customerpage),
+    path('Supplier/',views.Supplierpage),
     path('Employee/',views.Employee),
+    path('Roles/',views.Roleslist),
    
 ]
 
