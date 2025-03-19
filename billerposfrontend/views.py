@@ -6,6 +6,7 @@ from Paymentterms.models import Paymentterms
 from category.models import Category
 from supplier.models import Supplier
 from customer.models import Customer
+from brand.models import Brand
 
 def index (request):
     return render(request,"index.html")
@@ -73,10 +74,12 @@ def updatecategory(request):
         category_bannerimg=request.FILES.get("categoryBanner") 
 
         fetchRecord=Category.objects.get(category_id=category_id)
+        if category_img:
+            fetchRecord.category_img=category_img
+        if category_bannerimg:
+            fetchRecord.category_bannerimg=category_bannerimg
 
         fetchRecord.category_name=category_name
-        fetchRecord.category_img=category_img
-        fetchRecord.category_bannerimg=category_bannerimg
 
         fetchRecord.save()  
         return redirect('/category/')
@@ -84,7 +87,62 @@ def updatecategory(request):
 
 
 def brand(request):
-    return render(request,'brand.html')
+    branddata=Brand.objects.all()
+    data={
+
+        'branddata':branddata
+    }
+
+    return render(request,'brand.html',data)
+
+def insertbrandpage(request):
+    if request.method=='POST':
+        brandname=request.POST.get('Brandname')
+        brandImg=request.FILES.get('Brandimg')
+
+        insertbrand=Brand(
+            brand_name=brandname,
+            brand_img=brandImg
+
+        )
+        insertbrand.save()
+        return redirect('/brand/')
+    else:
+        return(request,'brand.html') 
+
+
+def editbrand(request, id):
+    try:
+        branddata = Brand.objects.get(brand_id=id)
+        edit = {
+            'editbrand': {
+                'brand_id': branddata.brand_id,
+                'brand_name': branddata.brand_name,  # Adjust field names based on your model
+                'brand_img':  branddata.brand_img.url if branddata.brand_img else None  # Adjust field names based on your model
+  
+            }
+        }
+        return JsonResponse(edit)
+    except Category.DoesNotExist:
+        return JsonResponse({'error': ' not found'}, status=404)       
+
+
+def updatebrand(request):       
+    if request.method=='POST':
+        brand_id=request.POST.get("brand_id")
+        brand_name=request.POST.get("brandName")  
+        brand_img=request.FILES.get("brandimg")
+
+        fetchRecord=Brand.objects.get(brand_id=brand_id)
+        fetchRecord.brand_name=brand_name
+        if brand_img:
+            fetchRecord.brand_img=brand_img
+        
+        fetchRecord.save()
+        return redirect('/brand/')
+
+
+
 
 def tax(request):
     return render(request,'tax.html')

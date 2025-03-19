@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'supplier',
     'customer',
     'category',
+    'brand',
     'Paymentmode',
     'Unit',
     'Expenses',

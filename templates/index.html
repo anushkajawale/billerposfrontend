@@ -50,14 +50,14 @@
     </div>
     <div class="navbar-content">
       <ul class="pc-navbar">
-        <li class="pc-item">
+        <li class="pc-item is-active">
           <a href="#" class="pc-link">
             <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
             <span class="pc-mtext">Dashboard</span>
           </a>
         </li>
 
-        <li class="pc-item">
+        <li class="pc-item">  
           <a href="/Customers/" class="pc-link">
             <span class="pc-micon"><i class="ti ti-typography"></i></span>
 
@@ -424,7 +424,7 @@
       <div class="page-header">
         <div class="page-block">
           <div class="row align-items-center">
-            <div class="col-md-12">
+            <!-- <div class="col-md-12">
               <div class="page-header-title">
                 <h5 class="m-b-10">Home</h5>
               </div>
@@ -433,7 +433,7 @@
                 <li class="breadcrumb-item"><a href="javascript: void(0)">Dashboard</a></li>
                 <li class="breadcrumb-item" aria-current="page">Home</li>
               </ul>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -461,6 +461,20 @@
       </div>
     </div>
   </footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const currentUrl = window.location.pathname;
+    const menuItems = document.querySelectorAll(".pc-item a");
+  
+    menuItems.forEach(item => {
+      if (item.getAttribute("href") === currentUrl) {
+        item.parentElement.classList.add("is-active");
+      }
+    });
+  });
+</script>
+  
 
   <!-- [Page Specific JS] start -->
   <script src="/static/assets/js/plugins/apexcharts.min.js"></script>

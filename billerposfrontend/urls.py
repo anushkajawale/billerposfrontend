@@ -22,6 +22,7 @@ from billerposfrontend import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.index),
     path('index/', views.index),
     path('login/', views.login),
     path('register/', views.register),
@@ -30,6 +31,9 @@ urlpatterns = [
     path('editcategory/<id>/',views.editcategory),
     path('updatecategory/',views.updatecategory),
     path('brand/',views.brand),
+    path('insertbrand/',views.insertbrandpage),
+    path('editbrand/<id>/',views.editbrand),
+    path('updatebrand/',views.updatebrand),
     path('tax/',views.tax),
     path('products/',views.productslist),
     path('AddUnit/',views.AddUnit),
