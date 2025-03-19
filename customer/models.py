@@ -5,7 +5,7 @@ class Customer(models.Model):
     customer_mobile=models.IntegerField(null=True)
     customer_email=models.CharField(max_length=255,null=True)
     customer_gstno=models.IntegerField(null=True)
-    9
+    
     customer_panno=models.IntegerField(null=True)
     customer_openingbal=models.IntegerField(null=True)
     customer_grouptype=models.CharField(max_length=255,null=True)

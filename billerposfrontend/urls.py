@@ -35,19 +35,17 @@ urlpatterns = [
     path('editbrand/<id>/',views.editbrand),
     path('updatebrand/',views.updatebrand),
     path('tax/',views.tax),
-    path('products/',views.productslist),
-    
+    path('products/',views.productslist), 
     path('AddUnit/',views.AddUnit),
     path('AddExpenses/',views.AddExpenses),
     path('AddOtherCharge/',views.AddOtherCharge),
-    path('Customerlist/',views.Customergrouplist),
-
+    path('Customergrouplist/',views.Customergrouplist),
     path('insertcustomergroup/',views.insertcustomergroup),
     path('insertsuppliergroup/',views.insertsuppliergroup),
 
    
 
-    path('Supplierlist/',views.Suppliergrouplist),
+    path('Suppliergrouplist/',views.Suppliergrouplist),
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
     
