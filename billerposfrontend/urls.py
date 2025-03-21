@@ -52,7 +52,7 @@ urlpatterns = [
    
     path('RewardPoints/',views.RewardPoints),
     path('Customerpage/',views.Customerpage),
-    path('Supplier/',views.Supplierpage),
+    path('Supplierpage/',views.Supplierpage),
     path('Employee/',views.Employee),
     path('Roles/',views.Roleslist),
    
