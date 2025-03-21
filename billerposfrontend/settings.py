@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'OtherCharge',
     'Paymentterms',
     'Roles',
+    'tax'
 ]
     
 
