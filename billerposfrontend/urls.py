@@ -43,6 +43,8 @@ urlpatterns = [
     path('Customers/',views.Customer),
     path('Suppliers/',views.Supplier),
     path('Employee/',views.Employee),
+    path('POSBills/',views.POSBills),
+    path('printpage/',views.printpage),
    
 ]
 

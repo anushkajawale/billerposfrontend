@@ -118,3 +118,8 @@ def paymentmodelist(request):
     return render(request,'paymentmode.html',data)
 
 
+def POSBills(request):
+    return render(request,'POSBills.html')
+
+def printpage(request):
+    return render(request,'printpage.html')
