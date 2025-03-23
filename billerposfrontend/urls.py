@@ -22,29 +22,44 @@ from billerposfrontend import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.index),
     path('index/', views.index),
     path('login/', views.login),
     path('register/', views.register),
     path('category/',views.category),
+    path('insertcategory/',views.insertcategory),
+    path('editcategory/<id>/',views.editcategory),
+    path('updatecategory/',views.updatecategory),
     path('brand/',views.brand),
+    path('insertbrand/',views.insertbrandpage),
+    path('editbrand/<id>/',views.editbrand),
+    path('updatebrand/',views.updatebrand),
     path('tax/',views.tax),
-    path('products/',views.productslist),
+    path('products/',views.productslist), 
     path('AddUnit/',views.AddUnit),
     path('AddExpenses/',views.AddExpenses),
     path('AddOtherCharge/',views.AddOtherCharge),
-    path('Customerlist/',views.Customerlist),
-    path('Supplierlist/',views.Supplierlist),
+    path('Customergrouplist/',views.Customergrouplist),
+    path('insertcustomergroup/',views.insertcustomergroup),
+    path('insertsuppliergroup/',views.insertsuppliergroup),
+
+   
+
+    path('Suppliergrouplist/',views.Suppliergrouplist),
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
-    path('Supplierlist/',views.supplierlist),
-    path('Paymentmode/',views.Paymentmode),
-    path('Paymentterms/',views.Paymentterms),
+    
+   
     path('RewardPoints/',views.RewardPoints),
-    path('Customers/',views.Customer),
-    path('Suppliers/',views.Supplier),
+    path('Customerpage/',views.Customerpage),
+    path('Supplierpage/',views.Supplierpage),
     path('Employee/',views.Employee),
+<<<<<<< HEAD
     path('POSBills/',views.POSBills),
     path('printpage/',views.printpage),
+=======
+    path('Roles/',views.Roleslist),
+>>>>>>> 22bc442af166ef4231a708db00e034e9e9416f1d
    
 ]
 
