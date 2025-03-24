@@ -54,12 +54,12 @@ urlpatterns = [
     path('Customerpage/',views.Customerpage),
     path('Supplierpage/',views.Supplierpage),
     path('Employee/',views.Employee),
-<<<<<<< HEAD
+
     path('POSBills/',views.POSBills),
     path('printpage/',views.printpage),
-=======
+
     path('Roles/',views.Roleslist),
->>>>>>> 22bc442af166ef4231a708db00e034e9e9416f1d
+
    
 ]
 
