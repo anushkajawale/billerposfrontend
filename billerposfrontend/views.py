@@ -269,13 +269,11 @@ def paymentmodelist(request):
     return render(request,'paymentmode.html',data)
 
 
-<<<<<<< HEAD
 def POSBills(request):
     return render(request,'POSBills.html')
 
 def printpage(request):
     return render(request,'printpage.html')
-=======
 def Roleslist(request):
     listdata = Roles.objects.all()
     data = {
@@ -283,4 +281,3 @@ def Roleslist(request):
     }
     return render(request,'Roles.html',data)
 
->>>>>>> 22bc442af166ef4231a708db00e034e9e9416f1d
