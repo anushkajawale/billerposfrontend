@@ -8,6 +8,7 @@ from category.models import Category
 from brand.models import Brand
 from Suppliergroup.models import Suppliergroup
 from Roles.models import Roles
+from customer.models import Customer
 
 
 def index (request):
@@ -224,7 +225,11 @@ def RewardPoints(request):
     return render(request,'RewardPoints.html')
 
 def Customerpage(request):
-    return render(request,'Customers.html')
+    customerdata=Customer.objects.all()
+    data={
+      'customer':customerdata
+    }
+    return render(request,'Customers.html',data)
 
 def Supplierpage(request):
     return render(request,'Suppliers.html')
@@ -265,11 +270,13 @@ def paymentmodelist(request):
 
 
 
+
 def POSBills(request):
     return render(request,'POSBills.html')
 
 def printpage(request):
     return render(request,'printpage.html')
+
 
 def Roleslist(request):
     listdata = Roles.objects.all()

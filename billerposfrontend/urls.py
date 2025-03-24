@@ -42,9 +42,6 @@ urlpatterns = [
     path('Customergrouplist/',views.Customergrouplist),
     path('insertcustomergroup/',views.insertcustomergroup),
     path('insertsuppliergroup/',views.insertsuppliergroup),
-
-   
-
     path('Suppliergrouplist/',views.Suppliergrouplist),
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
@@ -55,9 +52,15 @@ urlpatterns = [
     path('Supplierpage/',views.Supplierpage),
     path('Employee/',views.Employee),
 
+
     path('POSBills/',views.POSBills),
     path('printpage/',views.printpage),
 
+    path('Roles/',views.Roleslist),
+
+
+    path('POSBills/',views.POSBills),
+    path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
 
    
