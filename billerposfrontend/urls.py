@@ -42,9 +42,6 @@ urlpatterns = [
     path('Customergrouplist/',views.Customergrouplist),
     path('insertcustomergroup/',views.insertcustomergroup),
     path('insertsuppliergroup/',views.insertsuppliergroup),
-
-   
-
     path('Suppliergrouplist/',views.Suppliergrouplist),
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
