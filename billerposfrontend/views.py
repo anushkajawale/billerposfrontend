@@ -121,11 +121,11 @@ def editbrand(request, id):
                 'brand_name': branddata.brand_name,  # Adjust field names based on your model
                 'brand_img':  branddata.brand_img.url if branddata.brand_img else None  # Adjust field names based on your model
   
-            }
+            }   
         }
         return JsonResponse(edit)
     except Category.DoesNotExist:
-        return JsonResponse({'error': ' not found'}, status=404)       
+        return JsonResponse({'error': ' not found'}, status=404)        
 
 
 def updatebrand(request):       

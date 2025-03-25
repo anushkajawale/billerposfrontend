@@ -101,7 +101,7 @@
         <div class="container-fluid">
           <div class="row mb-3">
             <div class="col-12">
-              <label for="CategoryName" class="form-label">Brand Name</label>
+              <label for="BrandName" class="form-label">Brand Name</label>
               <input type="text" class="form-control" id="updateBrandName" name="updatebrandName" required>
               <input type="hidden" id="updatebrand_id" name="brand_id">
 
@@ -110,7 +110,7 @@
           </div>
           <div class="row">
             <div class="col-6 ">             
-              <label for="CategoryImg" class="form-label"> Brand Img</label>
+              <label for="BrandImg" class="form-label"> Brand Img</label>
               <input type="file" class="form-control" id="" name="" >
               <img src="" alt="" style="height: 150px; width: 200px;" id="updatebrandImg">
             </div>
@@ -126,21 +126,59 @@
   </div>
 </div>
 
-<script>
+
+<!-- <script>
   function loadEditModal(brand_id) {console.log(brand_id);
     
     fetch(`/editbrand/${brand_id}/`)
         .then(response =>{return response.json();})
         .then(html => {
-          console.log(html);
-          let brand = html.editbrand;
+            console.log(html);
+            let brand = html.editbrand;
             var editModal = new bootstrap.Modal(document.getElementById('editbrandmodel'));
-            document.getElementById("updatebrand_id").value=brand.brand_id;
+            document.getElementById("updatebrand_id").value=editbrand.brand_id;
             document.getElementById("updateBrandName").value = brand.brand_name;
             document.getElementById("updateBrandImg").src = brand.brand_img;
             editModal.show();
         })
         .catch(error => console.error('Error loading modal content:', error));
+}
+
+</script> -->
+
+<script>
+  function loadEditModal(brand_id) {
+    console.log("Brand ID:", brand_id);
+
+    fetch(`/editbrand/${brand_id}/`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Fetched Data:", data);
+
+            let brand = data.editbrand; // Extract brand details
+            
+            if (!brand) {
+                console.error("Error: Brand data is missing!");
+                return;
+            }
+
+            var editModal = new bootstrap.Modal(document.getElementById('editbrandmodel'));
+
+            // Corrected variable references
+            document.getElementById("updatebrand_id").value = brand.brand_id;
+            document.getElementById("updateBrandName").value = brand.brand_name;
+
+            // Ensure the image source is valid
+            let imgElement = document.getElementById("updateBrandImg");
+            if (brand.brand_img) {
+                imgElement.src = brand.brand_img.startsWith("http") ? brand.brand_img : `/uploads/${brand.brand_img}`;
+            } else {
+                imgElement.src = "/default-image.jpg"; // Set a default image if none is available
+            }
+
+            editModal.show();
+        })
+        .catch(error => console.error("Error loading modal content:", error));
 }
 
 </script>
