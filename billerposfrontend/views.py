@@ -1,12 +1,17 @@
-from django.shortcuts import render,redirect,HttpResponse
+from django.shortcuts import render,redirect
+from Customergroup.models import Customergroup
 from django.shortcuts import render
 from django.http import JsonResponse
 from Paymentmode.models import Paymentmode
 from Paymentterms.models import Paymentterms
 from category.models import Category
-from supplier.models import Supplier
+from brand.models import Brand
+from Suppliergroup.models import Suppliergroup
+from Roles.models import Roles
 from customer.models import Customer
 from Users.models import Users
+
+
 
 
 def index (request):
@@ -45,7 +50,6 @@ def editcategory(request, id):
 
 
 
-
 def insertcategory(request):
     if request.method=="POST":
         category_name=request.POST.get("categoryName")
@@ -75,10 +79,12 @@ def updatecategory(request):
         category_bannerimg=request.FILES.get("categoryBanner") 
 
         fetchRecord=Category.objects.get(category_id=category_id)
+        if category_img:
+            fetchRecord.category_img=category_img
+        if category_bannerimg:
+            fetchRecord.category_bannerimg=category_bannerimg
 
         fetchRecord.category_name=category_name
-        fetchRecord.category_img=category_img
-        fetchRecord.category_bannerimg=category_bannerimg
 
         fetchRecord.save()  
         return redirect('/category/')
@@ -86,14 +92,189 @@ def updatecategory(request):
 
 
 def brand(request):
-    return render(request,'brand.html')
+    branddata=Brand.objects.all()
+    data={
+
+        'branddata':branddata
+    }
+
+    return render(request,'brand.html',data)
+
+def insertbrandpage(request):
+    if request.method=='POST':
+        brandname=request.POST.get('Brandname')
+        brandImg=request.FILES.get('Brandimg')
+
+        insertbrand=Brand(
+            brand_name=brandname,
+            brand_img=brandImg
+
+        )
+        insertbrand.save()
+        return redirect('/brand/')
+    else:
+        return(request,'brand.html') 
+
+
+def editbrand(request, id):
+    try:
+        branddata = Brand.objects.get(brand_id=id)
+        edit = {
+            'editbrand': {
+                'brand_id': branddata.brand_id,
+                'brand_name': branddata.brand_name,  # Adjust field names based on your model
+                'brand_img':  branddata.brand_img.url if branddata.brand_img else None  # Adjust field names based on your model
+  
+            }
+        }
+        return JsonResponse(edit)
+    except Category.DoesNotExist:
+        return JsonResponse({'error': ' not found'}, status=404)       
+
+
+def updatebrand(request):       
+    if request.method=='POST':
+        brand_id=request.POST.get("brand_id")
+        brand_name=request.POST.get("brandName")  
+        brand_img=request.FILES.get("brandimg")
+
+        fetchRecord=Brand.objects.get(brand_id=brand_id)
+        fetchRecord.brand_name=brand_name
+        if brand_img:
+            fetchRecord.brand_img=brand_img
+        
+        fetchRecord.save()
+        return redirect('/brand/')
+
+
+
 
 def tax(request):
     return render(request,'tax.html')
 
 
+
+
 def AddUnit(request):
-    return render(request,'AddUnit.html')
+
+    AddUnitdata = AddUnit.objects.all() 
+
+    data={
+        "list":AddUnitdata
+    }   
+    return render(request,'AddUnit.html',data)
+
+def editAddUnit(request, id):
+    try:
+        AddUnitdata = Unit.objects.get(AddUnit_id=id)
+        edit = {
+            'editAddUnit': {
+                'AddUnit_id': AddUnitdata.category_id,
+                'AddUnit_name': AddUnitdata.category_name,  # Adjust field names based on your model
+            }
+        }
+        return JsonResponse(edit)
+    except AddUnit.DoesNotExist:
+        return JsonResponse({'error': 'Category not found'}, status=404)
+
+
+
+
+def insertAddUnit(request):
+    if request.method=="POST":
+        AddUnit_name=request.POST.get("unitName")
+
+        insertquery=Unit(
+           AddUnit_name=AddUnit_name,
+        )
+        
+        insertquery.save()
+        return redirect("/AddUnit/")
+    else:
+        return render(request,'AddUnit.html')
+        
+
+       
+
+
+def updateAddUnit(request):
+    if request.method =="POST":
+        AddUnit_id=request.POST.get("AddUnit_id")
+        AddUnit_name=request.POST.get("AddUnitName")  
+        
+        fetchRecord=Unit.objects.get(AddUnit_id=AddUnit_id)
+        
+        fetchRecord.AddUnit_name=AddUnit_name
+
+        fetchRecord.save()  
+        return redirect('/AddUnit/')
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def AddExpenses(request):
     return render(request,'AddExpenses.html')
@@ -101,17 +282,50 @@ def AddExpenses(request):
 def AddOtherCharge(request):
     return render(request,'AddOtherCharge.html')
 
-def Customerlist(request):
-    customerData = Customer.objects.all()
-    data ={
-        "customer":customerData
-    }  
+def Customergrouplist(request):
+     customerData = Customergroup.objects.all()
+     data ={
+         "customer":customerData
+     }  
     
-    return render(request, 'Customergroup.html',data)
+     return render(request, 'Customergroup.html',data)
+
+def insertcustomergroup(request):
+    if request.method=='POST':
+         customergroup=request.POST.get('customergroupname')
+
+         insertquery=Customergroup(
+         customergroup_name=customergroup
+         )  
+
+         insertquery.save() 
+         return redirect("/Customerlist/")
+    else:
+        return render(request,'Customergroup.html') 
 
 
-def Supplierlist(request):
-    return render(request,'Supplierlist.html')
+def Suppliergrouplist(request):
+     supplierData = Suppliergroup.objects.all()
+     data ={
+         "supplier":supplierData
+     }  
+    
+     return render(request, 'Supplierlist.html',data)
+
+def insertsuppliergroup(request):
+    if request.method=='POST':
+         suppliergroup=request.POST.get('suppliergroupname')
+
+         insertquery=Suppliergroup(
+         suppliergroup_name=suppliergroup
+         )  
+
+         insertquery.save() 
+         return redirect("/Supplierlist/")
+    else:
+        return render(request,'Supplier.html')
+
+
  
 def Paymenttermslist(request):
     listdata = Paymentterms.objects.all()
@@ -120,12 +334,7 @@ def Paymenttermslist(request):
     }
     return render(request,'Paymentterms.html',data)
 
-def supplierlist(request):
-    supplierData = Supplier.objects.all()
-    data ={
-        "supplier":supplierData
-    }  
-    return render(request,"Supplierlist.html",data) 
+
 
 def productslist(request):
     return render(request,'productlist.html')
@@ -138,10 +347,14 @@ def Employee(request):
 def RewardPoints(request):
     return render(request,'RewardPoints.html')
 
-def Customer(request):
-    return render(request,'Customers.html')
+def Customerpage(request):
+    customerdata=Customer.objects.all()
+    data={
+      'customer':customerdata
+    }
+    return render(request,'Customers.html',data)
 
-def Supplier(request):
+def Supplierpage(request):
     return render(request,'Suppliers.html')
 
 
@@ -186,3 +399,21 @@ def Userslist(request):
     return render(request,'Users.html',data)
 
 
+
+
+def POSBills(request):
+    return render(request,'POSBills.html')
+
+def printpage(request):
+    return render(request,'printpage.html')
+
+
+def Roleslist(request):
+    listdata = Roles.objects.all()
+    data = {
+        'list':listdata
+    }
+    return render(request,'Roles.html',data)
+
+def POSBill (request):
+    return render(request,'POSBills.html')

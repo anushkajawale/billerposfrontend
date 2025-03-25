@@ -26,22 +26,27 @@
 
                 </tr>
               </thead>
+              
               <tbody class="table-hover">
                 <tr>
-                  <td> </td>
-                  <td> </td>
+                  {% for i in customer %} 
+                  <td> {{ i.customer_id }}</td>
+                  <td> {{ i.customer_name }}</td>
 
                   <td>
-                    <a href="/editcustomer/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcustomer"
+                    <!-- <a href="/editcustomer/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcustomer"
                     data-bs-whatever="@mdo">
                       <i class="fa fa-pen"></i>
-                      </a>
+                      </a> -->
         
-                      <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
-                data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
+                      <button type="button" class="btn btn-sm mx-1 btn-outline-success" onclick="loadEditModal('{{ i.customer_id }}')">
+                        <i class="fa fa-pen"></i>
+                    </button>
                     
                   </td>
+                  {% endfor %}
                 </tr>
+                
               </tbody>
             </table>
           </div>
@@ -247,5 +252,25 @@
   </div>
 </div>
 
+<script>
+  function loadEditModal(categoryId) {console.log(categoryId);
+  
+    fetch(`/editcategory/${categoryId}/`)
+        .then(response =>{return response.json();})
+        .then(html => {
+          console.log(html);
+          let category = html.editcategory;
+            var editModal = new bootstrap.Modal(document.getElementById('editCategoryModal'));
+            document.getElementById("updatecategory_id").value=category.category_id;
+            document.getElementById("updateCategoryName").value = category.category_name;
+            document.getElementById("updateCategoryImg").src = category.category_img;
+            document.getElementById("updateCategoryBanner").src = category.category_bannerimg;
+            editModal.show();
+        })
+        .catch(error => console.error('Error loading modal content:', error));
+}
 
-  {% endblock %}
+</script>
+{% endblock %}
+
+
