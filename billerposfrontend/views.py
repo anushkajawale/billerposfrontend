@@ -8,6 +8,11 @@ from category.models import Category
 from brand.models import Brand
 from Suppliergroup.models import Suppliergroup
 from Roles.models import Roles
+from customer.models import Customer
+from Users.models import Users
+
+
+
 
 
 def index (request):
@@ -149,8 +154,13 @@ def tax(request):
     return render(request,'tax.html')
 
 
+
+
+
 def AddUnit(request):
     return render(request,'AddUnit.html')
+
+
 
 def AddExpenses(request):
     return render(request,'AddExpenses.html')
@@ -224,11 +234,14 @@ def RewardPoints(request):
     return render(request,'RewardPoints.html')
 
 def Customerpage(request):
-    return render(request,'Customers.html')
+    customerdata=Customer.objects.all()
+    data={
+      'customer':customerdata
+    }
+    return render(request,'Customers.html',data)
 
 def Supplierpage(request):
     return render(request,'Suppliers.html')
-
 
 from Unit.models import Unit
 def AddUnit(request):
@@ -237,6 +250,8 @@ def AddUnit(request):
         "list":list
     }
     return render(request,'AddUnit.html',data)
+
+
 
 from Expenses.models import Expenses
 def AddExpenses(request):
@@ -263,6 +278,22 @@ def paymentmodelist(request):
     }
     return render(request,'paymentmode.html',data)
 
+def Userslist(request):
+    listdata = Users.objects.all()
+    data = {
+        "list":listdata
+    }
+    return render(request,'Users.html',data)
+
+
+
+
+def POSBill(request):
+    return render(request,'POSBills.html')
+
+def printpage(request):
+    return render(request,'printpage.html')
+
 
 def Roleslist(request):
     listdata = Roles.objects.all()
@@ -271,3 +302,5 @@ def Roleslist(request):
     }
     return render(request,'Roles.html',data)
 
+def POSBill (request):
+    return render(request,'POSBills.html')
