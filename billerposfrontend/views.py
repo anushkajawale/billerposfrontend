@@ -9,7 +9,11 @@ from brand.models import Brand
 from Suppliergroup.models import Suppliergroup
 from Roles.models import Roles
 from customer.models import Customer
+
+from supplier.models import Supplier
+
 from Users.models import Users
+
 
 
 
@@ -129,8 +133,12 @@ def editbrand(request, id):
             }   
         }
         return JsonResponse(edit)
+    except Brand.DoesNotExist:
+        return JsonResponse({'error': ' Brand not found'}, status=404)       
+
     except Category.DoesNotExist:
         return JsonResponse({'error': ' not found'}, status=404)        
+
 
 
 def updatebrand(request):       
@@ -172,8 +180,7 @@ def Customergrouplist(request):
      customerData = Customergroup.objects.all()
      data ={
          "customer":customerData
-     }  
-    
+     }      
      return render(request, 'Customergroup.html',data)
 
 def insertcustomergroup(request):
@@ -210,9 +217,11 @@ def insertsuppliergroup(request):
          return redirect("/Supplierlist/")
     else:
         return render(request,'Supplier.html')
-
+    
 
  
+
+
 def Paymenttermslist(request):
     listdata = Paymentterms.objects.all()
     data = {
@@ -241,7 +250,38 @@ def Customerpage(request):
     return render(request,'Customers.html',data)
 
 def Supplierpage(request):
-    return render(request,'Suppliers.html')
+    supplierdata=Supplier.objects.all()
+    data={
+      'supplier':supplierdata
+    }
+    return render(request,'Suppliers.html',data)
+
+def editcustomer(requset,id):
+    try:
+        customerdata = Customer.objects.get(customer_id=id)
+        edit = {
+            'editcustomer': {
+                'customercategory_id': customerdata.customer_id,
+                'customer_name': customerdata.customer_name,  # Adjust field names based on your model
+                'customer_email': customerdata.customer_mobile,
+                'customer_email': customerdata.customer_email,
+                'customer_gstno': customerdata.customer_gstno,
+                'customer_panno': customerdata.customer_panno,
+                'customer_openingbal': customerdata.customer_openingbal,
+                'customer_grouptype': customerdata.customer_grouptype,
+                'customer_BillingAddress': customerdata.customer_BillingAddress,
+                'customer_ShippingAddress': customerdata.customer_ShippingAddress,
+                'customer_City': customerdata.customer_City,
+                'customer_CreditLimit': customerdata.customer_CreditLimit,
+                'customer_CreditPeriod': customerdata.customer_CreditPeriod,
+            }
+        }
+        return JsonResponse(edit)
+    except Customer.DoesNotExist:
+        return JsonResponse({'error': 'Customer not found'}, status=404)
+
+
+
 
 from Unit.models import Unit
 def AddUnit(request):

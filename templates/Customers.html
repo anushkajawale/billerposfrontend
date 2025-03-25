@@ -44,8 +44,9 @@
                     </button>
                     
                   </td>
-                  {% endfor %}
+                  
                 </tr>
+                {% endfor %}
                 
               </tbody>
             </table>
@@ -159,7 +160,7 @@
 </div>
 
 
-<div class="modal fade" id="editcustomer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editcustomerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
@@ -173,39 +174,38 @@
               <!-- Supplier Name -->
               <div class="col-md-6">
                 <label class="form-label">Customer Name </label>
-                <input type="text" class="form-control" placeholder="Customer Name" required>
+                <input type="text" class="form-control" placeholder="Customer Name"  id="updatecustomerName"  required>
               </div>
               <!-- Mobile No -->
-
               <div class="col-md-6">
                 <label class="form-label">Mobile No.</label>
-                <input type="text" class="form-control" placeholder="Mobile No">
+                <input type="text" class="form-control" placeholder="Mobile No" id="updateMobileNo">
               </div>
               <!-- Email -->
               <div class="col-md-6">
                 <label class="form-label">Email</label>
-                <input type="email" class="form-control" placeholder="Email">
+                <input type="email" class="form-control" placeholder="Email" id="updateEmail">
               </div>
               <!-- GST No -->
               <div class="col-md-6">
                 <label class="form-label">GST No.</label>
-                <input type="text" class="form-control" placeholder="GST No">
+                <input type="text" class="form-control" placeholder="GST No" id="updateGSTNo">
               </div>
               <!-- PAN No -->
               <div class="col-md-6">
                 <label class="form-label">PAN No.</label>
-                <input type="text" class="form-control" placeholder="PAN No">
+                <input type="text" class="form-control" placeholder="PAN No" id="updatePANNo">
               </div>
               <div class="col-md-6">
                 <label class="form-label">Opening Balance</label>
-                <input type="text" class="form-control" placeholder="Opening Balance">
+                <input type="text" class="form-control" placeholder="Opening Balance" id="updateOpeningBalance">
               </div>
               <div class="col-md-6">
                 <label class="form-label">Group Type</label>
                 <select class="form-select">
-                  <option>General</option>
-                  <option>Wholesale</option>
-                  <option>Retail</option>
+                  <option value="">General</option>
+                  <option value="">Wholesale</option>
+                  <option value="">Retail</option>
                 </select>
               </div>
               <!-- Billing Address -->
@@ -253,23 +253,23 @@
 </div>
 
 <script>
-  function loadEditModal(categoryId) {console.log(categoryId);
+  function loadEditModal(customerId) { 
+    console.log(customerId);
   
-    fetch(`/editcategory/${categoryId}/`)
+    fetch(`/editcustomer/${customerId}/`) 
         .then(response =>{return response.json();})
         .then(html => {
           console.log(html);
-          let category = html.editcategory;
-            var editModal = new bootstrap.Modal(document.getElementById('editCategoryModal'));
-            document.getElementById("updatecategory_id").value=category.category_id;
-            document.getElementById("updateCategoryName").value = category.category_name;
-            document.getElementById("updateCategoryImg").src = category.category_img;
-            document.getElementById("updateCategoryBanner").src = category.category_bannerimg;
+          let customer = html.editcustomer;
+            var editModal = new bootstrap.Modal(document.getElementById('editcustomerModal'));
+            // document.getElementById("customer_id").value=customer.customer_id;
+            document.getElementById("updatecustomerName").value = customer.customer_name;
+           
             editModal.show();
         })
         .catch(error => console.error('Error loading modal content:', error));
 }
-
+  
 </script>
 {% endblock %}
 
