@@ -45,25 +45,15 @@ urlpatterns = [
     path('Suppliergrouplist/',views.Suppliergrouplist),
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
-    path('POSBill/',views.POSBill),
-    path('printpage/',views.printpage),
-
-   
+    path('Supplierlist/',views.supplierlist),
     path('RewardPoints/',views.RewardPoints),
     path('Customerpage/',views.Customerpage),
     path('Supplierpage/',views.Supplierpage),
     path('Employee/',views.Employee),
-
-
+    path('Users/',views.Userslist),
     path('POSBills/',views.POSBills),
     path('printpage/',views.printpage),
-
     path('Roles/',views.Roleslist),
-
-
-   
-
-   
 ]
 
 if settings.DEBUG:
