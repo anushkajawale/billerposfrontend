@@ -6,6 +6,8 @@ from Paymentterms.models import Paymentterms
 from category.models import Category
 from supplier.models import Supplier
 from customer.models import Customer
+from Users.models import Users
+
 
 def index (request):
     return render(request,"index.html")
@@ -175,5 +177,12 @@ def paymentmodelist(request):
         "list":listdata
     }
     return render(request,'paymentmode.html',data)
+
+def Userslist(request):
+    listdata = Users.objects.all()
+    data = {
+        "list":listdata
+    }
+    return render(request,'Users.html',data)
 
 

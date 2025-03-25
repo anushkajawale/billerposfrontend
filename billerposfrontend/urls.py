@@ -40,12 +40,11 @@ urlpatterns = [
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
     path('Supplierlist/',views.supplierlist),
-   
     path('RewardPoints/',views.RewardPoints),
     path('Customers/',views.Customer),
     path('Suppliers/',views.Supplier),
     path('Employee/',views.Employee),
-   
+    path('Users/',views.Userslist),
 ]
 
 if settings.DEBUG:
