@@ -49,6 +49,7 @@ urlpatterns = [
    
     path('RewardPoints/',views.RewardPoints),
     path('Customerpage/',views.Customerpage),
+    path('editcustomer/<id>/',views.editcustomer),
     path('Supplierpage/',views.Supplierpage),
     path('Employee/',views.Employee),
     path('POSBills/',views.POSBills),
