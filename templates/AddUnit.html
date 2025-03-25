@@ -1,5 +1,6 @@
 {% extends 'index.html' %}
 {% block content %}
+
 <div class="content-wrapper">
   <div class="content-header">
     <div class="container-fluid">
@@ -45,100 +46,36 @@
                 </tr>
               </tbody>
               {% endfor %}
-          </table>
+            </table>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalcheck ">Add Unit</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Unit</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="container-fluid">
-          <form action="/insertAddUnit/" method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          <div class="row mb-3">
-            <div class="col-12">
-              <label for="UnitName" class="form-label"> Unit Name</label>
-              <input type="text" class="form-control" id="UnitName" name="AddUnitName" required>
-            </div>
+        <form>
+          <div class="mb-3">
+            <label for="UnitGroup Name " class="col-form-label">Add Unit</label>
+            <input type="text" class="form-control" id="UnitGroup Name" placeholder="UnitGroup Name" />
+          </div>
 
-          </div>
-          
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-success">Save</button>
-            </div>
-          </div>
         </form>
-        </div>
       </div>
-      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-success">Save</button>
+      </div>
     </div>
   </div>
 </div>
-
-
-<div class="modal fade" id="editUnitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Unit</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <form action="/updateAddUnit/" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="row mb-3">
-              <div class="col-12">
-                <label for="UnitName" class="form-label"> Unit Name</label>
-                <input type="text" class="form-control" id="updateUnitName" name="UnitName" required>
-                <input type="hidden" id="updateunit_id" name="unit_id">
-              </div>
-  
-            </div>
-            
-              
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success">Update</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-     
-    </div>
-  </div>
-</div>
-
-
-<script>
-  function loadEditModal(AddUnitId) {console.log(AddUnitId);
-  
-    fetch(`/editAddUnit/${AddUnitId}/`)
-        .then(response =>{return response.json();})
-        .then(html => {
-          console.log(html);
-          let AddUnit = html.editAddUnit;
-            var editModal = new bootstrap.Modal(document.getElementById('editunitModal'));
-            document.getElementById("updateAddUnit_id").value=AddUnit.AddUnit_Id;
-            document.getElementById("updateAddUnit_Name").value = AddUnit.AddUnit_name;
-        
-            editModal.show();
-        })
-        .catch(error => console.error('Error loading modal content:', error));
-}
-
-</script>
-
-
 {% endblock %}

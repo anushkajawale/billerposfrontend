@@ -14,6 +14,7 @@ from Users.models import Users
 
 
 
+
 def index (request):
     return render(request,"index.html")
 
@@ -155,124 +156,9 @@ def tax(request):
 
 
 
+
 def AddUnit(request):
-
-    AddUnitdata = AddUnit.objects.all() 
-
-    data={
-        "list":AddUnitdata
-    }   
-    return render(request,'AddUnit.html',data)
-
-def editAddUnit(request, id):
-    try:
-        AddUnitdata = Unit.objects.get(AddUnit_id=id)
-        edit = {
-            'editAddUnit': {
-                'AddUnit_id': AddUnitdata.category_id,
-                'AddUnit_name': AddUnitdata.category_name,  # Adjust field names based on your model
-            }
-        }
-        return JsonResponse(edit)
-    except AddUnit.DoesNotExist:
-        return JsonResponse({'error': 'Category not found'}, status=404)
-
-
-
-
-def insertAddUnit(request):
-    if request.method=="POST":
-        AddUnit_name=request.POST.get("unitName")
-
-        insertquery=Unit(
-           AddUnit_name=AddUnit_name,
-        )
-        
-        insertquery.save()
-        return redirect("/AddUnit/")
-    else:
-        return render(request,'AddUnit.html')
-        
-
-       
-
-
-def updateAddUnit(request):
-    if request.method =="POST":
-        AddUnit_id=request.POST.get("AddUnit_id")
-        AddUnit_name=request.POST.get("AddUnitName")  
-        
-        fetchRecord=Unit.objects.get(AddUnit_id=AddUnit_id)
-        
-        fetchRecord.AddUnit_name=AddUnit_name
-
-        fetchRecord.save()  
-        return redirect('/AddUnit/')
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return render(request,'AddUnit.html')
 
 
 
@@ -357,7 +243,6 @@ def Customerpage(request):
 def Supplierpage(request):
     return render(request,'Suppliers.html')
 
-
 from Unit.models import Unit
 def AddUnit(request):
     list = Unit.objects.all()
@@ -365,6 +250,8 @@ def AddUnit(request):
         "list":list
     }
     return render(request,'AddUnit.html',data)
+
+
 
 from Expenses.models import Expenses
 def AddExpenses(request):
