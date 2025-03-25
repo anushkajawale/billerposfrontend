@@ -9,7 +9,14 @@ from brand.models import Brand
 from Suppliergroup.models import Suppliergroup
 from Roles.models import Roles
 from customer.models import Customer
+
 from supplier.models import Supplier
+
+from Users.models import Users
+
+
+
+
 
 
 def index (request):
@@ -123,11 +130,15 @@ def editbrand(request, id):
                 'brand_name': branddata.brand_name,  # Adjust field names based on your model
                 'brand_img':  branddata.brand_img.url if branddata.brand_img else None  # Adjust field names based on your model
   
-            }
+            }   
         }
         return JsonResponse(edit)
     except Brand.DoesNotExist:
         return JsonResponse({'error': ' Brand not found'}, status=404)       
+
+    except Category.DoesNotExist:
+        return JsonResponse({'error': ' not found'}, status=404)        
+
 
 
 def updatebrand(request):       
@@ -151,8 +162,13 @@ def tax(request):
     return render(request,'tax.html')
 
 
+
+
+
 def AddUnit(request):
     return render(request,'AddUnit.html')
+
+
 
 def AddExpenses(request):
     return render(request,'AddExpenses.html')
@@ -267,7 +283,6 @@ def editcustomer(requset,id):
 
 
 
-
 from Unit.models import Unit
 def AddUnit(request):
     list = Unit.objects.all()
@@ -275,6 +290,8 @@ def AddUnit(request):
         "list":list
     }
     return render(request,'AddUnit.html',data)
+
+
 
 from Expenses.models import Expenses
 def AddExpenses(request):
@@ -301,12 +318,23 @@ def paymentmodelist(request):
     }
     return render(request,'paymentmode.html',data)
 
+def Userslist(request):
+    listdata = Users.objects.all()
+    data = {
+        "list":listdata
+    }
+    return render(request,'Users.html',data)
 
-def POSBills(request):
+
+
+
+def POSBill(request):
     return render(request,'POSBills.html')
 
 def printpage(request):
     return render(request,'printpage.html')
+
+
 def Roleslist(request):
     listdata = Roles.objects.all()
     data = {
@@ -314,3 +342,5 @@ def Roleslist(request):
     }
     return render(request,'Roles.html',data)
 
+def POSBill (request):
+    return render(request,'POSBills.html')
