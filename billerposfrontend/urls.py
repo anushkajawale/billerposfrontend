@@ -37,6 +37,9 @@ urlpatterns = [
     path('tax/',views.tax),
     path('products/',views.productslist), 
     path('AddUnit/',views.AddUnit),
+     path('insertAddUnit/',views.insertAddUnit),
+    path('editAddUnit/<id>/',views.editAddUnit),
+    path('updateAddUnit/',views.updateAddUnit),
     path('AddExpenses/',views.AddExpenses),
     path('AddOtherCharge/',views.AddOtherCharge),
     path('Customergrouplist/',views.Customergrouplist),
@@ -45,7 +48,9 @@ urlpatterns = [
     path('Suppliergrouplist/',views.Suppliergrouplist),
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
-    
+    path('POSBill/',views.POSBill),
+    path('printpage/',views.printpage),
+
    
     path('RewardPoints/',views.RewardPoints),
     path('Customerpage/',views.Customerpage),
@@ -59,9 +64,7 @@ urlpatterns = [
     path('Roles/',views.Roleslist),
 
 
-    path('POSBills/',views.POSBills),
-    path('printpage/',views.printpage),
-    path('Roles/',views.Roleslist),
+   
 
    
 ]
