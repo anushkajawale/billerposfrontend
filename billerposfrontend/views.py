@@ -401,7 +401,7 @@ def Userslist(request):
 
 
 
-def POSBills(request):
+def POSBill(request):
     return render(request,'POSBills.html')
 
 def printpage(request):
