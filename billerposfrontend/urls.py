@@ -30,7 +30,7 @@ urlpatterns = [
     path('insertcategory/',views.insertcategory),
     path('editcategory/<id>/',views.editcategory),
     path('updatecategory/',views.updatecategory),
-    path('deleteCategory/<id>/',views.deleteCategory)
+    path('deleteCategory/<id>/',views.deleteCategory),
     path('brand/',views.brand),
     path('insertbrand/',views.insertbrandpage),
     path('editbrand/<id>/',views.editbrand),
@@ -66,11 +66,11 @@ urlpatterns = [
     path('POSBill/',views.POSBill),
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
-<<<<<<< HEAD
+
    
-=======
+
     path('Barcode/',views.Barcodepage)
->>>>>>> cd4bab9636badb61c863089fff8eff8cfe98e044
+
 ]
 
 if settings.DEBUG:
