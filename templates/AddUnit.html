@@ -34,10 +34,10 @@
                   
                   <td> {{i.unit_name}} </td>
                   <td>
-                    <a href="/editunit/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcustomer"
+                    <a href="/editunit/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editunit"
                     data-bs-whatever="@mdo">
                       <i class="fa fa-pen"></i>
-                      </a>
+                    <a href="deleteunit/{{i.unit_id}}" class="btn btn-danger" onclick="return confirm('are you sure?')"><i class="fa fa-trash"></i></a>
         
                       <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
                 data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
@@ -61,21 +61,62 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="/Addunit/" method="post">
           <div class="mb-3">
             <label for="UnitGroup Name " class="col-form-label">Add Unit</label>
             <input type="text" class="form-control" id="UnitGroup Name" placeholder="UnitGroup Name" />
           </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button type="submit"  class="btn btn-success">Save</button>
+          </div>
 
         </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
-        <button type="button" class="btn btn-success">Save</button>
-      </div>
+      
     </div>
   </div>
 </div>
+
+
+
+<div class="modal fade" id="editunit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Edit Unit</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+  <div class="container-fluid">
+    <div class="row mb-3">
+      <div class="col-12">
+        <form action="/updateunit/" method="post">
+        <label for="CategoryName" class="form-label">Unit Name</label>
+        <input type="text" class="form-control" id="CategoryName" name="categoryName" value="" required>
+        </form>
+      </div>
+      
+    </div>
+    
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  <button type="submit" class="btn btn-success">Save</button>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+    
+
+
 {% endblock %}

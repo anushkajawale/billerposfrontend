@@ -37,8 +37,14 @@ urlpatterns = [
     path('tax/',views.tax),
     path('products/',views.productslist), 
     path('AddUnit/',views.AddUnit),
+    path('updateunit/',views.updateunit),
+    path('AddUnit/deleteunit/<id>',views.deleteunit),
+    
     path('AddExpenses/',views.AddExpenses),
+    path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
+
     path('AddOtherCharge/',views.AddOtherCharge),
+    path('AddOtherCharge/deleteothercharge/<id>',views.deleteothercharge),
     path('Customergrouplist/',views.Customergrouplist),
     path('insertcustomergroup/',views.insertcustomergroup),
     path('insertsuppliergroup/',views.insertsuppliergroup),
@@ -54,6 +60,7 @@ urlpatterns = [
     path('POSBill/',views.POSBill),
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
+   
 ]
 
 if settings.DEBUG:

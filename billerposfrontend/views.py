@@ -126,11 +126,11 @@ def editbrand(request, id):
                 'brand_name': branddata.brand_name,  # Adjust field names based on your model
                 'brand_img':  branddata.brand_img.url if branddata.brand_img else None  # Adjust field names based on your model
   
-            }   
+            }
         }
         return JsonResponse(edit)
     except Category.DoesNotExist:
-        return JsonResponse({'error': ' not found'}, status=404)        
+        return JsonResponse({'error': ' not found'}, status=404)       
 
 
 def updatebrand(request):       
@@ -304,3 +304,44 @@ def Roleslist(request):
 
 def POSBill (request):
     return render(request,'POSBills.html')
+
+def Salelist (request):
+    return render(request,'Salelist.html')
+
+
+
+
+def updateunit(request):
+    if request.method =="POST":
+        unit_id=request.POST.get("unit_id")
+        unit_name=request.POST.get("unitName")  
+        
+
+        fetchRecord=Category.objects.get(unit_id=unit_id)
+        
+
+        fetchRecord.category_name=unit_name
+
+        fetchRecord.save()  
+        return redirect('/AddUnit/')
+    
+def deleteunit(request,id):   
+    unitdata=Unit.objects.get(unit_id=id)
+
+    unitdata.delete()
+
+    return redirect('/AddUnit/') 
+
+def deleteexpenses(request,id):   
+    expensesdata=Expenses.objects.get(expenses_id=id)
+
+    expensesdata.delete()
+
+    return redirect('/AddExpenses/')  
+
+def deleteothercharge(request,id):   
+    otherchargedata=OtherCharge.objects.get(othercharge_id=id)
+
+    otherchargedata.delete()
+
+    return redirect('/AddOtherCharge/')  
