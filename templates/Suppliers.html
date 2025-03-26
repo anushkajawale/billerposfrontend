@@ -15,7 +15,7 @@
             </div>
           </div>
         </div>
-        <div class="card-body ">
+        <div class="card-body ">  
           <div class="table-responsive">
             <table class="table table-bordered text-center ">
               <thead class="table-success">
@@ -29,20 +29,25 @@
               
               <tbody class="table-hover">
                 <tr>
-                  <td> </td>
-                  <td> </td>
+                  {% for i in supplier %} 
+                  <td> {{ i.supplier_id }}</td>
+                  <td> {{ i.supplier_name }}</td>
 
                   <td>
-                    <a href="/editsupplier/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#editsupplier" data-bs-whatever="@mdo">
+                    <!-- <a href="/supplier/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#supplier"
+                    data-bs-whatever="@mdo">
                       <i class="fa fa-pen"></i>
-                    </a>
-
-                    <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
-                data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
-
+                      </a> -->
+        
+                      <button type="button" class="btn btn-sm mx-1 btn-outline-success" onclick="loadEditModal('{{ i.supplier_id }}')">
+                        <i class="fa fa-pen"></i>
+                    </button>
+                    
                   </td>
+                  
                 </tr>
+                {% endfor %}
+                
               </tbody>
             </table>
           </div>
@@ -113,7 +118,7 @@
                 
               </div>
               <!-- City -->
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label class="form-label">City</label>
                 <input type="text" class="form-control" placeholder="City">
               </div>
@@ -124,17 +129,20 @@
               <!-- Group Type -->
 
               <!-- Credit Limit -->
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label class="form-label">Credit Limit</label>
                 <input type="text" class="form-control" placeholder="Credit Limit">
               </div>
               <!-- Credit Period -->
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label class="form-label">Credit Period (Days)</label>
                 <input type="text" class="form-control" placeholder="Credit Period (Days)">
               </div>
 
-              
+              <div class="col-md-3">
+                <label class="form-label">Customer Barcode</label>
+                <input type="text" class="form-control" placeholder="Customer Barcode">
+              </div>
             
            
           
@@ -152,7 +160,7 @@
 </div>
 
 
-<div class="modal fade" id="editsupplier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editsupplierModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
@@ -166,39 +174,38 @@
               <!-- Supplier Name -->
               <div class="col-md-6">
                 <label class="form-label">Supplier Name </label>
-                <input type="text" class="form-control" placeholder="Supplier Name" required>
+                <input type="text" class="form-control" placeholder="Supplier Name"  id="updatesupplierName"  required>
               </div>
               <!-- Mobile No -->
-
               <div class="col-md-6">
                 <label class="form-label">Mobile No.</label>
-                <input type="text" class="form-control" placeholder="Mobile No">
+                <input type="text" class="form-control" placeholder="Mobile No" id="updateMobileNo">
               </div>
               <!-- Email -->
               <div class="col-md-6">
                 <label class="form-label">Email</label>
-                <input type="email" class="form-control" placeholder="Email">
+                <input type="email" class="form-control" placeholder="Email" id="updateEmail">
               </div>
               <!-- GST No -->
               <div class="col-md-6">
                 <label class="form-label">GST No.</label>
-                <input type="text" class="form-control" placeholder="GST No">
+                <input type="text" class="form-control" placeholder="GST No" id="updateGSTNo">
               </div>
               <!-- PAN No -->
               <div class="col-md-6">
                 <label class="form-label">PAN No.</label>
-                <input type="text" class="form-control" placeholder="PAN No">
+                <input type="text" class="form-control" placeholder="PAN No" id="updatePANNo">
               </div>
               <div class="col-md-6">
                 <label class="form-label">Opening Balance</label>
-                <input type="text" class="form-control" placeholder="Opening Balance">
+                <input type="text" class="form-control" placeholder="Opening Balance" id="updateOpeningBalance">
               </div>
               <div class="col-md-6">
                 <label class="form-label">Group Type</label>
                 <select class="form-select">
-                  <option>General</option>
-                  <option>Wholesale</option>
-                  <option>Retail</option>
+                  <option value="">General</option>
+                  <option value="">Wholesale</option>
+                  <option value="">Retail</option>
                 </select>
               </div>
               <!-- Billing Address -->
@@ -243,6 +250,27 @@
       </div>
     </div>
   </div>
+</div>
+
+<script>
+  function loadEditModal(supplierId) { 
+    console.log(supplierId);
+  
+    fetch(`/editsupplier/${supplierId}/`) 
+        .then(response =>{return response.json();})
+        .then(html => {
+          console.log(html);
+          let customer = html.editcustomer;
+            var editModal = new bootstrap.Modal(document.getElementById('editsupplierModal'));
+            // document.getElementById("customer_id").value=customer.customer_id;
+            document.getElementById("updatesupplierName").value = supplier.supplier_name;
+           
+            editModal.show();
+        })
+        .catch(error => console.error('Error loading modal content:', error));
+}
+  
+</script>
+{% endblock %}
 
 
-  {% endblock %}
