@@ -41,6 +41,10 @@ urlpatterns = [
     path('AddOtherCharge/',views.AddOtherCharge),
     path('Customergrouplist/',views.Customergrouplist),
     path('insertcustomergroup/',views.insertcustomergroup),
+    path('editcustomergroup/<id>/',views.editcustomergroup),
+    path('updatecustomergroup/',views.updatecustomergroup),
+
+    path('updatecustomer/',views.updatecustomer),
     path('insertsuppliergroup/',views.insertsuppliergroup),
     path('Suppliergrouplist/',views.Suppliergrouplist),
     path('paymentmode/',views.paymentmodelist),

@@ -56,7 +56,7 @@
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalcheck ">Add Customer</h5>
@@ -71,35 +71,37 @@
                 <!-- Supplier Name -->
                 <div class="col-4">
                   <label class="form-label">Customer Name *</label>
-                  <input type="text" class="form-control" placeholder="Customer Name" required>
+                  <input type="text" class="form-control" placeholder="Customer Name" id="customer_name" name="customer_name" required>
                 </div>
                 <!-- Mobile No -->
                 <div class="col-4">
                   <label class="form-label">Mobile No.</label>
-                  <input type="text" class="form-control" placeholder="Mobile No">
+                  <input type="text" class="form-control" placeholder="Mobile No" id="customer_mobile" name="customer_mobile">
                 </div>
                 <!-- Email -->
                 <div class="col-4">
                   <label class="form-label">Email</label>
-                  <input type="email" class="form-control" placeholder="Email">
+                  <input type="email" class="form-control" placeholder="Email" id="customer_email" name="customer_email">
                 </div>
                 <!-- GST No -->
                 <div class="col-3">
                   <label class="form-label">GST No.</label>
-                  <input type="text" class="form-control" placeholder="GST No">
+                  <input type="text" class="form-control" placeholder="GST No" id="customer_gstno" name="customer_gstno">
                 </div>
                 <!-- PAN No -->
                 <div class="col-3">
                   <label class="form-label">PAN No.</label>
-                  <input type="text" class="form-control" placeholder="PAN No">
+                  <input type="text" class="form-control" placeholder="PAN No" id="customer_panno" name="customer_panno">
+                  
+                  
                 </div>
                 <div class="col-3">
                   <label class="form-label">Opening Balance</label>
-                  <input type="text" class="form-control" placeholder="Opening Balance">
+                  <input type="text" class="form-control" placeholder="Opening Balance" id="customer_openingbal" name="customer_openingbal">
                 </div>
                 <div class="col-md-3">
                   <label class="form-label">Group Type</label>
-                  <select class="form-select">
+                  <select class="form-select" name="customer_grouptype" id="customer_grouptype">
                     <option>General</option>
                     <option>Wholesale</option>
                     <option>Retail</option>
@@ -109,18 +111,18 @@
                 <div class="col-md-6">
                   <label class="form-label">Billing Address</label>
 
-                  <textarea class="form-control" name="Billing Address" id=""></textarea>
+                  <textarea class="form-control" name="Billing Address" id="customer_BillingAddress" name="customer_BillingAddress"></textarea>
                 </div>
 
                 <div class="col-md-6">
                   <label class="form-label">Shipping Address</label>
-                  <textarea class="form-control" name="Shipping Address" id=""></textarea>
+                  <textarea class="form-control" name="Shipping Address" id="customer_ShippingAddress" name="customer_ShippingAddress"></textarea>
 
                 </div>
                 <!-- City -->
                 <div class="col-md-3">
                   <label class="form-label">City</label>
-                  <input type="text" class="form-control" placeholder="City">
+                  <input type="text" class="form-control" placeholder="City" id="customer_City" name="customer_City">
                 </div>
                 <!-- Opening Balance -->
 
@@ -131,12 +133,12 @@
                 <!-- Credit Limit -->
                 <div class="col-md-3">
                   <label class="form-label">Credit Limit</label>
-                  <input type="text" class="form-control" placeholder="Credit Limit">
+                  <input type="text" class="form-control" placeholder="Credit Limit" id="customer_CreditLimit" name="customer_CreditLimit">
                 </div>
                 <!-- Credit Period -->
                 <div class="col-md-3">
                   <label class="form-label">Credit Period (Days)</label>
-                  <input type="text" class="form-control" placeholder="Credit Period (Days)">
+                  <input type="text" class="form-control" placeholder="Credit Period (Days)" id="ustomer_CreditPeriod" name="ustomer_CreditPeriod">
                 </div>
 
                 <div class="col-md-3">
@@ -169,8 +171,8 @@
 </div>
 
 
-<div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal fade" id="editCustomerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Edit Customer</h5>
@@ -180,46 +182,41 @@
         <div class="container-fluid">
           <form action="/updatecustomer/" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="row mb-3">
-              <div class="col-12">
-                <label for="CategoryName" class="form-label"> Customer Name</label>
-                <input type="text" class="form-control" id="updateCustomerName" name="customerName" required>
-                <input type="hidden" id="updatecustomer_id" name="customer_id">
-              </div>
-
-            </div>
+            
             <div class="row g-3">
               <!-- Supplier Name -->
               <div class="col-md-6">
                 <label class="form-label">Customer Name </label>
-                <input type="text" class="form-control" placeholder="Customer Name" id="updatecustomerName" required>
+                <input type="text" class="form-control" placeholder="Customer Name" name="customer_name" id="updatecustomerName" required>
+                <input type="hidden" id="updatecustomerId" name="customer_id" >
+
               </div>
               <!-- Mobile No -->
               <div class="col-md-6">
                 <label class="form-label">Mobile No.</label>
-                <input type="text" class="form-control" placeholder="Mobile No" id="updateMobileNo">
+                <input type="text" class="form-control" placeholder="Mobile No" name="customer_mobile" id="updateMobileNo">
               </div>
               <!-- Email -->
               <div class="col-md-6">
                 <label class="form-label">Email</label>
-                <input type="email" class="form-control" placeholder="Email" id="updateEmail">
+              <input type="email" class="form-control" placeholder="Email" name="customer_email" id="updateEmail">
               </div>
               <!-- GST No -->
               <div class="col-md-6">
                 <label class="form-label">GST No.</label>
-                <input type="text" class="form-control" placeholder="GST No" id="updateGSTNo">
+                <input type="text" class="form-control" placeholder="GST No"  name="customer_gstno"  id="updateGSTNo">
               </div>
               <!-- PAN No -->
               <div class="col-md-6">
                 <label class="form-label">PAN No.</label>
-                <input type="text" class="form-control" placeholder="PAN No" id="updatePANNo">
+                <input type="text" class="form-control" placeholder="PAN No" name="customer_panno" id="updatePANNo">
               </div>
               <div class="col-md-6">
                 <label class="form-label">Opening Balance</label>
-                <input type="text" class="form-control" placeholder="Opening Balance" id="updateOpeningBalance">
+                <input type="text" class="form-control" placeholder="Opening Balance" name="customer_openingbal" id="updateOpeningBalance">
               </div>
               <div class="col-md-6">
-                <label class="form-label">Group Type</label>
+                <label class="form-label" name="customer_grouptype" id="updategrouptype">Group Type</label>
                 <select class="form-select">
                   <option value="">General</option>
                   <option value="">Wholesale</option>
@@ -229,17 +226,17 @@
               <!-- Billing Address -->
               <div class="col-4">
                 <label class="form-label">Billing Address</label>
-                <input type="text" class="form-control" placeholder="Enter billing address">
+                <input type="text" class="form-control" placeholder="Enter billing address" name="customer_BillingAddress" id="updatebillingaddress">
               </div>
 
               <div class="col-4">
                 <label class="form-label">Shipping Address</label>
-                <input type="text" class="form-control" placeholder="Enter shipping address">
+                <input type="text" class="form-control" placeholder="Enter shipping address"  name="customer_ShippingAddress" id="updateshippingaddress">
               </div>
               <!-- City -->
               <div class="col-4">
                 <label class="form-label">City</label>
-                <input type="text" class="form-control" placeholder="City">
+                <input type="text" class="form-control" placeholder="City" name="customer_City" id="updatecustomercity">
               </div>
               <!-- Opening Balance -->
 
@@ -250,12 +247,12 @@
               <!-- Credit Limit -->
               <div class="col-md-6">
                 <label class="form-label">Credit Limit</label>
-                <input type="text" class="form-control" placeholder="Credit Limit">
+                <input type="text" class="form-control" placeholder="Credit Limit"  name="customer_CreditLimit"  id="updatecreditlimit">
               </div>
               <!-- Credit Period -->
               <div class="col-md-6">
                 <label class="form-label">Credit Period (Days)</label>
-                <input type="text" class="form-control" placeholder="Credit Period (Days)">
+                <input type="text" class="form-control" placeholder="Credit Period (Days)" name=" customer_CreditPeriod" id="updatecreditperiod">
               </div>
             </div>
             <div class="modal-footer">
@@ -273,19 +270,28 @@
 
 
 <script>
-  function loadEditModal(categoryId) {
-    console.log(categoryId);
+  function loadEditModal(customerId) {
+    console.log(customerId);
 
-    fetch(`/editcategory/${categoryId}/`)
+    fetch(`/editcustomer/${customerId}/`)
       .then(response => { return response.json(); })
       .then(html => {
         console.log(html);
-        let category = html.editcategory;
-        var editModal = new bootstrap.Modal(document.getElementById('editCategoryModal'));
-        document.getElementById("updatecategory_id").value = category.category_id;
-        document.getElementById("updateCategoryName").value = category.category_name;
-        document.getElementById("updateCategoryImg").src = category.category_img;
-        document.getElementById("updateCategoryBanner").src = category.category_bannerimg;
+        let customer = html.editcustomer;
+        var editModal = new bootstrap.Modal(document.getElementById('editCustomerModal'));
+        document.getElementById("updatecustomerId").value = customer.customer_id
+        document.getElementById("updatecustomerName").value = customer.customer_name
+        document.getElementById("updateMobileNo").value = customer.customer_mobile
+        document.getElementById("updateEmail").value = customer.customer_email
+        document.getElementById("updateGSTNo").value = customer.customer_gstno
+        document.getElementById("updatePANNo").value = customer.customer_panno
+        document.getElementById("updateOpeningBalance").value = customer.customer_openingbal
+        document.getElementById("updategrouptype").value = customer.customer_grouptype
+        document.getElementById("updatebillingaddress").value = customer.customer_BillingAddress
+        document.getElementById("updateshippingaddress").value =customer.customer_ShippingAddress
+        document.getElementById("updatecreditlimit").value = customer.customer_CreditLimit
+        document.getElementById("updatecustomercity").value = customer.customer_City
+        document.getElementById("updatecreditperiod").value = customer.customer_CreditPeriod
         editModal.show();
       })
       .catch(error => console.error('Error loading modal content:', error));
