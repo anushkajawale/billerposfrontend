@@ -168,14 +168,8 @@
             document.getElementById("updatebrand_id").value = brand.brand_id;
             document.getElementById("updateBrandName").value = brand.brand_name;
 
-            // Ensure the image source is valid
-            let imgElement = document.getElementById("updateBrandImg");
-            if (brand.brand_img) {
-                imgElement.src = brand.brand_img.startsWith("http") ? brand.brand_img : `/uploads/${brand.brand_img}`;
-            } else {
-                imgElement.src = "/default-image.jpg"; // Set a default image if none is available
-            }
-
+            // Ensure the image source is valid 
+           
             editModal.show();
         })
         .catch(error => console.error("Error loading modal content:", error));

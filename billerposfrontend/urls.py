@@ -30,6 +30,7 @@ urlpatterns = [
     path('insertcategory/',views.insertcategory),
     path('editcategory/<id>/',views.editcategory),
     path('updatecategory/',views.updatecategory),
+    path('deleteCategory/<id>/',views.deleteCategory)
     path('brand/',views.brand),
     path('insertbrand/',views.insertbrandpage),
     path('editbrand/<id>/',views.editbrand),
@@ -37,8 +38,14 @@ urlpatterns = [
     path('tax/',views.tax),
     path('products/',views.productslist), 
     path('AddUnit/',views.AddUnit),
+    path('updateunit/',views.updateunit),
+    path('AddUnit/deleteunit/<id>',views.deleteunit),
+    
     path('AddExpenses/',views.AddExpenses),
+    path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
+
     path('AddOtherCharge/',views.AddOtherCharge),
+    path('AddOtherCharge/deleteothercharge/<id>',views.deleteothercharge),
     path('Customergrouplist/',views.Customergrouplist),
     path('insertcustomergroup/',views.insertcustomergroup),
     path('editcustomergroup/<id>/',views.editcustomergroup),
@@ -59,6 +66,11 @@ urlpatterns = [
     path('POSBill/',views.POSBill),
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
+<<<<<<< HEAD
+   
+=======
+    path('Barcode/',views.Barcodepage)
+>>>>>>> cd4bab9636badb61c863089fff8eff8cfe98e044
 ]
 
 if settings.DEBUG:
