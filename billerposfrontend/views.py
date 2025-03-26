@@ -344,3 +344,6 @@ def Roleslist(request):
 
 def POSBill (request):
     return render(request,'POSBills.html')
+
+def Barcodepage(request):
+    return render(request,'barcode.html')
