@@ -54,6 +54,8 @@ urlpatterns = [
     path('POSBill/',views.POSBill),
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
+    path('Salelist/',views.Salelist),
+
 ]
 
 if settings.DEBUG:
