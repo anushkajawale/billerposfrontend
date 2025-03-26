@@ -33,10 +33,12 @@
                   <td>{{i.expenses_id}} </td>
                   <td> {{i.expenses_name}}</td>
                   <td>
-                    <a href="/editexpenses/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcustomer"
+                    <a href="/editexpenses/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editexpenses"
                     data-bs-whatever="@mdo">
                       <i class="fa fa-pen"></i>
                       </a>
+                      <a href="deleteexpenses/{{i.expenses_id}}" class="btn btn-danger" onclick="return confirm('are you sure?')"><i class="fa fa-trash"></i></a>
+        
         
                       <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
                 data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
@@ -77,4 +79,34 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="editexpenses" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Expenses</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row mb-3">
+        <div class="col-12">
+          <label for="CategoryName" class="form-label">Expenses Name</label>
+          <input type="text" class="form-control" id="CategoryName" name="categoryName" value="" required>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-success">Save</button>
+  </div>
+  </div>
+  </div>
+  </div>
+  
+  
+  
 {% endblock %}
