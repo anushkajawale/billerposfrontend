@@ -93,8 +93,11 @@ def updatecategory(request):
 
         fetchRecord.save()  
         return redirect('/category/')
-     
+    
+def deletecategory(request):
+     return render(request,'category.html')
 
+     
 
 def brand(request):
     branddata=Brand.objects.all()
@@ -183,6 +186,8 @@ def Customergrouplist(request):
      }      
      return render(request, 'Customergroup.html',data)
 
+
+
 def insertcustomergroup(request):
     if request.method=='POST':
          customergroup=request.POST.get('customergroupname')
@@ -195,6 +200,38 @@ def insertcustomergroup(request):
          return redirect("/Customerlist/")
     else:
         return render(request,'Customergroup.html') 
+    
+def editcustomergroup(request,id):
+    try:
+        customerdata = Customergroup.objects.get(customergroup_id=id)
+        edit = {
+            'editcustomergroup': {
+                'customergroup_id': customerdata.customergroup_id,
+                'customergroup_name': customerdata.customergroup_name,  # Adjust field names based on your model
+                 
+            }
+        }
+        return JsonResponse(edit)
+    except Customergroup.DoesNotExist:
+        return JsonResponse({'error': ' not found'}, status=404)
+    
+def updatecustomergroup(request):
+    if request.method =="POST":
+        customergroup_id=request.POST.get("customergroup_id")
+        customergroup_name=request.POST.get("customergroupname")  
+        
+
+        fetchRecord=Customergroup.objects.get(customergroup_id=customergroup_id)
+        if customergroup_id:
+            fetchRecord.ustomergroup_id=customergroup_id
+        if customergroup_name:
+            fetchRecord.customergroup_name=customergroup_name
+
+        fetchRecord.customergroup_name=customergroup_name
+
+        fetchRecord.save()  
+        return redirect('/Customergrouplist/')    
+
 
 
 def Suppliergrouplist(request):
@@ -217,6 +254,37 @@ def insertsuppliergroup(request):
          return redirect("/Supplierlist/")
     else:
         return render(request,'Supplier.html')
+    
+def editsuppliergroup(request,id):
+    try:
+        supplierdata = Suppliergroup.objects.get(suppliergroup_id=id)
+        edit = {
+            'editsuppliergroup': {
+                'suppliergroup_id': supplierdata.suppliergroup_id,
+                'suppliergroup_name': supplierdata.suppliergroup_name,  # Adjust field names based on your model
+                 
+            }
+        }
+        return JsonResponse(edit)
+    except Suppliergroup.DoesNotExist:
+        return JsonResponse({'error': ' not found'}, status=404)   
+    
+def updatesuppliergroup(request):
+    if request.method =="POST":
+        suppliergroup_id=request.POST.get("suppliergroup_id")
+        suppliergroup_name=request.POST.get("suppliergroupname")  
+        
+
+        fetchRecord=Suppliergroup.objects.get(suppliergroup_id=suppliergroup_id)
+        if suppliergroup_id:
+            fetchRecord.suppliergroup_id=suppliergroup_id
+        if suppliergroup_name:
+            fetchRecord.suppliergroup_name=suppliergroup_name
+
+        fetchRecord.suppliergroup_name=suppliergroup_name
+
+        fetchRecord.save()  
+        return redirect('/Suppliergrouplist/')      
     
 
  
@@ -261,9 +329,9 @@ def editcustomer(requset,id):
         customerdata = Customer.objects.get(customer_id=id)
         edit = {
             'editcustomer': {
-                'customercategory_id': customerdata.customer_id,
+                'customer_id': customerdata.customer_id,
                 'customer_name': customerdata.customer_name,  # Adjust field names based on your model
-                'customer_email': customerdata.customer_mobile,
+                'customer_mobile': customerdata.customer_mobile,
                 'customer_email': customerdata.customer_email,
                 'customer_gstno': customerdata.customer_gstno,
                 'customer_panno': customerdata.customer_panno,
@@ -273,12 +341,78 @@ def editcustomer(requset,id):
                 'customer_ShippingAddress': customerdata.customer_ShippingAddress,
                 'customer_City': customerdata.customer_City,
                 'customer_CreditLimit': customerdata.customer_CreditLimit,
-                'customer_CreditPeriod': customerdata.customer_CreditPeriod,
+                'customer_CreditPeriod': customerdata.customer_CreditPeriod
             }
         }
         return JsonResponse(edit)
     except Customer.DoesNotExist:
         return JsonResponse({'error': 'Customer not found'}, status=404)
+    
+def updatecustomer(request):
+    if request.method =="POST":
+        customer_id=request.POST.get("customer_id")
+        customer_name=request.POST.get("customer_name") 
+        customer_mobile=request.POST.get("customer_mobile") 
+        customer_email=request.POST.get("customer_email") 
+        customer_gstno=request.POST.get("customer_gstno") 
+        customer_panno=request.POST.get("customer_panno") 
+        customer_openingbal=request.POST.get("customer_openingbal") 
+        customer_grouptype=request.POST.get("customer_grouptype'") 
+        customer_BillingAddress=request.POST.get("customer_BillingAddress")
+        customer_ShippingAddress=request.POST.get("customer_ShippingAddress")
+        customer_City=request.POST.get("customer_City")
+        customer_CreditLimit=request.POST.get("customer_CreditLimit")
+        customer_CreditPeriod=request.POST.get("customer_CreditPeriod")
+        customer_Barcode=request.POST.get("customer_Barcode")
+
+
+         # Adjust field names based on your model
+
+        
+                
+              
+      
+        
+
+               
+       
+
+        fetchRecord=Customer.objects.get(customer_id=customer_id)
+        
+        if customer_name:
+            fetchRecord.customer_name=customer_name
+        if customer_mobile:
+            fetchRecord.customer_mobile=customer_mobile
+        if  customer_email:
+            fetchRecord. customer_email= customer_email
+        if customer_gstno:
+            fetchRecord.customer_gstno=customer_gstno
+        if  customer_panno:
+            fetchRecord. customer_panno= customer_panno
+        if customer_openingbal:
+            fetchRecord.customer_openingbal=customer_openingbal
+        if customer_grouptype:
+            fetchRecord.customer_grouptype=customer_grouptype
+        if customer_BillingAddress:
+            fetchRecord.customer_BillingAddress=customer_BillingAddress
+        if  customer_ShippingAddress:
+            fetchRecord. customer_ShippingAddress= customer_ShippingAddress
+        if customer_City:
+            fetchRecord.customer_City=customer_City
+        if customer_CreditLimit:
+           fetchRecord.customer_CreditLimit=customer_CreditLimit
+        if customer_CreditPeriod:
+            fetchRecord.customer_CreditPeriod
+        if customer_Barcode:
+            fetchRecord.customer_Barcode=customer_Barcode
+
+        
+        
+        
+            
+
+        fetchRecord.save()  
+        return redirect('/Customerpage/')   
 
 
 
@@ -389,4 +523,5 @@ def deleteothercharge(request,id):
 
 def Barcodepage(request):
     return render(request,'barcode.html')
+
 

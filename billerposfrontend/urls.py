@@ -31,6 +31,10 @@ urlpatterns = [
     path('editcategory/<id>/',views.editcategory),
     path('updatecategory/',views.updatecategory),
 
+
+
+    path('deleteCategory/<id>/',views.deletecategory),
+
     path('brand/',views.brand),
     path('insertbrand/',views.insertbrandpage),
     path('editbrand/<id>/',views.editbrand),
@@ -48,8 +52,14 @@ urlpatterns = [
     path('AddOtherCharge/deleteothercharge/<id>',views.deleteothercharge),
     path('Customergrouplist/',views.Customergrouplist),
     path('insertcustomergroup/',views.insertcustomergroup),
-    path('insertsuppliergroup/',views.insertsuppliergroup),
+    path('editcustomergroup/<id>/',views.editcustomergroup),
+    path('updatecustomergroup/',views.updatecustomergroup),
     path('Suppliergrouplist/',views.Suppliergrouplist),
+    path('insertsuppliergroup/',views.insertsuppliergroup),
+    path('editsuppliergroup/<id>/',views.editsuppliergroup),
+    path('updatesuppliergroup/',views.updatesuppliergroup),
+    path('updatecustomer/',views.updatecustomer),
+    path('insertsuppliergroup/',views.insertsuppliergroup),
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
     path('Supplierlist/',views.Supplierpage),
@@ -62,7 +72,6 @@ urlpatterns = [
     path('POSBill/',views.POSBill),
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
-
     path('Barcode/',views.Barcodepage)
 
 ]
