@@ -93,8 +93,11 @@ def updatecategory(request):
 
         fetchRecord.save()  
         return redirect('/category/')
-     
+    
+def deletecategory(request):
+     return render(request,'category.html')
 
+     
 
 def brand(request):
     branddata=Brand.objects.all()
@@ -251,6 +254,37 @@ def insertsuppliergroup(request):
          return redirect("/Supplierlist/")
     else:
         return render(request,'Supplier.html')
+    
+def editsuppliergroup(request,id):
+    try:
+        supplierdata = Suppliergroup.objects.get(suppliergroup_id=id)
+        edit = {
+            'editsuppliergroup': {
+                'suppliergroup_id': supplierdata.suppliergroup_id,
+                'suppliergroup_name': supplierdata.suppliergroup_name,  # Adjust field names based on your model
+                 
+            }
+        }
+        return JsonResponse(edit)
+    except Suppliergroup.DoesNotExist:
+        return JsonResponse({'error': ' not found'}, status=404)   
+    
+def updatesuppliergroup(request):
+    if request.method =="POST":
+        suppliergroup_id=request.POST.get("suppliergroup_id")
+        suppliergroup_name=request.POST.get("suppliergroupname")  
+        
+
+        fetchRecord=Suppliergroup.objects.get(suppliergroup_id=suppliergroup_id)
+        if suppliergroup_id:
+            fetchRecord.suppliergroup_id=suppliergroup_id
+        if suppliergroup_name:
+            fetchRecord.suppliergroup_name=suppliergroup_name
+
+        fetchRecord.suppliergroup_name=suppliergroup_name
+
+        fetchRecord.save()  
+        return redirect('/Suppliergrouplist/')      
     
 
  
