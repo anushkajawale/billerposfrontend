@@ -34,7 +34,8 @@
                   <td>{{ i.customer_name }}</td>
 
                   <td>
-                    <button type="button" class="btn btn-sm mx-1 btn-outline-success"
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    data-bs-whatever="@mdo"   class="btn btn-sm mx-1 btn-outline-success"
                       onclick="loadEditModal('{{ i.customer_id }}')">
                       <i class="fa fa-pen"></i>
                     </button>
@@ -166,7 +167,7 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalcheck ">Add Customer</h5>
+        <h5 class="modal-title" id="exampleModalcheck ">Edit Customer</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
