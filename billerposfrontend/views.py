@@ -345,7 +345,7 @@ def Roleslist(request):
 def POSBill (request):
     return render(request,'POSBills.html')
 
-<<<<<<< HEAD
+
 def Salelist (request):
     return render(request,'Salelist.html')
 
