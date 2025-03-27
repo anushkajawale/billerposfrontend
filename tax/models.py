@@ -8,4 +8,7 @@ class Tax(models.Model):
     
     class Meta:
         db_table = "tbl_tax"  
+
+    def __str__(self):
+        return self.tax_name    
 # Create your models here.

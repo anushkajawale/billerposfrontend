@@ -9,10 +9,10 @@ from brand.models import Brand
 from Suppliergroup.models import Suppliergroup
 from Roles.models import Roles
 from customer.models import Customer
-
 from supplier.models import Supplier
-
 from Users.models import Users
+from tax.models import Tax
+
 
 
 
@@ -52,7 +52,7 @@ def editcategory(request, id):
     except Category.DoesNotExist:
         return JsonResponse({'error': 'Category not found'}, status=404)
 
-
+    
 
 
 def insertcategory(request):
@@ -93,7 +93,19 @@ def updatecategory(request):
 
         fetchRecord.save()  
         return redirect('/category/')
-     
+
+
+def deleteCategory(request,id):
+    categorydata =Category.objects.get(category_id=id)
+    categorydata.delete()
+    return redirect('/category/')
+
+
+
+
+
+    
+
 
 
 def brand(request):
@@ -155,11 +167,14 @@ def updatebrand(request):
         fetchRecord.save()
         return redirect('/brand/')
 
+def deleteBrand(requset,id):
+    branddata =Brand.objects.get(brand_id=id)
+    branddata.delete()
+    return redirect('/brand/')
 
 
 
-def tax(request):
-    return render(request,'tax.html')
+
 
 
 
@@ -232,7 +247,17 @@ def Paymenttermslist(request):
 
 
 def productslist(request):
-    return render(request,'productlist.html')
+    categorydata=Category.objects.all()
+    branddata=Brand.objects.all()
+    taxdata=Tax.objects.all()
+    unitdata=Unit.objects.all()
+    data={
+        'categories':categorydata,
+        'brands':branddata,
+        'taxs':taxdata,
+        'units':unitdata
+    }
+    return render(request,'productlist.html',data)
     
 
 

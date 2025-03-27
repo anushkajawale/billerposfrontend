@@ -76,46 +76,58 @@
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <label class="form-label">Product Name *</label>
-                                    <input type="text" class="form-control" placeholder="Enter Product Name">
+                                    <input type="text" class="form-control" placeholder="Enter Product Name" name="Productname">
                                 </div>
                                 <div class="col-4">
                                     <label class="form-label">Marathi Name</label>
-                                    <input type="text" class="form-control" placeholder="Enter Product Marathi Name">
+                                    <input type="text" class="form-control" placeholder="Enter Product Marathi Name" name="Marathiname">
                                 </div>
                                 <div class="col-4">
                                     <label class="form-label">HSN Code</label>
-                                    <input type="text" class="form-control" placeholder="Enter HSN Code">
+                                    <input type="text" class="form-control" placeholder="Enter HSN Code" name="HSNCode">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-3">
                                     <label class="form-label">Category</label>
-                                    <select class="form-select">
-                                        <option selected>General</option>
+                                    <select class="form-select" name="category">
+                                        <option value=""selected>select category </option>
+                                        {% for cate in categories %}
+                                        <option value="{{cate.category_id}}">{{ cate.category_name }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                                 <div class="col-3">
                                     <label class="form-label">Brand</label>
-                                    <select class="form-select">
-                                        <option selected>General</option>
+                                    <select class="form-select" name="brand">
+                                        <option value=""selected>select brand</option>
+                                        {% for barnd in brands %}                                        
+                                        <option value="{{barnd.brand_id}}">{{barnd.brand_name}}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                                 <div class="col-3">
                                     <label class="form-label">Tax %</label>
-                                    <input type="number" class="form-control" value="0">
+                                    <input type="number" class="form-control" name="tax" value="0">
                                 </div>
                                 <div class="col-3">
                                     <label class="form-label">Tax Type</label>
-                                    <select class="form-select">
-                                        <option selected>Inclusive Tax</option>
+                                    <select class="form-select" name="tax">
+                                        <option value=""selected>select Tax Type</option>
+                                        {% for tax in taxs %}
+                                        <option value="{{tax.tax_id}}">{{tax.tax_name}}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-3">
                                     <label class="form-label">Primary Unit</label>
-                                    <select class="form-select">
-                                        <option selected>NoS</option>
+                                    <select class="form-select" name="unit">
+                                    <option value=""selected>select Unit</option>
+                                        {% for unit in units %}
+                                        <option value="{{unit.unit_id}}">{{unit.unit_name}}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                                 <div class="col-3">
@@ -126,7 +138,7 @@
                                 </div>
                                 <div class="col-3">
                                     <label class="form-label">Conversion Factor</label>
-                                    <input type="text" class="form-control" placeholder="Enter Conversion Factor">
+                                    <input type="text" class="form-control" name="conversion" placeholder="Enter Conversion Factor">
                                 </div>
                                 <div class="col-3">
                                     <label class="form-label"> Unit Price Per</label>   
@@ -137,7 +149,7 @@
                             </div>
                             
                             <div>
-                                <table  border="1" cellspacing="10"  style="width: 100%; padding: 0px; margin:0%;">
+                                <table  border="1" cellspacing="10"  style="width: 100%; padding: 0px; margin:0%;" id="myTable">
                                     
                                         <tr>
                                             <th style="margin: 0%;">Barcode</th>
@@ -158,19 +170,19 @@
                                     
                                         <tbody style="margin: 0%;">
                                         <tr  style="margin: 0%;">
-                                            <td style="margin: 0%;"><input type="text" class="" style="width: 80px; margin: 0px;"></td>
-                                            <td style="margin-left: 0%;"><input type="text" class="" style="width: 80px;"></td>
-                                            <td><input type="text" class="" style="width: 80px;"></td>
-                                            <td><input type="text" class="" style="width: 80px;"></td>
-                                            <td><input type="text" class="" style="width: 80px;"></td>
-                                            <td><input type="text" class="" style="width: 80px;"></td>
-                                            <td><input type="text" class="" style="width: 80px;"></td>
-                                            <td><input type="text" class="" style="width: 80px;"></td>
-                                            <td><input type="text" class="" style="width: 80px;"></td>
-                                            <td><input type="text" class="" style="width: 80px;"></td>
-                                            <td><input type="date" class="" style="width: 80px;"></td>
-                                            <td><input type="date" class="" style="width: 80px;"></td>
-                                            <td><button class="btn btn-success btn-sm" onclick="copyRow(this)">+</button>
+                                            <td style="margin: 0%;"><input type="text" class="" style="width: 80px; margin: 0px;" name="barcode"></td>
+                                            <td style="margin-left: 0%;"><input type="text" class="" style="width: 80px;" name="qrcode"></td>
+                                            <td><input type="text" name="" class="" style="width: 80px;" name="mrp" ></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="sale" ></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="credit"></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="Purchase" ></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="Wholesaler"></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="Distributor"></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="Op_Qty"></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="Op_Value"></td>
+                                            <td><input type="date" class="" style="width: 80px;" name="MfgDate"></td>
+                                            <td><input type="date" class="" style="width: 80px;" name="ExpDate"></td>
+                                            <td><button type="button" class="btn btn-success btn-sm" onclick="copyRow()">+</button>
                                                 <button class="btn btn-danger btn-sm" onclick="removeRow(this)">X</button>
                                             </td>
                                         </tr>
@@ -194,12 +206,20 @@
     </div>
 </div>
 <script>
-    function copyRow(button) {
-        let table = document.getElementById("productTable").getElementsByTagName('tbody')[0];
-        let row = button.closest("tr");
-        let clone = row.cloneNode(true);
-        table.appendChild(clone);
-    }
+    function copyRow() {
+    // Get the table
+    let table = document.getElementById("myTable");
+
+    // Get the last row
+    let lastRow = table.rows[table.rows.length - 1];
+
+    // Clone the row
+    let newRow = lastRow.cloneNode(true);
+
+    // Append the new row to the table
+    table.appendChild(newRow);
+ }
+
 
     function removeRow(button) {
         let row = button.closest("tr");

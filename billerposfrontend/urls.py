@@ -19,6 +19,8 @@ from django.urls import path
 from billerposfrontend import settings
 from django.conf.urls.static import static
 from billerposfrontend import views
+from tax.views import taxlist,inserttax,deletetax,edittax
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,13 +32,17 @@ urlpatterns = [
     path('insertcategory/',views.insertcategory),
     path('editcategory/<id>/',views.editcategory),
     path('updatecategory/',views.updatecategory),
-    path('deleteCategory/<id>/',views.deleteCategory)
+    path('category/deleteCategory/<id>',views.deleteCategory),
     path('brand/',views.brand),
     path('insertbrand/',views.insertbrandpage),
     path('editbrand/<id>/',views.editbrand),
     path('updatebrand/',views.updatebrand),
-    path('tax/',views.tax),
-    path('products/',views.productslist), 
+    path('brand/deleteBrand/<id>',views.deleteBrand),
+    path('tax/',taxlist),
+    path('inserttax/',inserttax),
+    path('edittax/<id>/',edittax),
+    path('tax/deletetax/<id>',deletetax),
+    path('products/',views.productslist),   
     path('AddUnit/',views.AddUnit),
     path('AddExpenses/',views.AddExpenses),
     path('AddOtherCharge/',views.AddOtherCharge),
@@ -57,6 +63,7 @@ urlpatterns = [
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
     path('Barcode/',views.Barcodepage)
+    
 ]
 
 if settings.DEBUG:

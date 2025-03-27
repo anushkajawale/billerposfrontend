@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="card">
+            <div class="card-body border border-primary">
+                <svg id="barcode"></svg>  <!-- Barcode will appear here -->
+            </div>
+        </div>
+       
+      </div>
+    </div>
+</div>      
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/jsbarcode"></script> -->
+<!-- <script>
+        // JSON data with barcode information
+        let product = {
+            barcode: "123456789012",
+            type: "EAN13"
+        };
+
+        // Generate barcode
+        JsBarcode("#barcode", product.barcode, {
+            format: product.type,
+            lineColor: "#000",
+            width: 2,
+            height: 50,
+            displayValue: true
+        });
+</script> -->
+{% endblock %}
