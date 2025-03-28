@@ -8,5 +8,7 @@ class Brand(models.Model):
     
     class Meta:
         db_table = "tbl_brand"  
+    def __str__(self):
+        return self.brand_name    
 
 # Create your models here.

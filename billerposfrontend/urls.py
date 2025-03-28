@@ -19,6 +19,8 @@ from django.urls import path
 from billerposfrontend import settings
 from django.conf.urls.static import static
 from billerposfrontend import views
+from tax.views import taxlist,inserttax,deletetax,edittax
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,20 +32,23 @@ urlpatterns = [
     path('insertcategory/',views.insertcategory),
     path('editcategory/<id>/',views.editcategory),
     path('updatecategory/',views.updatecategory),
+    path('category/deleteCategory/<id>',views.deleteCategory),
     path('deleteCategory/<id>/',views.deletecategory),
     path('brand/',views.brand),
     path('insertbrand/',views.insertbrandpage),
     path('editbrand/<id>/',views.editbrand),
     path('updatebrand/',views.updatebrand),
-    path('tax/',views.tax),
-    path('products/',views.productslist), 
+    path('brand/deleteBrand/<id>',views.deleteBrand),
+    path('tax/',taxlist),
+    path('inserttax/',inserttax),
+    path('edittax/<id>/',edittax),
+    path('tax/deletetax/<id>',deletetax),
+    path('products/',views.productslist),   
     path('AddUnit/',views.AddUnit),
     path('updateunit/',views.updateunit),
     path('AddUnit/deleteunit/<id>',views.deleteunit),
-    
     path('AddExpenses/',views.AddExpenses),
     path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
-
     path('AddOtherCharge/',views.AddOtherCharge),
     path('AddOtherCharge/deleteothercharge/<id>',views.deleteothercharge),
     path('Customergrouplist/',views.Customergrouplist),
@@ -54,10 +59,8 @@ urlpatterns = [
     path('insertsuppliergroup/',views.insertsuppliergroup),
     path('editsuppliergroup/<id>/',views.editsuppliergroup),
     path('updatesuppliergroup/',views.updatesuppliergroup),
-
     path('updatecustomer/',views.updatecustomer),
     path('insertsuppliergroup/',views.insertsuppliergroup),
-    
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
     path('Supplierlist/',views.Supplierpage),
@@ -70,9 +73,7 @@ urlpatterns = [
     path('POSBill/',views.POSBill),
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
-
-   
-
+    path('Salelist/',views.Salelist),
     path('Barcode/',views.Barcodepage)
 
 ]
