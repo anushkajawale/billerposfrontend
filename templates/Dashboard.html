@@ -1,0 +1,312 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <!-- Top Navbar -->
+    <div class="d-flex justify-content-between align-items-center py-3">
+        <div>
+            <span class="text-success fw-bold">Hello Good Morning 😊, Welcome Back !</span>
+        </div>
+        <div>
+            <button class="btn btn-danger">POS</button>
+            <span class="ms-3">
+                <img src="profile.jpg" alt="User" class="rounded-circle" width="30">
+                <span class="fw-bold">Software Repair</span>
+            </span>
+        </div>
+    </div>
+
+    <h2>Dashboard</h2>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-dark bg-white mb-3">
+                <div class="card-header">Total Bills</div>
+                <div class="card-body">
+                    <h5 class="card-title">0</h5>
+                    <a href="#" class="text-decoration-underline">View All Bills</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-dark bg-white mb-3">
+                <div class="card-header">Total Products</div>
+                <div class="card-body">
+                    <h5 class="card-title">3,939</h5>
+                    <a href="#" class="text-decoration-underline">View All Products</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-dark bg-white mb-3">
+                <div class="card-header">Total Customers</div>
+                <div class="card-body">
+                    <h5 class="card-title">1</h5>
+                    <a href="#" class="text-decoration-underline">View All Customers</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-dark bg-white mb-3">
+                <div class="card-header">Customer Credit</div>
+                <div class="card-body">
+                    <h5 class="card-title">0</h5>
+                    <a href="#" class="text-decoration-underline">View All Receipts</a>
+                </div>
+            </div>
+        </div>
+    </div> <!-- Closing first row -->
+
+    <div class="container mt-4">
+        <div class="row">
+            <!-- POS Bills Section -->
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-body">POS Bills</h5>
+                        <div class="row text-center bg-light">
+                            <div class="col-md-3">
+                                <h6 class="fw-bold text-dark">Rs.0.00</h6>
+                                <p class="text-secondary">Cash Bills Amount</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="fw-bold text-dark">Rs.0.00</h6>
+                                <p class="text-secondary">Online Bills Amount</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="fw-bold text-danger">Rs.0.00</h6>
+                                <p class="text-secondary">Credit Bills Amount</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="fw-bold text-success">Rs.0.00</h6>
+                                <p class="text-secondary">Total Amount</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent POS Bills -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold mb-0">Recent POS Bills</h5>
+                        <a href="#" class="text-dark text-decoration-underline">View All Bills</a>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-bordered mb-0">
+                            <thead>
+                                <tr class="bg-light">
+                                    <th>Invoice No</th>
+                                    <th>Cust Name</th>
+                                    <th>Payment Type</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>A-3</td>
+                                    <td>Cash Sale</td>
+                                    <td><span class="badge bg-success">Cash</span></td>
+                                    <td>Rs.0</td>
+                                </tr>
+                                <tr>
+                                    <td>A-2</td>
+                                    <td>Cash Sale</td>
+                                    <td><span class="badge bg-success">Cash</span></td>
+                                    <td>Rs.700</td>
+                                </tr>
+                                <tr>
+                                    <td>A-1</td>
+                                    <td>Cash Sale</td>
+                                    <td><span class="badge bg-success">Cash</span></td>
+                                    <td>Rs.0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div> <!-- Closing container -->
+
+
+
+
+        <div class="row">
+            <!-- Best Selling Products (Left) -->
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold mb-0">Best Selling Products</h5>
+                        <button class="btn btn-primary btn-sm">📊 View Stock Report</button>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-bordered mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Price</th>
+                                    <th>QTY</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Hira Besan 250 gm</td>
+                                    <td>Rs.25</td>
+                                    <td>2</td>
+                                    <td>Rs.0.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Sahajabida Biryani Tandul 1 Kg</td>
+                                    <td>Rs.110</td>
+                                    <td>1</td>
+                                    <td>Rs.0.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Hira Besan 1 Kg</td>
+                                    <td>Rs.90</td>
+                                    <td>0</td>
+                                    <td>Rs.0.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Durva Besan 250 gm</td>
+                                    <td>Rs.65</td>
+                                    <td>0</td>
+                                    <td>Rs.0.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Ashirvad Indarayani 1 kg</td>
+                                    <td>Rs.20</td>
+                                    <td>1</td>
+                                    <td>Rs.0.00</td>
+                                </tr>0
+                                <tr>
+                                    <td>Madhukar wada Kolam 1 kg</td>
+                                    <td>Rs.70</td>
+                                    <td>2</td>
+                                    <td>Rs.0.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Radhegold Indarayani 1kg</td>
+                                    <td>Rs.65</td>
+                                    <td>5</td>
+                                    <td>Rs.0.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Radhegold Mogara Tandul 1kg</td>
+                                    <td>Rs.70</td>
+                                    <td>2</td>
+                                    <td>Rs.0.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Customers (Right) -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold mb-0">Top Customers</h5>
+                        <button class="btn btn-primary btn-sm">📑 View Report</button>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>Customer Name</th>
+                                    <th>Total Purchase</th>
+                                    <th>Total Credit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Cash Sale</td>
+                                    <td>700</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-dark bg-white mb-3">
+                <div class="card-header">TOTAL PURCHASE AMOUNT</div>
+                <div class="card-body">
+                    <h5 class="card-title">0</h5>
+                    <a href="#" class="text-decoration-underline">View All Purchase</a>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-dark bg-white mb-3">
+                <div class="card-header">SUPPLIER CREDIT AMOUNT</div>
+                <div class="card-body">
+                    <h5 class="card-title">3,939</h5>
+                    <a href="#" class="text-decoration-underline">View All Payment</a>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-dark bg-white mb-3">
+                <div class="card-header">TOTAL SUPPLIER</div>
+                <div class="card-body">
+                    <h5 class="card-title">1</h5>
+                    <a href="#" class="text-decoration-underline">View All Supplier</a>
+                    
+                    <i class="fas-regular fas-circle-user"></i>
+                  
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-dark bg-white mb-3">
+                <div class="card-header">TOTAL BRAND</div>
+                <div class="card-body">
+                    <h5 class="card-title">0</h5>
+                    <a href="#" class="text-decoration-underline">View All Brand</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-dark bg-white mb-3">
+                <div class="card-header">TOTAL TAX</div>
+                <div class="card-body">
+                    <h5 class="card-title">0</h5>
+                    <a href="#" class="text-decoration-underline">View All Taxes</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-dark bg-white mb-3">
+                <div class="card-header">TOTAL UNIT</div>
+                <div class="card-body">
+                    <h5 class="card-title">0</h5>
+                    <a href="#" class="text-decoration-underline">View All Unit</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-dark bg-white mb-3">
+                <div class="card-header">TOTAL SUPPLIER</div>
+                <div class="card-body">
+                    <h5 class="card-title">0</h5>
+                    <a href="#" class="text-decoration-underline">View All Supplier Group</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+{% endblock %}

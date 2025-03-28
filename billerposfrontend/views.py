@@ -8,11 +8,16 @@ from category.models import Category
 from brand.models import Brand
 from Suppliergroup.models import Suppliergroup
 from Roles.models import Roles
+
+from django.contrib import messages
+from django.db.models import Sum
+
 from customer.models import Customer
-
 from supplier.models import Supplier
-
 from Users.models import Users
+from tax.models import Tax
+
+
 
 
 
@@ -52,7 +57,7 @@ def editcategory(request, id):
     except Category.DoesNotExist:
         return JsonResponse({'error': 'Category not found'}, status=404)
 
-
+    
 
 
 def insertcategory(request):
@@ -72,10 +77,6 @@ def insertcategory(request):
     else:
         return render(request,'category.html')
         
-
-       
-
-
 def updatecategory(request):
     if request.method =="POST":
         category_id=request.POST.get("category_id")
@@ -93,9 +94,15 @@ def updatecategory(request):
 
         fetchRecord.save()  
         return redirect('/category/')
+
+
+def deleteCategory(request,id):
+    categorydata =Category.objects.get(category_id=id)
+    categorydata.delete()
+    return redirect('/category/')
+
     
-def deletecategory(request):
-     return render(request,'category.html')
+
 
      
 
@@ -158,20 +165,13 @@ def updatebrand(request):
         fetchRecord.save()
         return redirect('/brand/')
 
-
-
-
-def tax(request):
-    return render(request,'tax.html')
-
-
-
-
+def deleteBrand(requset,id):
+    branddata =Brand.objects.get(brand_id=id)
+    branddata.delete()
+    return redirect('/brand/')
 
 def AddUnit(request):
     return render(request,'AddUnit.html')
-
-
 
 def AddExpenses(request):
     return render(request,'AddExpenses.html')
@@ -300,7 +300,17 @@ def Paymenttermslist(request):
 
 
 def productslist(request):
-    return render(request,'productlist.html')
+    categorydata=Category.objects.all()
+    branddata=Brand.objects.all()
+    taxdata=Tax.objects.all()
+    unitdata=Unit.objects.all()
+    data={
+        'categories':categorydata,
+        'brands':branddata,
+        'taxs':taxdata,
+        'units':unitdata
+    }
+    return render(request,'productlist.html',data)
     
 
 
@@ -476,6 +486,111 @@ def Roleslist(request):
     }
     return render(request,'Roles.html',data)
 
+
+def edit(request):
+    if request.method=="POST":
+        Roles_id = request.POST.get('Roles_id')
+        Roles_name=request.POST.get('Roles_name')
+        Roles_dashboard=request.POST.get('Roles_dashboard')
+    findRecord=Roles.objects.get(Roles_id = Roles_id)
+    findRecord=Roles.objects.get(Roles_name = Roles_name)
+    findRecord=Roles.objects.get(Roles_dashboard = Roles_dashboard)
+
+    findRecord.save()
+    return redirect("/EditRole/")
+
+def EditRolelist(request):
+    listdata= Roles.objects.all()   
+    data = {
+        'list':listdata
+    }
+    return render(request,'EditRole.html',data)
+
+def add_role(request):
+    if request.method == 'POST':
+        role_name = request.POST.get('rolename')
+        selected_permissions = request.POST.get('selected_permissions')  # Comma-separated values
+        
+        if role_name:
+            role = role(name=role_name, permissions=selected_permissions)
+            role.save()
+            messages.success(request, "Role saved successfully!")
+            return redirect('add_role')  # Reloads the same page after saving
+        
+        messages.error(request, "Role name is required!")
+    
+    return render(request, 'EditRole.html')
+
+def role_list(request):
+    Roles = Roles.objects.all()  # Fetch all roles
+    return render(request, 'role_list.html', {'roles': Roles})
+
+def edit_role(request):
+    if request.method == "POST":
+        role_name = request.POST.get("Rolename")
+        
+        # Check if the role exists, otherwise create a new one
+        role = Roles.objects.get_or_create(name=role_name)
+
+        # Update role permissions based on the checkboxes
+        role.Role_Dashboard = request.POST.get("Role_Dashboard") == "True"
+        role.Role_UserProfile = request.POST.get("Role_UserProfile") == "True"
+        role.Role_BusinessProfile = request.POST.get("Role_BusinessProfile") == "True"
+
+        # Save the role to the database
+        role.save()
+
+        return redirect("edit_role")  # Redirect back to the form after saving
+
+    # If GET request, display the form
+    roles = Roles.objects.all()
+    return render(request, "your_template.html", {"list": roles})
+
+def insertroles(request):
+    if request.method=="POST":
+        Roles_name=request.POST.get("role_name")
+        Roles_Dashboard=request.POST.get("role_dashboard")
+        Roles_UserProfile=request.POST.get("role_userprofile")
+        Roles_BusinessProfile=request.POST.get("role_BusinessProfile")
+        Roles_BarcodePrint=request.POST.get("role_BarcodePrint")
+        Roles_Stock=request.POST.get("Roles_Stock")
+        Roles_HRDepartment=request.POST.get("Roles_HRDepartment") 
+        Roles_RewardPoint=request.POST.get("Roles_RewardPoint")
+        Roles_POS=request.POST.get("Roles_POS")
+        Roles_Sale=request.POST.get("Roles_Sale")
+        Roles_Purchase=request.POST.get("Roles_Purchase")
+        Roles_Supplier=request.POST.get("Roles_Supplier")
+        Roles_Settings=request.POST.get("Roles_Settings")
+        
+
+        insertquery=Roles(
+           Roles_name=Roles_name,
+           Roles_Dashboard=Roles_Dashboard,
+            Roles_UserProfile=Roles_UserProfile,
+            Roles_BusinessProfile=Roles_BusinessProfile,
+            Roles_BarcodePrint=Roles_BarcodePrint,
+            Roles_Stock=Roles_Stock,
+            Roles_HRDepartment=Roles_HRDepartment,
+            Roles_RewardPoint=Roles_RewardPoint,
+            Roles_POS=Roles_POS,
+            Roles_Sale=Roles_Sale,
+            Roles_Purchase=Roles_Purchase,
+            Roles_Supplier=Roles_Supplier,
+            Roles_Settings=Roles_Settings
+        )
+
+        
+        
+        insertquery.save()
+        return redirect("/Roles/")
+    else:
+        return render(request,'Roles.html')
+        
+
+def Dashboard(request):
+    
+    return render(request, 'Dashboard.html') 
+
 def POSBill (request):
     return render(request,'POSBills.html')
 
@@ -528,6 +643,10 @@ def Barcodepage(request):
 
 def Addsale(request):
     return render(request,'Addsale.html')
+
+
+def Stock(request):
+    return render(request,'Stock.html')
 
 
 
