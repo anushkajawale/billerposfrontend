@@ -19,6 +19,8 @@ from django.urls import path
 from billerposfrontend import settings
 from django.conf.urls.static import static
 from billerposfrontend import views
+from tax.views import taxlist,inserttax,deletetax,edittax
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,24 +32,23 @@ urlpatterns = [
     path('insertcategory/',views.insertcategory),
     path('editcategory/<id>/',views.editcategory),
     path('updatecategory/',views.updatecategory),
-
-
-
-    path('deleteCategory/<id>/',views.deletecategory),
-
+    path('category/deleteCategory/<id>',views.deleteCategory),
+   
     path('brand/',views.brand),
     path('insertbrand/',views.insertbrandpage),
     path('editbrand/<id>/',views.editbrand),
     path('updatebrand/',views.updatebrand),
-    path('tax/',views.tax),
-    path('products/',views.productslist), 
+    path('brand/deleteBrand/<id>',views.deleteBrand),
+    path('tax/',taxlist),
+    path('inserttax/',inserttax),
+    path('edittax/<id>/',edittax),
+    path('tax/deletetax/<id>',deletetax),
+    path('products/',views.productslist),   
     path('AddUnit/',views.AddUnit),
     path('updateunit/',views.updateunit),
     path('AddUnit/deleteunit/<id>',views.deleteunit),
-    
     path('AddExpenses/',views.AddExpenses),
     path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
-
     path('AddOtherCharge/',views.AddOtherCharge),
     path('AddOtherCharge/deleteothercharge/<id>',views.deleteothercharge),
     path('Customergrouplist/',views.Customergrouplist),
@@ -72,8 +73,13 @@ urlpatterns = [
     path('POSBill/',views.POSBill),
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
+
     path('Barcode/',views.Barcodepage),
-    path('Stock/',views.Stock)
+    path('Stock/',views.Stock),
+
+    path('Salelist/',views.Salelist),
+    path('Barcode/',views.Barcodepage)
+
 
 ]
 

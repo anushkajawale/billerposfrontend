@@ -8,6 +8,8 @@ class Category(models.Model):
     
     class Meta:
         db_table = "tbl_category"
-
+    
+    def __str__(self):
+        return self.category_name
 
 # Create your models here.

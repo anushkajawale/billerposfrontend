@@ -36,7 +36,7 @@
                   <td>{{ i.users_mobile}}</td>   
                   <td>{{ i.users_role}}</td>              
                   <td>
-                    <a href="/edittax/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcategory"
+                    <a href="/edituser/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#edituser"
                     data-bs-whatever="@mdo">  
                       <i class="fa fa-pen"></i>
                       <a href="/deleteuser/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcategory"
@@ -68,6 +68,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        <form action="" method="post">
+          {% csrf_token %}
         <div class="container-fluid">
           <div class="row mb-3">
             <div class="col-6">
@@ -107,8 +109,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> <i class="fas fa-times"></i> Close</button>
-        <button type="button" class="btn btn-success">Save</button>
+        <button type="submit" class="btn btn-success">Save</button>
       </div>
+    </form>
     </div>
   </div>
 </div>
