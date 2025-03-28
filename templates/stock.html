@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-3">Stock List</h2>
+        <!-- Move the button to the right using d-flex and ml-auto -->
+        <div class="d-flex justify-content-between mb-3">
+            <div></div> <!-- Empty div to keep content on the left -->
+            <a href="#" class="btn btn-success ml-auto">Dashboard</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-blue">
+                    <tr>
+                        <th scope="col">SR NO</th>
+                        <th scope="col">PRODUCT NAME</th>
+                        <th scope="col">OPENING QTY</th>
+                        <th scope="col">OPENING VALUE</th>
+                        <th scope="col">PURCHASE QTY</th>
+                        <th scope="col">PURCHASE VALUE</th>
+                        <th scope="col">SALE QTY</th>
+                        <th scope="col">SALE VALUE</th>
+                        <th scope="col">CLOSING QTY</th>
+                        <th scope="col">CLOSING VALUE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stock in stock_list %}
+                        
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endblock %}

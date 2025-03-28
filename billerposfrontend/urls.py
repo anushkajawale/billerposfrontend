@@ -72,7 +72,8 @@ urlpatterns = [
     path('POSBill/',views.POSBill),
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
-    path('Barcode/',views.Barcodepage)
+    path('Barcode/',views.Barcodepage),
+    path('Stock/',views.Stock)
 
 ]
 
