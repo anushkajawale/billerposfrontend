@@ -151,7 +151,7 @@
 
 
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  id="closeModal1">Close</button>
                   <button type="button" class="btn btn-success">Save</button>
                 </div>
           </form>
@@ -167,7 +167,7 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalcheck ">Edit Customer</h5>
+        <h5 class="modal-title" id="editCustomerModalcheck ">Edit Customer</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -248,7 +248,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  id="closeModal2">Close</button>
               <button type="submit" class="btn btn-success">Update</button>
             </div>
           </form>
@@ -292,6 +292,15 @@
       })
       .catch(error => console.error('Error loading modal content:', error));
   }
+
+  var closeModal2 = document.getElementById("closeModal2");
+  var modal1 = document.getElementById("exampleModal");
+  var modal2 = document.getElementById("editCustomerModal");
+
+  closeModal2.onclick = function() {
+  modal1.style.display = "none";
+  modal2.style.display = "none";
+}
 
 </script>
 
