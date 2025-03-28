@@ -641,12 +641,17 @@ def deleteothercharge(request,id):
 def Barcodepage(request):
     return render(request,'barcode.html')
 
+
+def stock(request):
+    return render(request,'stock.html')
+
 def Addsale(request):
     return render(request,'Addsale.html')
 
 
 def Stock(request):
     return render(request,'stock.html')
+
 
 
 
