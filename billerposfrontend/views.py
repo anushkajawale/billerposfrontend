@@ -526,5 +526,9 @@ def deleteothercharge(request,id):
 def Barcodepage(request):
     return render(request,'barcode.html')
 
+def Addsale(request):
+    return render(request,'Addsale.html')
+
+
 
 

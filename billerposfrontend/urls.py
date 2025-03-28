@@ -67,7 +67,8 @@ urlpatterns = [
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
     path('Salelist/',views.Salelist),
-    path('Barcode/',views.Barcodepage)
+    path('Barcode/',views.Barcodepage),
+    path('Addsale/',views.Addsale)
 
 ]
 
