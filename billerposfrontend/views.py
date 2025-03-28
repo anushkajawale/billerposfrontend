@@ -97,8 +97,7 @@ def deleteCategory(request,id):
     return redirect('/category/')
 
     
-def deletecategory(request):
-     return render(request,'category.html')
+
 
      
 
