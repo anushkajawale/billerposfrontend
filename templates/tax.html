@@ -28,21 +28,23 @@
                 </tr>
               </thead>
               <tbody class="table-hover">
+                {% for tax in taxdata %}
                 <tr>
-                  <td> </td>
-                  <td> </td>
-                  <td> </td>                 
+                  <td > {{ forloop.counter }}</td>
+                  <td> {{ tax.tax_name }}</td>
+                  <td> {{ tax.tax_percentage }}</td>
+                              
                   <td>
-                    <a href="/edittax/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcategory"
-                    data-bs-whatever="@mdo">
-                      <i class="fa fa-pen"></i>
+                    <button type="button" class="btn btn-sm mx-1 btn-outline-success" onclick="loadEditModal('{{ tax.tax_id }}')" ><i class="fa fa-pen"></i></button>
                       </a>
+                  <a href="deletetax/{{ tax.tax_id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
+
         
-                      <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
-                      data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
+                      
                     
                   </td>
                 </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
@@ -61,10 +63,13 @@
       </div>
       <div class="modal-body">
         <div class="container-fluid">
+          <form action="/inserttax/" method="post">
+          {% csrf_token %}
+
           <div class="row mb-3">
             <div class="col-12">
-              <label for="CategoryName" class="form-label"> Tax Name</label>
-              <input type="text" class="form-control" id="CategoryName" name="categoryName" required>
+              <label for="TaxName" class="form-label"> Tax Name</label>
+              <input type="text" class="form-control" id="TaxName" name="TaxName" required>
             </div>
             
           </div>
@@ -74,18 +79,20 @@
               <input type="text" class="form-control" id="percentage" name="percentage" required>
             </div>
           </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit"  name="submit" class="btn btn-success">Save</button>
+          </div>
+        </form>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success">Save</button>
-      </div>
+      
     </div>
   </div>
 </div>
 
 
-<div class="modal fade" id="editcategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editTax" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -97,25 +104,47 @@
           <div class="row mb-3">
             <div class="col-12">
               <label for="CategoryName" class="form-label">Tax Name</label>
-              <input type="text" class="form-control" id="CategoryName" name="categoryName" value="" required>
+              <input type="text" class="form-control" id="updateTaxName" name="updateTaxName"  required>
+              <input type="hidden" id="updateTax_id" name="updateTax_id">
             </div>
             
           </div>
           <div class="row">
             <div class="col-6">             
                 <label for="Percentage" class="form-label"> Percentage</label>
-                <input type="text" class="form-control" id="percentage" name="percentage" value="" required>
+                <input type="text" class="form-control" id="updateTaxpercentage" name="updateTaxpercentage" value="" required>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success">Save</button>
+        <button type="submit" name="submit" class="btn btn-success">Save</button>
       </div>
     </div>
   </div>
 </div>
+
+
+<script>
+  function loadEditModal(taxId) {console.log(taxId);
+  
+    fetch(`/edittax/${taxId}/`)
+        .then(response =>{return response.json();})
+        .then(html => {
+          console.log(html);
+          let tax = html.edittax;
+            var editModalContent = new bootstrap.Modal(document.getElementById('editTax'));
+            document.getElementById("updateTax_id").value=tax.tax_id;
+            document.getElementById("updateTaxName").value = tax.tax_name;
+            document.getElementById("updateTaxpercentage").value = tax.tax_percentage;
+            editModalContent.show();
+        })
+        .catch(error => console.error('Error loading modal content:', error));
+}
+
+</script>
+
 
 
 {% endblock %}

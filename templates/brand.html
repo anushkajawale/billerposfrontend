@@ -28,21 +28,23 @@
                 </tr>
               </thead>
               <tbody class="table-hover">
+                {% for i in branddata %}
                 <tr>
-                  <td> </td>
-                  <td> </td>
-                  <td> <img style="width:50px; height:50px;" src="" alt=""></td>                 
+                  <td>{{ i.brand_id }}</td>
+                  <td>{{ i.brand_name }} </td>
+                  <td> <img style="width:50px; height:50px;" src="/media/{{ i.brand_img }}" alt=""></td>                 
                   <td>
-                    <a href="/editcategory/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcategory"
-                    data-bs-whatever="@mdo">
+                    <button type="button" class="btn btn-sm mx-1 btn-outline-success" onclick="loadEditModal('{{ i.brand_id }}')">
                       <i class="fa fa-pen"></i>
-                      </a>
-        
+                  </button>
+                  <a href="deleteBrand/{{ i.brand_id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
+                  
                       <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
                 data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
                     
                   </td>
                 </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
@@ -60,32 +62,35 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        <form action="/insertbrand/" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
         <div class="container-fluid">
           <div class="row mb-3">
             <div class="col">
-              <label for="CategoryName" class="form-label"> Brand Name</label>
-              <input type="text" class="form-control" id="CategoryName" name="categoryName" required>
+              <label for="BrandName" class="form-label"> Brand Name</label>
+              <input type="text" class="form-control" id="BrandName" name="Brandname" required>
             </div>
             
           </div>
           <div class="row">
             <div class="col">             
-              <label for="CategoryImg" class="form-label"> Brand Img</label>
-              <input type="file" class="form-control" id="CategoryName" name="categoryName" style="height: 150px; width: 200px;">
+              <label for="BrandImg" class="form-label"> Brand Img</label>
+              <input type="file" class="form-control" id=" BrandImg" name="Brandimg" style="height: 150px; width: 200px;">
             </div>
           </div>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" name="submit" class="btn btn-success">Save</button>
+        </div>
+      </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success">Save</button>
-      </div>
-    </div>
+    </div>  
   </div>
 </div>
 
 
-<div class="modal fade" id="editcategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editbrandmodel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -93,29 +98,84 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        <form action="/updatebrand/" method="post"  enctype="multipart/form-data">
         <div class="container-fluid">
           <div class="row mb-3">
             <div class="col-12">
-              <label for="CategoryName" class="form-label">Brand Name</label>
-              <input type="text" class="form-control" id="CategoryName" name="categoryName" required>
+              <label for="BrandName" class="form-label">Brand Name</label>
+              <input type="text" class="form-control" id="updateBrandName" name="updatebrandName" required>
+              <input type="hidden" id="updatebrand_id" name="brand_id">
+
             </div>
             
           </div>
           <div class="row">
             <div class="col-6 ">             
-              <label for="CategoryImg" class="form-label"> Brand Img</label>
-              <input type="file" class="form-control" id="CategoryName" name="categoryName" style="height: 150px; width: 200px;">
+              <label for="BrandImg" class="form-label"> Brand Img</label>
+              <input type="file" class="form-control" id="" name="" >
+              <img src="" alt="" style="height: 150px; width: 200px;" id="updatebrandImg">
             </div>
           </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success">Save</button>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit"  name="submit" class="btn btn-success">Update</button>
+        </div>
+      </form>
       </div>
     </div>
   </div>
 </div>
 
+
+<!-- <script>
+  function loadEditModal(brand_id) {console.log(brand_id);
+    
+    fetch(`/editbrand/${brand_id}/`)
+        .then(response =>{return response.json();})
+        .then(html => {
+            console.log(html);
+            let brand = html.editbrand;
+            var editModal = new bootstrap.Modal(document.getElementById('editbrandmodel'));
+            document.getElementById("updatebrand_id").value=editbrand.brand_id;
+            document.getElementById("updateBrandName").value = brand.brand_name;
+            document.getElementById("updateBrandImg").src = brand.brand_img;
+            editModal.show();
+        })
+        .catch(error => console.error('Error loading modal content:', error));
+}
+
+</script> -->
+
+<script>
+  function loadEditModal(brand_id) {
+    console.log("Brand ID:", brand_id);
+
+    fetch(`/editbrand/${brand_id}/`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Fetched Data:", data);
+
+            let brand = data.editbrand; // Extract brand details
+            
+            if (!brand) {
+                console.error("Error: Brand data is missing!");
+                return;
+            }
+
+            var editModal = new bootstrap.Modal(document.getElementById('editbrandmodel'));
+
+            // Corrected variable references
+            document.getElementById("updatebrand_id").value = brand.brand_id;
+            document.getElementById("updateBrandName").value = brand.brand_name;
+
+            // Ensure the image source is valid 
+           
+            editModal.show();
+        })
+        .catch(error => console.error("Error loading modal content:", error));
+}
+
+</script>
 
 {% endblock %}

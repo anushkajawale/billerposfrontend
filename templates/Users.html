@@ -1,0 +1,120 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="card  border border-success">
+        <div class="card-header">
+          <div class="d-flex justify-content-between">
+            <h3>
+              User
+            </h3>
+            <div class="text-right">
+              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                data-bs-whatever="@mdo"><i class="nav-icon fas fa-plus"></i>Add User</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body ">
+          <div class="table-responsive">
+            <table class="table table-bordered text-center ">
+              <thead class="table-success">
+                <tr>
+                  <th>Sr.No</th>
+                  <th>User Email</th>
+                  <th>Mobile Number</th>
+                  <th>User Role</th>
+                  <th>Action</th>
+
+                </tr>
+              </thead>
+              <tbody class="table-hover">
+                {% for i in list %}
+                <tr>
+                  <td>{{ i.users_id}}</td>
+                  <td>{{ i.users_email}}</td>
+                  <td>{{ i.users_mobile}}</td>   
+                  <td>{{ i.users_role}}</td>              
+                  <td>
+                    <a href="/edituser/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#edituser"
+                    data-bs-whatever="@mdo">  
+                      <i class="fa fa-pen"></i>
+                      <a href="/deleteuser/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcategory"
+                    data-bs-whatever="@mdo">
+                      <i class="fas fa-trash"></i>
+                      
+                      </a>
+        
+                      <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
+                      data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
+                    
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
+          {% csrf_token %}
+        <div class="container-fluid">
+          <div class="row mb-3">
+            <div class="col-6">
+              <label for="UserName" class="form-label"> User Name</label>
+              <input type="text" class="form-control" id="User Name" name="categoryName" required>
+            </div>
+
+            <div class="col-6">
+              <label for="usersemail" class="form-label">User Email</label>
+              <input type="text" class="form-control" id="User Email" name="User Email" required>
+
+            </div>
+            
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">             
+              <label for="mobileno" class="form-label">Mobile Number</label>
+              <input type="text" class="form-control" id="mobile" name="Mobile_Number" placeholder="Mobile Number" required>
+            </div>
+
+            <div class="col-6">             
+              <label for="Role" class="form-label">Role</label>
+              <input type="text" class="form-control" id="Role" name="Role" placeholder="Admin" required>
+            </div>
+          </div>
+
+          <div class="row  mt-3">
+            <div class="col-12">             
+              <label for="mobileno" class="form-label">Password</label>
+              <input type="text" class="form-control" id="Password" name="Password" placeholder="Password" required>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> <i class="fas fa-times"></i> Close</button>
+        <button type="submit" class="btn btn-success">Save</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

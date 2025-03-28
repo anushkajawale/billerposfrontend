@@ -38,9 +38,10 @@
 
                   </td>
                   <td>
-                    <button type="button" class="btn btn-sm mx-1 btn-outline-success" onclick="loadEditModal('{{ i.category_id }}')">
+                    <button type="button" class="btn btn-sm mx-1 btn-outline-success"  onclick="loadEditModal('{{ i.category_id }}')">
                       <i class="fa fa-pen"></i>
                   </button>
+                  <a href="deleteCategory/{{ i.category_id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
                   
                   
                   <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
@@ -60,7 +61,7 @@
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content"> 
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalcheck ">Add Category</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -81,7 +82,7 @@
               <label for="CategoryImg" class="form-label"> Category Img</label>
               <input type="file" class="form-control" id="CategoryImg" name="categoryimg"
                 style="height: 150px; width: 200px;">
-            </div>
+            </div>  
             <div class="col-6">
               <label for="CategoryBanner" class="form-label"> Category Banner</label>
               <input type="file" class="form-control" id="CategoryBanner" name="categoryBanner"

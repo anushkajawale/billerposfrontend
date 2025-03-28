@@ -27,21 +27,20 @@
 
                 </tr>
               </thead>
+              {% for i in supplier %}
+
               <tbody class="table-hover">
                 <tr>
-                  <td> </td>
-                  <td> </td>
+                  <td>{{ i.suppliergroup_id}} </td>
+                  <td>{{ i.suppliergroup_name}} </td>
+                  
                   <td>
-                    <a href="/editsupplier/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editsupplier"
-                    data-bs-whatever="@mdo">
+                    <button type="button" class="btn btn-sm mx-1 btn-outline-success" onclick="loadEditModal('{{ i.suppliergroup_id}}')">
                       <i class="fa fa-pen"></i>
-                      </a>
-        
-                      <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
-                data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
-                    
+                    </button>
                   </td>
                 </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
@@ -50,6 +49,8 @@
     </div>
   </div>
 </div>
+
+
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -57,22 +58,73 @@
         <h5 class="modal-title" id="exampleModalLabel">Add SupplierGroup</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <form action="/insertsuppliergroup/" method="post">
+        {% csrf_token  %}
       <div class="modal-body">
-        <form>
           <div class="mb-3">
-            <label for="suppliergroup-name" class="col-form-label">SupplierGroup Name</label>
-            <input type="text" class="form-control" id="suppliergroup-name" placeholder="SupplierGroup Name" />
+            <label for="supplierGroup-name" class="col-form-label">SupplierGroup Name</label>
+            <input type="text" class="form-control" id="suppliergroup_name" name="suppliergroupname" placeholder="SupplierGroup Name" />
           </div>
 
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" name="submit" class="btn btn-success">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="editexampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit SupplierGroup</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
         </button>
-        <button type="button" class="btn btn-success">Save</button>
+      </div>
+      <form action="/updatesuppliergroup/" method="post">
+        {% csrf_token  %}
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="supplierGroup-name" class="col-form-label">SupplierGroup Name</label>
+            <input type="text" class="form-control" id="updatesuppliergroup_name" name="suppliergroupname" placeholder="SupplierGroup Name" />
+           <input type="hidden" id="updatesuppliergroup_id" name="suppliergroup_id">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" name="submit" class="btn btn-success">Save</button>
+        </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
+<script>
+  function loadEditModal(suppliergroupId) {console.log(suppliergroupId);
+  
+    fetch(`/editsuppliergroup/${suppliergroupId}/`)
+        .then(response =>{return response.json();})
+        .then(html => {
+          console.log(html);
+          let suppliergroup = html.editsuppliergroup;
+            var editModal = new bootstrap.Modal(document.getElementById('editexampleModal'));
+            document.getElementById("updatesuppliergroup_id").value=suppliergroup.suppliergroup_id;
+            document.getElementById("updatesuppliergroup_name").value=suppliergroup.suppliergroup_name;
+            
+            editModal.show();
+        })
+        .catch(error => console.error('Error loading modal content:', error));
+}
+
+</script>
 {% endblock %}

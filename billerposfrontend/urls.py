@@ -19,9 +19,12 @@ from django.urls import path
 from billerposfrontend import settings
 from django.conf.urls.static import static
 from billerposfrontend import views
+from tax.views import taxlist,inserttax,deletetax,edittax
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.index),
     path('index/', views.index),
     path('login/', views.login),
     path('register/', views.register),
@@ -29,27 +32,67 @@ urlpatterns = [
     path('insertcategory/',views.insertcategory),
     path('editcategory/<id>/',views.editcategory),
     path('updatecategory/',views.updatecategory),
+    path('category/deleteCategory/<id>',views.deleteCategory),
+   
     path('brand/',views.brand),
-    path('tax/',views.tax),
-    path('products/',views.productslist),
+    path('insertbrand/',views.insertbrandpage),
+    path('editbrand/<id>/',views.editbrand),
+    path('updatebrand/',views.updatebrand),
+    path('brand/deleteBrand/<id>',views.deleteBrand),
+    path('tax/',taxlist),
+    path('inserttax/',inserttax),
+    path('edittax/<id>/',edittax),
+    path('tax/deletetax/<id>',deletetax),
+    path('products/',views.productslist),   
     path('AddUnit/',views.AddUnit),
+    path('updateunit/',views.updateunit),
+    path('AddUnit/deleteunit/<id>',views.deleteunit),
     path('AddExpenses/',views.AddExpenses),
+    path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
     path('AddOtherCharge/',views.AddOtherCharge),
-    path('Customerlist/',views.Customerlist),
-    path('Supplierlist/',views.Supplierlist),
+    path('AddOtherCharge/deleteothercharge/<id>',views.deleteothercharge),
+    path('Customergrouplist/',views.Customergrouplist),
+    path('insertcustomergroup/',views.insertcustomergroup),
+    path('editcustomergroup/<id>/',views.editcustomergroup),
+    path('updatecustomergroup/',views.updatecustomergroup),
+    path('Suppliergrouplist/',views.Suppliergrouplist),
+    path('insertsuppliergroup/',views.insertsuppliergroup),
+    path('editsuppliergroup/<id>/',views.editsuppliergroup),
+    path('updatesuppliergroup/',views.updatesuppliergroup),
+    path('updatecustomer/',views.updatecustomer),
+    path('insertsuppliergroup/',views.insertsuppliergroup),
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
+
     path('Supplierlist/',views.supplierlist),
+
+    path('Supplierlist/',views.Supplierpage),
+
     path('RewardPoints/',views.RewardPoints),
-    path('Customers/',views.Customer),
-    path('Suppliers/',views.Supplier),
+    path('Customerpage/',views.Customerpage),
+    path('editcustomer/<id>/',views.editcustomer),
+    path('Supplierpage/',views.Supplierpage),
     path('Employee/',views.Employee),
+    path('Users/',views.Userslist),
+    path('POSBill/',views.POSBill),
+    path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
+
     path('EditRole/',views.EditRolelist),
     path('insertroles/',views.insertroles),
     path('Dashboard/',views.Dashboard),
     
    
+
+
+    path('Barcode/',views.Barcodepage),
+    path('Stock/',views.Stock),
+
+    path('Salelist/',views.Salelist),
+    path('Barcode/',views.Barcodepage)
+
+
+
 ]
 
 if settings.DEBUG:
