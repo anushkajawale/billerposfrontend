@@ -89,7 +89,8 @@ urlpatterns = [
     path('stock/',views.stock),
 
     path('Salelist/',views.Salelist),
-    path('Barcode/',views.Barcodepage)
+    path('Barcode/',views.Barcodepage),
+    path('Addsale/',views.Addsale)
 
 
 
