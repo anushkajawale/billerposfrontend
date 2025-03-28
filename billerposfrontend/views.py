@@ -646,7 +646,7 @@ def Addsale(request):
 
 
 def Stock(request):
-    return render(request,'Stock.html')
+    return render(request,'stock.html')
 
 
 
