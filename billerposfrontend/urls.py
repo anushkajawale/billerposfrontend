@@ -64,7 +64,7 @@ urlpatterns = [
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
 
-    path('Supplierlist/',views.supplierlist),
+    # ~path('Supplierlist/',views.supplierlist),
 
     path('Supplierlist/',views.Supplierpage),
 
@@ -86,7 +86,7 @@ urlpatterns = [
 
 
     path('Barcode/',views.Barcodepage),
-    path('Stock/',views.Stock),
+    path('stock/',views.stock),
 
     path('Salelist/',views.Salelist),
     path('Barcode/',views.Barcodepage)
