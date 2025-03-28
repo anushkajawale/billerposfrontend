@@ -63,7 +63,11 @@ urlpatterns = [
     path('insertsuppliergroup/',views.insertsuppliergroup),
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
+
+    path('Supplierlist/',views.supplierlist),
+
     path('Supplierlist/',views.Supplierpage),
+
     path('RewardPoints/',views.RewardPoints),
     path('Customerpage/',views.Customerpage),
     path('editcustomer/<id>/',views.editcustomer),
@@ -74,11 +78,19 @@ urlpatterns = [
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
 
+    path('EditRole/',views.EditRolelist),
+    path('insertroles/',views.insertroles),
+    path('Dashboard/',views.Dashboard),
+    
+   
+
+
     path('Barcode/',views.Barcodepage),
     path('Stock/',views.Stock),
 
     path('Salelist/',views.Salelist),
     path('Barcode/',views.Barcodepage)
+
 
 
 ]
