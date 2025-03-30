@@ -1,0 +1,94 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="card p-3">
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label class="form-label">Customer Name</label>
+                            <i class="fa fa-plus " style="margin-left: 150px;"></i>
+                            <select class="form-select">
+                                <option>Cash Sale</option>
+                                <option>Credit Sale</option>
+                                
+                            </select>
+                            
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Payment Term</label>
+                            <select class="form-select">
+                                <option>Cash</option>
+                                <option>Credit</option>
+                            </select>
+                        </div>
+                    
+                    
+                        <div class="col-md-2">
+                            <label class="form-label">Invoice Date</label>
+                            <input type="date" class="form-control" value="2025-03-26">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Due Days</label>
+                            <input type="number" class="form-control" value="0">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Due Date</label>
+                            <input type="date" class="form-control" value="2025-03-26">
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                    <div class="col-md-6 mb-3 ">
+                        <label class="form-label">Product Name</label>
+                        <input type="text" class="form-control" placeholder="Search Products by name or Scan Barcode">
+                    </div>
+
+                    <div class="col-md-2 mb-3" style="margin-top: 30px">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                          Close
+                        </button>
+                        
+                        <button type="button" class="btn btn-success">Save</button>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Item Name</th>
+                                <th>Qty</th>
+                                <th>Sale</th>
+                                <th>MRP</th>
+                                <th>Dis %</th>
+                                <th>Dis Value</th>
+                                <th>Basic Total</th>
+                                <th>GST %</th>
+                                <th>GST Value</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="12">No Items Added</td></tr>
+                        </tbody>
+                    </table>
+                    
+                   
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center p-3 w-500 " style= "color: white; font-weight: bold">
+    <span class="flex-fill text-center bg-success p-4">QTY 0</span>
+    <span class="flex-fill text-center bg-secondary p-4">Sale Amt: ₹ 0.00</span>
+    <span class="flex-fill text-center bg-danger p-4">Basic Amt: ₹ 0.00</span>
+    <span class="flex-fill text-center bg-warning p-4">Discount Amt: ₹ 0.00</span>
+    <span class="flex-fill text-center bg-info p-4">GST Amt: ₹ 0.00</span>
+    <span class="flex-fill text-center bg-primary p-4">Total Bill: ₹ 0.00</span>
+
+  </div>
+  </div>
+    
+{% endblock %}
