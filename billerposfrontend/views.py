@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from Customergroup.models import Customergroup
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -12,6 +12,7 @@ from customer.models import Customer
 from supplier.models import Supplier
 from Users.models import Users
 from tax.models import Tax
+from product.models import Product
 
 
 
@@ -142,8 +143,8 @@ def editbrand(request, id):
     except Brand.DoesNotExist:
         return JsonResponse({'error': ' Brand not found'}, status=404)       
 
-    except Category.DoesNotExist:
-        return JsonResponse({'error': ' not found'}, status=404)       
+    except Brand.DoesNotExist:
+        return JsonResponse({'error': 'Brand not found'}, status=404)       
 
 
 
@@ -296,6 +297,7 @@ def Paymenttermslist(request):
 
 
 def productslist(request):
+    productdata=Product.objects.all()
     categorydata=Category.objects.all()
     branddata=Brand.objects.all()
     taxdata=Tax.objects.all()
@@ -304,10 +306,10 @@ def productslist(request):
         'categories':categorydata,
         'brands':branddata,
         'taxs':taxdata,
-        'units':unitdata
+        'units':unitdata,
+        'products':productdata
     }
     return render(request,'productlist.html',data)
-    
 
 
 def Employee(request):
@@ -532,5 +534,48 @@ def deleteothercharge(request,id):
 def Barcodepage(request):
     return render(request,'barcode.html')
 
+def editproduct(request,id):
+    try:
+        productdata = Product.objects.get(product_id=id)
+        edit = {
+            'editproduct': {
+                'product_id': productdata.product_id,
+                'product_name': productdata.product_name, 
+                'product_marathi_name': productdata.product_marathi_name, 
+                'product_HSNCode':productdata.product_HSNCode,
+                'category':productdata.category,
+                'brand':productdata.brand,
+                'taxpercent':productdata.taxpercent,
+                'tax':productdata.tax,
+                'unit':productdata.unit,
+                'alternateunit':productdata.alternateunit,
+                'conversionfact':productdata.conversionfact,
+                'nos':productdata.nos,                
+                'barcode':productdata.barcode,                
+                'qrcode':productdata.qrcode,                
+                'mrp':productdata.mrp,                
+                'sale':productdata.sale,                
+                'credit':productdata.credit,                
+                'purchase':productdata.purchase,                
+                'wholesaler':productdata.wholesaler,                
+                'distributor':productdata.distributor,                
+                'purchase':productdata.purchase,                
+                'op_Qty':productdata.op_Qty,                
+                'op_Value':productdata.op_Value,                
+                'mfg_Date':productdata.mfg_Date,                
+                'exp_Date':productdata.exp_Date               
 
+            }
+        }
+        return JsonResponse(edit)
+    except Product.DoesNotExist:
+        return JsonResponse({'error': ' Product not found'}, status=404)       
 
+    except Product.DoesNotExist:
+        return JsonResponse({'error': 'Product not found'}, status=404)  
+
+def deleteproduct(request,id):
+    productdata=Product.objects.get(product_id=id)
+
+    productdata.delete()
+    return redirect("/products/")
