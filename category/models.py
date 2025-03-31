@@ -11,5 +11,12 @@ class Category(models.Model):
     
     def __str__(self):
         return self.category_name
-
+    
+    def to_dict(self):
+        return {
+            "category_id": self.category_id,
+            "category_name": self.category_name,
+            "category_img": self.category_img,
+            "category_bannerimg": self.category_bannerimg
+        }
 # Create your models here.

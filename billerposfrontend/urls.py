@@ -20,6 +20,7 @@ from billerposfrontend import settings
 from django.conf.urls.static import static
 from billerposfrontend import views
 from tax.views import taxlist,inserttax,deletetax,edittax
+from product.views import insertproduct
 
 
 urlpatterns = [
@@ -46,6 +47,12 @@ urlpatterns = [
     path('products/',views.productslist), 
     path('unit/',views.unitlist),  
     path('Addunit/',views.AddUnit),
+    path('products/',views.productslist),
+    path('insertproduct/',insertproduct),
+    path('editproduct/<id>/',views.editproduct),
+    path('deleteproduct/<id>/',views.deleteproduct),
+    path('AddUnit/',views.AddUnit),
+ 
     path('updateunit/',views.updateunit),
     path('AddUnit/deleteunit/<id>',views.deleteunit),
 
@@ -69,6 +76,7 @@ urlpatterns = [
     path('Paymentterms/',views.Paymenttermslist),
 
     
+
 
     path('Supplierlist/',views.Supplierpage),
 

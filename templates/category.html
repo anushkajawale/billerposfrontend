@@ -152,7 +152,7 @@
 <script>
   function loadEditModal(categoryId) {console.log(categoryId);
   
-    fetch(`/editcategory/${categoryId}/`)
+    fetch(`/editproduct/${categoryId}/`)
         .then(response =>{return response.json();})
         .then(html => {
           console.log(html);
