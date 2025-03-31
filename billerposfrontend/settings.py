@@ -59,7 +59,6 @@ INSTALLED_APPS = [
     'Employees',
     'RewardPOints'
 
-
 ]
     
 
