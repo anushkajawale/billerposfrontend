@@ -296,7 +296,7 @@
                                     <select class="form-select" name="brand" id="updateBrand">
                                         <option value="" selected>select brand</option>
                                         {% for barnd in brands %}
-                                        <option value="{{barnd.brand_id}}">{{barnd.brand_name}}</option>
+                                        <option value="{{ barnd.brand_id }}">{{ barnd.brand_name }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -460,7 +460,7 @@
             }
                 var editModal = new bootstrap.Modal(document.getElementById('editproduct'));
                 document.getElementById("updateproduct_id").value = product.product_id;
-                document.getElementById("updateproductName").value = product.product_name;
+                document.getElementById("updateproduct_name").value = product.product_name;
                 document.getElementById("updateproductMarathiname").value = product.product_marathi_name;
                 document.getElementById("updateproduct_HSNCode").value = product.product_HSNCode;
                 document.getElementById("updateCategory").value = product.category;

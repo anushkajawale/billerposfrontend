@@ -652,11 +652,15 @@ def editproduct(request,id):
                 'product_name': productdata.product_name, 
                 'product_marathi_name': productdata.product_marathi_name, 
                 'product_HSNCode':productdata.product_HSNCode,
-                'category':productdata.category,
-                'brand':productdata.brand,
+                'category':{
+                    'category_name':productdata.category.category_name},
+                'brand':{
+                    'brand_name':productdata.brand.brand_name},  
                 'taxpercent':productdata.taxpercent,
-                'tax':productdata.tax,
-                'unit':productdata.unit,
+                'tax':{
+                    'tax_name':productdata.tax.tax_name},
+                'unit':{
+                    'unit_name':productdata.unit.unit_name},
                 'alternateunit':productdata.alternateunit,
                 'conversionfact':productdata.conversionfact,
                 'nos':productdata.nos,                
