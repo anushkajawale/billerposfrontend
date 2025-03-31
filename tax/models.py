@@ -6,7 +6,7 @@ class Tax(models.Model):
     
     
     
-    class Meta:
+    class Meta: 
         db_table = "tbl_tax"  
 
     def __str__(self):

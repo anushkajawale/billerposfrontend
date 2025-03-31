@@ -92,7 +92,8 @@
       <div class="row mb-3">
         <div class="col-12">
           <label for="CategoryName" class="form-label">Expenses Name</label>
-          <input type="text" class="form-control" id="CategoryName" name="categoryName" value="" required>
+          <input type="text" class="form-control" id="updateexpenses_name" name="updateexpenses_name" value="" required>
+          <input type="hidden" id="updateexpenses_id" name="updateexpenses_id">
         </div>
         
       </div>
@@ -101,12 +102,28 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-    <button type="button" class="btn btn-success">Save</button>
+    <button type="submit" name="submit" class="btn btn-success">Save</button>
   </div>
   </div>
   </div>
   </div>
+  <script>
+    function loadEditModal(AddUnit) {console.log(AddUnit);
+    
+      fetch(`/editexpenses/${expensesid}/`)
+          .then(response =>{return response.json();})
+          .then(html => {
+            console.log(html);
+            let expenses = html.editexpenses;
+              var editModalContent = new bootstrap.Modal(document.getElementById('editexpenses'));
+              document.getElementById("updateexpenses_id").value=AddExpenses.expenses_name;
+              
+              editModalContent.show();
+          })
+          .catch(error => console.error('Error loading modal content:', error));
+  }
   
+  </script>
   
   
 {% endblock %}

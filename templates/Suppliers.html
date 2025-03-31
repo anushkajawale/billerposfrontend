@@ -1,286 +1,303 @@
 {% extends 'index.html' %}
 {% block content %}
-<div class="content-wrapper">
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="card  border border-success">
-        <div class="card-header">
-          <div class="d-flex justify-content-between">
-            <h3>
-              Suppliers
-            </h3>
-            <div class="text-right">
-              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                data-bs-whatever="@mdo"><i class="nav-icon fas fa-plus"></i>Add Supplier</button>
+            <div class="content-wrapper">
+              <div class="content-header">
+                <div class="container-fluid">
+                  <div class="card  border border-success">
+                    <div class="card-header">
+                      <div class="d-flex justify-content-between">
+                        <h3>
+                          Suppliers
+                        </h3>
+                        <div class="text-right">
+                          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            data-bs-whatever="@mdo"><i class="nav-icon fas fa-plus"></i>Add Supplier</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body ">
+                      <div class="table-responsive">
+                        <table class="table table-bordered text-center ">
+                          <thead class="table-success">
+                            <tr>
+                              <th>Sr.No</th>
+                              <th>Supplier Name</th>
+            
+                              <th>Action</th>
+            
+                            </tr>
+                          </thead>
+                          {% for i in supplier %}
+                          <tbody class="table-hover">
+                            <tr>
+                              <td>{{ i.supplier_id }} </td>
+                              <td>{{ i.supplier_name }}</td>
+            
+                              <td>
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                data-bs-whatever="@mdo"   class="btn btn-sm mx-1 btn-outline-success"
+                                  onclick="loadEditModal('{{ i.supplier_id }}')">
+                                  <i class="fa fa-pen"></i>
+                                </button>
+                                <a href="deleteSupplier/{{ i.supplier_id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
+            
+            
+                                <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
+                              data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
+            
+                              </td>
+                            </tr>
+                          </tbody>
+                          {% endfor %}
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="card-body ">
-          <div class="table-responsive">
-            <table class="table table-bordered text-center ">
-              <thead class="table-success">
-                <tr>
-                  <th>Sr.No</th>
-                  <th>Customer Name</th>
-
-                  <th>Action</th>
-
-                </tr>
-              </thead>
-              {% for i in supplier %}
-              <tbody class="table-hover">
-                <tr>
-                  <td>{{ i.supplier_id }} </td>
-                  <td>{{ i.supplier_name }}</td>
-
-                  <td>
-                    <button type="button" class="btn btn-sm mx-1 btn-outline-success"
-                      onclick="loadEditModal('{{ i.supplier_id }}')">
-                      <i class="fa fa-pen"></i>
-                    </button>
-
-
-                    <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
-                  data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
-
-                  </td>
-                </tr>
-              </tbody>
-              {% endfor %}
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalcheck ">Add Supplier</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <form action="/insertsupplier/" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="row mb-3">
-              <div class="row g-3">
-                <!-- Supplier Name -->
-                <div class="col-4">
-                  <label class="form-label">Supplier Name *</label>
-                  <input type="text" class="form-control" placeholder="Supplier Name" required>
+            
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalcheck ">Add Supplier</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container-fluid">
+                      <form action="/insertsupplier/" method="post">
+                        {% csrf_token %}
+                        <div class="row mb-3">
+                          <div class="row g-3">
+                            <!-- Supplier Name -->
+                            <div class="col-4">
+                              <label class="form-label">Supplier Name *</label>
+                              <input type="text" class="form-control" placeholder="Supplier Name" id="supplier_name" name="supplier_name" required>
+                            </div>
+                            <!-- Mobile No -->
+                            <div class="col-4">
+                              <label class="form-label">Mobile No.</label>
+                              <input type="text" class="form-control" placeholder="Mobile No" id="supplier_mobile" name="supplier_mobile">
+                            </div>
+                            <!-- Email -->
+                            <div class="col-4">
+                              <label class="form-label">Email</label>
+                              <input type="email" class="form-control" placeholder="Email" id="supplier_email" name="supplier_email">
+                            </div>
+                            <!-- GST No -->
+                            <div class="col-3">
+                              <label class="form-label">GST No.</label>
+                              <input type="text" class="form-control" placeholder="GST No" id="supplier_gstno" name="supplier_gstno">
+                            </div>
+                            <!-- PAN No -->
+                            <div class="col-3">
+                              <label class="form-label">PAN No.</label>
+                              <input type="text" class="form-control" placeholder="PAN No" id="supplier_panno" name="supplier_panno">
+                              
+                              
+                            </div>
+                            <div class="col-3">
+                              <label class="form-label">Opening Balance</label>
+                              <input type="text" class="form-control" placeholder="Opening Balance" id="supplier_openingbal" name="supplier_openingbal">
+                            </div>
+                            <div class="col-md-3">
+                              <label class="form-label">Group Type</label>
+                              <select class="form-select" name="supplier_grouptype" id="supplier_grouptype">
+                                <option>General</option>
+                                <option>Wholesale</option>
+                                <option>Retail</option>
+                              </select>
+                            </div>
+                            <!-- Billing Address -->
+                            <div class="col-md-6">
+                              <label class="form-label">Billing Address</label>
+            
+                              <textarea class="form-control" name="Billing Address" id="supplier_BillingAddress" name="supplier_BillingAddress"></textarea>
+                            </div>
+            
+                            <div class="col-md-6">
+                              <label class="form-label">Shipping Address</label>
+                              <textarea class="form-control" name="Shipping Address" id="supplier_ShippingAddress" name="supplier_ShippingAddress"></textarea>
+            
+                            </div>
+                            <!-- City -->
+                            <div class="col-md-3">
+                              <label class="form-label">City</label>
+                              <input type="text" class="form-control" placeholder="City" id="supplier_City" name="supplier_City">
+                            </div>
+                            <!-- Opening Balance -->
+            
+                            <!-- Shipping Address -->
+            
+                            <!-- Group Type -->
+            
+                            <!-- Credit Limit -->
+                            <div class="col-md-3">
+                              <label class="form-label">Credit Limit</label>
+                              <input type="text" class="form-control" placeholder="Credit Limit" id="supplier_CreditLimit" name="supplier_CreditLimit">
+                            </div>
+                            <!-- Credit Period -->
+                            <div class="col-md-3">
+                              <label class="form-label">Credit Period (Days)</label>
+                              <input type="text" class="form-control" placeholder="Credit Period (Days)" id="supplier_CreditPeriod" name="supplier_CreditPeriod">
+                            </div>
+            
+                         
+            
+            
+            
+            
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="submit" name="submit" class="btn btn-success">Save</button>
+                            </div>
+                      </form>
+                    </div>
+                  </div>
+            
                 </div>
-                <!-- Mobile No -->
-                <div class="col-4">
-                  <label class="form-label">Mobile No.</label>
-                  <input type="text" class="form-control" placeholder="Mobile No">
+              </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="modal fade" id="editSupplierModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="editSupplierModalcheck ">Edit supplier</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container-fluid">
+                      <form action="/updatesupplier/" method="post">
+                        {% csrf_token %}
+                        
+                        <div class="row g-3">
+                          <!-- Supplier Name -->
+                          <div class="col-md-6">
+                            <label class="form-label">Supplier Name </label>
+                            <input type="text" class="form-control" placeholder="supplier Name" name="supplier_name" id="updatesupplierName" required>
+                            <input type="hidden" id="updatesupplierId" name="supplier_id" >
+            
+                          </div>
+                          <!-- Mobile No -->
+                          <div class="col-md-6">
+                            <label class="form-label">Mobile No.</label>
+                            <input type="text" class="form-control" placeholder="Mobile No" name="supplier_mobile" id="updateMobileNo">
+                          </div>
+                          <!-- Email -->
+                          <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                          <input type="email" class="form-control" placeholder="Email" name="supplier_email" id="updateEmail">
+                          </div>
+                          <!-- GST No -->
+                          <div class="col-md-6">
+                            <label class="form-label">GST No.</label>
+                            <input type="text" class="form-control" placeholder="GST No"  name="supplier_gstno"  id="updateGSTNo">
+                          </div>
+                          <!-- PAN No -->
+                          <div class="col-md-6">
+                            <label class="form-label">PAN No.</label>
+                            <input type="text" class="form-control" placeholder="PAN No" name="supplier_panno" id="updatePANNo">
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label">Opening Balance</label>
+                            <input type="text" class="form-control" placeholder="Opening Balance" name="supplier_openingbal" id="updateOpeningBalance">
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label" name="supplier_grouptype" id="updategrouptype">Group Type</label>
+                            <select class="form-select">
+                              <option value="">General</option>
+                              <option value="">Wholesale</option>
+                              <option value="">Retail</option>
+                            </select>
+                          </div>
+                          <!-- Billing Address -->
+                          <div class="col-4">
+                            <label class="form-label">Billing Address</label>
+                            <input type="text" class="form-control" placeholder="Enter billing address" name="supplier_BillingAddress" id="updatebillingaddress">
+                          </div>
+            
+                          <div class="col-4">
+                            <label class="form-label">Shipping Address</label>
+                            <input type="text" class="form-control" placeholder="Enter shipping address"  name="supplier_ShippingAddress" id="updateshippingaddress">
+                          </div>
+                          <!-- City -->
+                          <div class="col-4">
+                            <label class="form-label">City</label>
+                            <input type="text" class="form-control" placeholder="City" name="supplier_City" id="updatesuppliercity">
+                          </div>
+                          <!-- Opening Balance -->
+            
+                          <!-- Shipping Address -->
+            
+                          <!-- Group Type -->
+            
+                          <!-- Credit Limit -->
+                          <div class="col-md-6">
+                            <label class="form-label">Credit Limit</label>
+                            <input type="text" class="form-control" placeholder="Credit Limit"  name="supplier_CreditLimit"  id="updatecreditlimit">
+                          </div>
+                          <!-- Credit Period -->
+                          <div class="col-md-6">
+                            <label class="form-label">Credit Period (Days)</label>
+                            <input type="text" class="form-control" placeholder="Credit Period (Days)" name="supplier_CreditPeriod" id="updatecreditperiod">
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-success">Update</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+            
                 </div>
-                <!-- Email -->
-                <div class="col-4">
-                  <label class="form-label">Email</label>
-                  <input type="email" class="form-control" placeholder="Email">
-                </div>
-                <!-- GST No -->
-                <div class="col-3">
-                  <label class="form-label">GST No.</label>
-                  <input type="text" class="form-control" placeholder="GST No">
-                </div>
-                <!-- PAN No -->
-                <div class="col-3">
-                  <label class="form-label">PAN No.</label>
-                  <input type="text" class="form-control" placeholder="PAN No">
-                </div>
-                <div class="col-3">
-                  <label class="form-label">Opening Balance</label>
-                  <input type="text" class="form-control" placeholder="Opening Balance">
-                </div>
-                <div class="col-md-3">
-                  <label class="form-label">Group Type</label>
-                  <select class="form-select">
-                    <option>General</option>
-                    <option>Wholesale</option>
-                    <option>Retail</option>
-                  </select>
-                </div>
-                <!-- Billing Address -->
-                <div class="col-md-6">
-                  <label class="form-label">Billing Address</label>
-
-                  <textarea class="form-control" name="Billing Address" id=""></textarea>
-                </div>
-
-                <div class="col-md-6">
-                  <label class="form-label">Shipping Address</label>
-                  <textarea class="form-control" name="Shipping Address" id=""></textarea>
-
-                </div>
-                <!-- City -->
-                <div class="col-md-3">
-                  <label class="form-label">City</label>
-                  <input type="text" class="form-control" placeholder="City">
-                </div>
-                <!-- Opening Balance -->
-
-                <!-- Shipping Address -->
-
-                <!-- Group Type -->
-
-                <!-- Credit Limit -->
-                <div class="col-md-3">
-                  <label class="form-label">Credit Limit</label>
-                  <input type="text" class="form-control" placeholder="Credit Limit">
-                </div>
-                <!-- Credit Period -->
-                <div class="col-md-3">
-                  <label class="form-label">Credit Period (Days)</label>
-                  <input type="text" class="form-control" placeholder="Credit Period (Days)">
-                </div>
+              </div>
+            </div> 
+            
+            <script>
+              
+              function loadEditModal(supplierId) {
+                console.log(supplierId);
+            
+                fetch(`/editsupplier/${supplierId}/`)
+                  .then(response => { return response.json(); })
+                  .then(html => {
+                    console.log(html);
+                    let supplier = html.editsupplier;
+                    var editModal = new bootstrap.Modal(document.getElementById('editSupplierModal'));
+                    document.getElementById("updatesupplierId").value = supplier.supplier_id
+                    document.getElementById("updatesupplierName").value = supplier.supplier_name
+                    document.getElementById("updateMobileNo").value = supplier.supplier_mobile
+                    document.getElementById("updateEmail").value = supplier.supplier_email
+                    document.getElementById("updateGSTNo").value = supplier.supplier_gstno
+                    document.getElementById("updatePANNo").value = supplier.supplier_panno
+                    document.getElementById("updateOpeningBalance").value = supplier.supplier_openingbal
+                    document.getElementById("updategrouptype").value = supplier.supplier_grouptype
+                    document.getElementById("updatebillingaddress").value = supplier.supplier_BillingAddress
+                    document.getElementById("updateshippingaddress").value =supplier.supplier_ShippingAddress
+                    document.getElementById("updatesuppliercity").value = supplier.supplier_City
+                    document.getElementById("updatecreditlimit").value = supplier.supplier_CreditLimit
+                    document.getElementById("updatecreditperiod").value = supplier.supplier_CreditPeriod
+                    editModal.show();
+                  })
+                  .catch(error => console.error('Error loading modal content:', error));
+              }
+            
+             
+            
+            
+            </script>
+            
+            
+            {% endblock %}
 
 
 
 
-
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-success">Save</button>
-                </div>
-          </form>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
-
-
-
-<!-- Large modal -->
-
-<div class="modal fade" id="editSupplierModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalcheck ">Add Supplier</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <form action="/updatesupplier/" method="post">
-            {% csrf_token %}
-            <div class="row mb-3">
-              <div class="row g-3">
-                <!-- Supplier Name -->
-                <div class="col-4">
-                  <label class="form-label">Supplier Name *</label>
-                  <input type="text" class="form-control" placeholder="Supplier Name" required>
-                </div>
-                <!-- Mobile No -->
-                <div class="col-4">
-                  <label class="form-label">Mobile No.</label>
-                  <input type="text" class="form-control" placeholder="Mobile No">
-                </div>
-                <!-- Email -->
-                <div class="col-4">
-                  <label class="form-label">Email</label>
-                  <input type="email" class="form-control" placeholder="Email">
-                </div>
-                <!-- GST No -->
-                <div class="col-3">
-                  <label class="form-label">GST No.</label>
-                  <input type="text" class="form-control" placeholder="GST No">
-                </div>
-                <!-- PAN No -->
-                <div class="col-3">
-                  <label class="form-label">PAN No.</label>
-                  <input type="text" class="form-control" placeholder="PAN No">
-                </div>
-                <div class="col-3">
-                  <label class="form-label">Opening Balance</label>
-                  <input type="text" class="form-control" placeholder="Opening Balance">
-                </div>
-                <div class="col-md-3">
-                  <label class="form-label">Group Type</label>
-                  <select class="form-select">
-                    <option>General</option>
-                    <option>Wholesale</option>
-                    <option>Retail</option>
-                  </select>
-                </div>
-                <!-- Billing Address -->
-                <div class="col-md-6">
-                  <label class="form-label">Billing Address</label>
-
-                  <textarea class="form-control" name="Billing Address" id=""></textarea>
-                </div>
-
-                <div class="col-md-6">
-                  <label class="form-label">Shipping Address</label>
-                  <textarea class="form-control" name="Shipping Address" id=""></textarea>
-
-                </div>
-                <!-- City -->
-                <div class="col-md-3">
-                  <label class="form-label">City</label>
-                  <input type="text" class="form-control" placeholder="City">
-                </div>
-                <!-- Opening Balance -->
-
-                <!-- Shipping Address -->
-
-                <!-- Group Type -->
-
-                <!-- Credit Limit -->
-                <div class="col-md-3">
-                  <label class="form-label">Credit Limit</label>
-                  <input type="text" class="form-control" placeholder="Credit Limit">
-                </div>
-                <!-- Credit Period -->
-                <div class="col-md-3">
-                  <label class="form-label">Credit Period (Days)</label>
-                  <input type="text" class="form-control" placeholder="Credit Period (Days)">
-                </div>
-
-
-
-
-
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" name="submit" class="btn btn-success">Update</button>
-                </div>
-          </form>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-</div>
-
-
-
-
-
-<script>
-  function loadEditModal(supplierId) {
-    console.log(supplierId);
-
-    fetch(`/editcustomer/${supplierId}/`)
-      .then(response => { return response.json(); })
-      .then(html => {
-        console.log(html);
-        let supplier = html.editsupplier;
-        var editModal = new bootstrap.Modal(document.getElementById('editSupplierModal'));
-        editModal.show();
-      })
-      .catch(error => console.error('Error loading modal content:', error));
-  }
-
-</script>
-
-
-{% endblock %}
+            

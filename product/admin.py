@@ -2,14 +2,13 @@ from django.contrib import admin
 from .models import Product
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display =('product_name',
+    list_display =( 'product_id', 'product_name',
 'product_marathi_name',
 'product_HSNCode',
 'category',
 'brand',
 'tax',
 'taxpercent',
-'taxtype',
 'unit',
 'alternateunit',
 'conversionfact',
