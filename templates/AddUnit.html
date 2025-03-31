@@ -37,7 +37,7 @@
                     <a href="/editunit/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editunit"
                     data-bs-whatever="@mdo">
                       <i class="fa fa-pen"></i>
-                    <a href="deleteunit/{{i.unit_id}}" class="btn btn-danger" onclick="return confirm('are you sure?')"><i class="fa fa-trash"></i></a>
+                    <a href="deleteunit/{{i.unit_id}}" class="btn btn-sm mx-1 btn-outline-danger" onclick="return confirm('are you sure?')"><i class="fa fa-trash"></i></a>
         
                       <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
                 data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
@@ -62,15 +62,16 @@
       </div>
       <div class="modal-body">
         <form action="/Addunit/" method="post">
+          {% csrf_token %}
           <div class="mb-3">
-            <label for="UnitGroup Name " class="col-form-label">Add Unit</label>
-            <input type="text" class="form-control" id="UnitGroup Name" placeholder="UnitGroup Name" />
+            <label for="UnitGroup Name " class="col-form-label"> Unit group</label>
+            <input type="text" class="form-control" name="unitgroupname" id="UnitGroup Name" placeholder="UnitGroup Name" />
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               Close
             </button>
-            <button type="submit"  class="btn btn-success">Save</button>
+            <button type="submit" name="submit" class="btn btn-success">Save</button>
           </div>
 
         </form>
@@ -110,13 +111,21 @@
 </div>
 </div>
 </div>
+ <script>
+  function loadEditModal(AddUnit) {console.log(AddUnit);
+  
+    fetch(`/editAddUnit/${AddUnit}/`)
+        .then(response =>{return response.json();})
+        .then(html => {
+          console.log(html);
+          let AddUnit = html.editAddUnit;
+            var editModalContent = new bootstrap.Modal(document.getElementById('editAddUnit'));
+            document.getElementById("updateunit_name").value=AddUnit.AddUnit;
+            
+            editModalContent.show();
+        })
+        .catch(error => console.error('Error loading modal content:', error));
+}
 
-
-
-
-
-
-    
-
-
+</script> 
 {% endblock %}

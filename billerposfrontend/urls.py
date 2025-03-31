@@ -20,6 +20,7 @@ from billerposfrontend import settings
 from django.conf.urls.static import static
 from billerposfrontend import views
 from tax.views import taxlist,inserttax,deletetax,edittax
+from product.views import insertproduct
 
 
 urlpatterns = [
@@ -33,7 +34,11 @@ urlpatterns = [
     path('editcategory/<id>/',views.editcategory),
     path('updatecategory/',views.updatecategory),
     path('category/deleteCategory/<id>',views.deleteCategory),
+<<<<<<< HEAD
     path('deleteCategory/<id>/',views.deleteCategory),
+=======
+   
+>>>>>>> 4f6321c1defe930511aca38866592d9999cb5326
     path('brand/',views.brand),
     path('insertbrand/',views.insertbrandpage),
     path('editbrand/<id>/',views.editbrand),
@@ -43,10 +48,20 @@ urlpatterns = [
     path('inserttax/',inserttax),
     path('edittax/<id>/',edittax),
     path('tax/deletetax/<id>',deletetax),
-    path('products/',views.productslist),   
+    path('products/',views.productslist), 
+    path('unit/',views.unitlist),  
+    path('Addunit/',views.AddUnit),
+    path('products/',views.productslist),
+    path('insertproduct/',insertproduct),
+    path('editproduct/<id>/',views.editproduct),
+    path('deleteproduct/<id>/',views.deleteproduct),
     path('AddUnit/',views.AddUnit),
+ 
     path('updateunit/',views.updateunit),
     path('AddUnit/deleteunit/<id>',views.deleteunit),
+
+    
+    path('AddExpenses/',views.expenseslist), 
     path('AddExpenses/',views.AddExpenses),
     path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
     path('AddOtherCharge/',views.AddOtherCharge),
@@ -67,7 +82,12 @@ urlpatterns = [
     path('insertsuppliergroup/',views.insertsuppliergroup),
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
+
+    
+
+
     path('Supplierlist/',views.Supplierpage),
+
     path('RewardPoints/',views.RewardPoints),
     path('Customerpage/',views.Customerpage),
     path('insertcustomer/',views.insertcustomer),
@@ -86,8 +106,25 @@ urlpatterns = [
     path('POSBill/',views.POSBill),
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
+
+    path('EditRole/',views.EditRolelist),
+    path('insertroles/',views.insertroles),
+    path('Dashboard/',views.Dashboard),
+    
+   
+
+
+    path('Barcode/',views.Barcodepage),
+
+
+    path('stock/',views.stock),
+
+
     path('Salelist/',views.Salelist),
-    path('Barcode/',views.Barcodepage)
+    path('Barcode/',views.Barcodepage),
+    path('Addsale/',views.Addsale)
+
+
 
 ]
 

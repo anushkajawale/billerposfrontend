@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from Customergroup.models import Customergroup
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -8,10 +8,18 @@ from category.models import Category
 from brand.models import Brand
 from Suppliergroup.models import Suppliergroup
 from Roles.models import Roles
+
+from django.contrib import messages
+from django.db.models import Sum
+
 from customer.models import Customer
 from supplier.models import Supplier
 from Users.models import Users
 from tax.models import Tax
+from Unit.models import Unit
+
+from product.models import Product
+
 
 
 
@@ -141,8 +149,8 @@ def editbrand(request, id):
     except Brand.DoesNotExist:
         return JsonResponse({'error': ' Brand not found'}, status=404)       
 
-    except Category.DoesNotExist:
-        return JsonResponse({'error': ' not found'}, status=404)       
+    except Brand.DoesNotExist:
+        return JsonResponse({'error': 'Brand not found'}, status=404)       
 
 
 
@@ -165,11 +173,47 @@ def deleteBrand(requset,id):
     branddata.delete()
     return redirect('/brand/')
 
+def unitlist(request):
+    list = Unit.objects.all()
+    data = {
+        "list":list
+    }
+    return render(request,'AddUnit.html',data)
+
 def AddUnit(request):
-    return render(request,'AddUnit.html')
+    if request.method=='POST':
+        unitname=request.POST.get('unitgroupname')
+
+        insertunit=Unit(
+            unit_name=unitname
+        )
+
+        insertunit.save()
+        return redirect('/unit/')
+    else:
+        return render(request,'AddUnit.html')
+    #########################
+
+def expenseslist(request):
+    list = Expenses.objects.all()
+    data = {
+        "list":list
+    }
+    return render(request,'AddExpenses.html',data)
 
 def AddExpenses(request):
-    return render(request,'AddExpenses.html')
+    if request.method=='POST':
+        expensesname=request.POST.get('expensesgroupname')
+
+        insertexpenses=AddExpenses(
+            expenses_name=expensesname
+        )
+
+        insertexpenses.save()
+        return redirect('/expenses/')
+    else:
+        return render(request,'AddExpenses.html')
+    #########################
 
 def AddOtherCharge(request):
     return render(request,'AddOtherCharge.html')
@@ -308,6 +352,7 @@ def Paymenttermslist(request):
 
 
 def productslist(request):
+    productdata=Product.objects.all()
     categorydata=Category.objects.all()
     branddata=Brand.objects.all()
     taxdata=Tax.objects.all()
@@ -316,10 +361,10 @@ def productslist(request):
         'categories':categorydata,
         'brands':branddata,
         'taxs':taxdata,
-        'units':unitdata
+        'units':unitdata,
+        'products':productdata
     }
     return render(request,'productlist.html',data)
-    
 
 
 def Employee(request):
@@ -635,12 +680,8 @@ def deleteSupplier(request,id):
 
 
 from Unit.models import Unit
-def AddUnit(request):
-    list = Unit.objects.all()
-    data = {
-        "list":list
-    }
-    return render(request,'AddUnit.html',data)
+
+
 
 
 
@@ -693,6 +734,111 @@ def Roleslist(request):
     }
     return render(request,'Roles.html',data)
 
+
+def edit(request):
+    if request.method=="POST":
+        Roles_id = request.POST.get('Roles_id')
+        Roles_name=request.POST.get('Roles_name')
+        Roles_dashboard=request.POST.get('Roles_dashboard')
+    findRecord=Roles.objects.get(Roles_id = Roles_id)
+    findRecord=Roles.objects.get(Roles_name = Roles_name)
+    findRecord=Roles.objects.get(Roles_dashboard = Roles_dashboard)
+
+    findRecord.save()
+    return redirect("/EditRole/")
+
+def EditRolelist(request):
+    listdata= Roles.objects.all()   
+    data = {
+        'list':listdata
+    }
+    return render(request,'EditRole.html',data)
+
+def add_role(request):
+    if request.method == 'POST':
+        role_name = request.POST.get('rolename')
+        selected_permissions = request.POST.get('selected_permissions')  # Comma-separated values
+        
+        if role_name:
+            role = role(name=role_name, permissions=selected_permissions)
+            role.save()
+            messages.success(request, "Role saved successfully!")
+            return redirect('add_role')  # Reloads the same page after saving
+        
+        messages.error(request, "Role name is required!")
+    
+    return render(request, 'EditRole.html')
+
+def role_list(request):
+    Roles = Roles.objects.all()  # Fetch all roles
+    return render(request, 'role_list.html', {'roles': Roles})
+
+def edit_role(request):
+    if request.method == "POST":
+        role_name = request.POST.get("Rolename")
+        
+        # Check if the role exists, otherwise create a new one
+        role = Roles.objects.get_or_create(name=role_name)
+
+        # Update role permissions based on the checkboxes
+        role.Role_Dashboard = request.POST.get("Role_Dashboard") == "True"
+        role.Role_UserProfile = request.POST.get("Role_UserProfile") == "True"
+        role.Role_BusinessProfile = request.POST.get("Role_BusinessProfile") == "True"
+
+        # Save the role to the database
+        role.save()
+
+        return redirect("edit_role")  # Redirect back to the form after saving
+
+    # If GET request, display the form
+    roles = Roles.objects.all()
+    return render(request, "your_template.html", {"list": roles})
+
+def insertroles(request):
+    if request.method=="POST":
+        Roles_name=request.POST.get("role_name")
+        Roles_Dashboard=request.POST.get("role_dashboard")
+        Roles_UserProfile=request.POST.get("role_userprofile")
+        Roles_BusinessProfile=request.POST.get("role_BusinessProfile")
+        Roles_BarcodePrint=request.POST.get("role_BarcodePrint")
+        Roles_Stock=request.POST.get("Roles_Stock")
+        Roles_HRDepartment=request.POST.get("Roles_HRDepartment") 
+        Roles_RewardPoint=request.POST.get("Roles_RewardPoint")
+        Roles_POS=request.POST.get("Roles_POS")
+        Roles_Sale=request.POST.get("Roles_Sale")
+        Roles_Purchase=request.POST.get("Roles_Purchase")
+        Roles_Supplier=request.POST.get("Roles_Supplier")
+        Roles_Settings=request.POST.get("Roles_Settings")
+        
+
+        insertquery=Roles(
+           Roles_name=Roles_name,
+           Roles_Dashboard=Roles_Dashboard,
+            Roles_UserProfile=Roles_UserProfile,
+            Roles_BusinessProfile=Roles_BusinessProfile,
+            Roles_BarcodePrint=Roles_BarcodePrint,
+            Roles_Stock=Roles_Stock,
+            Roles_HRDepartment=Roles_HRDepartment,
+            Roles_RewardPoint=Roles_RewardPoint,
+            Roles_POS=Roles_POS,
+            Roles_Sale=Roles_Sale,
+            Roles_Purchase=Roles_Purchase,
+            Roles_Supplier=Roles_Supplier,
+            Roles_Settings=Roles_Settings
+        )
+
+        
+        
+        insertquery.save()
+        return redirect("/Roles/")
+    else:
+        return render(request,'Roles.html')
+        
+
+def Dashboard(request):
+    
+    return render(request, 'Dashboard.html') 
+
 def POSBill (request):
     return render(request,'POSBills.html')
 
@@ -717,14 +863,14 @@ def updateunit(request):
         fetchRecord.category_name=unit_name
 
         fetchRecord.save()  
-        return redirect('/AddUnit/')
+        return redirect('/unit/')
     
 def deleteunit(request,id):   
     unitdata=Unit.objects.get(unit_id=id)
 
     unitdata.delete()
 
-    return redirect('/AddUnit/') 
+    return redirect('/unit/') 
 
 def deleteexpenses(request,id):   
     expensesdata=Expenses.objects.get(expenses_id=id)
@@ -752,5 +898,55 @@ def RewardPoints(request):
 def Barcodepage(request):
     return render(request,'barcode.html')
 
+def editproduct(request,id):
+    try:
+        productdata = Product.objects.get(product_id=id)
+        edit = {
+            'editproduct': {
+                'product_id': productdata.product_id,
+                'product_name': productdata.product_name, 
+                'product_marathi_name': productdata.product_marathi_name, 
+                'product_HSNCode':productdata.product_HSNCode,
+                'category':productdata.category,
+                'brand':productdata.brand,
+                'taxpercent':productdata.taxpercent,
+                'tax':productdata.tax,
+                'unit':productdata.unit,
+                'alternateunit':productdata.alternateunit,
+                'conversionfact':productdata.conversionfact,
+                'nos':productdata.nos,                
+                'barcode':productdata.barcode,                
+                'qrcode':productdata.qrcode,                
+                'mrp':productdata.mrp,                
+                'sale':productdata.sale,                
+                'credit':productdata.credit,                
+                'purchase':productdata.purchase,                
+                'wholesaler':productdata.wholesaler,                
+                'distributor':productdata.distributor,                
+                'purchase':productdata.purchase,                
+                'op_Qty':productdata.op_Qty,                
+                'op_Value':productdata.op_Value,                
+                'mfg_Date':productdata.mfg_Date,                
+                'exp_Date':productdata.exp_Date               
+            }
+        }
+        return JsonResponse(edit)
+    except Product.DoesNotExist:
+        return JsonResponse({'error': ' Product not found'}, status=404) 
+            
+def stock(request):
+    return render(request,'stock.html')
+
+def Addsale(request):
+    return render(request,'Addsale.html')
 
 
+def Stock(request):
+    return render(request,'stock.html')
+
+
+def deleteproduct(request,id):
+    productdata=Product.objects.get(product_id=id)
+
+    productdata.delete()
+    return redirect("/products/")
