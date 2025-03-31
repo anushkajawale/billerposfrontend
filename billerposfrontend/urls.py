@@ -34,7 +34,11 @@ urlpatterns = [
     path('editcategory/<id>/',views.editcategory),
     path('updatecategory/',views.updatecategory),
     path('category/deleteCategory/<id>',views.deleteCategory),
+<<<<<<< HEAD
+    path('deleteCategory/<id>/',views.deleteCategory),
+=======
    
+>>>>>>> 4f6321c1defe930511aca38866592d9999cb5326
     path('brand/',views.brand),
     path('insertbrand/',views.insertbrandpage),
     path('editbrand/<id>/',views.editbrand),
@@ -66,11 +70,15 @@ urlpatterns = [
     path('insertcustomergroup/',views.insertcustomergroup),
     path('editcustomergroup/<id>/',views.editcustomergroup),
     path('updatecustomergroup/',views.updatecustomergroup),
+    path('Customergrouplist/deleteCustomergroup/<id>/',views.deleteCustomergroup),
     path('Suppliergrouplist/',views.Suppliergrouplist),
     path('insertsuppliergroup/',views.insertsuppliergroup),
     path('editsuppliergroup/<id>/',views.editsuppliergroup),
     path('updatesuppliergroup/',views.updatesuppliergroup),
+    path('Suppliergrouplist/deleteSuppliergroup/<id>/',views.deleteSuppliergroup),
+
     path('updatecustomer/',views.updatecustomer),
+    path('Customerpage/deleteCustomer/<id>',views.deleteCustomer),
     path('insertsuppliergroup/',views.insertsuppliergroup),
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
@@ -82,8 +90,17 @@ urlpatterns = [
 
     path('RewardPoints/',views.RewardPoints),
     path('Customerpage/',views.Customerpage),
+    path('insertcustomer/',views.insertcustomer),
     path('editcustomer/<id>/',views.editcustomer),
     path('Supplierpage/',views.Supplierpage),
+    path('insertsupplier/',views.insertsupplier),
+    path('editsupplier/<id>/',views.editsupplier),
+    path('updatesupplier/',views.updatesupplier),
+    path('Supplierpage/deleteSupplier/<id>',views.deleteSupplier),
+
+
+    
+
     path('Employee/',views.Employee),
     path('Users/',views.Userslist),
     path('POSBill/',views.POSBill),

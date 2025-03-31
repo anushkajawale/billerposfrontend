@@ -62,25 +62,19 @@
             </tr>
         </thead>
         <tbody id="dataList">
+             {% for i in list %}
             <tr>
-                <td>100</td>
-                <td>101</td>
-                <td>10</td>
+                <td>{{ i.RewardPoints_Maxrange }} </td>
+                  <td>{{ i.RewardPoints_Minrange }}</td>
+                  <td>{{ i. RewardPoints_Points }}</td>
+
+                
                 <td>
                     <span class="actions" onclick="editRow(this)">✏️</span> 
                     <span class="actions" onclick="deleteRow(this)">🗑️</span>
                 </td>
             </tr>
-            <tr>
-                <td>102</td>
-                <td>1000</td>
-                <td>12</td>
-                <td>
-                    <span class="actions" onclick="editRow(this)">✏️</span> 
-                    <span class="actions" onclick="deleteRow(this)">🗑️</span>
-                </td>
-            </tr>
-           
+            {% endfor %}
         </tbody>
     </table>
 </div>
