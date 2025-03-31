@@ -43,10 +43,14 @@ urlpatterns = [
     path('inserttax/',inserttax),
     path('edittax/<id>/',edittax),
     path('tax/deletetax/<id>',deletetax),
-    path('products/',views.productslist),   
-    path('AddUnit/',views.AddUnit),
+    path('products/',views.productslist), 
+    path('unit/',views.unitlist),  
+    path('Addunit/',views.AddUnit),
     path('updateunit/',views.updateunit),
     path('AddUnit/deleteunit/<id>',views.deleteunit),
+
+    
+    path('AddExpenses/',views.expenseslist), 
     path('AddExpenses/',views.AddExpenses),
     path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
     path('AddOtherCharge/',views.AddOtherCharge),

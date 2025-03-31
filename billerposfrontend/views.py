@@ -16,6 +16,7 @@ from customer.models import Customer
 from supplier.models import Supplier
 from Users.models import Users
 from tax.models import Tax
+from Unit.models import Unit
 
 
 
@@ -170,11 +171,47 @@ def deleteBrand(requset,id):
     branddata.delete()
     return redirect('/brand/')
 
+def unitlist(request):
+    list = Unit.objects.all()
+    data = {
+        "list":list
+    }
+    return render(request,'AddUnit.html',data)
+
 def AddUnit(request):
-    return render(request,'AddUnit.html')
+    if request.method=='POST':
+        unitname=request.POST.get('unitgroupname')
+
+        insertunit=Unit(
+            unit_name=unitname
+        )
+
+        insertunit.save()
+        return redirect('/unit/')
+    else:
+        return render(request,'AddUnit.html')
+    #########################
+
+def expenseslist(request):
+    list = Expenses.objects.all()
+    data = {
+        "list":list
+    }
+    return render(request,'AddExpenses.html',data)
 
 def AddExpenses(request):
-    return render(request,'AddExpenses.html')
+    if request.method=='POST':
+        expensesname=request.POST.get('expensesgroupname')
+
+        insertexpenses=AddExpenses(
+            expenses_name=expensesname
+        )
+
+        insertexpenses.save()
+        return redirect('/expenses/')
+    else:
+        return render(request,'AddExpenses.html')
+    #########################
 
 def AddOtherCharge(request):
     return render(request,'AddOtherCharge.html')
@@ -428,12 +465,8 @@ def updatecustomer(request):
 
 
 from Unit.models import Unit
-def AddUnit(request):
-    list = Unit.objects.all()
-    data = {
-        "list":list
-    }
-    return render(request,'AddUnit.html',data)
+
+
 
 
 
@@ -615,14 +648,14 @@ def updateunit(request):
         fetchRecord.category_name=unit_name
 
         fetchRecord.save()  
-        return redirect('/AddUnit/')
+        return redirect('/unit/')
     
 def deleteunit(request,id):   
     unitdata=Unit.objects.get(unit_id=id)
 
     unitdata.delete()
 
-    return redirect('/AddUnit/') 
+    return redirect('/unit/') 
 
 def deleteexpenses(request,id):   
     expensesdata=Expenses.objects.get(expenses_id=id)
