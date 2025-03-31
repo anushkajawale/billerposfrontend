@@ -34,11 +34,10 @@ urlpatterns = [
     path('editcategory/<id>/',views.editcategory),
     path('updatecategory/',views.updatecategory),
     path('category/deleteCategory/<id>',views.deleteCategory),
-<<<<<<< HEAD
+
     path('deleteCategory/<id>/',views.deleteCategory),
-=======
-   
->>>>>>> 4f6321c1defe930511aca38866592d9999cb5326
+
+
     path('brand/',views.brand),
     path('insertbrand/',views.insertbrandpage),
     path('editbrand/<id>/',views.editbrand),
