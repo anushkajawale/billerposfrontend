@@ -4,39 +4,37 @@
 <div class="content-wrapper">
   <div class="content-header">
     <div class="container-fluid">
-      <div class="card  border border-success">
+      <div class="card border border-success">
         <div class="card-header">
           <div class="d-flex justify-content-between">
-            <h3>
-              Payment Terms
-            </h3>
+            <h3>Payment Terms</h3>
             <div class="text-right">
-              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                data-bs-whatever="@mdo"><i class="nav-icon fas fa-plus"></i> Payment Terms</button>
+              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="nav-icon fas fa-plus"></i> Payment Terms
+              </button>
             </div>
           </div>
         </div>
-        <div class="card-body ">
+        <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-bordered text-center ">
+            <table class="table table-bordered text-center">
               <thead class="table-success">
                 <tr>
                   <th>Sr.No</th>
                   <th>PaymentTerms Name</th>
                   <th>Action</th>
-
                 </tr>
               </thead>
               <tbody class="table-hover">
                 {% for i in list %}
                 <tr>
-                  <td>{{ i.Paymentterms_id}}</td>
-                  <td>{{ i.Paymentterms_name}}</td>
+                  <td>{{ i.Paymentterms_id }}</td>
+                  <td>{{ i.Paymentterms_name }}</td>
                   <td>
-                    <a href="/editcustomer/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcustomer"
+                    <a href="/insertpaymentterms/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editpaymentterms"
                     data-bs-whatever="@mdo">
-                      <i class="fa fa-pen"></i>
-                      </a>
+                      <i class="fa fa-pen"></i></a>
+                      <a href="deletepaymentterms/{{ i.Paymentterms_id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
         
                       <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
                 data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
@@ -52,29 +50,81 @@
     </div>
   </div>
 </div>
+
+<!-- Add Payment Terms Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"> Payment Terms</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title">Add Payment Terms</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="/insertpaymentterms/" method="post">
+          {% csrf_token %}
           <div class="mb-3">
-            <label for="customergroup-name" class="col-form-label"> PaymentTerms Name</label>
-            <input type="text" class="form-control" id="PaymentTerms-name" placeholder="PaymentTerms Name" required/>
+            <label for="customergroup-name" class="col-form-label">paymentterms Name</label>
+            <input type="text" class="form-control" id="updatepaymentterms_name" name="updatepaymentterms_name" placeholder="paymentterms Name" required />
+            <input type="hidden" id="updatepaymentterms_id" name="updatepaymentterms_id">
           </div>
-
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Save</button>
+          </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
-        <button type="button" class="btn btn-success">Save</button>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Edit Payment Terms Modal -->
+<div class="modal fade" id="editpaymentterms" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Payment Terms</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/updatepaymentterms/" method="post">
+          {% csrf_token %}
+          <input type="hidden" id="updatepaymentterms_id" name="updatepaymentterms_id">
+          <div class="mb-3">
+            <label class="form-label">Payment Terms Name</label>
+            <input type="text" class="form-control" id="updatepaymentterms_name" name="updatepaymentterms_name" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function loadEditModal(paymenttermsId) {
+    console.log("Loading edit modal for ID:", paymenttermsId);
+
+    fetch(`/editpaymentterms/${paymenttermsId}/`)
+      .then(response => response.json())
+      .then(data => {
+        console.log("Data received:", data);
+        let paymentterms = data.editpaymentterms;
+        
+        if (paymentterms) {
+          document.getElementById("updatepaymentterms_id").value = paymentterms.Paymentterms_id;
+          document.getElementById("updatepaymentterms_name").value = paymentterms.Paymentterms_name;
+
+          let editModal = new bootstrap.Modal(document.getElementById('editpaymentterms'));
+          editModal.show();
+        } else {
+          console.error("Payment mode data not found");
+        }
+      })
+      .catch(error => console.error("Error loading modal content:", error));
+  }
+</script>
+
 {% endblock %}

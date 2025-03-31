@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Paymentmode List</h2>
+    
+    {% if paymentterms %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                  <th>Sr.No</th>
+                  <th>Payment Name</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for i in list %}
+                <tr>
+                  <td>{{ i.Paymentterms_id}}</td>
+                  <td>{{ i.Paymentterms_name}}</td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No Paymentmode found.</p>
+    {% endif %}
+</div>
+{% endblock %}
