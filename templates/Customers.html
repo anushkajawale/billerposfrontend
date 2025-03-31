@@ -39,6 +39,7 @@
                       onclick="loadEditModal('{{ i.customer_id }}')">
                       <i class="fa fa-pen"></i>
                     </button>
+                    <a href="deleteCustomer/{{ i.customer_id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
 
 
                     <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
@@ -139,20 +140,17 @@
                 <!-- Credit Period -->
                 <div class="col-md-3">
                   <label class="form-label">Credit Period (Days)</label>
-                  <input type="text" class="form-control" placeholder="Credit Period (Days)" id="ustomer_CreditPeriod" name="ustomer_CreditPeriod">
+                  <input type="text" class="form-control" placeholder="Credit Period (Days)" id="customer_CreditPeriod" name="customer_CreditPeriod">
                 </div>
 
-                <div class="col-md-3">
-                  <label class="form-label">Customer Barcode</label>
-                  <input type="text" class="form-control" placeholder="Customer Barcode">
-                </div>
+             
 
 
 
 
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  id="closeModal1">Close</button>
-                  <button type="button" class="btn btn-success">Save</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" name="submit" class="btn btn-success">Save</button>
                 </div>
           </form>
         </div>
@@ -163,21 +161,11 @@
 </div>
 
 
+
+
+
 <div class="modal fade" id="editCustomerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
-
-
-</form>
-</div>
-</div>
-
-</div>
-</div>
-</div>
-
-
-<div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="editCustomerModalcheck ">Edit Customer</h5>
@@ -261,7 +249,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  id="closeModal2">Close</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-success">Update</button>
             </div>
           </form>
@@ -306,14 +294,8 @@
       .catch(error => console.error('Error loading modal content:', error));
   }
 
-  var closeModal2 = document.getElementById("closeModal2");
-  var modal1 = document.getElementById("exampleModal");
-  var modal2 = document.getElementById("editCustomerModal");
+ 
 
-  closeModal2.onclick = function() {
-  modal1.style.display = "none";
-  modal2.style.display = "none";
-}
 
 </script>
 

@@ -38,6 +38,7 @@
                     <button type="button" class="btn btn-sm mx-1 btn-outline-success" onclick="loadEditModal('{{ i.customergroup_id}}')">
                       <i class="fa fa-pen"></i>
                     </button>
+                    <a href="deleteCustomergroup/{{ i.customergroup_id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
                   </td>
                 </tr>
                 {% endfor %}

@@ -192,7 +192,7 @@ def insertcustomergroup(request):
          )  
 
          insertquery.save() 
-         return redirect("/Customerlist/")
+         return redirect("/Customergrouplist/")
     else:
         return render(request,'Customergroup.html') 
     
@@ -225,7 +225,15 @@ def updatecustomergroup(request):
         fetchRecord.customergroup_name=customergroup_name
 
         fetchRecord.save()  
-        return redirect('/Customergrouplist/')    
+        return redirect('/Customergrouplist/') 
+
+ 
+def deleteCustomergroup(request,id):
+    customergroupdata =Customergroup.objects.get(customergroup_id=id)
+    customergroupdata.delete()
+    return redirect('/Customergrouplist/')   
+
+
 
 
 
@@ -246,7 +254,7 @@ def insertsuppliergroup(request):
          )  
 
          insertquery.save() 
-         return redirect("/Supplierlist/")
+         return redirect("/Suppliergrouplist/")
     else:
         return render(request,'Supplier.html')
     
@@ -279,7 +287,12 @@ def updatesuppliergroup(request):
         fetchRecord.suppliergroup_name=suppliergroup_name
 
         fetchRecord.save()  
-        return redirect('/Suppliergrouplist/')      
+        return redirect('/Suppliergrouplist/') 
+
+def deleteSuppliergroup(request,id):
+    suppliergroupdata =Suppliergroup.objects.get(suppliergroup_id=id)
+    suppliergroupdata.delete()
+    return redirect('/Suppliergrouplist/')          
     
 
  
@@ -328,6 +341,53 @@ def Supplierpage(request):
       'supplier':supplierdata
     }
     return render(request,'Suppliers.html',data)
+
+
+def insertcustomer(request):
+    if request.method=="POST":
+        customer_name=request.POST.get("customer_name")
+        customer_mobile=request.POST.get("customer_mobile")
+        customer_email=request.POST.get("customer_email")
+        customer_gstno=request.POST.get("customer_gstno")
+        customer_panno=request.POST.get("customer_panno")
+        customer_openingbal=request.POST.get("customer_openingbal")
+        customer_grouptype=request.POST.get("customer_grouptype")
+        customer_BillingAddress=request.POST.get("customer_BillingAddress")
+        customer_ShippingAddress=request.POST.get("customer_ShippingAddress")
+        customer_City=request.POST.get("customer_City")
+        customer_CreditLimit=request.POST.get("customer_CreditLimit")
+        customer_CreditPeriod=request.POST.get("customer_CreditPeriod")
+        customer_barcode=request.POST.get("customer_barcode")
+        
+
+
+
+
+        insertquery=Customer(
+           
+        customer_name=customer_name,
+        customer_mobile=customer_mobile,
+        customer_email=customer_email,
+        customer_gstno=customer_gstno,
+        customer_panno=customer_panno,
+        customer_openingbal=customer_openingbal,
+        customer_grouptype=customer_grouptype,
+        customer_BillingAddress=customer_BillingAddress,
+        customer_ShippingAddress=customer_ShippingAddress,
+        customer_City=customer_City,
+        customer_CreditLimit=customer_CreditLimit,
+        customer_CreditPeriod=customer_CreditPeriod,
+        # customer_barcode=customer_barcode
+       )
+        
+        insertquery.save()
+        return redirect("/Customerpage/")
+    else:
+        return render(request,'customers.html')
+        
+       
+    
+
 
 def editcustomer(requset,id):
     try:
@@ -418,6 +478,158 @@ def updatecustomer(request):
 
         fetchRecord.save()  
         return redirect('/Customerpage/')   
+
+def deleteCustomer(request,id):
+    customerdata =Customer.objects.get(customer_id=id)
+    customerdata.delete()
+    return redirect('/Customerpage/')
+
+
+def insertsupplier(request):
+    if request.method=="POST":
+        supplier_name=request.POST.get("supplier_name")
+        supplier_mobile=request.POST.get("supplier_mobile")
+        supplier_email=request.POST.get("supplier_email")
+        supplier_gstno=request.POST.get("supplier_gstno")
+        supplier_panno=request.POST.get("supplier_panno")
+        supplier_openingbal=request.POST.get("supplier_openingbal")
+        supplier_grouptype=request.POST.get("supplier_grouptype")
+        supplier_BillingAddress=request.POST.get("supplier_BillingAddress")
+        supplier_ShippingAddress=request.POST.get("supplier_ShippingAddress")
+        supplier_City=request.POST.get("supplier_City")
+        supplier_CreditLimit=request.POST.get("supplier_CreditLimit")
+        supplier_CreditPeriod=request.POST.get("supplier_CreditPeriod")
+        # supplier_barcode=request.POST.get("supplier_barcode")
+        
+
+
+
+
+        insertquery=Supplier(
+           
+        supplier_name=supplier_name,
+        supplier_mobile=supplier_mobile,
+        supplier_email=supplier_email,
+        supplier_gstno=supplier_gstno,
+        supplier_panno=supplier_panno,
+        supplier_openingbal=supplier_openingbal,
+        supplier_grouptype=supplier_grouptype,
+        supplier_BillingAddress=supplier_BillingAddress,
+        supplier_ShippingAddress=supplier_ShippingAddress,
+        supplier_City=supplier_City,
+        supplier_CreditLimit=supplier_CreditLimit,
+        supplier_CreditPeriod=supplier_CreditPeriod,
+        # customer_barcode=customer_barcode
+       )
+        
+        insertquery.save()
+        return redirect("/Supplierpage/")
+    else:
+        return render(request,'Suppliers.html')
+    
+def editsupplier(requset,id):
+    try:
+        supplierdata = Supplier.objects.get(supplier_id=id)
+        edit = {
+            'editsupplier': {
+                'supplier_id': supplierdata.supplier_id,
+                'supplier_name': supplierdata.supplier_name,  # Adjust field names based on your model
+                'supplier_mobile': supplierdata.supplier_mobile,
+                'supplier_email': supplierdata.supplier_email,
+                'supplier_gstno': supplierdata.supplier_gstno,
+                'supplier_panno': supplierdata.supplier_panno,
+                'supplier_openingbal': supplierdata.supplier_openingbal,
+                'supplier_grouptype': supplierdata.supplier_grouptype,
+                'supplier_BillingAddress': supplierdata.supplier_BillingAddress,
+                'supplier_ShippingAddress': supplierdata.supplier_ShippingAddress,
+                'supplier_City': supplierdata.supplier_City,
+                'supplier_CreditLimit': supplierdata.supplier_CreditLimit,
+                # 'supplier_CreditPeriod': supplierdata.supplier_CreditPeriod
+            }
+        }
+        return JsonResponse(edit)
+    except Supplier.DoesNotExist:
+        return JsonResponse({'error': 'Supplier not found'}, status=404)
+    
+def updatesupplier(request):
+    if request.method =="POST":
+        supplier_id=request.POST.get("supplier_id")
+        supplier_name=request.POST.get("supplier_name") 
+        supplier_mobile=request.POST.get("supplier_mobile") 
+        supplier_email=request.POST.get("supplier_email") 
+        supplier_gstno=request.POST.get("supplier_gstno") 
+        supplier_panno=request.POST.get("supplier_panno") 
+        supplier_openingbal=request.POST.get("supplier_openingbal") 
+        supplier_grouptype=request.POST.get("supplier_grouptype'") 
+        supplier_BillingAddress=request.POST.get("supplier_BillingAddress")
+        supplier_ShippingAddress=request.POST.get("supplier_ShippingAddress")
+        supplier_City=request.POST.get("supplier_City")
+        supplier_CreditLimit=request.POST.get("supplier_CreditLimit")
+        # supplier_CreditPeriod=request.POST.get("supplier_CreditPeriod")
+       
+
+
+         # Adjust field names based on your model
+
+        
+                
+              
+      
+        
+
+               
+       
+
+        fetchRecord=Supplier.objects.get(supplier_id=supplier_id)
+        
+        if supplier_name:
+            fetchRecord.supplier_name=supplier_name
+        if supplier_mobile:
+            fetchRecord.supplier_mobile=supplier_mobile
+        if  supplier_email:
+            fetchRecord. supplier_email= supplier_email
+        if supplier_gstno:
+            fetchRecord.supplier_gstno=supplier_gstno
+        if  supplier_panno:
+            fetchRecord. supplier_panno= supplier_panno
+        if supplier_openingbal:
+            fetchRecord.supplier_openingbal=supplier_openingbal
+        if supplier_grouptype:
+            fetchRecord.supplier_grouptype=supplier_grouptype
+        if supplier_BillingAddress:
+            fetchRecord.supplier_BillingAddress=supplier_BillingAddress
+        if  supplier_ShippingAddress:
+            fetchRecord. supplier_ShippingAddress= supplier_ShippingAddress
+        if supplier_City:
+            fetchRecord.supplier_City=supplier_City
+        if supplier_CreditLimit:
+           fetchRecord.supplier_CreditLimit=supplier_CreditLimit
+        # if supplier_CreditPeriod:
+        #    fetchRecord.supplier_CreditPeriod
+        
+
+        
+        
+        
+            
+
+        fetchRecord.save()  
+        return redirect('/Supplierpage/')  
+
+
+def deleteSupplier(request,id):
+    supplierdata =Supplier.objects.get(supplier_id=id)
+    supplierdata.delete()
+    return redirect('/Supplierpage/') 
+     
+
+
+    
+    
+        
+       
+
+
 
 
 
@@ -527,6 +739,15 @@ def deleteothercharge(request,id):
     otherchargedata.delete()
 
     return redirect('/AddOtherCharge/')  
+
+def RewardPoints(request):
+
+    RewardPOintsdata = RewardPoints.objects.all() 
+
+    data={
+        "list":RewardPOintsdata
+    }   
+    return render(request,'RewardPoints.html',data)
 
 def Barcodepage(request):
     return render(request,'barcode.html')

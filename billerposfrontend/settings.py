@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'Roles',
     'tax',
     'product',
-    'Barcode'
+    'Barcode',
+    'RewardPOints'
 
 ]
     
