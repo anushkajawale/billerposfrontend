@@ -37,6 +37,10 @@ urlpatterns = [
 
     path('deleteCategory/<id>/',views.deleteCategory),
 
+<<<<<<< HEAD
+   
+=======
+>>>>>>> b90315084a90106d203c7198eed8b1811e0113d5
 
     path('brand/',views.brand),
     path('insertbrand/',views.insertbrandpage),
@@ -96,7 +100,12 @@ urlpatterns = [
     path('insertpaymentterms/',views.insertpaymentterms),
     path('Users/deleteusers/<id>',views.deleteusers),
     path('Supplierlist/',views.Supplierpage),
+<<<<<<< HEAD
+
+    path('RewardPoints/',views.RewardPointslist),
+=======
     path('RewardPoints/',views.RewardPoints),
+>>>>>>> b90315084a90106d203c7198eed8b1811e0113d5
     path('Customerpage/',views.Customerpage),
     path('insertcustomer/',views.insertcustomer),
     path('editcustomer/<id>/',views.editcustomer),
