@@ -17,6 +17,7 @@ from supplier.models import Supplier
 from Users.models import Users
 from tax.models import Tax
 from Unit.models import Unit
+from Expenses.models import Expenses
 
 from product.models import Product
 
@@ -201,16 +202,16 @@ def expenseslist(request):
     }
     return render(request,'AddExpenses.html',data)
 
-def AddExpenses(request):
+def insertexpenses(request):
     if request.method=='POST':
-        expensesname=request.POST.get('expensesgroupname')
+        expensesname=request.POST.get('ExpensesName')
 
-        insertexpenses=AddExpenses(
+        insertexpenses=Expenses(
             expenses_name=expensesname
         )
 
         insertexpenses.save()
-        return redirect('/expenses/')
+        return redirect('/AddExpenses/')
     else:
         return render(request,'AddExpenses.html')
     #########################
@@ -686,12 +687,6 @@ from Unit.models import Unit
 
 
 from Expenses.models import Expenses
-def AddExpenses(request):
-    list = Expenses.objects.all()
-    data = {
-        "list":list
-    }
-    return render(request,'AddExpenses.html',data)
 
 
 
@@ -865,12 +860,26 @@ def updateunit(request):
         fetchRecord.save()  
         return redirect('/unit/')
     
+def updateExpenses(request):
+    if request.method =="POST":
+        expenses_id=request.POST.get("expenses_id")
+        expenses_name=request.POST.get("expenses_name")  
+        
+
+        fetchRecord=Expenses.objects.get(expenses_id=expenses_id)
+        
+
+        fetchRecord.expenses_name=expenses_name
+
+        fetchRecord.save()  
+        return redirect('/AddExpenses/')
+    
 def deleteunit(request,id):   
     unitdata=Unit.objects.get(unit_id=id)
 
     unitdata.delete()
 
-    return redirect('/unit/') 
+    return redirect('/Unit/') 
 
 def deleteexpenses(request,id):   
     expensesdata=Expenses.objects.get(expenses_id=id)

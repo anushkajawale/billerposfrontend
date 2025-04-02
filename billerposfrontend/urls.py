@@ -54,14 +54,15 @@ urlpatterns = [
     path('insertproduct/',insertproduct),
     path('editproduct/<id>/',views.editproduct),
     path('deleteproduct/<id>/',views.deleteproduct),
-    path('AddUnit/',views.AddUnit),
+   
  
     path('updateunit/',views.updateunit),
     path('AddUnit/deleteunit/<id>',views.deleteunit),
 
-    
-    path('AddExpenses/',views.expenseslist), 
-    path('AddExpenses/',views.AddExpenses),
+    path('updateExpenses/',views.updateExpenses),
+    # path('saveExpenses/',views.expenseslist), 
+    path('AddExpenses/',views.expenseslist),
+    path('insertexpenses/',views.insertexpenses),
     path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
     path('AddOtherCharge/',views.AddOtherCharge),
     path('AddOtherCharge/deleteothercharge/<id>',views.deleteothercharge),
