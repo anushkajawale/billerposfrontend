@@ -252,7 +252,24 @@
   </div>
 </div>
 
+<script>
+  function loadEditModal(AddOtherCharge) {
+    console.log(AddOtherCharge);
 
+    fetch(`/editAddOtherCharge/${AddOtherCharge}/`)
+      .then(response => { return response.json(); })
+      .then(html => {
+        console.log(html);
+        let AddOtherCharge = html.editAddOtherCharge;
+        var editModalContent = new bootstrap.Modal(document.getElementById('editAddOtherCharge'));
+        document.getElementById("editAddOtherCharge_name").value = AddOtherCharge.AddOtherCharge;
+
+        editModalContent.show();
+      })
+      .catch(error => console.error('Error loading modal content:', error));
+  }
+
+</script>
 
 
 {% endblock %}

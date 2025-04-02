@@ -48,14 +48,14 @@ urlpatterns = [
     path('edittax/<id>/',edittax),
     path('tax/deletetax/<id>',deletetax),
     path('products/',views.productslist), 
-    path('unit/',views.unitlist),  
-    path('Addunit/',views.AddUnit),
+   
     path('products/',views.productslist),
     path('insertproduct/',insertproduct),
     path('editproduct/<id>/',views.editproduct),
     path('deleteproduct/<id>/',views.deleteproduct),
    
- 
+    path('unit/',views.unitlist),  
+    path('Addunit/',views.AddUnit),
     path('updateunit/',views.updateunit),
     path('AddUnit/deleteunit/<id>',views.deleteunit),
 
@@ -64,8 +64,18 @@ urlpatterns = [
     path('AddExpenses/',views.expenseslist),
     path('insertexpenses/',views.insertexpenses),
     path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
-    path('AddOtherCharge/',views.AddOtherCharge),
+
+
+
+    path('AddOtherCharge/',views.chargelist),  
+    path('AddOtherCharge/',views.OtherCharge),
+   ## path('updateAddOtherCharge/',views.updateAddOtherCharge),
+    path('insertcharge/',views.insertcharge),
     path('AddOtherCharge/deleteothercharge/<id>',views.deleteothercharge),
+
+
+
+
     path('Customergrouplist/',views.Customergrouplist),
     path('insertcustomergroup/',views.insertcustomergroup),
     path('editcustomergroup/<id>/',views.editcustomergroup),

@@ -19,6 +19,7 @@ from Employees.models import Employees
 
 from Unit.models import Unit
 from Expenses.models import Expenses
+from OtherCharge.models import OtherCharge
 
 from product.models import Product
 
@@ -171,6 +172,14 @@ def deleteBrand(requset,id):
     branddata.delete()
     return redirect('/brand/')
 
+
+
+
+    
+from Unit.models import Unit
+from Expenses.models import Expenses
+from OtherCharge.models import OtherCharge
+#########################################
 def unitlist(request):
     list = Unit.objects.all()
     data = {
@@ -212,9 +221,29 @@ def insertexpenses(request):
     else:
         return render(request,'AddExpenses.html')
     #########################
+def chargelist(request):
+    listdata = OtherCharge.objects.all()
+    data = {
+        "list":listdata
+    }
+    return render(request,'AddOtherCharge.html',data)
 
-def AddOtherCharge(request):
-    return render(request,'AddOtherCharge.html')
+def insertcharge(request):
+    if request.method=='POST':
+        chargename=request.POST.get('chargename')
+
+        insertcharge=OtherCharge(
+            charge_name=chargename
+        )
+        insertcharge.save()
+        return redirect('/AddOtherCharge/')
+    else:
+        return render(request,'AddOtherCharge.html')
+
+
+
+#######################################
+
 
 def Customergrouplist(request):
      customerData = Customergroup.objects.all()
@@ -647,30 +676,6 @@ def deleteSupplier(request,id):
      
 
 
-    
-    
-        
-       
-
-
-
-
-from Unit.models import Unit
-
-
-
-
-from Expenses.models import Expenses
-
-
-
-from OtherCharge.models import OtherCharge
-def AddOtherCharge(request):
-    listdata = OtherCharge.objects.all()
-    data = {
-        "list":listdata
-    }
-    return render(request,'AddOtherCharge.html',data)
 
 def paymentmodelist(request):
     listdata = Paymentmode.objects.all()
