@@ -5,10 +5,11 @@
                     <div class="row mb-3">
                         <div class="col-md-3">
                             <label class="form-label">Customer Name</label>
-                            <i class="fa fa-plus " style="margin-left: 150px;"></i>
+                            <i class="fa fa-plus " style="margin-left: 125px;"></i>
+                            <input type="hidden" id="updatesale_id" name="updatesale_id">
                             <select class="form-select">
-                                <option>Cash Sale</option>
-                                <option>Credit Sale</option>
+                                <option id="add_cashsale" name="add_cashsale">Cash Sale</option>
+                                <option id="add_creditsale" name="add_creditsale">Credit Sale</option>
                                 
                             </select>
                             
@@ -16,30 +17,30 @@
                         <div class="col-md-2">
                             <label class="form-label">Payment Term</label>
                             <select class="form-select">
-                                <option>Cash</option>
-                                <option>Credit</option>
+                                <option id="add_cash" name="add_cash">Cash</option>
+                                <option id="add_credit" name="add_credit">Credit</option>
                             </select>
                         </div>
                     
                     
                         <div class="col-md-2">
                             <label class="form-label">Invoice Date</label>
-                            <input type="date" class="form-control" value="2025-03-26">
+                            <input type="date" class="form-control" value="2025-03-26" id="add_invoicedate" name="add_invoicedate">
                         </div>
                         <div class="col-md-2">
                             <label class="form-label">Due Days</label>
-                            <input type="number" class="form-control" value="0">
+                            <input type="number" class="form-control" value="0" id="add_duedays" name="add_duedays">
                         </div>
                         <div class="col-md-3">
                             <label class="form-label">Due Date</label>
-                            <input type="date" class="form-control" value="2025-03-26">
+                            <input type="date" class="form-control" value="2025-03-26" id="add_duedate" name="add_duedate">
                         </div>
                     </div>
                     
                     <div class="row mb-3">
                     <div class="col-md-6 mb-3 ">
                         <label class="form-label">Product Name</label>
-                        <input type="text" class="form-control" placeholder="Search Products by name or Scan Barcode">
+                        <input type="text" class="form-control" placeholder="Search Products by name or Scan Barcode" id="add_producrname" name="add_producrname">
                     </div>
 
                     <div class="col-md-2 mb-3" style="margin-top: 30px">
@@ -47,7 +48,7 @@
                           Close
                         </button>
                         
-                        <button type="button" class="btn btn-success">Save</button>
+                        <button type="submit" class="btn btn-success">Save</button>
                         </div>
                       </div>
                     </div>
@@ -90,5 +91,47 @@
 
   </div>
   </div>
+
+  <script>
+    function loadEditModal(salesId) {
+      console.log(paymentmodeId);
+      
+      fetch(`/editsale/${salesId}/`)
+          .then(response => response.json())
+          .then(data => {
+              console.log(data);
+              let paymentmode = data.editsale;
+              
+              if (Sales) {
+                  document.getElementById("updatesale_id").value = Sales.Sales_id;
+                  document.getElementById("updatesale_name").value = Sales.Sales_name;
+                  document.getElementById("add_cashsale").value = Sales.Sales_addcashsale;
+                  document.getElementById("add_creditsale").value = Sales.add_creditsale;
+                  document.getElementById("add_cash").value = Sales.Sales_addcash;
+                  document.getElementById("add_credit").value = Sales.Sales_addcredit;
+                  document.getElementById("add_invoicedate").value = Sales.Sales_addinvoicedate;
+                  document.getElementById("add_duedays").value = Sales.Sales_add_duedays;
+                  document.getElementById("add_duedate").value = Sales.Sales_add_duedate;
+                  document.getElementById("add_producrname").value = Sales.Sales_addproducrname;
+
+
+
+
+
+
+
+
+                  
+                  let editModal = new bootstrap.Modal(document.getElementById('editsale'));
+                  editModal.show();
+              } else {
+                  console.error("Sales data not found");
+              }
+          })
+          .catch(error => console.error('Error loading modal content:', error));
+  }
+  
+  
+  </script>
     
 {% endblock %}

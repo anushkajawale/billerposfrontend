@@ -33,10 +33,10 @@
                   <td>{{ i.Paymentmode_id}}</td>
                   <td>{{ i.Paymentmode_name}}</td>
                   <td>
-                    <a href="/editpayment/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editpayment"
+                    <a href="/insertpaymentmode/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editpaymentmode"
                     data-bs-whatever="@mdo">
-                      <i class="fa fa-pen"></i>
-                      </a>
+                      <i class="fa fa-pen"></i></a>
+                      <a href="deletepaymentmode/{{ i.Paymentmode_id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
         
                       <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
                 data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
@@ -60,21 +60,87 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="/insertpaymentmode/" method="post">
+          {% csrf_token %}
           <div class="mb-3">
             <label for="customergroup-name" class="col-form-label">Payment Name</label>
-            <input type="text" class="form-control" id="Payment-name" placeholder="Payment Name" required />
+            <input type="text" class="form-control" id="updatepaymentmode_name" name="updatepaymentmode_name" placeholder="Payment Name" required />
+            <input type="hidden" id="updatepaymentmode_id" name="updatepaymentmode_id">
           </div>
 
-        </form>
+      
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn btn-success">Save</button>
+        <button type="submit" class="btn btn-success">Save</button>
       </div>
+    </form>
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="editpaymentmode" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Paymentmode</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row mb-3">
+        <div class="col-12">
+          <form action="/updatepaymentmode/" method="post">
+          <label for="Paymentmode Name" class="form-label">Paymentmode Name</label>
+          <input type="text" class="form-control" id="updatepaymentmode_name" name="updatepaymentmode_name" required>
+          <input type="hidden" id="updatepaymentmode_id" name="updatepaymentmode_id">
+          </form>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-success">Save</button>
+  </div>
+  </div>
+  </div>
+  </div>
+  
+  
+  
+  
+  
+  
+
+
+<script>
+  function loadEditModal(paymentmodeId) {
+    console.log(paymentmodeId);
+    
+    fetch(`/editpaymentmode/${paymentmodeId}/`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            let paymentmode = data.editpaymentmode;
+            
+            if (paymentmode) {
+                document.getElementById("updatepaymentmode_id").value = paymentmode.Paymentmode_id;
+                document.getElementById("updatepaymentmode_name").value = paymentmode.Paymentmode_name;
+                
+                let editModal = new bootstrap.Modal(document.getElementById('editpaymentmode'));
+                editModal.show();
+            } else {
+                console.error("Payment mode data not found");
+            }
+        })
+        .catch(error => console.error('Error loading modal content:', error));
+}
+
+
+</script>
 {% endblock %}
