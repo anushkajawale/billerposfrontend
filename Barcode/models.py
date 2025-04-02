@@ -6,7 +6,8 @@ class Barcode(models.Model):
     barcode_img =models.ImageField(upload_to='barcode/')
 
     class Meta:
-        db_table = "tbl_barcode"  
+        db_table = "tbl_barcode"
+         
     def __str__(self):
         return self.barcode_number 
 

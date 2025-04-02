@@ -54,6 +54,9 @@ INSTALLED_APPS = [
     'tax',
     'product',
     'Barcode',
+
+    'Sales',
+    'Employees',
     'RewardPOints'
 
 ]

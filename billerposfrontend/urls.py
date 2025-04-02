@@ -82,12 +82,10 @@ urlpatterns = [
     path('insertsuppliergroup/',views.insertsuppliergroup),
     path('paymentmode/',views.paymentmodelist),
     path('Paymentterms/',views.Paymenttermslist),
-
-    
-
-
+    path('insertpaymentmode/',views.insertpaymentmode),
+    path('insertpaymentterms/',views.insertpaymentterms),
+    path('Users/deleteusers/<id>',views.deleteusers),
     path('Supplierlist/',views.Supplierpage),
-
     path('RewardPoints/',views.RewardPoints),
     path('Customerpage/',views.Customerpage),
     path('insertcustomer/',views.insertcustomer),
@@ -106,25 +104,22 @@ urlpatterns = [
     path('POSBill/',views.POSBill),
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
-
     path('EditRole/',views.EditRolelist),
     path('insertroles/',views.insertroles),
     path('Dashboard/',views.Dashboard),
-    
-   
-
-
+    path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
     path('Barcode/',views.Barcodepage),
-
-
     path('stock/',views.stock),
-
-
     path('Salelist/',views.Salelist),
     path('Barcode/',views.Barcodepage),
-    path('Addsale/',views.Addsale)
-
-
+    path('Addsale/',views.Addsale),
+    path('Paymentterms/deletepaymentterms/<id>',views.deletepaymentterms),
+    path('updatepaymentmode/',views.updatepaymentmode),
+    path('updatepaymentterms/<int:id>/', views.updatepaymentterms),
+    path('adduser/',views.adduser),
+    path('updateuser/',views.updateuser)
+   
+    
 
 ]
 
