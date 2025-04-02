@@ -19,6 +19,7 @@ from tax.models import Tax
 from Unit.models import Unit
 
 from product.models import Product
+from RewardPOints.models import RewardPoints
 
 
 
@@ -370,8 +371,7 @@ def productslist(request):
 def Employee(request):
     return render(request,'Employee.html')
 
-def RewardPoints(request):
-    return render(request,'RewardPoints.html')
+
 
 def Customerpage(request):
     customerdata=Customer.objects.all()
@@ -886,12 +886,12 @@ def deleteothercharge(request,id):
 
     return redirect('/AddOtherCharge/')  
 
-def RewardPoints(request):
+def RewardPointslist(request):
 
-    RewardPOintsdata = RewardPoints.objects.all() 
+    RewardPointsdata = RewardPoints.objects.all() 
 
     data={
-        "list":RewardPOintsdata
+        "list":RewardPointsdata
     }   
     return render(request,'RewardPoints.html',data)
 
