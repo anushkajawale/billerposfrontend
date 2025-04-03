@@ -1199,3 +1199,4 @@ def insertemployee(request):
     productdata.delete()
     return redirect("/products/")
  
+ 
