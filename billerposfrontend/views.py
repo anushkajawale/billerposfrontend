@@ -880,6 +880,45 @@ def RewardPointslist(request):
     }   
     return render(request,'RewardPoints.html',data)
 
+def insertrewardpoint(request):
+    if request.method=="POST":
+        RewardPoints_Minrange=request.POST.get("RewardPoints_Minrange")
+        RewardPoints_Maxrange=request.POST.get("RewardPoints_Maxange")
+        RewardPoints_Points=request.POST.get("RewardPoints_Points")
+        
+        
+        insertquery=RewardPoints(
+        RewardPoints_Minrange=RewardPoints_Minrange,
+        RewardPoints_Maxrange=RewardPoints_Maxrange,
+        RewardPoints_Points=RewardPoints_Points      # customer_barcode=customer_barcode
+       )
+        
+        insertquery.save()
+        return redirect("/RewardPoints/")
+    else:
+        return render(request,'RewardPoints.html')
+    
+def editrewardpointpage(request,id):
+    try:
+        RewardPointsdata = RewardPoints.objects.get(RewardPoints_id=id)
+        edit = {
+            'editrewardpoints': {
+                'RewardPoints_id': RewardPointsdata.RewardPoints_id,
+                'RewardPoints_Minrange': RewardPointsdata.RewardPoints_Minrange,
+                'RewardPoints_Maxrange': RewardPointsdata. RewardPoints_Maxrange,
+                'RewardPoints_Points':RewardPointsdata. RewardPoints_Points
+                 
+            }
+        }
+        return JsonResponse(edit)
+    except RewardPoints.DoesNotExist:
+        return JsonResponse({'error': ' not found'}, status=404)     
+    
+
+
+
+
+
 def Barcodepage(request):
     return render(request,'barcode.html')
 
@@ -1199,4 +1238,4 @@ def insertemployee(request):
     productdata.delete()
     return redirect("/products/")
  
- 
+

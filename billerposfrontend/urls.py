@@ -102,8 +102,11 @@ urlpatterns = [
 
 
     path('RewardPoints/',views.RewardPointslist),
+    path('insertrewardpoint/',views.insertrewardpoint),
+    path('editrewardpoint/<id>/',views.editrewardpointpage),
 
-    path('RewardPoints/',views.RewardPoints),
+
+    
     path('Customerpage/',views.Customerpage),
     path('insertcustomer/',views.insertcustomer),
     path('editcustomer/<id>/',views.editcustomer),

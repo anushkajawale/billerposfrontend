@@ -32,15 +32,15 @@
               <tbody class="table-hover">
                 <tr>
                   <td>{{ forloop.counter }} </td>
-                  <td>{{ i.RewardPoints_Maxrange}}</td>
-                  <td>{{ i.RewardPoints_Minrange}}</td>
-                  <td>{{ i.RewardPoints_Points}}</td>
+                  <td>{{ i.RewardPoints_Minrange }}</td>
+                  <td>{{ i.RewardPoints_Maxrange }}</td>
+                  <td>{{ i.RewardPoints_Points }}</td>
                   
                   <td>
                     <button type="button" class="btn btn-sm mx-1 btn-outline-success"  onclick="loadEditModal('{{ i.RewardPoints_id }}')">
                       <i class="fa fa-pen"></i>
                   </button>
-                  <a href="deleteRewardPoints/{{ RewardPoints_id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
+                  <a href="deleteRewardPoints/{{ i.RewardPoints_id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
                   
                   
                   <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
@@ -67,27 +67,27 @@
       </div>
       <div class="modal-body">
         <div class="container-fluid">
-          <form action="/insertrewardpoint/" method="post" enctype="multipart/form-data">
+          <form action="/insertrewardpoint/" method="post">
           {% csrf_token %}
           <div class="row mb-3">
-            <div class="col-12">
-              <label for="RewardPoints_Maxrange" class="form-label">Set Min Range</label>
-              <input type="number" class="form-control" id="RewardPoints_Minrange" name="RewardPoints_Minrange" required>
+            <div class="col-6">
+              <label for="RewardPoints_Minrange" class="form-label">Set Min Range</label>
+              <input type="number" class="form-control" id="RewardPoints_Minrange" name="RewardPoints_Minrange" >
             </div>
 
           </div>
           <div class="row">
             <div class="col-6 ">
-              <label for="RewardPoints_Minrange" class="form-label"> Set Max Range</label>
+              <label for="RewardPoints_Maxrange" class="form-label"> Set Max Range</label>
               <input type="number" class="form-control" id="RewardPoints_Maxrange" name="RewardPoints_Maxange">
             </div>  
             <div class="col-6">
-              <label for="RewardPoints_Minrange" class="form-label">Points</label>
-              <input type="number" class="form-control" id="RewardPoints_Minrange" name="RewardPoints_Minrange">
+              <label for="RewardPoints_Points" class="form-label">Points</label>
+              <input type="number" class="form-control" id="RewardPoints_Points" name="RewardPoints_Points">
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-success">Save</button>
+              <button type="submit" name="submit"  class="btn btn-success">Save</button>
             </div>
           </div>
         </form>
@@ -99,7 +99,7 @@
 </div>
 
 
-<div class="modal fade" id="#exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleeditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -108,26 +108,25 @@
       </div>
       <div class="modal-body">
         <div class="container-fluid">
-          <form action="/updaterewardpoint/" method="post" enctype="multipart/form-data">
+          <form action="/updaterewardpoint/" method="post">
             {% csrf_token %}
             <div class="row mb-3">
               <div class="col-12">
-                <label for="RewardPoints_Maxrange" class="form-label">Set Min Range</label>
-                <input type="text" class="form-control" id="updateRewardPoints_Maxrange" name="RewardPoints_Maxrange" required>
-                <input type="hidden" id="updateRewardPoints_Maxrange" name="Min_Range">
+                <label for="RewardPoints_Minrange" class="form-label">Set Min Range</label>
+                <input type="text" class="form-control" id="updateRewardPoints_Minrange" name="RewardPoints_Minrange" required>
               </div>
   
             </div>
             <div class="row">   
               <div class="col-12">
                 <label for="RewardPoints_Maxrange" class="form-label">Set Max Range</label>
-                <input type="text" class="form-control" id="updateRewardPoints_Minrange" name="RewardPoints_Minrange" required>
-                <input type="hidden" id="updateRewardPoints_Minrange" name="Max_Range">
+                <input type="text" class="form-control" id="updateRewardPoints_Maxrange" name="RewardPoints_Maxrange" required>
+                
               </div>
               <div class="col-12">
                 <label for="RewardPoints_Points" class="form-label">Set Points</label>
-                <input type="text" class="form-control" id="updateRewardPoints_Minrange" name="RewardPoints_Minrange" required>
-                <input type="hidden" id="updateRewardPoints_Minrange" name="Range_Points">
+                <input type="text" class="form-control" id="updateRewardPoints_Points" name="RewardPoints_points" required>
+                
               </div>
               </div>
               <div class="modal-footer">
@@ -145,21 +144,23 @@
 
 
 <script>
-  function loadEditModal(RewardPoints_id) {console.log(RewardPoints_id);
+   function loadEditModal(RewardPoints_id) {console.log(RewardPoints_id);
   
     fetch(`/editrewardpoints/${RewardPoints_id}/`)
         .then(response =>{return response.json();})
         .then(html => {
           console.log(html);
           let rewardpoint = html.editrewardpoints;
-            var editModal = new bootstrap.Modal(document.getElementById('editRewardPointsModal'));
-            document.getElementById("updateRewardPoints_id").value=rewardpoints.RewardPoints_id;
-            document.getElementById("updateRewardPoints_Minrange").value = rewardpoints.RewardPoints_Minrange;
-            document.getElementById("updateRewardPoints_Maxrange").value = rewardpoints.RewardPoints_Maxrange;
+            
+            document.getElementById("updateRewardPoints_id").value=rewardpoint.RewardPoints_id;
+            document.getElementById("updateRewardPoints_Minrange").value = rewardpoint.RewardPoints_Minrange;
+            document.getElementById("updateRewardPoints_Maxrange").value = rewardpoint.RewardPoints_Maxrange;
+            document.getElementById("updateRewardPoints_Points").value = rewardpoint.RewardPoints_Points;
+            var editModal = new bootstrap.Modal(document.getElementById('exampleeditModal'));
             editModal.show();
-        })
+        })  
         .catch(error => console.error('Error loading modal content:', error));
-}
+      }
 
 </script>
 
