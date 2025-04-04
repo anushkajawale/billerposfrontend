@@ -948,9 +948,87 @@ def Addsale(request):
 def Stock(request):
     return render(request,'stock.html')
 
+def updateproduct(request):
+    if request.method=='POST':
+        id=request.POST.get('product_id'),    
+        product_name=request.POST.get('Productname'),
+        product_marathi_name=request.POST.get('Marathiname'),
+        product_HSNCode=request.POST.get('HSNCode'),
+        category=request.POST.get('category'),
+        brand=request.POST.get('brand'),
+        taxpercent=request.POST.get('tax_percentage'),
+        tax=request.POST.get('tax'),
+        unit=request.POST.get('unit'),
+        alternateunit=request.POST.get('AlternateUnit'),
+        conversionfact=request.POST.get('conversion'),
+        nos=request.POST.get('unitperprice'),
+        barcode=request.POST.get('barcode'),
+        #qrcode=request.POST.get('mrp'),
+        mrp=request.POST.get('mrp'),
+        sale=request.POST.get('sale'),
+        credit=request.POST.get('credit'),
+        purchase=request.POST.get('Purchase'),
+        wholesaler=request.POST.get('Wholesaler'),
+        distributor=request.POST.get('Distributor'),
+        op_Qty=request.POST.get('Op_Qty'),
+        op_Value=request.POST.get('Op_Value'),
+        mfg_Date=request.POST.get('MfgDate'),
+        exp_Date=request.POST.get('ExpDate')
 
-def deleteproduct(request,id):
+        fetchRecord=Product.objects.get(product_id=id)
+        fetchRecord.product_name=product_name,
+        fetchRecord.product_marathi_name=product_marathi_name,
+        fetchRecord.product_HSNCode=product_HSNCode,
+        fetchRecord.category=category,
+        fetchRecord.brand=brand,
+        fetchRecord.tax=tax,
+        fetchRecord.taxpercent=taxpercent,
+        fetchRecord.unit=unit,
+        fetchRecord.alternateunit=alternateunit,
+        fetchRecord.conversionfact=conversionfact,
+        fetchRecord.nos=nos,
+        fetchRecord.barcode=barcode,
+        fetchRecord.qrcode=brand,
+        fetchRecord.mrp=mrp,
+        fetchRecord.sale=sale,
+        fetchRecord.credit=credit,
+        fetchRecord.purchase=purchase,
+        fetchRecord.wholesaler=wholesaler,
+        fetchRecord.distributor=distributor,
+        fetchRecord.op_Qty=op_Qty,
+        fetchRecord.op_Value=op_Value,
+        fetchRecord.mfg_Date=mfg_Date,
+        fetchRecord.exp_Date=exp_Date
+        fetchRecord.save()
+        return redirect('/products/')
+
+    else:
+        return render(request,'productlist.html')    
+
+
+def deleteproduct(request,id):  
     productdata=Product.objects.get(product_id=id)
 
     productdata.delete()
     return redirect("/products/")
+
+def posview(request):
+    query = request.GET.get('search', '')  # Get search input from request
+    customer=Customer.objects.all()
+    products = Product.objects.filter(name__icontains=query) if query else Product.objects.all()
+    return render(request,'Pos1.html',{'products': products, 'search_query': query,'customer':customer})
+
+
+def get_product_names(request):
+    products = list(Product.objects.values_list('name', flat=True))  # Get only product names
+    return JsonResponse({'products': products})
+
+def insertpos(request):
+    if request.method=="POST":
+        productname=request.POST.get('productname'),
+        productqty=request.POST.get('productqty'),
+        productmrp=request.POST.get('mrp'),
+        productname=request.POST.get('productname'),
+        productname=request.POST.get('productname'),
+        productname=request.POST.get('productname'),
+        productname=request.POST.get('productname'),

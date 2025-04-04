@@ -22,7 +22,7 @@ class Product(models.Model):
     mrp=models.DecimalField(max_digits=10, decimal_places=2,null=True)   
     sale=models.DecimalField(max_digits=10, decimal_places=2)   
     credit=models.DecimalField(max_digits=10, decimal_places=2)
-    purchase=models.IntegerField()    
+    purchase=models.IntegerField(null=True)    
     wholesaler=models.IntegerField()    
     distributor=models.IntegerField()    
     op_Qty=models.IntegerField()    

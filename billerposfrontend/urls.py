@@ -47,12 +47,13 @@ urlpatterns = [
     path('inserttax/',inserttax),
     path('edittax/<id>/',edittax),
     path('tax/deletetax/<id>',deletetax),
-    path('products/',views.productslist), 
+    
     path('unit/',views.unitlist),  
     path('Addunit/',views.AddUnit),
     path('products/',views.productslist),
     path('insertproduct/',insertproduct),
     path('editproduct/<id>/',views.editproduct),
+    path('updateproduct/',views.updateproduct),
     path('deleteproduct/<id>/',views.deleteproduct),
     path('AddUnit/',views.AddUnit),
  
@@ -121,7 +122,10 @@ urlpatterns = [
 
     path('Salelist/',views.Salelist),
     path('Barcode/',views.Barcodepage),
-    path('Addsale/',views.Addsale)
+    path('Addsale/',views.Addsale),
+    path('posview/',views.posview),
+    path('get-product-names/', views.get_product_names, name='get_product_names'),
+    path('insertpos/',views.insertpos)
 
 
 
