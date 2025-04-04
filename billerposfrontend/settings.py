@@ -58,6 +58,17 @@ INSTALLED_APPS = [
     'tbl_master',
     'posbill',
     'poschlid'
+
+    'BillWiselist',
+    'OutstandingReport'
+
+
+    'Sales',
+    'Employees',
+    'RewardPOints'
+
+
+
 ]
     
 

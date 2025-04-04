@@ -1,122 +1,168 @@
 {% extends 'index.html' %}
 {% block content %}
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            width: 60%;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 2px 2px 10px #aaa;
-        }
-        input {
-            padding: 8px;
-            margin: 5px;
-            width: 150px;
-        }
-        button {
-            padding: 8px 12px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        table {
-            width: 100%;
-            margin-top: 10px;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        .actions {
-            color: red;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="card  border border-success">
+        <div class="card-header">
+          <div class="d-flex justify-content-between">
+            <h3>
+              Set Range
+            </h3>
+            <div class="text-right">
+              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                data-bs-whatever="@mdo"><i class="nav-icon fas fa-plus"></i>Set Range</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body ">
+          <div class="table-responsive">
+            <table class="table table-bordered text-center ">
+              <thead class="table-success">
+                <tr>
+                  <th>Sr.no</th>
+                  <th>Min Range</th>
+                  <th>Max Range</th>
+                  <th>Points</th>
+                  <th>Action</th>
 
-<div class="container">
-    <h2>Set Range</h2>
-    <input type="number" id="minRange" placeholder="Set Min Range">
-    <input type="number" id="maxRange" placeholder="Set Max Range">
-    <input type="number" id="points" placeholder="Points">
-    <button onclick="addToList()">Add to List</button>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Min Range</th>
-                <th>Max Range</th>
-                <th>Points</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody id="dataList">
-             {% for i in list %}
-            <tr>
-                <td>{{ i.RewardPoints_Maxrange }} </td>
+                </tr>
+              </thead>
+              {% for i in list %}
+              <tbody class="table-hover">
+                <tr>
+                  <td>{{ forloop.counter }} </td>
                   <td>{{ i.RewardPoints_Minrange }}</td>
-                  <td>{{ i. RewardPoints_Points }}</td>
-
-                
-                <td>
-                    <span class="actions" onclick="editRow(this)">✏️</span> 
-                    <span class="actions" onclick="deleteRow(this)">🗑️</span>
+                  <td>{{ i.RewardPoints_Maxrange }}</td>
+                  <td>{{ i.RewardPoints_Points }}</td>
+                  
+                  <td>
+                    <button type="button" class="btn btn-sm mx-1 btn-outline-success"  onclick="loadEditModal('{{ i.RewardPoints_id }}')">
+                      <i class="fa fa-pen"></i>
+                  </button>
+                  <a href="deleteRewardPoints/{{ i.RewardPoints_id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
+                  
+                  
+                  <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
+                  data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
+                  
                 </td>
-            </tr>
+              </tr>
+            </tbody>
             {% endfor %}
-        </tbody>
-    </table>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content"> 
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalcheck ">Set Range</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form action="/insertrewardpoint/" method="post">
+          {% csrf_token %}
+          <div class="row mb-3">
+            <div class="col-6">
+              <label for="RewardPoints_Minrange" class="form-label">Set Min Range</label>
+              <input type="number" class="form-control" id="RewardPoints_Minrange" name="RewardPoints_Minrange" >
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-6 ">
+              <label for="RewardPoints_Maxrange" class="form-label"> Set Max Range</label>
+              <input type="number" class="form-control" id="RewardPoints_Maxrange" name="RewardPoints_Maxange">
+            </div>  
+            <div class="col-6">
+              <label for="RewardPoints_Points" class="form-label">Points</label>
+              <input type="number" class="form-control" id="RewardPoints_Points" name="RewardPoints_Points">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" name="submit"  class="btn btn-success">Save</button>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="exampleeditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Range</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form action="/updaterewardpoint/" method="post">
+            {% csrf_token %}
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="RewardPoints_Minrange" class="form-label">Set Min Range</label>
+                <input type="text" class="form-control" id="updateRewardPoints_Minrange" name="RewardPoints_Minrange" required>
+              </div>
+  
+            </div>
+            <div class="row">   
+              <div class="col-12">
+                <label for="RewardPoints_Maxrange" class="form-label">Set Max Range</label>
+                <input type="text" class="form-control" id="updateRewardPoints_Maxrange" name="RewardPoints_Maxrange" required>
+                
+              </div>
+              <div class="col-12">
+                <label for="RewardPoints_Points" class="form-label">Set Points</label>
+                <input type="text" class="form-control" id="updateRewardPoints_Points" name="RewardPoints_points" required>
+                
+              </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Update</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+
 <script>
-    function addToList() {
-        let min = document.getElementById("minRange").value;
-        let max = document.getElementById("maxRange").value;
-        let points = document.getElementById("points").value;
+   function loadEditModal(RewardPoints_id) {console.log(RewardPoints_id);
+  
+    fetch(`/editrewardpoints/${RewardPoints_id}/`)
+        .then(response =>{return response.json();})
+        .then(html => {
+          console.log(html);
+          let rewardpoint = html.editrewardpoints;
+            
+            document.getElementById("updateRewardPoints_id").value=rewardpoint.RewardPoints_id;
+            document.getElementById("updateRewardPoints_Minrange").value = rewardpoint.RewardPoints_Minrange;
+            document.getElementById("updateRewardPoints_Maxrange").value = rewardpoint.RewardPoints_Maxrange;
+            document.getElementById("updateRewardPoints_Points").value = rewardpoint.RewardPoints_Points;
+            var editModal = new bootstrap.Modal(document.getElementById('exampleeditModal'));
+            editModal.show();
+        })  
+        .catch(error => console.error('Error loading modal content:', error));
+      }
 
-        if (min && max && points) {
-            let table = document.getElementById("dataList");
-            let row = table.insertRow();
-            row.innerHTML = `
-                <td>${min}</td>
-                <td>${max}</td>
-                <td>${points}</td>
-                <td>
-                    <span class="actions" onclick="editRow(this)">✏️</span> 
-                    <span class="actions" onclick="deleteRow(this)">🗑️</span>
-                </td>
-            `;
-            document.getElementById("minRange").value = "";
-            document.getElementById("maxRange").value = "";
-            document.getElementById("points").value = "";
-        } else {
-            alert("Please fill all fields!");
-        }
-    }
-
-    function deleteRow(element) {
-        element.parentElement.parentElement.remove();
-    }
-
-    function editRow(element) {
-        let row = element.parentElement.parentElement;
-        document.getElementById("minRange").value = row.cells[0].innerText;
-        document.getElementById("maxRange").value = row.cells[1].innerText;
-        document.getElementById("points").value = row.cells[2].innerText;
-        row.remove();
-    }
 </script>
 
-</body>
+
 {% endblock %}
