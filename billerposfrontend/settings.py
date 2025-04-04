@@ -57,6 +57,12 @@ INSTALLED_APPS = [
     'BillWiselist',
     'OutstandingReport'
 
+
+    'Sales',
+    'Employees',
+    'RewardPOints'
+
+
 ]
     
 

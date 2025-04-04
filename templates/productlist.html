@@ -2,59 +2,80 @@
 {% block content %}
 <div class="content-wrapper">
     <div class="content-header">
-      <div class="container-fluid">
-        <div class="card  border border-success">
-          <div class="card-header">
-            <div class="d-flex justify-content-between">
-              <h3>
-                Products List
-              </h3>
-              <div class="text-right">
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal"
-                  data-bs-whatever="@mdo"><i class="nav-icon fas fa-plus"></i>Add Product</button>
-              </div>
-            </div>
-          </div>
-          <div class="card-body ">
-            <div class="table-responsive">
-              <table class="table table-bordered text-center ">
-                <thead class="table-success">
-                  <tr>
-                    <th>Sr.No</th>
-                    <th>Category Name</th>
-                    <th>Category Img</th>
-                    <th>Banner Img</th>
-                    <th>Action</th>
-  
-                  </tr>
-                </thead>
-                <tbody class="table-hover">
-                  <tr>
-                    <td> </td>
-                    <td> </td>
-                    <td> <img style="width:50px; height:50px;" src="" alt=""></td>
-                    <td><img style="width:50px; height:50px;" src="" alt=""></td>
-                    <td>
-                      <a href="/editproduct/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal"
-                        data-bs-target="#editcategory" data-bs-whatever="@mdo">
-                        <i class="fa fa-pen"></i>
-                      </a>
-  
-                      <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
-                  data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
-  
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        <div class="container-fluid">
+            <div class="card  border border-success">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <h3>
+                            Products List
+                        </h3>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#addProductModal" data-bs-whatever="@mdo"><i
+                                    class="nav-icon fas fa-plus"></i>Add Product</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body ">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center ">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>Sr.No</th>
+                                    <th>Product Name</th>
+                                    <th>Marathi Name</th>
+                                    <th>Barcode</th>
+                                    <th>Action</th>
 
-  <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+                                </tr>
+                            </thead>
+                            <tbody class="table-hover">
+                                {% for i in products %}
+                                <tr>
+                                    <td>{{i.product_id}}</td>
+                                    <td>{{i.product_name}}</td>
+                                    <td>{{i.product_marathi_name}}</td>
+                                    <td>
+                                        <svg id="barcode-{{ i.product_id }}"></svg>
+                                        <div onclick="generateBarcode('{{i.qrcode}}','{{ i.product_id }}')">
+                                            CLick Me
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <button class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal"
+                                            data-bs-whatever="@mdo" onclick="loadEditModal('{{i.product_id}}')">
+                                            <i class="fa fa-pen"></i>
+                                        </button>
+
+                                        <a type="button" href="/deleteproduct/{{ i.product_id }}/"
+                                            class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
+
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                            </tbody>
+                            <script
+                                src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+                            <script>
+                                function generateBarcode(e, id) {
+                                    JsBarcode(`#barcode-${id}`, e, {
+                                        format: "CODE128",
+                                        width: 1.5,
+                                        height: 40,
+                                        displayValue: false
+                                    });
+                                }
+                            </script>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content">
             <div class="modal-header">
@@ -64,7 +85,8 @@
             <div class="modal-body">
                 <ul class="nav nav-tabs" id="productTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="primary-tab" data-bs-toggle="tab" data-bs-target="#primary" type="button" role="tab">Primary Information</button>
+                        <button class="nav-link active" id="primary-tab" data-bs-toggle="tab" data-bs-target="#primary"
+                            type="button" role="tab">Primary Information</button>
                     </li>
                     <!-- <li class="nav-item" role="presentation">
                         <button class="nav-link" id="ecommerce-tab" data-bs-toggle="tab" data-bs-target="#ecommerce" type="button" role="tab">Ecommerce</button>
@@ -73,14 +95,17 @@
                 <div class="tab-content mt-3">
                     <div class="tab-pane fade show active" id="primary" role="tabpanel">
                         <form action="/insertproduct/" method="post">
+                            {% csrf_token %}
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <label class="form-label">Product Name *</label>
-                                    <input type="text" class="form-control" placeholder="Enter Product Name" name="Productname">
+                                    <input type="text" class="form-control" placeholder="Enter Product Name"
+                                        name="Productname">
                                 </div>
                                 <div class="col-4">
                                     <label class="form-label">Marathi Name</label>
-                                    <input type="text" class="form-control" placeholder="Enter Product Marathi Name" name="Marathiname">
+                                    <input type="text" class="form-control" placeholder="Enter Product Marathi Name"
+                                        name="Marathiname">
                                 </div>
                                 <div class="col-4">
                                     <label class="form-label">HSN Code</label>
@@ -91,7 +116,7 @@
                                 <div class="col-3">
                                     <label class="form-label">Category</label>
                                     <select class="form-select" name="category">
-                                        <option value=""selected>select category </option>
+                                        <option value="" selected>select category </option>
                                         {% for cate in categories %}
                                         <option value="{{cate.category_id}}">{{ cate.category_name }}</option>
                                         {% endfor %}
@@ -100,20 +125,20 @@
                                 <div class="col-3">
                                     <label class="form-label">Brand</label>
                                     <select class="form-select" name="brand">
-                                        <option value=""selected>select brand</option>
-                                        {% for barnd in brands %}                                        
+                                        <option value="" selected>select brand</option>
+                                        {% for barnd in brands %}
                                         <option value="{{barnd.brand_id}}">{{barnd.brand_name}}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
                                 <div class="col-3">
                                     <label class="form-label">Tax %</label>
-                                    <input type="number" class="form-control" name="tax" value="0">
+                                    <input type="number" class="form-control" name="tax_percentage" value="0">
                                 </div>
                                 <div class="col-3">
                                     <label class="form-label">Tax Type</label>
                                     <select class="form-select" name="tax">
-                                        <option value=""selected>select Tax Type</option>
+                                        <option value="" selected>select Tax Type</option>
                                         {% for tax in taxs %}
                                         <option value="{{tax.tax_id}}">{{tax.tax_name}}</option>
                                         {% endfor %}
@@ -124,7 +149,7 @@
                                 <div class="col-3">
                                     <label class="form-label">Primary Unit</label>
                                     <select class="form-select" name="unit">
-                                    <option value=""selected>select Unit</option>
+                                        <option value="" selected>select Unit</option>
                                         {% for unit in units %}
                                         <option value="{{unit.unit_id}}">{{unit.unit_name}}</option>
                                         {% endfor %}
@@ -132,93 +157,284 @@
                                 </div>
                                 <div class="col-3">
                                     <label class="form-label">Alternate Unit</label>
-                                    <select class="form-select">
-                                        <option selected>NoS</option>
-                                    </select>
+                                    <input type="text" class="form-control" name="AlternateUnit"
+                                        placeholder="Enter Alternate Unit">
+
                                 </div>
                                 <div class="col-3">
                                     <label class="form-label">Conversion Factor</label>
-                                    <input type="text" class="form-control" name="conversion" placeholder="Enter Conversion Factor">
+                                    <input type="text" class="form-control" name="conversion"
+                                        placeholder="Enter Conversion Factor">
                                 </div>
                                 <div class="col-3">
-                                    <label class="form-label"> Unit Price Per</label>   
-                                    <select class="form-select">
-                                        <option selected>NOS</option>
-                                    </select>
+                                    <label class="form-label"> Unit Price Per</label>
+                                    <input type="text" class="form-control" name="unitperprice"
+                                        placeholder="Enter Unit Price Per">
+
+
                                 </div>
                             </div>
-                            
+
                             <div>
-                                <table  border="1" cellspacing="10"  style="width: 100%; padding: 0px; margin:0%;" id="myTable">
-                                    
-                                        <tr>
-                                            <th style="margin: 0%;">Barcode</th>
-                                            <th>QR Code</th>
-                                            <th>MRP</th>
-                                            <th>Sale</th>
-                                            <th>Credit</th>
-                                            <th>Purchase </th>
-                                            <th>Wholesaler</th>
-                                            <th>Distributor </th>
-                                            <th>Op_Qty</th>
-                                            <th>Op_Value</th>
-                                            <th>Mfg Date</th>
-                                            <th>Exp Date</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    
-                                    
-                                        <tbody style="margin: 0%;">
-                                        <tr  style="margin: 0%;">
-                                            <td style="margin: 0%;"><input type="text" class="" style="width: 80px; margin: 0px;" name="barcode"></td>
-                                            <td style="margin-left: 0%;"><input type="text" class="" style="width: 80px;" name="qrcode"></td>
-                                            <td><input type="text" name="" class="" style="width: 80px;" name="mrp" ></td>
-                                            <td><input type="text" class="" style="width: 80px;" name="sale" ></td>
+                                <table border="1" cellspacing="10" style="width: 100%; padding: 0px; margin:0%;"
+                                    id="myTable">
+
+                                    <tr>
+                                        <th style="margin: 0%;">Barcode</th>
+                                        <th>QR Code</th>
+                                        <th>MRP</th>
+                                        <th>Sale</th>
+                                        <th>Credit</th>
+                                        <th>Purchase </th>
+                                        <th>Wholesaler</th>
+                                        <th>Distributor </th>
+                                        <th>Op_Qty</th>
+                                        <th>Op_Value</th>
+                                        <th>Mfg Date</th>
+                                        <th>Exp Date</th>
+                                        <th>Action</th>
+                                    </tr>
+
+
+                                    <tbody style="margin: 0%;">
+                                        <tr style="margin: 0%;">
+                                            <td style="margin: 0%;"><input type="text" class=""
+                                                    style="width: 80px; margin: 0px;" name="barcode"></td>
+                                            <td style="margin-left: 0%;"><input type="text" class=""
+                                                    style="width: 80px;" name="qrcode"></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="mrp"></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="sale"></td>
                                             <td><input type="text" class="" style="width: 80px;" name="credit"></td>
-                                            <td><input type="text" class="" style="width: 80px;" name="Purchase" ></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="Purchase"></td>
                                             <td><input type="text" class="" style="width: 80px;" name="Wholesaler"></td>
-                                            <td><input type="text" class="" style="width: 80px;" name="Distributor"></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="Distributor">
+                                            </td>
                                             <td><input type="text" class="" style="width: 80px;" name="Op_Qty"></td>
                                             <td><input type="text" class="" style="width: 80px;" name="Op_Value"></td>
                                             <td><input type="date" class="" style="width: 80px;" name="MfgDate"></td>
                                             <td><input type="date" class="" style="width: 80px;" name="ExpDate"></td>
-                                            <td><button type="button" class="btn btn-success btn-sm" onclick="copyRow()">+</button>
-                                                <button class="btn btn-danger btn-sm" onclick="removeRow(this)">X</button>
+                                            <td><button type="button" class="btn btn-success btn-sm"
+                                                    onclick="copyRow()">+</button>
+                                                <button class="btn btn-danger btn-sm"
+                                                    onclick="removeRow(this)">X</button>
                                             </td>
                                         </tr>
                                     </tbody>
-                                
+
                                 </table>
                             </div>
-                        
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" name="submit" class="btn btn-primary">Save</button>
+                            </div>
+
                         </form>
                     </div>
-                      <div class="tab-pane fade" id="ecommerce" role="tabpanel">
+                    <div class="tab-pane fade" id="ecommerce" role="tabpanel">
                         <p>Content for Ecommerce tab.</p>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
-            </div>
+
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="editproduct" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProductModalLabel">Edit Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="productTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="primary-tab" data-bs-toggle="tab" data-bs-target="#primary"
+                            type="button" role="tab">Primary Information</button>
+                    </li>
+                    <!-- <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="ecommerce-tab" data-bs-toggle="tab" data-bs-target="#ecommerce" type="button" role="tab">Ecommerce</button>
+                    </li> -->
+                </ul>
+                <div class="tab-content mt-3">
+                    <div class="tab-pane fade show active" id="primary" role="tabpanel">
+                        <form action="/updateproduct/" method="post">
+                            {% csrf_token %}
+                            <div class="row mb-3">
+                                <div class="col-4">
+                                    <label class="form-label">Product Name *</label>
+                                    <input type="text" class="form-control" placeholder="Enter Product Name"
+                                        name="Productname" id="updateproduct_name">
+                                    <input type="hidden" class="form-control" id="updateproduct_id"
+                                        name="updateproduct_id">
+
+                                </div>
+                                <div class="col-4">
+                                    <label class="form-label">Marathi Name</label>
+                                    <input type="text" class="form-control" placeholder="Enter Product Marathi Name"
+                                        name="Marathiname" id="updateproductMarathiname">
+                                </div>
+                                <div class="col-4">
+                                    <label class="form-label">HSN Code</label>
+                                    <input type="text" class="form-control" placeholder="Enter HSN Code" name="HSNCode"
+                                        id="updateproduct_HSNCode">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-3">
+                                    <label class="form-label">Category</label>
+                                    <select class="form-select" name="category" id="updateCategory">
+                                        <option value="" selected>select category </option>
+                                        {% for cate in categories %}
+                                        <option value="{{cate.category_id}}">{{ cate.category_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="form-label">Brand</label>
+                                    <select class="form-select" name="brand" id="updateBrand">
+                                        <option value="" selected>select brand</option>
+                                        {% for barnd in brands %}
+                                        <option value="{{ barnd.brand_id }}">{{ barnd.brand_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="form-label">Tax %</label>
+                                    <input type="number" class="form-control" name="tax_percentage" value="0"
+                                        id="updatetax_percentage">
+                                </div>
+                                <div class="col-3">
+                                    <label class="form-label">Tax Type</label>
+                                    <select class="form-select" name="tax" id="updatetax">
+                                        <option value="" selected>select Tax Type</option>
+                                        {% for tax in taxs %}
+                                        <option value="{{tax.tax_id}}">{{tax.tax_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-3">
+                                    <label class="form-label">Primary Unit</label>
+                                    <select class="form-select" name="unit" id="updateunit">
+                                        <option value="" selected>select Unit</option>
+                                        {% for unit in units %}
+                                        <option value="{{unit.unit_id}}">{{unit.unit_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="form-label">Alternate Unit</label>
+                                    <input type="text" class="form-control" name="AlternateUnit"
+                                        placeholder="Enter Alternate Unit" id="updateAlternateUnit">
+
+                                </div>
+                                <div class="col-3">
+                                    <label class="form-label">Conversion Factor</label>
+                                    <input type="text" class="form-control" name="conversion"
+                                        placeholder="Enter Conversion Factor" id="updateconversionfact">
+                                </div>
+                                <div class="col-3">
+                                    <label class="form-label"> Unit Price Per</label>
+                                    <input type="text" class="form-control" name="unitperprice"
+                                        placeholder="Enter Unit Price Per" id="updateunitperprice">
+
+
+                                </div>
+                            </div>
+
+                            <div>
+                                <table border="1" cellspacing="10" style="width: 100%; padding: 0px; margin:0%;"
+                                    id="myTable">
+
+                                    <tr>
+                                        <th style="margin: 0%;">Barcode</th>
+                                        <th>QR Code</th>
+                                        <th>MRP</th>
+                                        <th>Sale</th>
+                                        <th>Credit</th>
+                                        <th>Purchase </th>
+                                        <th>Wholesaler</th>
+                                        <th>Distributor </th>
+                                        <th>Op_Qty</th>
+                                        <th>Op_Value</th>
+                                        <th>Mfg Date</th>
+                                        <th>Exp Date</th>
+                                        <th>Action</th>
+                                    </tr>
+
+
+                                    <tbody style="margin: 0%;">
+                                        <tr style="margin: 0%;">
+                                            <td style="margin: 0%;"><input type="text" class=""
+                                                    style="width: 80px; margin: 0px;" name="barcode" id="updatebarcode">
+                                            </td>
+                                            <td style="margin-left: 0%;"><input type="text" class=""
+                                                    style="width: 80px;" name="qrcode" id="updateqrcode"></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="mrp"
+                                                    id="updatemrp"></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="sale"
+                                                    id="updatesale"></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="credit"
+                                                    id="updatecredit"></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="Purchase"
+                                                    id="updatePurchase"></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="Wholesaler"
+                                                    id="updateWholesaler"></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="Distributor"
+                                                    id="updateDistributor">
+                                            </td>
+                                            <td><input type="text" class="" style="width: 80px;" name="Op_Qty"
+                                                    id="updateOp_Qty"></td>
+                                            <td><input type="text" class="" style="width: 80px;" name="Op_Value"
+                                                    id="updateOp_Value"></td>
+                                            <td><input type="date" class="" style="width: 80px;" name="MfgDate"
+                                                    id="updateMfgDate"></td>
+                                            <td><input type="date" class="" style="width: 80px;" name="ExpDate"
+                                                    id="updateExpDate"></td>
+                                            <td><button type="button" class="btn btn-success btn-sm"
+                                                    onclick="copyRow()">+</button>
+                                                <button class="btn btn-danger btn-sm"
+                                                    onclick="removeRow(this)">X</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" name="submit" class="btn btn-primary">Save</button>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="ecommerce" role="tabpanel">
+                        <p>Content for Ecommerce tab.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <script>
     function copyRow() {
-    // Get the table
-    let table = document.getElementById("myTable");
+        // Get the table
+        let table = document.getElementById("myTable");
 
-    // Get the last row
-    let lastRow = table.rows[table.rows.length - 1];
+        // Get the last row
+        let lastRow = table.rows[table.rows.length - 1];
 
-    // Clone the row
-    let newRow = lastRow.cloneNode(true);
+        // Clone the row
+        let newRow = lastRow.cloneNode(true);
 
-    // Append the new row to the table
-    table.appendChild(newRow);
- }
+        // Append the new row to the table
+        table.appendChild(newRow);
+    }
 
 
     function removeRow(button) {
@@ -229,4 +445,52 @@
         }
     }
 </script>
-  {% endblock %}    
+<script>
+    function loadEditModal(productId) {
+        console.log(productId);
+
+        fetch(`/editproduct/${productId}/`)
+            .then(response => { return response.json(); })
+            .then(html => {
+                console.log(html);
+                let product = html.editproduct;
+                if (!product) {
+                 console.error("Error: product data is missing!");
+                return;
+            }
+                var editModal = new bootstrap.Modal(document.getElementById('editproduct'));
+                document.getElementById("updateproduct_id").value = product.product_id;
+                document.getElementById("updateproduct_name").value = product.product_name;
+                document.getElementById("updateproductMarathiname").value = product.product_marathi_name;
+                document.getElementById("updateproduct_HSNCode").value = product.product_HSNCode;
+                document.getElementById("updateCategory").value = product.category;
+                document.getElementById("updatebrand").value = product.brand;
+                document.getElementById("updatetaxpercent").value = product.taxpercent;
+                document.getElementById("updatetax").value = product.tax;
+                document.getElementById("updateunit").value = product.unit;
+                document.getElementById("updatealternateunit").value = product.alternateunit;
+                document.getElementById("updateconversionfact").value = product.conversionfact;
+                document.getElementById("updatenos").value = product.nos;
+                document.getElementById("updatebarcode").value = product.barcode;
+                document.getElementById("updateqrcode").value = product.qrcode;
+                document.getElementById("updatemrp").value = product.mrp;
+                document.getElementById("updatesale").value = product.sale;
+                document.getElementById("updatecredit").value = product.credit;
+                document.getElementById("updatepurchase").value = product.purchase;
+                document.getElementById("updatewholesaler").value = product.wholesaler;
+                document.getElementById("updatedistributor").value = product.distributor;
+                document.getElementById("updateop_Qty").value = product.op_Qty;
+                document.getElementById("updateop_Value").value = product.op_Value;
+                document.getElementById("updatemfg_Date").value = product.mfg_Date;
+                document.getElementById("updateexp_Date").value = product.exp_Date;
+
+                editModal.show();
+            })
+            .catch(error => console.error('Error loading modal content:', error));
+    }
+
+</script>
+
+
+
+{% endblock %}

@@ -36,14 +36,11 @@
                   <td>{{ i.users_mobile}}</td>   
                   <td>{{ i.users_role}}</td>              
                   <td>
-                    <a href="/edituser/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#edituser"
+                    <a href="/updateuser/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#edituser"
                     data-bs-whatever="@mdo">  
                       <i class="fa fa-pen"></i>
-                      <a href="/deleteuser/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcategory"
-                    data-bs-whatever="@mdo">
-                      <i class="fas fa-trash"></i>
-                      
-                      </a>
+                      <a href="deleteusers/{{i.users_id}}" class="btn btn-sm mx-1 btn-outline-success" onclick="return confirm('are you sure?')">
+                      <i class="fas fa-trash"></i></a>
         
                       <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
                       data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
@@ -68,18 +65,18 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="" method="post">
+        <form action="/adduser/" method="post">
           {% csrf_token %}
         <div class="container-fluid">
           <div class="row mb-3">
             <div class="col-6">
               <label for="UserName" class="form-label"> User Name</label>
-              <input type="text" class="form-control" id="User Name" name="categoryName" required>
+              <input type="text" class="form-control" id="updateuser_name" name="updateuser_name" required>
             </div>
 
             <div class="col-6">
               <label for="usersemail" class="form-label">User Email</label>
-              <input type="text" class="form-control" id="User Email" name="User Email" required>
+              <input type="text" class="form-control" id="updateuser_email" name="User updateuser_email" required>
 
             </div>
             
@@ -87,19 +84,19 @@
           <div class="row mt-3">
             <div class="col-6">             
               <label for="mobileno" class="form-label">Mobile Number</label>
-              <input type="text" class="form-control" id="mobile" name="Mobile_Number" placeholder="Mobile Number" required>
+              <input type="text" class="form-control" id="updatemob" name="updatemob" placeholder="Mobile Number" required>
             </div>
 
             <div class="col-6">             
               <label for="Role" class="form-label">Role</label>
-              <input type="text" class="form-control" id="Role" name="Role" placeholder="Admin" required>
+              <input type="text" class="form-control" id="update_Role" name="update_Role" placeholder="Admin" required>
             </div>
           </div>
 
           <div class="row  mt-3">
             <div class="col-12">             
               <label for="mobileno" class="form-label">Password</label>
-              <input type="text" class="form-control" id="Password" name="Password" placeholder="Password" required>
+              <input type="text" class="form-control" id="update_pass" name="update_pass" placeholder="Password" required>
             </div>
 
           </div>
@@ -115,6 +112,100 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="edituser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/updateuser/" method="POST">
+          {% csrf_token %}
+        <div class="container-fluid">
+          <div class="row mb-3">
+            <div class="col-6">
+              <label for="UserName" class="form-label"> User Name</label>
+              <input type="text" class="form-control" id="updateuser_name" name="updateuser_name" required>
+              <input type="hidden" class="form-control" id="updateuser_id" name="updateuser_id">
+            </div>
+
+            <div class="col-6">
+              <label for="usersemail" class="form-label">User Email</label>
+              <input type="text" class="form-control" id="updateUser_email" name="updateUser_email" required>
+
+            </div>
+            
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">             
+              <label for="mobileno" class="form-label">Mobile Number</label>
+              <input type="text" class="form-control" id="update_mob" name="update_mob" placeholder="Mobile Number" required>
+            </div>
+
+            <div class="col-6">             
+              <label for="Role" class="form-label">Role</label>
+              <input type="text" class="form-control" id="update_role" name="update_role" placeholder="Admin" required>
+            </div>
+          </div>
+
+          <div class="row  mt-3">
+            <div class="col-12">             
+              <label for="mobileno" class="form-label">Password</label>
+              <input type="text" class="form-control" id="update_pass" name="update_pass" placeholder="Password" required>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> <i class="fas fa-times"></i> Close</button>
+        <button type="submit" class="btn btn-success">Save</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  function loadEditModal(usersId) {
+    console.log("Fetching user data for ID:", usersId);
+
+    if (!usersId) {
+        console.error("🚨 Invalid User ID received!");
+        return;
+    }
+
+    fetch(`/updateuser/${usersId}/`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Received user data:", data);
+
+            let user = data.edituser;
+
+            if (user) {
+                document.getElementById("updateuser_id").value = Users.users_id;
+                document.getElementById("updateuser_name").value = Users.users_name;
+                document.getElementById("updateUser_email").value = Users.users_email;
+                document.getElementById("update_mob").value = Users.users_mobile;
+                document.getElementById("update_role").value = Users.users_role;
+                document.getElementById("update_pass").value = Users.users_pass;
+
+                let editModal = new bootstrap.Modal(document.getElementById('updateuser'));
+                editModal.show();
+            } else {
+                console.error("🚨 User data not found!");
+            }
+        })
+        .catch(error => console.error('❌ Error loading modal content:', error));
+}
+
+</script>
+
 
 
 {% endblock %}

@@ -8,7 +8,7 @@
         <div class="card-header">
           <div class="d-flex justify-content-between">
             <h3>
-              Add Expenses
+              Expenses
             </h3>
             <div class="text-right">
               <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -33,16 +33,17 @@
                   <td>{{i.expenses_id}} </td>
                   <td> {{i.expenses_name}}</td>
                   <td>
-                    <a href="/editexpenses/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editexpenses"
-                    data-bs-whatever="@mdo">
+                    <a href="/editexpenses/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal"
+                      data-bs-target="#editexpenses" data-bs-whatever="@mdo">
                       <i class="fa fa-pen"></i>
-                      </a>
-                      <a href="deleteexpenses/{{i.expenses_id}}" class="btn btn-danger" onclick="return confirm('are you sure?')"><i class="fa fa-trash"></i></a>
-        
-        
-                      <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
+                    </a>
+                    <a href="deleteexpenses/{{i.expenses_id}}" class="btn btn-danger"
+                      onclick="return confirm('are you sure?')"><i class="fa fa-trash"></i></a>
+
+
+                    <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
                 data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
-                    
+
                   </td>
                 </tr>
               </tbody>
@@ -54,6 +55,7 @@
     </div>
   </div>
 </div>
+
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -62,51 +64,71 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="/insertexpenses/" method="post">
+          {% csrf_token %}
           <div class="mb-3">
-            <label for="ExpensesGroup Name " class="col-form-label">Add Expenses</label>
-            <input type="text" class="form-control" id="ExpensesGroup Name" placeholder="ExpensesGroup Name" />
+            <label for="ExpensesGroupName" class="col-form-label">Add Expenses</label>
+            <input type="text" class="form-control" name="ExpensesName" placeholder="ExpensesGroup Name" />
           </div>
-
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button type="submit" name="submit" class="btn btn-success">Save</button>
+          </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
-        <button type="button" class="btn btn-success">Save</button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="modal fade" id="editexpenses" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-  <div class="modal-content">
-  <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Edit Expenses</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  </div>
-  <div class="modal-body">
-    <div class="container-fluid">
-      <div class="row mb-3">
-        <div class="col-12">
-          <label for="CategoryName" class="form-label">Expenses Name</label>
-          <input type="text" class="form-control" id="CategoryName" name="categoryName" value="" required>
+  <div class="modal fade" id="editexpenses" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Expenses
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row mb-3">
+              <div class="col-12">
+                <form action="/updateexpenses/" method="post">
+                  <label for="ExpensesName" class="form-label">Unit Name</label>
+                  <input type="text" class="form-control" id="ExpensesName" name="ExpensesName" value="" required>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" name="submit" class="btn btn-success">Save</button>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+
+          </div>
         </div>
         
       </div>
-      
     </div>
   </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-    <button type="button" class="btn btn-success">Save</button>
-  </div>
-  </div>
-  </div>
-  </div>
-  
-  
-  
-{% endblock %}
+  <script>
+    function loadEditModal(AddExpenses) {
+      console.log(AddExpenses);
+
+      fetch(`/editAddExpenses/${AddExpenses}/`)
+        .then(response => { return response.json(); })
+        .then(html => {
+          console.log(html);
+          let AddUnit = html.editAddExpenses;
+          var editModalContent = new bootstrap.Modal(document.getElementById('editAddExpenses'));
+          document.getElementById("updateexpenses_name").value = AddExpenses.AddExpenses;
+
+          editModalContent.show();
+        })
+        .catch(error => console.error('Error loading modal content:', error));
+    }
+
+  </script>
+
+
+  {% endblock %}
