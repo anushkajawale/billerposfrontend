@@ -34,12 +34,11 @@
                   
                   <td> {{i.unit_name}} </td>
                   <td>
-                    <a href="/editunit/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editunit"
+                    <!-- <a href="/editunit/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editunit"
                     data-bs-whatever="@mdo">
-                      <i class="fa fa-pen"></i>
-                      <a href="deleteexpenses/{{i.expenses_id}}" class="btn btn-danger" onclick="return confirm('are you sure?')"><i class="fa fa-trash"></i></a>
-                      <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
-                data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
+                      <i class="fa fa-pen"></i> -->
+                      <button type="button" class="btn btn-success" onclick="loadEditModal('{{ i.unit_id }}')"><i class="fa fa-pen"></i></button> 
+                      <a href="deleteunit/{{i.unit_id}}" class="btn btn-danger" onclick="return confirm('are you sure?')"><i class="fa fa-trash"></i></a>
                     
                   </td>
                 </tr>
@@ -90,36 +89,43 @@
   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
+  <form action="/updateunit/" method="post">
+    {% csrf_token %}
   <div class="container-fluid">
     <div class="row mb-3">
-      <div class="col-12">
-        <form action="/updateunit/" method="post">
-        <label for="CategoryName" class="form-label">Unit Name</label>
-        <input type="text" class="form-control" id="CategoryName" name="categoryName" value="" required>
-        </form>
+      <div class="col-12">                
+        <label for="unitname" class="form-label">Unit Name</label>
+        <input type="text" class="form-control" placeholder="unit Name" name="unit_name" id="updateunit_name" required>
+        <input type="hidden" id="updateunitId" name="unit_id" >
+      
       </div>
       
     </div>
-    
   </div>
-</div>
+
 <div class="modal-footer">
   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-  <button type="submit" class="btn btn-success">Save</button>
+  <button type="submit" class="btn btn-success">Update</button>
+</div>
+</form>
 </div>
 </div>
 </div>
 </div>
+
+
+
  <script>
-  function loadEditModal(AddUnit) {console.log(AddUnit);
+  function loadEditModal(unit_id) {console.log(unit_id);
   
-    fetch(`/editAddUnit/${AddUnit}/`)
+    fetch(`/editproduct/${unit_id}/`)
         .then(response =>{return response.json();})
         .then(html => {
           console.log(html);
-          let AddUnit = html.editAddUnit;
-            var editModalContent = new bootstrap.Modal(document.getElementById('editAddUnit'));
-            document.getElementById("updateunit_name").value=AddUnit.AddUnit;
+          let Unit = html.editunit;
+            var editModalContent = new bootstrap.Modal(document.getElementById('editunit'));
+            document.getElementById("updateunitId").value=Unit.unit_id;
+            document.getElementById("updateunit_name").value=Unit.unit_name;
             
             editModalContent.show();
         })

@@ -232,9 +232,11 @@ def chargelist(request):
 def insertcharge(request):
     if request.method=='POST':
         chargename=request.POST.get('chargename')
+        
+
 
         insertcharge=OtherCharge(
-            charge_name=chargename
+            othercharge_name=chargename
         )
         insertcharge.save()
         return redirect('/AddOtherCharge/')
@@ -819,22 +821,50 @@ def Salelist (request):
 def Salelist (request):
     return render(request,'Salelist.html')
 
+def editAddUnit(request,id):
+    
+    try:
+        unitdata = Unit.objects.get(unit_id=id)
+        edit = {
+            'editunit': {
+                'unit_id': unitdata.unit_id,
+                'unit_name': unitdata.unit_name,  # Adjust field names based on your model
+            }
+        }
+        return JsonResponse(edit)
+    except Unit.DoesNotExist:
+        return JsonResponse({'error': 'Unit not found'}, status=404)
+
+
 
 
 
 def updateunit(request):
     if request.method =="POST":
         unit_id=request.POST.get("unit_id")
-        unit_name=request.POST.get("unitName")  
+        unit_name=request.POST.get("unit_name")  
         
+        fetchRecord=Unit.objects.get(unit_id=unit_name)
 
-        fetchRecord=Category.objects.get(unit_id=unit_id)
-        
-
-        fetchRecord.category_name=unit_name
+        fetchRecord.unit_name=unit_name
 
         fetchRecord.save()  
-        return redirect('/unit/')
+        return redirect('/AddUnit/') 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 def updateExpenses(request):
     if request.method =="POST":
@@ -850,6 +880,28 @@ def updateExpenses(request):
         fetchRecord.save()  
         return redirect('/AddExpenses/')
     
+def updateAddOtherCharge(request):
+    if request.method =="POST":
+        othercharge_id=request.POST.get("othercharge_id")
+        othercharge_name=request.POST.get("othercharge_name")  
+        
+
+        fetchRecord=Expenses.objects.get(othercharge_id=othercharge_id)
+        
+
+        fetchRecord.othercharge_id=othercharge_id
+
+        fetchRecord.save()  
+        return redirect('/AddOtherCharge/')
+    
+
+
+
+
+
+
+
+
 def deleteunit(request,id):   
     unitdata=Unit.objects.get(unit_id=id)
 
