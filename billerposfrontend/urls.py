@@ -102,17 +102,16 @@ urlpatterns = [
 
 
     path('RewardPoints/',views.RewardPointslist),
-<<<<<<< HEAD
 
     path('RewardPoints/',views.RewardPoints),
 
-=======
+
     path('insertrewardpoint/',views.insertrewardpoint),
     path('editrewardpoint/<id>/',views.editrewardpointpage),
 
 
     
->>>>>>> c607efd76541b7156451439a5e1127eb21f3b7f4
+
     path('Customerpage/',views.Customerpage),
     path('insertcustomer/',views.insertcustomer),
     path('editcustomer/<id>/',views.editcustomer),
