@@ -78,9 +78,10 @@ urlpatterns = [
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
 
-    path('EditRole/',views.EditRolelist),
+    path('EditRole/',views.EditRoles),
     path('insertroles/',views.insertroles),
     path('Dashboard/',views.Dashboard),
+    path('logout/',views.logout),
     
    
 
@@ -90,7 +91,15 @@ urlpatterns = [
 
     path('Salelist/',views.Salelist),
     path('Barcode/',views.Barcodepage),
-    path('Addsale/',views.Addsale)
+    path('Addsale/',views.Addsale),
+    path('BillWiselist/',views.BillWiselist),
+    path('OutstandingReport/',views.OutstandingReport),
+    path('LedgerReport/',views.LedgerReport),
+    path('POSRegisterReport/',views.POSRegisterReport),
+    path('PrintLedgerReport/',views.PrintLedgerReport),
+    path('PrintOutStandingReport/',views.PrintOutStandingReport),
+    path('PrintPOSRegisterReport/',views.PrintPOSRegisterReport),
+    path('PrintBillWiseReport/',views.PrintBillWiseReport)
 
 
 

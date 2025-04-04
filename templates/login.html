@@ -41,7 +41,8 @@
     </div>
   </div>
   <!-- [ Pre-loader ] End -->
-
+  <form action="/Dashboard/" method="post">
+      {% csrf_token %}
   <div class="auth-main">
     <div class="auth-wrapper v3">
       <div class="auth-form">
@@ -73,3 +74,4 @@
             <div class="d-grid mt-4">
               <button type="submit" class="btn btn-primary">Sign In</button>
             </div>
+          </form>

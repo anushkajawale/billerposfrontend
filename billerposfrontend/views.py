@@ -16,6 +16,9 @@ from customer.models import Customer
 from supplier.models import Supplier
 from Users.models import Users
 from tax.models import Tax
+from django.contrib.auth import authenticate
+from django.contrib.auth import logout as auth_logout
+
 
 
 
@@ -27,8 +30,28 @@ from tax.models import Tax
 def index (request):
     return render(request,"index.html")
 
-def login (request):
-    return render(request,"login.html")
+
+
+def login(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=email, password=password)
+
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Login successful!")
+            return redirect('dashboard')  # Change 'dashboard' to your actual home page
+        else:
+            messages.error(request, "Invalid email or password")
+
+    return render(request, 'login.html')
+
+def logout(request):  
+    auth_logout(request)  
+    messages.success(request, "Logged out successfully!")
+    return redirect('login')  
 
 def register (request):
     return render(request,"register.html")
@@ -223,7 +246,7 @@ def updatecustomergroup(request):
 
         fetchRecord=Customergroup.objects.get(customergroup_id=customergroup_id)
         if customergroup_id:
-            fetchRecord.ustomergroup_id=customergroup_id
+            fetchRecord.customergroup_id=customergroup_id
         if customergroup_name:
             fetchRecord.customergroup_name=customergroup_name
 
@@ -487,17 +510,9 @@ def Roleslist(request):
     return render(request,'Roles.html',data)
 
 
-def edit(request):
-    if request.method=="POST":
-        Roles_id = request.POST.get('Roles_id')
-        Roles_name=request.POST.get('Roles_name')
-        Roles_dashboard=request.POST.get('Roles_dashboard')
-    findRecord=Roles.objects.get(Roles_id = Roles_id)
-    findRecord=Roles.objects.get(Roles_name = Roles_name)
-    findRecord=Roles.objects.get(Roles_dashboard = Roles_dashboard)
 
-    findRecord.save()
-    return redirect("/EditRole/")
+
+    
 
 def EditRolelist(request):
     listdata= Roles.objects.all()   
@@ -506,86 +521,170 @@ def EditRolelist(request):
     }
     return render(request,'EditRole.html',data)
 
-def add_role(request):
-    if request.method == 'POST':
-        role_name = request.POST.get('rolename')
-        selected_permissions = request.POST.get('selected_permissions')  # Comma-separated values
-        
-        if role_name:
-            role = role(name=role_name, permissions=selected_permissions)
-            role.save()
-            messages.success(request, "Role saved successfully!")
-            return redirect('add_role')  # Reloads the same page after saving
-        
-        messages.error(request, "Role name is required!")
-    
-    return render(request, 'EditRole.html')
+
+
 
 def role_list(request):
     Roles = Roles.objects.all()  # Fetch all roles
-    return render(request, 'role_list.html', {'roles': Roles})
+    return render(request, 'role_list.html')
 
-def edit_role(request):
+def EditRoles(request):
     if request.method == "POST":
-        role_name = request.POST.get("Rolename")
+        id = request.POST.get("id")
+        Roles_name = request.POST.get("Rolesname")
+
+      
+        fetchRecord = Roles.objects.get(id=id)
+
+        if Roles_name:
+            fetchRecord.Roles_name = request.POST.get('Rolesname', False)
+            fetchRecord.Roles_Dashboard = request.POST.get('RolesDashboard', False)
+            fetchRecord.Roles_UserProfile = request.POST.get('RolesUserProfile', False)
+            fetchRecord.Roles_BusinessProfile = request.POST.get('RolesBusinessProfile', False)
+            fetchRecord.Roles_BarcodePrint = request.POST.get('RolesBarcodePrint', False)
+            fetchRecord.Roles_Stock = request.POST.get('RolesStock', False)
+            fetchRecord.Roles_HRDepartment = request.POST.get('RolesHRDepartment', False)
+            fetchRecord.Roles_RewardPoint = request.POST.get('RolesRewardPoint', False)
+            fetchRecord.Roles_POS = request.POST.get('RolesPOS', False)
+            fetchRecord.Roles_POSList = request.POST.get('RolesPOSList', False)
+            fetchRecord.Roles_POSCreate = request.POST.get('RolesPOSCreate', False)
+            fetchRecord.Roles_POSUpdate = request.POST.get('RolesPOSUpdate', False)
+            fetchRecord.Roles_Sale = request.POST.get('RolesSale', False)
+            fetchRecord.Roles_SaleList = request.POST.get('RolesSaleList', False)
+            fetchRecord.Roles_SaleCreate = request.POST.get('RolesSaleCreate', False)
+            fetchRecord.Roles_SaleUpdate = request.POST.get('RolesSaleUpdate', False)
+            fetchRecord.Roles_SaleDelete = request.POST.get('RolesSaleDelete', False)
+            fetchRecord.Roles_Purchase = request.POST.get('RolesPurchase', False)
+            fetchRecord.Roles_PurchaseList = request.POST.get('RolesPurchaseList', False)
+            fetchRecord.Roles_PurchaseCreate = request.POST.get('RolesPurchaseCreate', False)
+            fetchRecord.Roles_PurchaseUpdate = request.POST.get('RolesPurchaseUpdate', False)
+            fetchRecord.Roles_PurchaseDelete = request.POST.get('Roles_PurchaseDelete', False)
+            fetchRecord.Roles_Supplier = request.POST.get('Roles_Supplier', False)
+            fetchRecord.Roles_SupplierList = request.POST.get('Roles_SupplierList', False)
+            fetchRecord.Roles_SupplierCreate = request.POST.get('RolesSupplierCreate', False)
+            fetchRecord.Roles_SupplierUpdate = request.POST.get('RolesSupplierUpdate', False)
+            fetchRecord.Roles_SupplierDelete = request.POST.get('RolesSupplierDelete', False)
+            fetchRecord.Roles_Settings = request.POST.get('RolesSettings', False)
+            fetchRecord.Roles_Category = request.POST.get('RolesCategory', False)
+            fetchRecord.Roles_Brand = request.POST.get('RolesBrand', False)
+            fetchRecord.Roles_Taxes = request.POST.get('RolesTaxes', False)
+            fetchRecord.Roles_Units = request.POST.get('RolesUnits', False)
+            fetchRecord.Roles_ExpensesTypes = request.POST.get('RolesExpensesTypes', False)
+            fetchRecord.Roles_PaymentModes = request.POST.get('RolesPaymentModes', False)
+            fetchRecord.Roles_PaymentTerms = request.POST.get('RolesPaymentTerms', False)
+            fetchRecord.Roles_CustomerGroup = request.POST.get('RolesCustomerGroup', False)
+            fetchRecord.Roles_SupplierGroup = request.POST.get('RolesSupplierGroup', False)
+            fetchRecord.Roles_BarcodeSettings = request.POST.get('RolesBarcodeSettings', False)
+            fetchRecord.Roles_PrinterSettings = request.POST.get('RolesPrinterSettings', False)
+            fetchRecord.Roles_BillingSettings = request.POST.get('RolesBillingSettings', False)
+            fetchRecord.Roles_LanguageSettings = request.POST.get('RolesLanguageSettings', False)
+            fetchRecord.Roles_Reports = request.POST.get('RolesReports', False)
+            fetchRecord.BillWiseProfit = request.POST.get('BillWiseProfit', False)
+            fetchRecord.Roles_OutStandingReport = request.POST.get('RolesOutStandingReport', False)
+            fetchRecord.Roles_LedgerReport = request.POST.get('RolesLedgerReport', False)
+            fetchRecord.Roles_POSRegisterReport = request.POST.get('RolesPOSRegisterReport', False)
+            fetchRecord.Roles_Customer = request.POST.get('RolesCustomer', False)
+            fetchRecord.Roles_CustomerList = request.POST.get('RolesCustomerList', False)
+            fetchRecord.Roles_CustomerCreate = request.POST.get('RolesCustomerCreate', False)
+            fetchRecord.Roles_CustomerUpdate = request.POST.get('RolesCustomerUpdate', False)
+            fetchRecord.Roles_CustomerDelete = request.POST.get('RolesCustomerDelete', False)
+            fetchRecord.Roles_PaymentReceipt = request.POST.get('RolesPaymentReceipt', False)
+            fetchRecord.Roles_Payment = request.POST.get('RolesPayment', False)
+            fetchRecord.Roles_UserManagement = request.POST.get('RolesUserManagement', False)
+            fetchRecord.Roles_Roles = request.POST.get('RolesRoles', False)
+            fetchRecord.Roles_User = request.POST.get('RolesUser', False)
+            fetchRecord.Roles_Product = request.POST.get('RolesProduct', False)
+            fetchRecord.Roles_ProductList = request.POST.get('Roles_ProductList', False)
+            fetchRecord.Roles_ProductCreate = request.POST.get('RolesProductCreate', False)
+            fetchRecord.Roles_ProductUpdate = request.POST.get('RolesProductUpdate', False)
+            fetchRecord.Roles_ProductDelete = request.POST.get('RolesProductDelete', False)
+
         
-        # Check if the role exists, otherwise create a new one
-        role = Roles.objects.get_or_create(name=role_name)
+        fetchRecord.save()
 
-        # Update role permissions based on the checkboxes
-        role.Role_Dashboard = request.POST.get("Role_Dashboard") == "True"
-        role.Role_UserProfile = request.POST.get("Role_UserProfile") == "True"
-        role.Role_BusinessProfile = request.POST.get("Role_BusinessProfile") == "True"
-
-        # Save the role to the database
-        role.save()
-
-        return redirect("edit_role")  # Redirect back to the form after saving
-
-    # If GET request, display the form
-    roles = Roles.objects.all()
-    return render(request, "your_template.html", {"list": roles})
+        return redirect("/Roles/")
+    return render(request, "EditRole.html")
+  
+   
 
 def insertroles(request):
     if request.method=="POST":
-        Roles_name=request.POST.get("role_name")
-        Roles_Dashboard=request.POST.get("role_dashboard")
-        Roles_UserProfile=request.POST.get("role_userprofile")
-        Roles_BusinessProfile=request.POST.get("role_BusinessProfile")
-        Roles_BarcodePrint=request.POST.get("role_BarcodePrint")
-        Roles_Stock=request.POST.get("Roles_Stock")
-        Roles_HRDepartment=request.POST.get("Roles_HRDepartment") 
-        Roles_RewardPoint=request.POST.get("Roles_RewardPoint")
-        Roles_POS=request.POST.get("Roles_POS")
-        Roles_Sale=request.POST.get("Roles_Sale")
-        Roles_Purchase=request.POST.get("Roles_Purchase")
-        Roles_Supplier=request.POST.get("Roles_Supplier")
-        Roles_Settings=request.POST.get("Roles_Settings")
-        
-
-        insertquery=Roles(
-           Roles_name=Roles_name,
-           Roles_Dashboard=Roles_Dashboard,
-            Roles_UserProfile=Roles_UserProfile,
-            Roles_BusinessProfile=Roles_BusinessProfile,
-            Roles_BarcodePrint=Roles_BarcodePrint,
-            Roles_Stock=Roles_Stock,
-            Roles_HRDepartment=Roles_HRDepartment,
-            Roles_RewardPoint=Roles_RewardPoint,
-            Roles_POS=Roles_POS,
-            Roles_Sale=Roles_Sale,
-            Roles_Purchase=Roles_Purchase,
-            Roles_Supplier=Roles_Supplier,
-            Roles_Settings=Roles_Settings
+        insert_query = Roles(
+            id=request.POST.get('Roles_id',False),
+            Roles_name=request.POST.get('Roles_name',False),
+            Roles_Dashboard=request.POST.get('RolesDashboard', False),
+            Roles_UserProfile=request.POST.get('RolesUserProfile', False),
+            Roles_BusinessProfile=request.POST.get('RolesBusinessProfile', False),
+            Roles_BarcodePrint=request.POST.get('RolesBarcodePrint', False),
+            Roles_Stock=request.POST.get('RolesStock', False),
+            Roles_HRDepartment=request.POST.get('RolesHRDepartment', False),
+            Roles_RewardPoint=request.POST.get('RolesRewardPoint', False),
+            Roles_POS=request.POST.get('RolesPOS', False),
+            Roles_POSList=request.POST.get('RolesPOSList', False),
+            Roles_POSCreate=request.POST.get('RolesPOSCreate',False),
+            Roles_POSUpdate=request.POST.get('RolesPOSUpdate', False),
+            Roles_Sale=request.POST.get('RolesSale', False),
+            Roles_SaleList=request.POST.get('RolesSaleList', False),
+            Roles_SaleCreate=request.POST.get('RolesSaleCreate', False),
+            Roles_SaleUpdate=request.POST.get('RolesSaleUpdate', False),
+            Roles_SaleDelete=request.POST.get('RolesSaleDelete', False),
+            Roles_Purchase=request.POST.get('RolesPurchase', False),
+            Roles_PurchaseList=request.POST.get('Roles_PurchaseList', False),
+            Roles_PurchaseCreate=request.POST.get('Roles_PurchaseCreate', False),
+            Roles_PurchaseUpdate=request.POST.get('Roles_PurchaseUpdate', False),
+            Roles_PurchaseDelete=request.POST.get('Roles_PurchaseDelete', False),
+            Roles_Supplier=request.POST.get('Roles_Supplier', False),
+            Roles_SupplierList=request.POST.get('Roles_SupplierList', False),
+            Roles_SupplierCreate=request.POST.get('Roles_SupplierCreate', False),
+            Roles_SupplierUpdate=request.POST.get('Roles_SupplierUpdate', False),
+            Roles_SupplierDelete=request.POST.get('Roles_SupplierDelete', False),
+            Roles_Settings=request.POST.get('Roles_Settings', False),
+            Roles_Category=request.POST.get('Roles_Category', False),
+            Roles_Brand=request.POST.get('Roles_Brand', False),
+            Roles_Taxes=request.POST.get('Roles_Taxes', False),
+            Roles_Units=request.POST.get('Roles_Units', False),
+            Roles_ExpensesTypes=request.POST.get('Roles_ExpensesTypes', False),
+            Roles_PaymentModes=request.POST.get('Roles_PaymentModes', False),
+            Roles_PaymentTerms=request.POST.get('Roles_PaymentTerms', False),
+            Roles_CustomerGroup=request.POST.get('Roles_CustomerGroup', False),
+            Roles_SupplierGroup=request.POST.get('Roles_SupplierGroup', False),
+            Roles_BarcodeSettings=request.POST.get('Roles_BarcodeSettings', False),
+            Roles_PrinterSettings=request.POST.get('Roles_PrinterSettings', False),
+            Roles_BillingSettings=request.POST.get('Roles_BillingSettings', False),
+            Roles_LanguageSettings=request.POST.get('Roles_LanguageSettings', False),
+            Roles_Reports=request.POST.get('Roles_Reports', False),
+            BillWiseProfit=request.POST.get('BillWiseProfit', False),
+            Roles_OutStandingReport=request.POST.get('Roles_OutStandingReport', False),
+            Roles_LedgerReport=request.POST.get('Roles_LedgerReport', False),
+            Roles_POSRegisterReport=request.POST.get('Roles_POSRegisterReport', False),
+            Roles_Customer=request.POST.get('Roles_Customer', False),
+            Roles_CustomerList=request.POST.get('Roles_CustomerList', False),
+            Roles_CustomerCreate=request.POST.get('Roles_CustomerCreate', False),
+            Roles_CustomerUpdate=request.POST.get('Roles_CustomerUpdate', False),
+            Roles_CustomerDelete=request.POST.get('Roles_CustomerDelete', False),
+            Roles_PaymentReceipt=request.POST.get('Roles_PaymentReceipt', False),
+            Roles_Payment=request.POST.get('Roles_Payment', False),
+            Roles_UserManagement=request.POST.get('Roles_UserManagement', False),
+            Roles_Roles=request.POST.get('Roles_Roles', False),
+            Roles_User=request.POST.get('Roles_User', False),
+            Roles_Product=request.POST.get('Roles_Product', False),
+            Roles_ProductList=request.POST.get('Roles_ProductList', False),
+            Roles_ProductCreate=request.POST.get('RolesProductCreate', False),
+            Roles_ProductUpdate=request.POST.get('RolesProductUpdate', False),
+            Roles_ProductDelete=request.POST.get('RolesProductDelete', False)
         )
 
+        insert_query.save()
+        messages.success(request, "Role successfully added!")
+        return redirect('/Roles/')  #
+
+    return render(request, "insertroles.html")
+
+
         
+
         
-        insertquery.save()
-        return redirect("/Roles/")
-    else:
-        return render(request,'Roles.html')
-        
+    
 
 def Dashboard(request):
     
@@ -650,9 +749,31 @@ def Addsale(request):
 
 
 def Stock(request):
-    return render(request,'Stock.html')
+    return render(request,'stock.html')
 
+def BillWiselist(request):
+    return render(request,'BillWiselist.html')
 
+def OutstandingReport(request):
+    return render(request,'OutstandingReport.html')
 
+def POSRegisterReport(request):
+    return render(request,'POSRegisterReport.html')
 
+def LedgerReport(request):
+    return render(request,'LedgerReport.html')
 
+def POSRegistrationReport(request):
+    return render(request,'POSRegistrationReport.html')
+
+def PrintLedgerReport(request):
+    return render(request,'PrintLedgerReport.html')
+
+def PrintOutStandingReport(request):
+    return render(request,'PrintOutStandingReport.html')
+   
+def  PrintPOSRegisterReport(request):
+    return render(request,'PrintPOSRegisterReport.html')
+   
+def  PrintBillWiseReport(request):
+    return render(request,'PrintBillWiseReport.html')
