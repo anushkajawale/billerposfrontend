@@ -1,0 +1,71 @@
+{% extends 'index.html' %}
+{% block content %}
+
+    <div class="container mt-4">
+        <div class="card border-0 shadow">
+            <div class="card-body">
+                <h5 class="fw-bold">POS Register Report</h5>
+         <form  id="POSRegisterform" action="/PrintPOSRegisterReport/"  method="post">
+                 {% csrf_token %}
+                <div class="row g-2 align-items-center">
+                    <div class="col-md-3">
+                        <select class="form-select">
+                            <option selected>Select Customer</option>
+                            <option>Customer 1</option>
+                            <option>Customer 2</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" class="form-control">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" class="form-control">
+                    </div>
+                    <div class="col-md-3 text-end">
+                        
+                        <button class="btn btn-primary me-2">Print</button>
+                        <button class="btn btn-info">Export</button>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-responsive mt-3">
+                    <table class="table table-bordered text-center">
+                        <thead class="table-light">
+                            <tr>
+                                <th>SR NO</th>
+                                <th>DATE</th>
+                                <th>TYPE</th>
+                                <th>NAME</th>
+                                <th>INVOICE NO</th>
+                                <th>DEBIT</th>
+                                <th>CREDIT</th>
+                                <th>BALANCE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="8" class="text-muted">No data available</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Summary -->
+        <div class="row mt-3">
+            <div class="col-md-3 bg-dark text-white p-3 text-center rounded">Opening Balance: ₹</div>
+            <div class="col-md-3 bg-primary text-white p-3 text-center rounded">Total Debit Amt: ₹</div>
+            <div class="col-md-3 bg-warning text-dark p-3 text-center rounded">Total Credit Amt: ₹</div>
+            <div class="col-md-3 bg-info text-white p-3 text-center rounded">Balance Amt: ₹</div>
+        </div>
+    </form>
+    </div>
+    <script>
+        function openPrintPage() {
+            window.open('/PrintPOSRegisterReport/', '_blank'); 
+        }
+    </script>
+    {% endblock %}
+

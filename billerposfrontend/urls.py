@@ -102,9 +102,17 @@ urlpatterns = [
 
 
     path('RewardPoints/',views.RewardPointslist),
+<<<<<<< HEAD
 
     path('RewardPoints/',views.RewardPoints),
 
+=======
+    path('insertrewardpoint/',views.insertrewardpoint),
+    path('editrewardpoint/<id>/',views.editrewardpointpage),
+
+
+    
+>>>>>>> c607efd76541b7156451439a5e1127eb21f3b7f4
     path('Customerpage/',views.Customerpage),
     path('insertcustomer/',views.insertcustomer),
     path('editcustomer/<id>/',views.editcustomer),
@@ -122,15 +130,38 @@ urlpatterns = [
     path('POSBill/',views.POSBill),
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
+
+
+    path('EditRole/',views.EditRoles),
+    path('insertroles/',views.insertroles),
+    path('Dashboard/',views.Dashboard),
+    path('logout/',views.logout),
+    
+   
+
+
+
     path('EditRole/',views.EditRolelist),
     path('insertroles/',views.insertroles),
     path('Dashboard/',views.Dashboard),
     path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
+
     path('Barcode/',views.Barcodepage),
     path('stock/',views.stock),
     path('Salelist/',views.Salelist),
     path('Barcode/',views.Barcodepage),
     path('Addsale/',views.Addsale),
+    path('BillWiselist/',views.BillWiselist),
+    path('OutstandingReport/',views.OutstandingReport),
+    path('LedgerReport/',views.LedgerReport),
+    path('POSRegisterReport/',views.POSRegisterReport),
+    path('PrintLedgerReport/',views.PrintLedgerReport),
+    path('PrintOutStandingReport/',views.PrintOutStandingReport),
+    path('PrintPOSRegisterReport/',views.PrintPOSRegisterReport),
+    path('PrintBillWiseReport/',views.PrintBillWiseReport),
+
+
+
     path('Paymentterms/deletepaymentterms/<id>',views.deletepaymentterms),
     path('updatepaymentmode/',views.updatepaymentmode),
     path('updatepaymentterms/<int:id>/', views.updatepaymentterms),
@@ -138,6 +169,7 @@ urlpatterns = [
     path('updateuser/',views.updateuser)
    
     
+
 
 ]
 
