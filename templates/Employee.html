@@ -28,15 +28,16 @@
                 </tr>
               </thead>
               <tbody class="table-hover">
+                {% for i in list %}
                 <tr>
-                  <td> </td>
-                  <td> </td>
+                <td>{{ i.Employees_id}}</td>
+                  <td>{{ i.Employees_firstname}}</td>
                   <td>
-                    <a href="/editcustomer/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editEmployeeModal"
-                    data-bs-whatever="@mdo">
+                    <a href="/Employees/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editEmployeeModal" 
+                    data-bs-whatever="@mdo" onclick="loadEditModal('{{ i.Employees_id }}')" >
                       <i class="fa fa-pen"></i>
                       </a>
-                      <a href="deletepaymentterms/{{ i.Paymentterms_id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
+                      <a href="deleteemployee/{{ i.id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
         
                       
         
@@ -45,6 +46,7 @@
                     
                   </td>
                 </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
@@ -72,32 +74,33 @@
                 </ul>
                 <div class="tab-content mt-3">
                     <div class="tab-pane fade show active" id="basic" role="tabpanel">
-                        <form>
+                        <form action="/insertemployee/" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <label class="form-label">First Name *</label>
-                                    <input type="text" class="form-control" placeholder="Enter First Name" value="First Name ">
+                                    <input type="text" class="form-control" placeholder="Enter First Name"  id="first_name" name="first_name">
                                 </div>
                                 <div class="col-4">
                                     <label class="form-label">Middle Name</label>
-                                    <input type="text" class="form-control" placeholder="Enter Middle Name" value="Middle Name ">
+                                    <input type="text" class="form-control" placeholder="Enter Middle Name"  id="middle_name" name="middle_name" >
                                 </div>
                                 <div class="col-4">
                                     <label class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" placeholder="Last Name" value="Last Name ">
+                                    <input type="text" class="form-control" placeholder="Last Name"  id="last_name" name="last_name">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <label class="form-label">Date Of Birth</label>
-                                    <input type="date"  class="form-control" value="Date Of Birth">
+                                    <input type="date"  class="form-control" id="date_birth" name="date_birth" placeholder="Date of Birth">
                                 </div>
                                 <div class="col-4">
                                     <label class="form-label">Gender</label>
                                     <div class="d-flex gap-2">
-                                        <button type="submit" class="btn btn-outline-primary" value="Male">Male</button>
-                                        <button type="submit" class="btn btn-outline-primary" value="Female">Female</button>
-                                        <button type="submit" class="btn btn-outline-primary" value="Other">Other</button>
+                                        <input type="radio" class="btn btn-outline-primary"  id="male" name="Gender">Male
+                                        <input type="radio" class="btn btn-outline-primary"  id="Female" name="Gender">Female
+                                        <input type="radio" class="btn btn-outline-primary"  id="other" name="Gender">Other
                                     </div>
                                     
                                 </div>
@@ -108,15 +111,15 @@
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label class="form-label">Address (Home / Current)</label>
-                                            <input type="text" class="form-control" placeholder="Address" value="Address">
+                                            <input type="text" class="form-control" placeholder="Address"  id="address" name="address">
                                         </div>
                                         <div class="col-md-3">
                                             <label class="form-label">Mobile Number</label>
-                                            <input type="text" class="form-control" placeholder="Mobile Number" value="Mobile Number">
+                                            <input type="text" class="form-control" placeholder="Mobile Number"  id="mob" name="mob">
                                         </div>
                                         <div class="col-md-3">
                                             <label class="form-label">Email Address</label>
-                                            <input type="email" class="form-control" placeholder="Email Address" value="Email Address">
+                                            <input type="email" class="form-control" placeholder="Email Address"  id="email_add" name="email_add">
                                         </div>
                                     </div>
                                 </div>
@@ -129,22 +132,22 @@
                                     <div class="row mb-3">
                                         <div class="col-md-4">
                                             <label class="form-label">Highest Education Level Attained</label>
-                                            <input type="text" class="form-control" placeholder="Highest Education" value="Highest Education">
+                                            <input type="text" class="form-control" placeholder="Highest Education"  id="high_education" name="high_education">
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Institutions Attended</label>
-                                            <input type="text" class="form-control" placeholder="Institution Attended" value="Institutions Attended">
+                                            <input type="text" class="form-control" placeholder="Institution Attended"   id="institution_attended" name="institution_attended">
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Degrees Earned</label>
-                                            <input type="text" class="form-control" placeholder="Degree Earned" value="Degrees Earned">
+                                            <input type="text" class="form-control" placeholder="Degree Earned" id="degrees_earned" name="degrees_earned">
                                         </div>
                                     </div>
                 
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label class="form-label">Certifications or Licenses</label>
-                                            <input type="text" class="form-control" placeholder="Certification" value="Certifications or Licenses">
+                                            <input type="text" class="form-control" placeholder="Certification" id="certifications" name="certifications">
                                         </div>
                                     </div>
                                 </div>
@@ -155,15 +158,15 @@
                                     <div class="row mb-3">
                                         <div class="col-md-4">
                                             <label class="form-label">Vacation Leave Balance</label>
-                                            <input type="text" class="form-control" placeholder="Middle Name" value="Vacation Leave Balance">
+                                            <input type="text" class="form-control" placeholder="Middle Name" id="v_leave_balance" name="v_leave_balance">
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Sick Leave Balance</label>
-                                            <input type="text" class="form-control" placeholder="Sick Leave Balance" value="Sick Leave Balance">
+                                            <input type="text" class="form-control" placeholder="Sick Leave Balance"  id="s_leave_balance" name="s_leave_balance">
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Types of leaves</label>
-                                            <input type="text" class="form-control" placeholder="Leave Type" value="Types of leaves">
+                                            <input type="text" class="form-control" placeholder="Leave Type"  id="types_leave" name="types_leave">
                                         </div>
                                     </div>
                         
@@ -176,63 +179,62 @@
                                     <div class="row mb-3">
                                         <div class="col-md-4">
                                             <label class="form-label">Salary (Home / Current) </label>
-                                            <input type="text" class="form-control" placeholder="Salary" value="Salary">
+                                            <input type="text" class="form-control" placeholder="Salary"  id="Salary" name="salary">
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Pay Frequency </label>
-                                            <input type="text" class="form-control" placeholder="Pay Frequency" value="Pay Frequency">
+                                            <input type="text" class="form-control" placeholder="Pay Frequency" id="pay_frequency" name="pay_frequency" >
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Account Number</label>
-                                            <input type="text" class="form-control" placeholder="Account Number" value="Account Number">
+                                            <input type="text" class="form-control" placeholder="Account Number"  id="acc_no" name="acc_no">
                                         </div>
                                         <div class="col-md-4 mt-3">
                                             <label class="form-label">IFSC Code</label>
-                                            <input type="text" class="form-control" placeholder="IFSC Code" value="IFSC Code">
+                                            <input type="text" class="form-control" placeholder="IFSC Code"  id="ifsc_code" name="ifsc_code">
                                         </div>
                                         <div class="col-md-4 mt-3">
-                                            <label class="form-label">Account Holder Namer</label>
-                                            <input type="text" class="form-control" placeholder="Account Holder Namer" value="IFSC Code">
+                                            <label class="form-label">Account Holder Name</label>
+                                            <input type="text" class="form-control" placeholder="Account Holder Name"  id="acc_holder" name="acc_holder">
                                         </div>
                                     </div>
                         
                                 </div>
-                            </div>
-                    
-                        </form>
+                            </div>   
+                        
                     </div>
 
                      
                     <div class="tab-pane fade" id="advance" role="tabpanel">
-                        <form>
+                        
                             <h5>Employment Details</h5>
                             <div class="row mb-3">
                                 <div class="col-md-4">
                                     <label class="form-label">Employee ID</label>
-                                    <input type="text" class="form-control" placeholder="Employee ID" value="Employee ID">
+                                    <input type="text" class="form-control" placeholder="Employee ID"  id="emp_id" name="emp_id">
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Job Title</label>
-                                    <input type="text" class="form-control" placeholder="Job Title" value="Job Title">
+                                    <input type="text" class="form-control" placeholder="Job Title"  id="job_title" name="job_title">
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Department</label>
-                                    <input type="text" class="form-control" placeholder="Employee Department" value="Department">
+                                    <input type="text" class="form-control" placeholder="Employee Department"  id="dept" name="dept">
                                 </div>
                             </div>
     
                             <div class="row mb-3">
                                 <div class="col-md-4">
                                     <label class="form-label">Employment Status</label>
-                                    <input type="text" class="form-control" placeholder="Employment Status" value="Employment Status">
+                                    <input type="text" class="form-control" placeholder="Employment Status" id="emp_status" name="emp_status">
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Hire Date</label>
-                                    <input type="date"  class="form-control" value="Hire Date" >
+                                    <input type="date"  class="form-control"  id="hire_date" name="hire_date" placeholder="Hire Date">
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Termination Date (if applicable)</label>
-                                    <input type="date"  class="form-control" value="Termination Date" >
+                                    <input type="date"  class="form-control"  id="termination_date" name="termination_date" placeholder="Termination date">
                                 </div>
                             </div>
     
@@ -244,17 +246,17 @@
                         <div class="col-md-6">
 
                                     <label class="form-label">Name</label>
-                                    <input type="text" class="form-control" placeholder="Enter Name" value="Name">
+                                    <input type="text" class="form-control" placeholder="Enter Name"  id="e_name" name="e_name">
                                 </div>
 
                                 <div class="col-md-4">
                                     <label class="form-label">Relationship</label>
-                                    <input type="text" class="form-control" placeholder="Relationship" value="Relationship">
+                                    <input type="text" class="form-control" placeholder="Relationship"  id="relationship" name="relationship">
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-4">
                                     <label class="form-label">Phone Number</label>
-                                    <input type="text" class="form-control" placeholder="Mobile Number" value="Phone Number">
+                                    <input type="text" class="form-control" placeholder="Mobile Number"  id="phone_no" name="phone_no">
                                 </div>
                             </div>
                         </div>
@@ -269,17 +271,17 @@
                         <div class="col-md-6">
 
                                     <label class="form-label">Name</label>
-                                    <input type="text" class="form-control" placeholder="Middle Name" value="D_Name">
+                                    <input type="text" class="form-control" placeholder="Middle Name"  id="d_name" >
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Date of Birth</label>
-                                    <input type="date" class="form-control" value="Date of Birth" >
+                                    <input type="date" class="form-control"  id="d_birth" name="d_birth" placeholder="Date of Birth">
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-4">
                                     <label class="form-label">Relationship (Spouse, Child, etc.)</label>
-                                    <input type="text" class="form-control" placeholder="Relationship" value="Relationship">
-                                </div>
+                                    <input type="text" class="form-control" placeholder="Relationship"  id="d_relationship" name="d_relationship">
+                               
                             </div>
                         </div>
                         </div>
@@ -292,15 +294,15 @@
                                 <div class="col-md-4">
         
                                             <label class="form-label">Previous Employees</label>
-                                            <input type="text" class="form-control" placeholder="Previous Employees" value="Previous Employees">
+                                            <input type="text" class="form-control" placeholder="Previous Employees"  id="p_emp" name="p_emp">
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Job Titles</label>
-                                            <input type="text" class="form-control" placeholder="Job Titles" value="Job Titles">
+                                            <input type="text" class="form-control" placeholder="Job Titles"  id="job_titles" name="job_titles">
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Responsibilities</label>
-                                            <input type="text" class="form-control" placeholder="Job Responsibilities" value="Responsibilities">
+                                            <input type="text" class="form-control" placeholder="Job Responsibilities"  id="responsibilities" name="responsibilities">
                                         </div>
                                     </div>
                                 </div>
@@ -315,331 +317,385 @@
                                     <div class="row mb-3">
                                         <div class="col-md-4">
                                                 <label class="form-label">Resume</label>
-                                                <input type="text" class="form-control" placeholder="Resume" value="Resume">
+                                                <input type="text" class="form-control" placeholder="Resume"  id="resume" name="resume">
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="form-label">ID</label>
-                                                <input type="text" class="form-control" placeholder="ID" value="ID">
+                                                <input type="text" class="form-control" placeholder="ID" id="id" name="id">
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="form-label">Certification</label>
-                                                <input type="text" class="form-control" placeholder="Certification" value="Certification">
+                                                <input type="text" class="form-control" placeholder="Certification" id="d_certification" name="d_certification">
                                             </div>
+                                        
                                         </div>
                                     </div>
                                 </div>
                         
-                                       
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                            </div>
-    
-           
-                    </div>
-               
-        
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addEmployeeModalLabel">Update Employee </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <ul class="nav nav-tabs" id="employeeTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="primary-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab">Basic Information</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="ecommerce-tab" data-bs-toggle="tab" data-bs-target="#advance" type="button" role="tab">Employment Advance Information</button>
-                    </li>
-                </ul>
-                <div class="tab-content mt-3">
-                    <div class="tab-pane fade show active" id="basic" role="tabpanel">
-                        <form>
-                            <div class="row mb-3">
-                                <div class="col-4">
-                                    <label class="form-label">First Name *</label>
-                                    <input type="text" class="form-control" placeholder="Enter First Name" value="First Name ">
-                                </div>
-                                <div class="col-4">
-                                    <label class="form-label">Middle Name</label>
-                                    <input type="text" class="form-control" placeholder="Enter Middle Name" value="Middle Name ">
-                                </div>
-                                <div class="col-4">
-                                    <label class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" placeholder="Last Name" value="Last Name ">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-4">
-                                    <label class="form-label">Date Of Birth</label>
-                                    <input type="date"  class="form-control" value=">Date Of Birth">
-                                </div>
-                                <div class="col-4">
-                                    <label class="form-label">Gender</label>
-                                    <div class="d-flex gap-2">
-                                        <button type="button" class="btn btn-outline-primary" value="Male">Male</button>
-                                        <button type="button" class="btn btn-outline-primary" value="Female">Female</button>
-                                        <button type="button" class="btn btn-outline-primary" value="Other">Other</button>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="card mt-3">
-                                <div class="card-header bg-info text-white">Contact Information</div>
-                                <div class="card-body">
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <label class="form-label">Address (Home / Current)</label>
-                                            <input type="text" class="form-control" placeholder="Address" value="Address">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="form-label">Mobile Number</label>
-                                            <input type="text" class="form-control" placeholder="Mobile Number" value="Mobile Number">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="form-label">Email Address</label>
-                                            <input type="email" class="form-control" placeholder="Email Address" value="Email Address">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                
-                            <!-- Education & Qualifications -->
-                            <div class="card mt-3">
-                                <div class="card-header bg-info text-white">Education and Qualifications</div>
-                                <div class="card-body">
-                                    <div class="row mb-3">
-                                        <div class="col-md-4">
-                                            <label class="form-label">Highest Education Level Attained</label>
-                                            <input type="text" class="form-control" placeholder="Highest Education" value="Highest Education">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label">Institutions Attended</label>
-                                            <input type="text" class="form-control" placeholder="Institution Attended" value="Institutions Attended">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label">Degrees Earned</label>
-                                            <input type="text" class="form-control" placeholder="Degree Earned" value="Degrees Earned">
-                                        </div>
-                                    </div>
-                
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <label class="form-label">Certifications or Licenses</label>
-                                            <input type="text" class="form-control" placeholder="Certification" value="Certifications or Licenses">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card mt-3">
-                                <div class="card-header bg-info text-white">Leave and Time Off</div>
-                                <div class="card-body">
-                                    <div class="row mb-3">
-                                        <div class="col-md-4">
-                                            <label class="form-label">Vacation Leave Balance</label>
-                                            <input type="text" class="form-control" placeholder="Middle Name" value="Vacation Leave Balance">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label">Sick Leave Balance</label>
-                                            <input type="text" class="form-control" placeholder="Sick Leave Balance" value="Sick Leave Balance">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label">Types of leaves</label>
-                                            <input type="text" class="form-control" placeholder="Leave Type" value="Types of leaves">
-                                        </div>
-                                    </div>
-                        
-                                </div>
-                            </div>
-
-                            <div class="card mt-3">
-                                <div class="card-header bg-info text-white">Compensation Details</div>
-                                <div class="card-body">
-                                    <div class="row mb-3">
-                                        <div class="col-md-4">
-                                            <label class="form-label">Salary (Home / Current) </label>
-                                            <input type="text" class="form-control" placeholder="Salary" value="Salary">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label">Pay Frequency </label>
-                                            <input type="text" class="form-control" placeholder="Pay Frequency" value="Pay Frequency">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label">Account Number</label>
-                                            <input type="text" class="form-control" placeholder="Account Number" value="Account Number">
-                                        </div>
-                                        <div class="col-md-4 mt-3">
-                                            <label class="form-label">IFSC Code</label>
-                                            <input type="text" class="form-control" placeholder="IFSC Code" value="IFSC Code">
-                                        </div>
-                                        <div class="col-md-4 mt-3">
-                                            <label class="form-label">Account Holder Namer</label>
-                                            <input type="text" class="form-control" placeholder="Account Holder Namer" value="IFSC Code">
-                                        </div>
-                                    </div>
-                        
-                                </div>
-                            </div>
                     
-                        </form>
-                    </div>
-
-                     
-                    <div class="tab-pane fade" id="advance" role="tabpanel">
-                        <form>
-                            <h5>Employment Details</h5>
-                            <div class="row mb-3">
-                                <div class="col-md-4">
-                                    <label class="form-label">Employee ID</label>
-                                    <input type="text" class="form-control" placeholder="Employee ID" value="Employee ID">
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="form-label">Job Title</label>
-                                    <input type="text" class="form-control" placeholder="Job Title" value="Job Title">
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="form-label">Department</label>
-                                    <input type="text" class="form-control" placeholder="Employee Department" value="Department">
-                                </div>
-                            </div>
-    
-                            <div class="row mb-3">
-                                <div class="col-md-4">
-                                    <label class="form-label">Employment Status</label>
-                                    <input type="text" class="form-control" placeholder="Employment Status" value="Employment Status">
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="form-label">Hire Date</label>
-                                    <input type="date"  class="form-control" value="Hire Date" >
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="form-label">Termination Date (if applicable)</label>
-                                    <input type="date"  class="form-control" value="Termination Date" >
-                                </div>
-                            </div>
-    
-                           
-            <div class="card mt-3">
-                <div class="card-header bg-info text-white">Emergency Contact</div>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-
-                                    <label class="form-label">Name</label>
-                                    <input type="text" class="form-control" placeholder="Enter Name" value="Name">
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label class="form-label">Relationship</label>
-                                    <input type="text" class="form-control" placeholder="Relationship" value="Relationship">
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-4">
-                                    <label class="form-label">Phone Number</label>
-                                    <input type="text" class="form-control" placeholder="Mobile Number" value="Phone Number">
+                                  
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-    
-                          
-            <div class="card mt-3">
-                <div class="card-header bg-info text-white">Department</div>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-
-                                    <label class="form-label">Name</label>
-                                    <input type="text" class="form-control" placeholder="Middle Name" value="D_Name">
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="form-label">Date of Birth</label>
-                                    <input type="date" class="form-control" value="Date of Birth" >
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-4">
-                                    <label class="form-label">Relationship (Spouse, Child, etc.)</label>
-                                    <input type="text" class="form-control" placeholder="Relationship" value="Relationship">
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-    
-                    <div class="card mt-3">
-                        <div class="card-header bg-info text-white">Work History</div>
-                        <div class="card-body">
-                            <div class="row mb-3">
-                                <div class="col-md-4">
-        
-                                            <label class="form-label">Previous Employees</label>
-                                            <input type="text" class="form-control" placeholder="Previous Employees" value="Previous Employees">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label">Job Titles</label>
-                                            <input type="text" class="form-control" placeholder="Job Titles" value="Job Titles">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label">Responsibilities</label>
-                                            <input type="text" class="form-control" placeholder="Job Responsibilities" value="Responsibilities">
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
     
-    
-    
-                               
-                            <div class="card mt-3">
-                                <div class="card-header bg-info text-white">Documents and Attachments</div>
-                                <div class="card-body">
-                                    <div class="row mb-3">
-                                        <div class="col-md-4">
-                                                <label class="form-label">Resume</label>
-                                                <input type="text" class="form-control" placeholder="Resume" value="Resume">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="form-label">ID</label>
-                                                <input type="text" class="form-control" placeholder="ID" value="ID">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="form-label">Certification</label>
-                                                <input type="text" class="form-control" placeholder="Certification" value="Certification">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                         
-                                       
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                            </div>
-    
-           
                     </div>
                
+                </div>  
         
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save</button>
-            </div>
+        
+              
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+                </div>  
+                
+<!-- UPDATE -->
+
+<div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="editEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editEmployeeModalLabel">Update Employee</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <form action="/updateemployee/" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="modal-body">
+            <ul class="nav nav-tabs" id="editEmployeeTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="edit-primary-tab" data-bs-toggle="tab" data-bs-target="#edit-basic" type="button" role="tab">Basic Information</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="edit-advance-tab" data-bs-toggle="tab" data-bs-target="#edit-advance" type="button" role="tab">Employment Advance Information</button>
+              </li>
+            </ul>
+            <div class="tab-content mt-3">
+              <div class="tab-pane fade show active" id="edit-basic" role="tabpanel">
+                <!-- Basic Info -->
+                <div class="row mb-3">
+                  <div class="col-4">
+                    <label class="form-label">First Name *</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name">
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label">Middle Name</label>
+                    <input type="text" class="form-control" id="middle_name" name="middle_name">
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="last_name" name="last_name">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-4">
+                    <label class="form-label">Date Of Birth</label>
+                    <input type="date" class="form-control" id="date_birth" name="date_birth">
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label">Gender</label>
+                    <div class="d-flex gap-2">
+                      <input type="radio" id="male" name="Gender" value="Male"> Male
+                      <input type="radio" id="Female" name="Gender" value="Female"> Female
+                      <input type="radio" id="other" name="Gender" value="Other"> Other
+                    </div>
+                  </div>
+                </div>
+  
+                <!-- Contact -->
+                 
+                <div class="card mt-3">
+                  <div class="card-header bg-info text-white">Contact Information</div>
+                  <div class="card-body">
+                    <div class="row mb-3">
+                      <div class="col-md-6">
+                        <label class="form-label">Address (Home / Current)</label>
+                        <input type="text" class="form-control" id="address" name="address">
+                      </div>
+                      <div class="col-md-3">
+                        <label class="form-label">Mobile Number</label>
+                        <input type="text" class="form-control" id="mob" name="mob">
+                      </div>
+                      <div class="col-md-3">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email_add" name="email_add">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <!-- Education -->
+                <div class="card mt-3">
+                  <div class="card-header bg-info text-white">Education and Qualifications</div>
+                  <div class="card-body">
+                    <div class="row mb-3">
+                      <div class="col-md-4">
+                        <label class="form-label">Highest Education Level Attained</label>
+                        <input type="text" class="form-control" id="high_education" name="high_education">
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Institutions Attended</label>
+                        <input type="text" class="form-control" id="institution_attended" name="institution_attended">
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Degrees Earned</label>
+                        <input type="text" class="form-control" id="degrees_earned" name="degrees_earned">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <div class="col-md-6">
+                        <label class="form-label">Certifications or Licenses</label>
+                        <input type="text" class="form-control" id="certifications" name="certifications">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <!-- Leave -->
+                <div class="card mt-3">
+                  <div class="card-header bg-info text-white">Leave and Time Off</div>
+                  <div class="card-body">
+                    <div class="row mb-3">
+                      <div class="col-md-4">
+                        <label class="form-label">Vacation Leave Balance</label>
+                        <input type="text" class="form-control" id="v_leave_balance" name="v_leave_balance">
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Sick Leave Balance</label>
+                        <input type="text" class="form-control" id="s_leave_balance" name="s_leave_balance">
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Types of leaves</label>
+                        <input type="text" class="form-control" id="types_leave" name="types_leave">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <!-- Compensation -->
+                <div class="card mt-3">
+                  <div class="card-header bg-info text-white">Compensation Details</div>
+                  <div class="card-body">
+                    <div class="row mb-3">
+                      <div class="col-md-4">
+                        <label class="form-label">Salary</label>
+                        <input type="text" class="form-control" id="Salary" name="salary">
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Pay Frequency</label>
+                        <input type="text" class="form-control" id="pay_frequency" name="pay_frequency">
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Account Number</label>
+                        <input type="text" class="form-control" id="acc_no" name="acc_no">
+                      </div>
+                      <div class="col-md-4 mt-3">
+                        <label class="form-label">IFSC Code</label>
+                        <input type="text" class="form-control" id="ifsc_code" name="ifsc_code">
+                      </div>
+                      <div class="col-md-4 mt-3">
+                        <label class="form-label">Account Holder Name</label>
+                        <input type="text" class="form-control" id="acc_holder" name="acc_holder">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> <!-- End Basic Tab -->
+  
+              <!-- Advanced Tab -->
+              <div class="tab-pane fade" id="edit-advance" role="tabpanel">
+                <div class="row mb-3">
+                  <div class="col-md-4">
+                    <label class="form-label">Employee ID</label>
+                    <input type="text" class="form-control" id="emp_id" name="emp_id">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">Job Title</label>
+                    <input type="text" class="form-control" id="job_title" name="job_title">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">Department</label>
+                    <input type="text" class="form-control" id="dept" name="dept">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-4">
+                    <label class="form-label">Employment Status</label>
+                    <input type="text" class="form-control" id="emp_status" name="emp_status">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">Hire Date</label>
+                    <input type="date" class="form-control" id="hire_date" name="hire_date">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">Termination Date</label>
+                    <input type="date" class="form-control" id="termination_date" name="termination_date">
+                  </div>
+                </div>
+  
+                <!-- Emergency Contact -->
+                <div class="card mt-3">
+                  <div class="card-header bg-info text-white">Emergency Contact</div>
+                  <div class="card-body">
+                    <div class="row mb-3">
+                      <div class="col-md-6">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" id="e_name" name="e_name">
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Relationship</label>
+                        <input type="text" class="form-control" id="relationship" name="relationship">
+                      </div>
+                      <div class="col-4 mt-3">
+                        <label class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="phone_no" name="phone_no">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <!-- Department Member Info -->
+                <div class="card mt-3">
+                  <div class="card-header bg-info text-white">Department</div>
+                  <div class="card-body">
+                    <div class="row mb-3">
+                      <div class="col-md-6">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" id="d_name">
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control" id="d_birth" name="d_birth">
+                      </div>
+                      <div class="col-4 mt-3">
+                        <label class="form-label">Relationship</label>
+                        <input type="text" class="form-control" id="d_relationship" name="d_relationship">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <!-- Work History -->
+                <div class="card mt-3">
+                  <div class="card-header bg-info text-white">Work History</div>
+                  <div class="card-body">
+                    <div class="row mb-3">
+                      <div class="col-md-4">
+                        <label class="form-label">Previous Employees</label>
+                        <input type="text" class="form-control" id="p_emp" name="p_emp">
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Job Titles</label>
+                        <input type="text" class="form-control" id="job_titles" name="job_titles">
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Responsibilities</label>
+                        <input type="text" class="form-control" id="responsibilities" name="responsibilities">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <!-- Documents -->
+                <div class="card mt-3">
+                  <div class="card-header bg-info text-white">Documents and Attachments</div>
+                  <div class="card-body">
+                    <div class="row mb-3">
+                      <div class="col-md-4">
+                        <label class="form-label">Resume</label>
+                        <input type="text" class="form-control" id="resume" name="resume">
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">ID</label>
+                        <input type="text" class="form-control" id="id" name="id">
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Certification</label>
+                        <input type="text" class="form-control" id="d_certification" name="d_certification">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> <!-- End Advanced Tab -->
+            </div> <!-- tab-content -->
+          </div> <!-- modal-body -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
     </div>
-</div>
+  </div>
+  
+
+<script>
+  
+  function loadEditModal(employeeId) {
+    console.log(employeeId);
+
+    fetch(`/editemployee/${employeeId}/`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            let Employees = data.Employees;  // Ensure it matches your API response
+
+            var editModal = new bootstrap.Modal(document.getElementById('editEmployeeModal'));
+
+            document.getElementById("first_name").value = Employees.Employees_firstname;
+            document.getElementById("middle_name").value = Employees.Employees_middlename;
+            document.getElementById("last_name").value = Employees.Employees_lastname;
+            document.getElementById("date_birth").value = Employees.Employees_dateof_birth;
+            document.getElementById("male").checked = Employees.Employees_gender ==="Male";
+            document.getElementById("Female").checked = Employees.Employees_gender === "Female";
+            document.getElementById("other").checked = Employees.Employees_gender ==="Other";
+            document.getElementById("address").value = Employees.Employees_address;
+            document.getElementById("mob").value = Employees.Employees_mobile_number;
+            document.getElementById("email_add").value = Employees.Employees_email;
+            document.getElementById("high_education").value = Employees.Employees_highesteducation;
+            document.getElementById("institution_attended").value = Employees.Employees_institutionsattended;
+            document.getElementById("degrees_earned").value = Employees.Employees_degreesearned;
+            document.getElementById("certifications").value = Employees.Employees_certifications;
+            document.getElementById("v_leave_balance").value = Employees.Employees_vacationleave_balance;
+            document.getElementById("s_leave_balance").value = Employees.Employees_sickleave_balance;
+            document.getElementById("types_leave").value = Employees.Employees_leavetypes;
+            document.getElementById("Salary").value = Employees.Employees_salary;
+            document.getElementById("pay_frequency").value = Employees.Employees_payfrequency;
+            document.getElementById("acc_no").value = Employees.Employees_accountnumber;
+            document.getElementById("ifsc_code").value = Employees.Employees_ifsccode;
+            document.getElementById("acc_holder").value = Employees.Employees_accountholder_name;
+            document.getElementById("emp_id").value = Employees.employee_id;
+            document.getElementById("job_title").value = Employees.job_title;
+            document.getElementById("dept").value = Employees.department;
+            document.getElementById("emp_status").value = Employees.employment_status;
+            document.getElementById("hire_date").value = Employees.hire_date;
+            document.getElementById("termination_date").value = Employees.termination_date;
+            document.getElementById("e_name").value = Employees.Employees_emergencycontact_name;
+            document.getElementById("relationship").value = Employees.Employees_emergencycontact_relationship;
+            document.getElementById("phone_no").value = Employees.Employees_emergencycontact_phone;
+            document.getElementById("d_name").value = Employees.department_name;
+            document.getElementById("d_birth").value = Employees.department_birth;
+            document.getElementById("d_relationship").value = Employees.d_relationship;
+            document.getElementById("p_emp").value = Employees.Employees_previous_employers;
+            document.getElementById("job_titles").value=Employees.Employees_previous_jobtitles
+            document.getElementById("responsibilities").value = Employees.Employees_previous_responsibilities;
+            document.getElementById("resume").value = Employees.Employees_resume;
+            document.getElementById("id").value = Employees.Employees_iddocument;
+            document.getElementById("d_certification").value = Employees.Employees_certificationsdocument;
+
+            editModal.show();
+        })
+        .catch(error => console.error('Error loading modal content:', error));
+}
+
+   
+  
+  
+  </script>
+  
+  
         {% endblock %}
     

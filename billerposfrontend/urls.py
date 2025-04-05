@@ -116,7 +116,9 @@ urlpatterns = [
     path('updatepaymentmode/',views.updatepaymentmode),
     path('updatepaymentterms/<int:id>/', views.updatepaymentterms),
     path('adduser/',views.adduser),
-    path('updateuser/',views.updateuser)
+    path('updateuser/',views.updateuser),
+    path('editemployee/',views.editemployee),
+    path('insertemployee/',views.insertemployee)
    
     
 

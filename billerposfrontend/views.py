@@ -18,7 +18,7 @@ from tax.models import Tax
 from Employees.models import Employees
 
 from Unit.models import Unit
-
+from Sales.models import Sales
 from product.models import Product
 
 
@@ -40,6 +40,10 @@ def login (request):
 
 def register (request):
     return render(request,"register.html")
+
+def editemployee(request):
+    return render(request,"editemployee.html")
+
 
 def category(request):
 
@@ -358,7 +362,11 @@ def productslist(request):
 
 
 def Employee(request):
-    return render(request,'Employee.html')
+    listdata = Employees.objects.all()
+    data = {
+        "list":listdata
+    }
+    return render(request,'Employee.html',data)
 
 def RewardPoints(request):
     return render(request,'RewardPoints.html')
@@ -816,8 +824,7 @@ def POSBill (request):
 def Salelist (request):
     return render(request,'Salelist.html')
 
-def Salelist (request):
-    return render(request,'Salelist.html')
+
 
 
 
@@ -921,7 +928,7 @@ def Stock(request):
 
 def insertpaymentmode(request):
     if request.method=='POST':
-        Paymentmode_name=request.POST.get('updatepaymentmode_name')
+        Paymentmode_name=request.POST.get('ipaymentmode_name')
 
         insertpaymentmode=Paymentmode(
             Paymentmode_name=Paymentmode_name
@@ -934,18 +941,18 @@ def insertpaymentmode(request):
     
 
 
-from django.shortcuts import get_object_or_404, redirect
+
 
 def updatepaymentmode(request):
     if request.method == "POST":
-        paymentmode_id = request.POST.get("updatepaymentmode_id")  # Ensure correct name
-        paymentmode_name = request.POST.get("updatepaymentmode_name")  
+        Paymentmode_id = request.POST.get("updatepaymentmode_id")  # Ensure correct name
+        Paymentmode_name = request.POST.get("updatepaymentmode_name")  
 
         # Fetch record safely
-        fetchRecord = get_object_or_404(Paymentmode, Paymentmode_id=paymentmode_id)
+        fetchRecord=Paymentmode.objects.get(Paymentmode_id=Paymentmode_id)
 
         # Update the record
-        fetchRecord.Paymentmode_name = paymentmode_name
+        fetchRecord.Paymentmode_name = Paymentmode_name
         fetchRecord.save()
 
         return redirect('/paymentmode/')  # Redirect back to the list page
@@ -1015,33 +1022,28 @@ from django.http import HttpResponse
 def updateuser(request):
     if request.method == "POST":
         users_id = request.POST.get("updateuser_id")
-        if not users_id or not users_id.isdigit():
-            return HttpResponse("Invalid User ID", status=400)  # Handle missing or invalid ID
 
-        users_name = request.POST.get("updateuser_name")  
-        users_email = request.POST.get("updateUser_email")
-        users_mobile = request.POST.get("update_mob") 
-        users_role = request.POST.get("update_role")
-        users_pass = request.POST.get("update_pass")
+        if not users_id:
+            messages.error(request, "User ID missing from request.")
+            return redirect('/Users/')
 
-        # Fetch record safely
-        fetchRecord = get_object_or_404(Users, users_id=int(users_id))
+        try:
+            fetchRecord = Users.objects.get(users_id=users_id)
+            fetchRecord.users_name = request.POST.get("updateuser_name")
+            fetchRecord.users_email = request.POST.get("updateuser_email")
+            fetchRecord.users_mobile = request.POST.get("updatemob")
+            fetchRecord.users_role = request.POST.get("updateRole")
+            fetchRecord.users_pass = request.POST.get("update_pass")
+            fetchRecord.save()
+            messages.success(request, "User updated successfully.")
+        except Users.DoesNotExist:
+            messages.error(request, "User not found.")
 
-        # Update fields if provided
-        if users_mobile:
-            fetchRecord.users_mobile = users_mobile
-        if users_email:
-            fetchRecord.users_email = users_email
-        if users_role:
-            fetchRecord.users_role = users_role
-        if users_pass:
-            fetchRecord.users_pass = users_pass
+        return redirect('/Users/')
+    
+    return redirect('/Users/')
 
-        fetchRecord.users_name = users_name  # Name should always update
-        fetchRecord.save()
 
-        return redirect('/Users/')  # Redirect to the user list
-    return redirect('/Users/')  # Handle non-POST requests
 
 def deleteusers(request,id):   
     Usersdata=Users.objects.get(users_id=id)
@@ -1054,81 +1056,112 @@ def deleteusers(request,id):
     
 
 def adduser(request):
-    if request.method=='POST':
-        users_name=request.POST.get('updateuser_name')
-        users_email=request.POST.get('updateUser_email')
-        users_mobile=request.POST.get('update_mob')
-        users_role=request.POST.get('update_role')
-        users_pass=request.POST.get('update_pass')
-        
+    if request.method == 'POST':
+        users_name = request.POST.get('updateuser_name')
+        users_email = request.POST.get('updateuser_email')
+        users_mobile = request.POST.get('updatemob')
+        users_role = request.POST.get('update_Role')  # ✅ fixed name here
+        users_pass = request.POST.get('update_pass')
 
-
-
-        adduser=Users(
+        adduser = Users(
             users_name=users_name,
             users_email=users_email,
             users_mobile=users_mobile,
             users_role=users_role,
             users_pass=users_pass
-
-
         )
-
 
         adduser.save()
         return redirect('/Users/')
     else:
-        return render(request,'Users.html')
+        return render(request, 'Users.html')
 
+
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from datetime import datetime
 
 
 def insertemployee(request):
     if request.method == "POST":
-        Employees_firstname = request.POST.get("Employees_firstname")
-        Employees_middlename = request.POST.get("Employees_middlename")
-        Employees_lastname = request.POST.get("Employees_lastname")
-        Employees_dateof_birth = request.POST.get("Employees_dateof_birth")
-        Employees_gender = request.POST.get("Employees_gender")
-        Employees_address = request.POST.get("Employees_address")
-        Employees_mobile_number = request.POST.get("Employees_mobile_number")
-        Employees_email = request.POST.get("Employees_email")
+        Employees_firstname = request.POST.get("first_name")
+        Employees_middlename = request.POST.get("middle_name") 
+        Employees_lastname = request.POST.get("last_name")
+        Employees_dateof_birth = request.POST.get("date_birth")
+        Employees_gender = request.POST.get("Gender")
+        Employees_address = request.POST.get("address")
+        Employees_mobile_number = request.POST.get("mob")
+        Employees_email = request.POST.get("email_add")
 
-        Employees_highesteducation = request.POST.get("Employees_highesteducation")
-        Employees_institutionsattended = request.POST.get("Employees_institutionsattended")
-        Employees_degreesearned = request.POST.get("Employees_degreesearned")
-        Employees_certifications = request.POST.get("Employees_certifications")
+        Employees_highesteducation = request.POST.get("high_education")
+        Employees_institutionsattended = request.POST.get("institution_attended")
+        Employees_degreesearned = request.POST.get("degrees_earned")
+        Employees_certifications = request.POST.get("certifications")
 
-        Employees_vacationleave_balance = request.POST.get("Employees_vacationleave_balance")
-        Employees_sickleave_balance = request.POST.get("Employees_sickleave_balance")
-        Employees_leavetypes = request.POST.get("Employees_leavetypes")
+        Employees_vacationleave_balance = request.POST.get("v_leave_balance")
+        Employees_sickleave_balance = request.POST.get("s_leave_balance")
+        Employees_leavetypes = request.POST.get("types_leave")
 
-        Employees_salary = request.POST.get("Employees_salary")
-        Employees_payfrequency = request.POST.get("Employees_payfrequency")
-        Employees_accountnumber = request.POST.get("Employees_accountnumber")
-        Employees_ifsccode = request.POST.get("Employees_ifsccode")
-        Employees_accountholder_name = request.POST.get("Employees_accountholder_name")
+        Employees_salary = request.POST.get("salary")
+        Employees_payfrequency = request.POST.get("pay_frequency")
+        Employees_accountnumber = request.POST.get("acc_no")
+        Employees_ifsccode = request.POST.get("ifsc_code")
+        Employees_accountholder_name = request.POST.get("acc_holder")
 
-        employee_id = request.POST.get("employee_id")
         job_title = request.POST.get("job_title")
-        department = request.POST.get("department")
-        employment_status = request.POST.get("employment_status")
+        department = request.POST.get("dept")
+        employment_status = request.POST.get("emp_status")
         hire_date = request.POST.get("hire_date")
         termination_date = request.POST.get("termination_date")
+        employee_id = request.POST.get("emp_id")
 
-        Employees_emergencycontact_name = request.POST.get("Employees_emergencycontact_name")
-        Employees_emergencycontact_relationship = request.POST.get("Employees_emergencycontact_relationship")
-        Employees_emergencycontact_phone = request.POST.get("Employees_emergencycontact_phone")
+        Employees_emergencycontact_name = request.POST.get("e_name")
+        Employees_emergencycontact_relationship = request.POST.get("relationship")
+        Employees_emergencycontact_phone = request.POST.get("phone_no")
 
-        Employees_previous_employers = request.POST.get("Employees_previous_employers")
-        Employees_previous_jobtitles = request.POST.get("Employees_previous_jobtitles")
-        Employees_previous_responsibilities = request.POST.get("Employees_previous_responsibilities")
+        Employees_previous_employers = request.POST.get("p_emp")
+        Employees_previous_jobtitles = request.POST.get("job_titles")
+        Employees_previous_responsibilities = request.POST.get("responsibilities")
 
-        Employees_resume = request.POST.get("Employees_resume")
-        Employees_iddocument = request.POST.get("Employees_iddocument")
-        Employees_certificationsdocument = request.POST.get("Employees_certificationsdocument")
+        Employees_resume = request.FILES.get("resume")
+        Employees_iddocument = request.FILES.get("id")
+        Employees_certificationsdocument = request.FILES.get("d_certification")
 
-        # Create a new Employee instance
-        new_employee = Employees(
+        department_name = request.POST.get("d_name")
+        department_birth = request.POST.get("d_birth")
+        d_relationship = request.POST.get("d_relationship")
+
+        
+
+        # Convert date fields safely
+        try:
+            if Employees_dateof_birth:
+                Employees_dateof_birth = datetime.strptime(Employees_dateof_birth, '%Y-%m-%d').date()
+        except ValueError:
+            Employees_dateof_birth = None
+
+        try:
+            if hire_date:
+                hire_date = datetime.strptime(hire_date, '%Y-%m-%d').date()
+        except ValueError:
+            hire_date = None
+
+        try:
+            if termination_date:
+                termination_date = datetime.strptime(termination_date, '%Y-%m-%d').date()
+        except ValueError:
+            termination_date = None
+
+        # Convert department_birth safely
+        try:
+            if department_birth:
+                department_birth = datetime.strptime(department_birth, '%Y-%m-%d').date()
+        except ValueError:
+            department_birth = None
+
+
+        # Create new Employees instance
+        insertemployee = Employees(
             Employees_firstname=Employees_firstname,
             Employees_middlename=Employees_middlename,
             Employees_lastname=Employees_lastname,
@@ -1137,6 +1170,7 @@ def insertemployee(request):
             Employees_address=Employees_address,
             Employees_mobile_number=Employees_mobile_number,
             Employees_email=Employees_email,
+            employee_id = employee_id,
 
             Employees_highesteducation=Employees_highesteducation,
             Employees_institutionsattended=Employees_institutionsattended,
@@ -1153,7 +1187,6 @@ def insertemployee(request):
             Employees_ifsccode=Employees_ifsccode,
             Employees_accountholder_name=Employees_accountholder_name,
 
-            employee_id=employee_id,
             job_title=job_title,
             department=department,
             employment_status=employment_status,
@@ -1170,18 +1203,61 @@ def insertemployee(request):
 
             Employees_resume=Employees_resume,
             Employees_iddocument=Employees_iddocument,
-            Employees_certificationsdocument=Employees_certificationsdocument
+            Employees_certificationsdocument=Employees_certificationsdocument,
+
+            department_name=department_name,
+            department_birth=department_birth,
+            d_relationship=d_relationship
         )
 
-        new_employee.save()  # Save the employee data to the database
+        insertemployee.save()
 
-        return redirect("/Employees/")  # Redirect to the employees list page
+        return redirect("/Employee/")
     else:
-        return render(request, 'Employees.html')  # Render the employee form page
+        return render(request, 'Employee.html')
     
+def addsale(request):
+    if request.method == 'POST':
+        # Collecting form data
+        Sales_name = request.POST.get('Sales_name')
+        invoice_no = request.POST.get('Sales_invoice_no')
+        cash_sale = bool(request.POST.get('Sales_addcashsale'))
+        credit_sale = bool(request.POST.get('Sales_add_creditsale'))
+        cash = request.POST.get('Sales_addcash') or 0
+        credit = request.POST.get('Sales_addcredit') or 0
+        invoice_date = request.POST.get('Sales_addinvoicedate') 
+        due_days = request.POST.get('Sales_add_duedays') or 0
+        due_date = request.POST.get('Sales_add_duedate') or invoice_date
+        product_name = request.POST.get('Sales_addproductname')
+        qty = request.POST.get('Sales_qty') or 0
+        payment_term = request.POST.get('Sales_payment_term')
+        grand_total = request.POST.get('Sales_grand_total') or 0
 
-           
+        # Save to DB
+        sale = Sales.objects.create(
+            Sales_name=Sales_name,
+            Sales_invoice_no=invoice_no,
+            Sales_addcashsale=cash_sale,
+            Sales_add_creditsale=credit_sale,
+            Sales_addcash=cash,
+            Sales_addcredit=credit,
+            Sales_addinvoicedate=invoice_date,
+            Sales_add_duedays=due_days,
+            Sales_add_duedate=due_date,
+            Sales_addproductname=product_name,
+            Sales_qty=qty,
+            Sales_payment_term=payment_term,
+            Sales_grand_total=grand_total,
+        )
+        sale.save()
 
-    productdata.delete()
-    return redirect("/products/")
- 
+        messages.success(request, "Sale added successfully!")
+        return redirect('/Sales/')
+
+    return render(request, 'addsale.html')
+
+
+# 👉 Sale List View
+def salelist(request):
+    sales = Sales.objects.all().order_by('-Sales_id')
+    return render(request, 'sales/sale_list.html', {'sales': sales})
