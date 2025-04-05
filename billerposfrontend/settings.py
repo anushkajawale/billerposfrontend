@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'RewardPOints',
     'tbl_master',
     'posbill',
-    'poschlid'
+    'poschlid',
 
     'BillWiselist',
     'OutstandingReport',
@@ -65,7 +65,7 @@ INSTALLED_APPS = [
 
     'Sales',
     'Employees',
-    'RewardPOints'
+  
 
 
 
