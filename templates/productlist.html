@@ -52,7 +52,7 @@
                                             class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
 
                                     </td>
-                                    {% endfor %}
+                                    {% endfor %}    
                                 </tr>
                             </tbody>
                             <script
@@ -267,7 +267,7 @@
                                     <input type="text" class="form-control" placeholder="Enter Product Name"
                                         name="Productname" id="updateproduct_name">
                                     <input type="hidden" class="form-control" id="updateproduct_id"
-                                        name="updateproduct_id">
+                                        name="product_id">
 
                                 </div>
                                 <div class="col-4">
@@ -284,17 +284,15 @@
                             <div class="row mb-3">
                                 <div class="col-3">
                                     <label class="form-label">Category</label>
-                                    <select class="form-select" name="category" id="updateCategory">
-                                        <option value="" selected>select category </option>
+                                    <select class="form-select" name="category" id="updateCategory"> 
                                         {% for cate in categories %}
                                         <option value="{{cate.category_id}}">{{ cate.category_name }}</option>
                                         {% endfor %}
                                     </select>
-                                </div>
+                                </div>  
                                 <div class="col-3">
                                     <label class="form-label">Brand</label>
                                     <select class="form-select" name="brand" id="updateBrand">
-                                        <option value="" selected>select brand</option>
                                         {% for barnd in brands %}
                                         <option value="{{ barnd.brand_id }}">{{ barnd.brand_name }}</option>
                                         {% endfor %}
@@ -303,12 +301,12 @@
                                 <div class="col-3">
                                     <label class="form-label">Tax %</label>
                                     <input type="number" class="form-control" name="tax_percentage" value="0"
-                                        id="updatetax_percentage">
+                                        id="updatetaxpercent">
                                 </div>
                                 <div class="col-3">
                                     <label class="form-label">Tax Type</label>
                                     <select class="form-select" name="tax" id="updatetax">
-                                        <option value="" selected>select Tax Type</option>
+                                        
                                         {% for tax in taxs %}
                                         <option value="{{tax.tax_id}}">{{tax.tax_name}}</option>
                                         {% endfor %}
@@ -319,16 +317,16 @@
                                 <div class="col-3">
                                     <label class="form-label">Primary Unit</label>
                                     <select class="form-select" name="unit" id="updateunit">
-                                        <option value="" selected>select Unit</option>
+                                       
                                         {% for unit in units %}
-                                        <option value="{{unit.unit_id}}">{{unit.unit_name}}</option>
+                                        <option value="{{ unit.unit_id }}">{{unit.unit_name}}</option>  
                                         {% endfor %}
-                                    </select>
+                                    </select> 
                                 </div>
                                 <div class="col-3">
                                     <label class="form-label">Alternate Unit</label>
                                     <input type="text" class="form-control" name="AlternateUnit"
-                                        placeholder="Enter Alternate Unit" id="updateAlternateUnit">
+                                        placeholder="Enter Alternate Unit" id="updatealternateunit">
 
                                 </div>
                                 <div class="col-3">
@@ -339,7 +337,7 @@
                                 <div class="col-3">
                                     <label class="form-label"> Unit Price Per</label>
                                     <input type="text" class="form-control" name="unitperprice"
-                                        placeholder="Enter Unit Price Per" id="updateunitperprice">
+                                        placeholder="Enter Unit Price Per" id="updatenos">
 
 
                                 </div>
@@ -406,14 +404,12 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" name="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" name="submit"  class="btn btn-success">Save</button>
                             </div>
 
                         </form>
                     </div>
-                    <div class="tab-pane fade" id="ecommerce" role="tabpanel">
-                        <p>Content for Ecommerce tab.</p>
-                    </div>
+                    
                 </div>
             </div>
 
@@ -463,10 +459,10 @@
                 document.getElementById("updateproduct_name").value = product.product_name;
                 document.getElementById("updateproductMarathiname").value = product.product_marathi_name;
                 document.getElementById("updateproduct_HSNCode").value = product.product_HSNCode;
-                document.getElementById("updateCategory").value = product.category;
-                document.getElementById("updatebrand").value = product.brand;
+                document.getElementById("updateCategory").placeholder = product.category;
+                document.getElementById("updateBrand").placeholder= product.brand[0];
                 document.getElementById("updatetaxpercent").value = product.taxpercent;
-                document.getElementById("updatetax").value = product.tax;
+                document.getElementById("updatetax").placeholder = product.tax;
                 document.getElementById("updateunit").value = product.unit;
                 document.getElementById("updatealternateunit").value = product.alternateunit;
                 document.getElementById("updateconversionfact").value = product.conversionfact;
@@ -476,14 +472,13 @@
                 document.getElementById("updatemrp").value = product.mrp;
                 document.getElementById("updatesale").value = product.sale;
                 document.getElementById("updatecredit").value = product.credit;
-                document.getElementById("updatepurchase").value = product.purchase;
-                document.getElementById("updatewholesaler").value = product.wholesaler;
-                document.getElementById("updatedistributor").value = product.distributor;
-                document.getElementById("updateop_Qty").value = product.op_Qty;
-                document.getElementById("updateop_Value").value = product.op_Value;
-                document.getElementById("updatemfg_Date").value = product.mfg_Date;
-                document.getElementById("updateexp_Date").value = product.exp_Date;
-
+                document.getElementById("updatePurchase").value = product.purchase;
+                document.getElementById("updateWholesaler").value= product.wholesaler;                
+                document.getElementById("updateDistributor").value=product.distributor;                
+                document.getElementById("updateOp_Qty").value=product.op_Qty;              
+                document.getElementById("updateOp_Value").value=product.op_Value;                 
+                document.getElementById("updateMfgDate").value=product.mfg_Date;                
+                document.getElementById("updateExpDate").value=product.exp_Date;
                 editModal.show();
             })
             .catch(error => console.error('Error loading modal content:', error));

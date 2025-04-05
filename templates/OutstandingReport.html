@@ -1,0 +1,60 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container-fluid mt-3">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="fw-bold">OutStanding Report</h5>
+            <form  id="OutStandingForm" action="/PrintOutStandingReport/" method="post">
+                {% csrf_token %}
+            <div class="d-flex align-items-center gap-2 mt-2">
+                <select class="form-select w-auto">
+                    <option>Select...</option>
+                </select>
+                <input type="date" class="form-control w-auto" value="2025-03-28">
+                <input type="date" class="form-control w-auto" value="2025-03-28">
+                <button class="btn btn-primary"><i class="fa fa-print"></i> Print</button>
+                <button class="btn btn-primary"><i class="fa fa-download"></i> Export</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card mt-3 shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-bordered mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th>DATE</th>
+                        <th>BILL NO.</th>
+                        <th>NAME</th>
+                        <th>QUANTITY</th>
+                        <th>MRP</th>
+                        <th>PURCHASE PRICE</th>
+                        <th>SALE PRICE</th>
+                        <th>PROFIT/LOSS</th>
+                        <th>PERCENTAGE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="9" class="text-center py-5">No Data Available</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col text-white text-center py-4" style="background: #5a2bbd;">Qty: 14</div>
+        <div class="col text-white text-center py-4" style="background: #f4a621;">Purchase Price: ₹ 526.25</div>
+        <div class="col text-white text-center py-4" style="background: #1e1e1e;">MRP: ₹ 684</div>
+        <div class="col text-white text-center py-4" style="background: #2672ff;">Sale Price: ₹ 700</div>
+        <div class="col text-white text-center py-4" style="background: #28a745;">Profit: ₹ 173.75</div>
+    </div>
+</form>
+</div>
+<script>
+    function openPrintPage() {
+        window.open('/PrintOutStandingReport/', '_blank'); 
+    }
+</script>
+{% endblock %}
