@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     'poschlid'
 
     'BillWiselist',
-    'OutstandingReport'
+    'OutstandingReport',
 
 
     'Sales',
