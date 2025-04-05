@@ -1152,79 +1152,65 @@ def Addsale(request):
 def Stock(request):
     return render(request,'stock.html')
 
-
-def insertpaymentmode(request):
+def updateproduct(request):
     if request.method=='POST':
-        Paymentmode_name=request.POST.get('updatepaymentmode_name')
+        id=request.POST.get('product_id'),    
+        product_name=request.POST.get('Productname'),
+        product_marathi_name=request.POST.get('Marathiname'),
+        product_HSNCode=request.POST.get('HSNCode'),
+        category=request.POST.get('category'),
+        brand=request.POST.get('brand'),
+        taxpercent=request.POST.get('tax_percentage'),
+        tax=request.POST.get('tax'),
+        unit=request.POST.get('unit'),
+        alternateunit=request.POST.get('AlternateUnit'),
+        conversionfact=request.POST.get('conversion'),
+        nos=request.POST.get('unitperprice'),
+        barcode=request.POST.get('barcode'),
+        #qrcode=request.POST.get('mrp'),
+        mrp=request.POST.get('mrp'),
+        sale=request.POST.get('sale'),
+        credit=request.POST.get('credit'),
+        purchase=request.POST.get('Purchase'),
+        wholesaler=request.POST.get('Wholesaler'),
+        distributor=request.POST.get('Distributor'),
+        op_Qty=request.POST.get('Op_Qty'),
+        op_Value=request.POST.get('Op_Value'),
+        mfg_Date=request.POST.get('MfgDate'),
+        exp_Date=request.POST.get('ExpDate')
 
-        insertpaymentmode=Paymentmode(
-            Paymentmode_name=Paymentmode_name
-        )
-
-        insertpaymentmode.save()
-        return redirect('/paymentmode/')
-    else:
-        return render(request,'paymentmode.html')
-    
-
-
-from django.shortcuts import get_object_or_404, redirect
-
-def updatepaymentmode(request):
-    if request.method == "POST":
-        paymentmode_id = request.POST.get("updatepaymentmode_id")  # Ensure correct name
-        paymentmode_name = request.POST.get("updatepaymentmode_name")  
-
-        # Fetch record safely
-        fetchRecord = get_object_or_404(Paymentmode, Paymentmode_id=paymentmode_id)
-
-        # Update the record
-        fetchRecord.Paymentmode_name = paymentmode_name
+        fetchRecord=Product.objects.get(product_id=id)
+        fetchRecord.product_name=product_name,
+        fetchRecord.product_marathi_name=product_marathi_name,
+        fetchRecord.product_HSNCode=product_HSNCode,
+        fetchRecord.category=category,
+        fetchRecord.brand=brand,
+        fetchRecord.tax=tax,
+        fetchRecord.taxpercent=taxpercent,
+        fetchRecord.unit=unit,
+        fetchRecord.alternateunit=alternateunit,
+        fetchRecord.conversionfact=conversionfact,
+        fetchRecord.nos=nos,
+        fetchRecord.barcode=barcode,
+        fetchRecord.qrcode=brand,
+        fetchRecord.mrp=mrp,
+        fetchRecord.sale=sale,
+        fetchRecord.credit=credit,
+        fetchRecord.purchase=purchase,
+        fetchRecord.wholesaler=wholesaler,
+        fetchRecord.distributor=distributor,
+        fetchRecord.op_Qty=op_Qty,
+        fetchRecord.op_Value=op_Value,
+        fetchRecord.mfg_Date=mfg_Date,
+        fetchRecord.exp_Date=exp_Date
         fetchRecord.save()
+        return redirect('/products/')
 
-        return redirect('/paymentmode/')  # Redirect back to the list page
-    return redirect('/paymentmode/')  # Handle non-POST requests
-    
-def deletepaymentmode(request,id):   
-    Paymentmodedata=Paymentmode.objects.get(Paymentmode_id=id)
-
-    Paymentmodedata.delete()
-
-    return redirect('/paymentmode/') 
-
-def deletepaymentterms(request,id):   
-    Paymenttermsdata=Paymentterms.objects.get(Paymentterms_id=id)
-
-    Paymenttermsdata.delete()
-
-    return redirect('/Paymentterms/') 
-
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse
+    else:
+        return render(request,'productlist.html')    
 
 
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse
-
-def updatepaymentterms(request, id):
-    """Fetch and update payment terms."""
-    paymentterms = get_object_or_404(Paymentterms, Paymentterms_id=id)
-
-    if request.method == 'POST':
-        new_name = request.POST.get('updatepaymentterms_name')
-        if new_name:
-            paymentterms.Paymentterms_name = new_name
-            paymentterms.save()
-            return redirect('/Paymentterms/')  # Redirect after successful update
-
-    # If request is GET, return JSON data for the modal
-    if request.method == 'GET':
-        return JsonResponse({
-            "Paymentterms_id": paymentterms.Paymentterms_id,
-            "Paymentterms_name": paymentterms.Paymentterms_name
-        })
-
-def deleteproduct(request,id):
+def deleteproduct(request,id):  
     productdata=Product.objects.get(product_id=id)
 
 
@@ -1444,8 +1430,26 @@ def insertemployee(request):
 
            
 
-    productdata.delete()
-    return redirect("/products/")
- 
+    
 
+def posview(request):
+    query = request.GET.get('search', '')  # Get search input from request
+    customer=Customer.objects.all()
+    products = Product.objects.filter(name__icontains=query) if query else Product.objects.all()
+    return render(request,'Pos1.html',{'products': products, 'search_query': query,'customer':customer})
+
+
+def get_product_names(request):
+    products = list(Product.objects.values_list('name', flat=True))  # Get only product names
+    return JsonResponse({'products': products})
+
+def insertpos(request):
+    if request.method=="POST":
+        productname=request.POST.get('productname'),
+        productqty=request.POST.get('productqty'),
+        productmrp=request.POST.get('mrp'),
+        productname=request.POST.get('productname'),
+        productname=request.POST.get('productname'),
+        productname=request.POST.get('productname'),
+        productname=request.POST.get('productname'),
 
