@@ -40,7 +40,6 @@ def index (request):
 
 
 
-
 def login(request):
     if request.method == "POST":
         email = request.POST.get('email')
@@ -56,6 +55,17 @@ def login(request):
             messages.error(request, "Invalid email or password")
 
     return render(request, 'login.html')
+
+
+
+
+
+
+
+
+
+
+
 
 def logout(request):  
     auth_logout(request)  
@@ -937,66 +947,80 @@ def editAddUnit(request,id):
         }
         return JsonResponse(edit)
     except Unit.DoesNotExist:
+
+
         return JsonResponse({'error': 'Unit not found'}, status=404)
-
-
-
-
 
 def updateunit(request):
     if request.method =="POST":
         unit_id=request.POST.get("unit_id")
         unit_name=request.POST.get("unit_name")  
         
-        fetchRecord=Unit.objects.get(unit_id=unit_name)
+        fetchRecord=Unit.objects.get(unit_id=unit_id)
 
         fetchRecord.unit_name=unit_name
 
         fetchRecord.save()  
-        return redirect('/AddUnit/') 
+        return redirect('/unit/') 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+def editAddExpenses(request,id):
     
-def updateExpenses(request):
+    try:
+        expensesdata = Expenses.objects.get(expenses_id=id)
+        edit = {
+            'editexpenses': {
+                'expenses_id': expensesdata.expenses_id,
+                'expenses_name': expensesdata.expenses_name,  # Adjust field names based on your model
+            }
+        }
+        return JsonResponse(edit)
+    except Expenses.DoesNotExist:
+        return JsonResponse({'error': 'Expenses not found'}, status=404)
+
+
+def updateexpenses(request):
     if request.method =="POST":
         expenses_id=request.POST.get("expenses_id")
         expenses_name=request.POST.get("expenses_name")  
         
-
         fetchRecord=Expenses.objects.get(expenses_id=expenses_id)
-        
 
         fetchRecord.expenses_name=expenses_name
 
         fetchRecord.save()  
-        return redirect('/AddExpenses/')
+        return redirect('/AddExpenses/') 
+
+
+def editAddOtherCharge(request,id):
     
+    try:
+        otherchargedata = OtherCharge.objects.get(othercharge_id=id)
+        edit = {
+            'editcharge': {
+                'othercharge_id': otherchargedata.othercharge_id,
+                'othercharge_name': otherchargedata.othercharge_name,  # Adjust field names based on your model
+            }
+        }
+        return JsonResponse(edit)
+    except OtherCharge.DoesNotExist:
+        return JsonResponse({'error': 'Expenses not found'}, status=404)
+
+
 def updateAddOtherCharge(request):
     if request.method =="POST":
         othercharge_id=request.POST.get("othercharge_id")
         othercharge_name=request.POST.get("othercharge_name")  
         
+        fetchRecord=OtherCharge.objects.get(othercharge_id=othercharge_name)
 
-        fetchRecord=Expenses.objects.get(othercharge_id=othercharge_id)
-        
-
-        fetchRecord.othercharge_id=othercharge_id
+        fetchRecord.othercharge_name=othercharge_name
 
         fetchRecord.save()  
-        return redirect('/AddOtherCharge/')
+        return redirect('/AddOtherCharge/') 
+
+
+
     
 
 

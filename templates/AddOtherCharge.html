@@ -36,14 +36,12 @@
                   <td>{{ i.othercharge_id }}</td>
                   <td>{{ i.othercharge_name}}</td>
                   <td>
-                    <a href="/editcharge/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editcharge"
-                    data-bs-whatever="@mdo">
-                      <i class="fa fa-pen"></i>
-                      </a>
-                    <a href="deleteothercharge/{{i.othercharge_id}}" class="btn btn-danger" onclick="return confirm('are you sure?')"><i class="fa fa-trash"></i></a>
-        
-                      <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
-                data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
+                    <button type="button" class="btn btn-success" onclick="loadEditModal('{{ i.othercharge_id }}')"><i class="fa fa-pen"></i></button> 
+
+                    <a href="deletecharge/{{i.othercharge_id}}" class="btn btn-danger"
+                      onclick="return confirm('are you sure?')"><i class="fa fa-trash"></i></a>
+
+
                     
                   </td>
                 </tr>
@@ -167,10 +165,11 @@
       <div class="modal-body">
         <div class="container-fluid">
           <div class="row">
-            <form action="/updatecharge/" method="post">
+            <form action="/updateAddOtherCharge/" method="post">
             <div class="col-6">
               <label for="chargename" class="form-label">Other Charge Name</label>
               <input type="text" class="form-control" id="chargename" name="chargename" required>
+              <input type="hidden" id="Charge_id" name="updateCharge_id">
             </div>
             <div class="col-6">
               <label for="chargename" class="form-label">Types of Charges</label>
@@ -254,16 +253,17 @@
 </div>
 
 <script>
-  function loadEditModal(AddOtherCharge) {
-    console.log(AddOtherCharge);
-
-    fetch(`/editAddOtherCharge/${AddOtherCharge}/`)
+  function loadEditModal(AddOtherCharge) {console.log(AddOtherCharge);
+      fetch(`/editAddOtherCharge/${Charge_name}/`)
       .then(response => { return response.json(); })
       .then(html => {
         console.log(html);
-        let AddOtherCharge = html.editAddOtherCharge;
+        let editCharge = html.editCharge;
         var editModalContent = new bootstrap.Modal(document.getElementById('editAddOtherCharge'));
         document.getElementById("editAddOtherCharge_name").value = AddOtherCharge.AddOtherCharge;
+
+        document.getElementById("Charge_id").value = editOtherCharge.othercharge_id;
+        document.getElementById("updateAddOtherCharge_name").value = editCharge.othercharge_name;
 
         editModalContent.show();
       })
