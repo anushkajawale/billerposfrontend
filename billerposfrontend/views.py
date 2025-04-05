@@ -200,7 +200,7 @@ def AddUnit(request):
         return redirect('/unit/')
     else:
         return render(request,'AddUnit.html')
-    #########################
+    
 
 def expenseslist(request):
     list = Expenses.objects.all()
@@ -221,7 +221,7 @@ def insertexpenses(request):
         return redirect('/AddExpenses/')
     else:
         return render(request,'AddExpenses.html')
-    #########################
+    
 def chargelist(request):
     listdata = OtherCharge.objects.all()
     data = {
@@ -243,7 +243,7 @@ def insertcharge(request):
 
 
 
-#######################################
+
 
 
 def Customergrouplist(request):
@@ -523,13 +523,15 @@ def updatecustomer(request):
         if customer_CreditLimit:
            fetchRecord.customer_CreditLimit=customer_CreditLimit
         if customer_CreditPeriod:
-            fetchRecord.customer_CreditPeriod
+            fetchRecord.customer_CreditPeriod=customer_CreditPeriod
         if customer_Barcode:
             fetchRecord.customer_Barcode=customer_Barcode
 
     
         fetchRecord.save()  
-        return redirect('/Customerpage/')   
+        return redirect('/Customerpage/') 
+
+      
 
 def deleteCustomer(request,id):
     customerdata =Customer.objects.get(customer_id=id)
@@ -551,7 +553,7 @@ def insertsupplier(request):
         supplier_City=request.POST.get("supplier_City")
         supplier_CreditLimit=request.POST.get("supplier_CreditLimit")
         supplier_CreditPeriod=request.POST.get("supplier_CreditPeriod")
-        # supplier_barcode=request.POST.get("supplier_barcode")
+        
         
 
 
@@ -570,8 +572,9 @@ def insertsupplier(request):
         supplier_ShippingAddress=supplier_ShippingAddress,
         supplier_City=supplier_City,
         supplier_CreditLimit=supplier_CreditLimit,
-        supplier_CreditPeriod=supplier_CreditPeriod,
-        # customer_barcode=customer_barcode
+        supplier_CreditPeriod=supplier_CreditPeriod
+
+        
        )
         
         insertquery.save()
@@ -596,7 +599,8 @@ def editsupplier(requset,id):
                 'supplier_ShippingAddress': supplierdata.supplier_ShippingAddress,
                 'supplier_City': supplierdata.supplier_City,
                 'supplier_CreditLimit': supplierdata.supplier_CreditLimit,
-                # 'supplier_CreditPeriod': supplierdata.supplier_CreditPeriod
+                'supplier_CreditPeriod': supplierdata.supplier_CreditPeriod,
+                
             }
         }
         return JsonResponse(edit)
@@ -617,7 +621,8 @@ def updatesupplier(request):
         supplier_ShippingAddress=request.POST.get("supplier_ShippingAddress")
         supplier_City=request.POST.get("supplier_City")
         supplier_CreditLimit=request.POST.get("supplier_CreditLimit")
-        # supplier_CreditPeriod=request.POST.get("supplier_CreditPeriod")
+        supplier_CreditPeriod=request.POST.get("supplier_CreditPeriod")
+        
        
 
 
@@ -656,8 +661,10 @@ def updatesupplier(request):
             fetchRecord.supplier_City=supplier_City
         if supplier_CreditLimit:
            fetchRecord.supplier_CreditLimit=supplier_CreditLimit
-        # if supplier_CreditPeriod:
-        #    fetchRecord.supplier_CreditPeriod
+        if supplier_CreditPeriod:
+            fetchRecord.supplier_CreditPeriod=supplier_CreditPeriod
+
+       
         
 
         
@@ -912,7 +919,38 @@ def editrewardpointpage(request,id):
         }
         return JsonResponse(edit)
     except RewardPoints.DoesNotExist:
-        return JsonResponse({'error': ' not found'}, status=404)     
+        return JsonResponse({'error': ' not found'}, status=404)  
+    
+def updaterewardpoint(request):
+    if request.method =="POST":
+        RewardPoints_id=request.POST.get("RewardPoints_id")
+        RewardPoints_Minrange=request.POST.get("RewardPoints_Minrange")
+        RewardPoints_Maxrange=request.POST.get("RewardPoints_Maxrange") 
+        RewardPoints_Points=request.POST.get("RewardPoints_Points")
+
+        
+        fetchRecord=RewardPoints.objects.get(RewardPoints_id=RewardPoints_id)
+        if RewardPoints_id:
+            fetchRecord.RewardPoints_id=RewardPoints_id
+        if RewardPoints_Minrange:
+            fetchRecord.RewardPoints_Minrange=RewardPoints_Minrange
+        if RewardPoints_Maxrange:
+            fetchRecord.RewardPoints_Maxrange=RewardPoints_Maxrange
+        if RewardPoints_Points:
+            fetchRecord.RewardPoints_Points=RewardPoints_Points
+
+
+            
+
+        fetchRecord.save()  
+        return redirect('/RewardPoints/')     
+   
+    
+
+def deleteRewardPoints(request,id):
+    RewardPointsdata =RewardPoints.objects.get(RewardPoints_id=id)
+    RewardPointsdata.delete()
+    return redirect('/RewardPoints/')
     
 
 

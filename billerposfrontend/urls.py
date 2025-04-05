@@ -103,7 +103,11 @@ urlpatterns = [
 
     path('RewardPoints/',views.RewardPointslist),
     path('insertrewardpoint/',views.insertrewardpoint),
-    path('editrewardpoint/<id>/',views.editrewardpointpage),
+    path('editrewardpointpage/<id>/',views.editrewardpointpage),
+    path('updaterewardpoint/',views.updaterewardpoint),
+
+    path('RewardPoints/deleteRewardPoints/<id>',views.deleteRewardPoints),
+    
 
 
     
