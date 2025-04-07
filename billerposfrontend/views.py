@@ -1053,7 +1053,7 @@ def deleteunit(request,id):
 
     unitdata.delete()
 
-    return redirect('/Unit/') 
+    return redirect('/unit/') 
 
 def deleteexpenses(request,id):   
     expensesdata=Expenses.objects.get(expenses_id=id)
