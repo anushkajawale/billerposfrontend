@@ -56,7 +56,7 @@ urlpatterns = [
     path('Addunit/',views.AddUnit),
     path('editunit/<id>/',views.editAddUnit),
     path('updateunit/',views.updateunit),
-    path('Unit/deleteunit/<id>',views.deleteunit),
+    path('unit/deleteunit/<id>',views.deleteunit),
 
 
     path('updateexpenses/',views.updateexpenses),
