@@ -125,7 +125,7 @@ urlpatterns = [
     path('EditRole/',views.EditRolelist),
     path('insertroles/',views.insertroles),
     path('Dashboard/',views.Dashboard),
-    path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
+    # path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
 
     path('Barcode/',views.Barcodepage),
     path('stock/',views.stock),
@@ -149,11 +149,12 @@ urlpatterns = [
 
 
 
-    path('Paymentterms/deletepaymentterms/<id>',views.deletepaymentterms),
-    path('updatepaymentmode/',views.updatepaymentmode),
-    path('updatepaymentterms/<int:id>/', views.updatepaymentterms),
+    # path('Paymentterms/deletepaymentterms/<id>',views.deletepaymentterms),
+    # path('updatepaymentmode/',views.updatepaymentmode),
+    # path('updatepaymentterms/<int:id>/', views.updatepaymentterms),
     path('adduser/',views.adduser),
-    path('updateuser/',views.updateuser)
+    path('updateuser/',views.updateuser),
+    path("get-customer-details/<id>/", views.get_customer_details),
    
     
 

@@ -16,6 +16,7 @@ from Users.models import Users
 from tax.models import Tax
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout as auth_logout
+from tbl_master.models import Master
 
 
 from Employees.models import Employees
@@ -1419,13 +1420,46 @@ def get_product_names(request):
     products = list(Product.objects.values_list('name', flat=True))  # Get only product names
     return JsonResponse({'products': products})
 
+def get_customer_details(request,id):
+    customer = get_object_or_404(Customer, customer_id=id)
+    data = {
+        "mobile_no": customer.customer_mobile,
+        "address": customer.customer_ShippingAddress,
+        "credit_amt": customer.customer_CreditLimit,
+    }
+    return JsonResponse(data)
+
 def insertpos(request):
     if request.method=="POST":
-        productname=request.POST.get('productname'),
-        productqty=request.POST.get('productqty'),
-        productmrp=request.POST.get('mrp'),
-        productname=request.POST.get('productname'),
-        productname=request.POST.get('productname'),
-        productname=request.POST.get('productname'),
-        productname=request.POST.get('productname'),
+        productname=request.POST.get('productname')
+        productqty=request.POST.get('productqty')
+        productmrp=request.POST.get('mrp')
+        productsale=request.POST.get('sale')
+        totalprice=request.POST.get('totalprice')
+        customer_id=int(request.POST.get('customername'))
+        paymentmode=request.POST.get('paymentmode')
+        billdate=request.POST.get('billdate')
+        total_amount=request.POST.get('total_amount')
+
+        insertdata=Master(
+            customer_id=Customer.objects.get(customer_id = customer_id),
+            master_itemname=productname,
+            master_qty=productqty,
+            master_mrp=productmrp,
+            master_sale_price=productsale,
+            master_total=totalprice,
+            master_payment_mode=paymentmode,
+            master_billdate=billdate,
+            master_totalAmount=total_amount    
+
+        )
+
+        insertdata.save()
+        return redirect('/posview/')
+    else:
+        return render(request,'Pos1.html')
+
+
+
+       
 
