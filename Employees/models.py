@@ -1,13 +1,14 @@
 from django.db import models
 class Employees(models.Model):
-   from django.db import models
+  
 
-class Employees(models.Model):
+
     # Basic Information
+    Employees_id = models.AutoField(primary_key=True)
     Employees_firstname = models.CharField(max_length=100)
     Employees_middlename = models.CharField(max_length=100, blank=True, null=True)
     Employees_lastname = models.CharField(max_length=100)
-    Employees_dateof_birth = models.DateField()
+    Employees_dateof_birth = models.DateField(null=True, blank=True)
     Employees_gender = models.CharField(max_length=10, choices=[('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')])
 
     # Contact Information
@@ -38,7 +39,7 @@ class Employees(models.Model):
     job_title = models.CharField(max_length=100)
     department = models.CharField(max_length=100)
     employment_status = models.CharField(max_length=50, choices=[('Active', 'Active'), ('Inactive', 'Inactive'), ('Terminated', 'Terminated')])
-    hire_date = models.DateField()
+    hire_date = models.DateField(null=True, blank=True)
     termination_date = models.DateField(blank=True, null=True)
 
     # Emergency Contact
@@ -50,6 +51,8 @@ class Employees(models.Model):
     Employees_previous_employers = models.TextField(blank=True, null=True)
     Employees_previous_jobtitles = models.TextField(blank=True, null=True)
     Employees_previous_responsibilities = models.TextField(blank=True, null=True)
+    department_name = models.CharField(max_length=100)
+    department_birth = models.DateField(null=True, blank=True)
 
     # Documents & Attachments
     Employees_resume = models.FileField(upload_to='resumes/', blank=True, null=True)
@@ -59,6 +62,11 @@ class Employees(models.Model):
     def __str__(self):
         return f"{self.Employees_firstname} {self.Employees_lastname}"
 
+ 
+    d_relationship = models.CharField(max_length=100, null=True, blank=True)
+
+    
+ 
     
     class Meta:
         db_table = "tbl_Employees"

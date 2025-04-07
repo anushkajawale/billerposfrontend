@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Employees
 
 class EmployeesAdmin(admin.ModelAdmin):
-    list_display = [
+    list_display = ['Employees_id',
         'Employees_firstname', 'Employees_middlename', 'Employees_lastname', 'Employees_dateof_birth', 'Employees_gender',
         'Employees_address', 'Employees_mobile_number', 'Employees_email',
         
@@ -21,8 +21,7 @@ class EmployeesAdmin(admin.ModelAdmin):
 
   
         'Employees_emergencycontact_name', 'Employees_emergencycontact_relationship', 'Employees_emergencycontact_phone',
-
-        
+        'department_name','department_birth',
         'Employees_previous_employers', 'Employees_previous_jobtitles', 'Employees_previous_responsibilities',
 
         'Employees_resume', 'Employees_iddocument', 'Employees_certificationsdocument'

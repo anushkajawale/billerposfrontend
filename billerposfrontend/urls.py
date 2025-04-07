@@ -54,18 +54,34 @@ urlpatterns = [
     path('deleteproduct/<id>/',views.deleteproduct),  
     path('unit/',views.unitlist),  
     path('Addunit/',views.AddUnit),
-    path('editAddUnit/<id>/',views.editAddUnit),
+    path('editunit/<id>/',views.editAddUnit),
     path('updateunit/',views.updateunit),
     path('unit/deleteunit/<id>',views.deleteunit),
-    path('updateExpenses/',views.updateExpenses),
+
+
+    path('updateexpenses/',views.updateexpenses),
+    path('editAddExpenses/<id>/',views.editAddExpenses),
+    path('AddExpenses/',views.expenseslist),
+    path('insertexpenses/',views.insertexpenses),
+    path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
+
+    #path('updateExpenses/',views.updateExpenses),
     # path('saveExpenses/',views.expenseslist), 
     path('AddExpenses/',views.expenseslist),
     path('insertexpenses/',views.insertexpenses),
     path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
+
     path('AddOtherCharge/',views.chargelist),  
     path('updateAddOtherCharge/',views.updateAddOtherCharge),
     path('insertcharge/',views.insertcharge),
     path('AddOtherCharge/deleteothercharge/<id>',views.deleteothercharge),
+
+    path('editAddOtherCharge/<id>',views.editAddOtherCharge),
+
+
+
+
+
     path('Customergrouplist/',views.Customergrouplist),
     path('insertcustomergroup/',views.insertcustomergroup),
     path('editcustomergroup/<id>/',views.editcustomergroup),
@@ -89,7 +105,11 @@ urlpatterns = [
     path('RewardPoints/',views.RewardPoints), 
 
     path('insertrewardpoint/',views.insertrewardpoint),
-    path('editrewardpoint/<id>/',views.editrewardpointpage),
+    path('editrewardpointpage/<id>/',views.editrewardpointpage),
+    path('updaterewardpoint/',views.updaterewardpoint),
+
+    path('RewardPoints/deleteRewardPoints/<id>',views.deleteRewardPoints),
+    
 
 
     
@@ -125,7 +145,10 @@ urlpatterns = [
     path('EditRole/',views.EditRolelist),
     path('insertroles/',views.insertroles),
     path('Dashboard/',views.Dashboard),
+
     # path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
+    #path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
+
 
     path('Barcode/',views.Barcodepage),
     path('stock/',views.stock),
@@ -149,12 +172,22 @@ urlpatterns = [
 
 
 
+ 
     # path('Paymentterms/deletepaymentterms/<id>',views.deletepaymentterms),
     # path('updatepaymentmode/',views.updatepaymentmode),
     # path('updatepaymentterms/<int:id>/', views.updatepaymentterms),
     path('adduser/',views.adduser),
     path('updateuser/',views.updateuser),
     path("get-customer-details/<id>/", views.get_customer_details),
+ 
+    #path('Paymentterms/deletepaymentterms/<id>',views.deletepaymentterms),
+    #path('updatepaymentmode/',views.updatepaymentmode),
+    #path('updatepaymentterms/<int:id>/', views.updatepaymentterms),
+    path('adduser/',views.adduser),
+    path('updateuser/',views.updateuser),
+    path('editemployee/',views.editemployee),
+   # path('insertemployee/',views.insertemployee)
+
    
     
 

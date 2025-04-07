@@ -34,9 +34,9 @@
                   <td>{{ i.Paymentmode_name}}</td>
                   <td>
                     <a href="/insertpaymentmode/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editpaymentmode"
-                    data-bs-whatever="@mdo">
+                    data-bs-whatever="@mdo" onclick="loadEditModal('{{ i.Paymentmode_id }}')" >
                       <i class="fa fa-pen"></i></a>
-                      <a href="deletepaymentmode/{{ i.Paymentmode_id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
+                      <a href="deletepaymentmode/{{ i.Paymentmode_id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger" ><i class="fa fa-trash"></i></a>
         
                       <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
                 data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
@@ -64,8 +64,8 @@
           {% csrf_token %}
           <div class="mb-3">
             <label for="customergroup-name" class="col-form-label">Payment Name</label>
-            <input type="text" class="form-control" id="updatepaymentmode_name" name="updatepaymentmode_name" placeholder="Payment Name" required />
-            <input type="hidden" id="updatepaymentmode_id" name="updatepaymentmode_id">
+            <input type="text" class="form-control" id="ipaymentmode_name" name="ipaymentmode_name" placeholder="Payment Name" required />
+            <input type="hidden" id="ipaymentmode_id" name="ipaymentmode_id">
           </div>
 
       
@@ -93,10 +93,12 @@
       <div class="row mb-3">
         <div class="col-12">
           <form action="/updatepaymentmode/" method="post">
+            {% csrf_token %}
+
           <label for="Paymentmode Name" class="form-label">Paymentmode Name</label>
           <input type="text" class="form-control" id="updatepaymentmode_name" name="updatepaymentmode_name" required>
-          <input type="hidden" id="updatepaymentmode_id" name="updatepaymentmode_id">
-          </form>
+          <input type="hidden" id="updatepaymentmode_id" name="updatepaymentmode_id" >
+        
         </div>
         
       </div>
@@ -107,20 +109,16 @@
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     <button type="submit" class="btn btn-success">Save</button>
   </div>
+</form>
   </div>
   </div>
   </div>
   
-  
-  
-  
-  
-  
-
-
 <script>
-  function loadEditModal(paymentmodeId) {
-    console.log(paymentmodeId);
+
+function loadEditModal(paymentmodeId) {
+  console.log("Fetching payment mode with ID:", paymentmodeId);
+  
     
     fetch(`/editpaymentmode/${paymentmodeId}/`)
         .then(response => response.json())
