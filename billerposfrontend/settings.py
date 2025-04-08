@@ -54,13 +54,18 @@ INSTALLED_APPS = [
     'tax',
     'product',
     'Barcode',
+    'RewardPOints',
+    'tbl_master',
+    'posbill',
+    'poschlid',
+
     'BillWiselist',
     'OutstandingReport',
 
 
     'Sales',
     'Employees',
-    'RewardPOints'
+
 
 
 ]

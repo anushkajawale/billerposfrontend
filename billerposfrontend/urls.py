@@ -34,13 +34,7 @@ urlpatterns = [
     path('editcategory/<id>/',views.editcategory),
     path('updatecategory/',views.updatecategory),
     path('category/deleteCategory/<id>',views.deleteCategory),
-
     path('deleteCategory/<id>/',views.deleteCategory),
-
-
-   
-
-
     path('brand/',views.brand),
     path('insertbrand/',views.insertbrandpage),
     path('editbrand/<id>/',views.editbrand),
@@ -49,32 +43,41 @@ urlpatterns = [
     path('tax/',taxlist),
     path('inserttax/',inserttax),
     path('edittax/<id>/',edittax),
-    path('tax/deletetax/<id>',deletetax),
+    path('tax/deletetax/<id>',deletetax),  
+    path('unit/',views.unitlist),  
+    path('Addunit/',views.AddUnit),
     path('products/',views.productslist), 
-   
     path('products/',views.productslist),
     path('insertproduct/',insertproduct),
     path('editproduct/<id>/',views.editproduct),
-    path('deleteproduct/<id>/',views.deleteproduct),
-   
+    path('updateproduct/',views.updateproduct),
+    path('deleteproduct/<id>/',views.deleteproduct),  
     path('unit/',views.unitlist),  
     path('Addunit/',views.AddUnit),
+    path('editunit/<id>/',views.editAddUnit),
     path('updateunit/',views.updateunit),
-    path('AddUnit/deleteunit/<id>',views.deleteunit),
+    path('unit/deleteunit/<id>',views.deleteunit),
 
-    path('updateExpenses/',views.updateExpenses),
+
+    path('updateexpenses/',views.updateexpenses),
+    path('editAddExpenses/<id>/',views.editAddExpenses),
+    path('AddExpenses/',views.expenseslist),
+    path('insertexpenses/',views.insertexpenses),
+    path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
+
+    #path('updateExpenses/',views.updateExpenses),
     # path('saveExpenses/',views.expenseslist), 
     path('AddExpenses/',views.expenseslist),
     path('insertexpenses/',views.insertexpenses),
     path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
 
-
-
     path('AddOtherCharge/',views.chargelist),  
-    path('AddOtherCharge/',views.OtherCharge),
-   ## path('updateAddOtherCharge/',views.updateAddOtherCharge),
+    path('updateAddOtherCharge/',views.updateAddOtherCharge),
     path('insertcharge/',views.insertcharge),
     path('AddOtherCharge/deleteothercharge/<id>',views.deleteothercharge),
+
+    path('editAddOtherCharge/<id>',views.editAddOtherCharge),
+
 
 
 
@@ -89,7 +92,6 @@ urlpatterns = [
     path('editsuppliergroup/<id>/',views.editsuppliergroup),
     path('updatesuppliergroup/',views.updatesuppliergroup),
     path('Suppliergrouplist/deleteSuppliergroup/<id>/',views.deleteSuppliergroup),
-
     path('updatecustomer/',views.updatecustomer),
     path('Customerpage/deleteCustomer/<id>',views.deleteCustomer),
     path('insertsuppliergroup/',views.insertsuppliergroup),
@@ -99,14 +101,19 @@ urlpatterns = [
     path('insertpaymentterms/',views.insertpaymentterms),
     path('Users/deleteusers/<id>',views.deleteusers),
     path('Supplierlist/',views.Supplierpage),
-
-
     path('RewardPoints/',views.RewardPointslist),
+    path('RewardPoints/',views.RewardPoints), 
+
     path('insertrewardpoint/',views.insertrewardpoint),
-    path('editrewardpoint/<id>/',views.editrewardpointpage),
+    path('editrewardpointpage/<id>/',views.editrewardpointpage),
+    path('updaterewardpoint/',views.updaterewardpoint),
+
+    path('RewardPoints/deleteRewardPoints/<id>',views.deleteRewardPoints),
+    
 
 
     
+
     path('Customerpage/',views.Customerpage),
     path('insertcustomer/',views.insertcustomer),
     path('editcustomer/<id>/',views.editcustomer),
@@ -141,13 +148,21 @@ urlpatterns = [
     path('insertroles/',views.insertroles),
 
     path('Dashboard/',views.Dashboard),
-    path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
+
+    # path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
+    #path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
+
 
     path('Barcode/',views.Barcodepage),
     path('stock/',views.stock),
     path('Salelist/',views.Salelist),
     path('Barcode/',views.Barcodepage),
     path('Addsale/',views.Addsale),
+
+    path('posview/',views.posview),
+    path('get-product-names/', views.get_product_names, name='get_product_names'),
+    path('insertpos/',views.insertpos),
+
     path('BillWiselist/',views.BillWiselist),
     path('OutstandingReport/',views.OutstandingReport),
     path('LedgerReport/',views.LedgerReport),
@@ -159,11 +174,23 @@ urlpatterns = [
 
 
 
-    path('Paymentterms/deletepaymentterms/<id>',views.deletepaymentterms),
-    path('updatepaymentmode/',views.updatepaymentmode),
-    path('updatepaymentterms/<int:id>/', views.updatepaymentterms),
+
+ 
+    # path('Paymentterms/deletepaymentterms/<id>',views.deletepaymentterms),
+    # path('updatepaymentmode/',views.updatepaymentmode),
+    # path('updatepaymentterms/<int:id>/', views.updatepaymentterms),
     path('adduser/',views.adduser),
-    path('updateuser/',views.updateuser)
+    path('updateuser/',views.updateuser),
+    path("get-customer-details/<id>/", views.get_customer_details),
+ 
+    #path('Paymentterms/deletepaymentterms/<id>',views.deletepaymentterms),
+    #path('updatepaymentmode/',views.updatepaymentmode),
+    #path('updatepaymentterms/<int:id>/', views.updatepaymentterms),
+    path('adduser/',views.adduser),
+    path('updateuser/',views.updateuser),
+    path('editemployee/',views.editemployee),
+   # path('insertemployee/',views.insertemployee)
+
    
     
 

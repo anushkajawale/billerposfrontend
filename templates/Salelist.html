@@ -26,10 +26,33 @@
           <th>ACTION</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="table-hover">
+        {% for i in list %}
         <tr>
-          <td colspan="8" class="text-center">No data available</td>
+          <td>{{ i.Sales_id }}</td>
+          <td>{{ i.Sales_addinvoicedate }}</td>
+          <td>{{ i.Sales_invoice_no }}</td> <!-- Assuming slug is used as invoice number -->
+          <td>{{ i.Sales_name }}</td>
+          <td>{{ i.Sales_qty }}</td>
+          <td>{{ i.Sales_payment_term }}</td>
+          <td>{{ i.Sales_grand_total }}</td>
+          <td>
+            <a href="/updatesalr/" class="btn btn-sm mx-1 btn-outline-success"
+onclick="loadEditModal('{{ i.Sales_id }}')"
+data-bs-toggle="modal" data-bs-target="#edituser">
+<i class="fa fa-pen"></i>
+</a>
+
+              <a href="deleteusers/{{i.users_id}}" class="btn btn-sm mx-1 btn-outline-success" onclick="return confirm('are you sure?')">
+              <i class="fas fa-trash"></i></a>
+
+              <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
+              data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
+            
+          </td>
+
         </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>
@@ -40,6 +63,5 @@
   </div>
   </div>
 </div>
-
 
 {% endblock %}

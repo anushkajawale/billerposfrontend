@@ -33,16 +33,13 @@
                   <td>{{i.expenses_id}} </td>
                   <td> {{i.expenses_name}}</td>
                   <td>
-                    <a href="/editexpenses/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal"
-                      data-bs-target="#editexpenses" data-bs-whatever="@mdo">
-                      <i class="fa fa-pen"></i>
-                    </a>
+                    <button type="button" class="btn btn-success" onclick="loadEditModal('{{ i.expenses_id }}')"><i class="fa fa-pen"></i></button> 
+
                     <a href="deleteexpenses/{{i.expenses_id}}" class="btn btn-danger"
                       onclick="return confirm('are you sure?')"><i class="fa fa-trash"></i></a>
 
 
-                    <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
-                data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
+                    
 
                   </td>
                 </tr>
@@ -82,7 +79,7 @@
   </div>
 </div>
 
-  <div class="modal fade" id="editexpenses" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="editAddExpenses" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -94,8 +91,10 @@
             <div class="row mb-3">
               <div class="col-12">
                 <form action="/updateexpenses/" method="post">
+                  {% csrf_token %}
                   <label for="ExpensesName" class="form-label">Unit Name</label>
-                  <input type="text" class="form-control" id="ExpensesName" name="ExpensesName" value="" required>
+                  <input type="text" class="form-control" id="updateexpenses_name" name="ExpensesName" value="" required>
+                  <input type="hidden" id="Expenses_id" name="updateExpenses_id">
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" name="submit" class="btn btn-success">Save</button>
@@ -112,16 +111,16 @@
     </div>
   </div>
   <script>
-    function loadEditModal(AddExpenses) {
-      console.log(AddExpenses);
-
-      fetch(`/editAddExpenses/${AddExpenses}/`)
+    function loadEditModal(Expenses_id) { console.log(Expenses_id);
+      fetch(`/editAddExpenses/${Expenses_id}/`)
         .then(response => { return response.json(); })
         .then(html => {
           console.log(html);
-          let AddUnit = html.editAddExpenses;
+          let editExpenses = html.editexpenses;
           var editModalContent = new bootstrap.Modal(document.getElementById('editAddExpenses'));
-          document.getElementById("updateexpenses_name").value = AddExpenses.AddExpenses;
+
+          document.getElementById("Expenses_id").value = editExpenses.expenses_id;
+          document.getElementById("updateexpenses_name").value = editExpenses.expenses_name;
 
           editModalContent.show();
         })

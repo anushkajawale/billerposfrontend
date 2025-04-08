@@ -1,24 +1,25 @@
 {% extends 'index.html' %}
 {% block content %}
 <div class="card p-3">
-                <form>
+                <form action="/Salelist/" method="post">
+                    {% csrf_token %}
                     <div class="row mb-3">
                         <div class="col-md-3">
                             <label class="form-label">Customer Name</label>
                             <i class="fa fa-plus " style="margin-left: 125px;"></i>
                             <input type="hidden" id="updatesale_id" name="updatesale_id">
-                            <select class="form-select">
-                                <option id="add_cashsale" name="add_cashsale">Cash Sale</option>
-                                <option id="add_creditsale" name="add_creditsale">Credit Sale</option>
+                            <select class="form-select" name="Sales_name">
+                                <option  value="add_cashsale">Cash Sale</option>
+                                <option value="add_creditsale">Credit Sale</option>
                                 
                             </select>
                             
                         </div>
                         <div class="col-md-2">
                             <label class="form-label">Payment Term</label>
-                            <select class="form-select">
-                                <option id="add_cash" name="add_cash">Cash</option>
-                                <option id="add_credit" name="add_credit">Credit</option>
+                            <select class="form-select" name="sales_mode">
+                                <option  value="add_cash">Cash</option>
+                                <option  value="add_credit">Credit</option>
                             </select>
                         </div>
                     
@@ -40,7 +41,7 @@
                     <div class="row mb-3">
                     <div class="col-md-6 mb-3 ">
                         <label class="form-label">Product Name</label>
-                        <input type="text" class="form-control" placeholder="Search Products by name or Scan Barcode" id="add_producrname" name="add_producrname">
+                        <input type="text" class="form-control" placeholder="Search Products by name or Scan Barcode" id="add_productname" name="add_productname">
                     </div>
 
                     <div class="col-md-2 mb-3" style="margin-top: 30px">
@@ -94,7 +95,7 @@
 
   <script>
     function loadEditModal(salesId) {
-      console.log(paymentmodeId);
+      console.log(salesId);
       
       fetch(`/editsale/${salesId}/`)
           .then(response => response.json())
@@ -112,7 +113,7 @@
                   document.getElementById("add_invoicedate").value = Sales.Sales_addinvoicedate;
                   document.getElementById("add_duedays").value = Sales.Sales_add_duedays;
                   document.getElementById("add_duedate").value = Sales.Sales_add_duedate;
-                  document.getElementById("add_producrname").value = Sales.Sales_addproducrname;
+                  document.getElementById("add_productname").value = Sales.Sales_addproducrname;
 
 
 

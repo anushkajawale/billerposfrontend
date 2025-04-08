@@ -12,7 +12,7 @@ class Supplier(models.Model):
     supplier_ShippingAddress=models.CharField(max_length=255,null=True)
     supplier_City=models.CharField(max_length=255,null=True)
     supplier_CreditLimit=models.IntegerField(null=True)
-    # supplier_CreditPeriod=models.IntegerField() 
+    supplier_CreditPeriod=models.IntegerField(default=0) 
     class Meta:
         db_table = "tbl_supplier"
 

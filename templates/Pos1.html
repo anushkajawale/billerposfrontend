@@ -1,115 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>POS System</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
   <div class="container-fluid mt-3">
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h4>POS 1+</h4>
+      <h4>POS </h4>
       <div>
         <button class="btn btn-primary me-2">Dashboard</button>
-        <button class="btn btn-info text-white">POS Bills List</button>
+        <a href="/posview/" class="btn btn-info text-white">POS Bills List</a>
       </div>
     </div>
+    <form action="/insertpos/" method="post">
+      {% csrf_token %}
+      <div class="row">
+        <!-- Product Table -->
+        <div class="col-md-8">
+          <!-- Search Input with datalist -->
+          <input list="productList" id="searchProduct" class="form-control mb-2" placeholder="Search Products...">
+          <datalist id="productList">
+            {% for product in products %}
+            <option value="{{ product.product_name }}"  data-price="{{ product.sale }}" data-mrp="{{ product.mrp }}">
+              {% endfor %}
+          </datalist>
+          <button type="button" class="btn btn-success mb-3" onclick="addProduct()">Add Product</button>
+          <table class="table table-bordered" id="productTable">
+            <thead class="table-light">
+              <tr>
+                <th>No.</th>
+                <th>Item Name</th>
+                <th>Qty</th>
+                <th>MRP</th>
+                <th>Sale Price</th>
+                <th>Total</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
 
-    <div class="row">
-      <!-- Product Table -->
-      <div class="col-md-8">
-        <input type="text" class="form-control mb-3" placeholder="Search Products by name or Scan Barcode...">
+            </tbody>
+          </table>
+        </div>
+        <script>
+          let productCount = 0;
 
-        <table class="table table-bordered">
-          <thead class="table-light">
-            <tr>
-              <th>No.</th>
-              <th>Item Name</th>
-              <th>Qty</th>
-              <th>MRP</th>
-              <th>Sale Price</th>
-              <th>Total</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Dynamically added product rows will go here -->
-          </tbody>
-        </table>
-      </div>
+          function addProduct() {
+            let searchInput = document.getElementById("searchProduct");
+            let productName = searchInput.value;
+            let productList = document.getElementById("productList").options;
 
-      <!-- Customer Details -->
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title d-flex justify-content-between align-items-center">
-              Customer Details
-              <button class="btn btn-sm btn-success">+</button>
-            </h5>
+            let found = false;
+            let salePrice = 0, mrp = 0;
 
-            <form>
+            for (let option of productList) {
+              if (option.value === productName) {
+                salePrice = option.getAttribute("data-price") || 0;
+                mrp = option.getAttribute("data-mrp") || 0;
+                found = true;
+                break;
+              }
+            }
+
+            if (!found) {
+              alert("Product not found!");
+              return;
+            }
+
+            productCount++;
+
+            let table = document.getElementById("productTable").getElementsByTagName('tbody')[0];
+            let newRow = table.insertRow();
+            newRow.innerHTML = `
+              <td>${productCount}</td>
+              <td name="productname">${productName}</td>
+              <td><input type="number" value="1" min="1" class="form-control qty-input" oninput="updateTotal(this)" name="productqty"></td>
+              <td name="mrp[]">₹${mrp}</td>
+              <td name="sale[]">₹${salePrice}</td>
+              <td class="total-price" name="totalprice[]"> ₹${salePrice}</td>
+              <td><button type="button" class="btn btn-danger btn-sm" onclick="removeProduct(this)">Remove</button></td>
+            `;
+            // document.getElementById("noProducts").style.display = "none";
+            searchInput.value = ""; // Clear input
+            updateGrandTotal();
+
+
+          }
+          const updateGrandTotal = ()=>{
+            let totalPrices = document.querySelectorAll(".total-price");
+            let grandTotal = 0;
+
+            totalPrices.forEach(priceCell => {
+              let price = parseFloat(priceCell.textContent.replace("₹", "")) || 0;
+              grandTotal += price;
+            });
+
+            document.getElementById("totalamount").textContent = `Total Amount: ₹${grandTotal.toFixed(2)}`;
+          }
+
+          function removeProduct(button) {
+            let row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+            productCount--;
+
+            if (productCount === 0) {
+              document.getElementById("noProducts").style.display = "table-row";
+            }
+            updateGrandTotal();
+          }
+
+          function updateTotal(input) {
+            let row = input.parentNode.parentNode;
+            let salePrice = parseFloat(row.cells[4].textContent.replace("₹", ""));
+            let qty = parseInt(input.value);
+            row.cells[5].textContent = "₹" + (salePrice * qty).toFixed(2);
+            updateGrandTotal();
+          }
+        </script>
+
+        <!-- Customer Details -->
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                Customer Details
+
+              </h5>
+
+
               <div class="mb-2">
-                <label>Sale Type</label>
-                <select class="form-select">
-                  <option>Cash Sale</option>
+                <label>Customer Add</label>
+                <select class="form-select" name="customername">
+                  {% for i in customer %}
+                  <option value="{{i.customer_id}}">{{i.customer_name}}</option>
+                  {% endfor %}
                 </select>
-              </div>
+              </div>      
+              <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                  document.querySelector("[name='customername']").addEventListener("change", function () {
+                    let customerId = this.value;  // Get selected customer ID
+
+                    if (customerId) {
+                      console.log(customerId);
+                      fetch(`/get-customer-details/${customerId}/`)   // Django URL to fetch customer details
+
+                        .then(response => response.json())
+                        .then(data => {
+                          console.log(data);
+                          document.querySelector("[name='mobaileno']").value = data.mobile_no || "";
+                          document.querySelector("[name='address']").value = data.address || "";
+                          document.querySelector("[name='creditamt']").value = data.credit_amt || "0";
+                        })
+                        .catch(error => console.error("Error fetching customer details:", error));
+                    }
+                  });
+                });
+              </script>
+  
 
               <div class="mb-2">
                 <label>Mobile No</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="mobaileno">
               </div>
 
               <div class="mb-2">
                 <label>Address</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="address">
               </div>
 
               <div class="mb-2">
                 <label>Credit Amt</label>
-                <input type="text" class="form-control" value="0" readonly>
+                <input type="text" class="form-control" name="creditamt" value="0" readonly>
               </div>
 
-              <div class="mb-2">
-                <label>Payment Term</label>
-                <input type="text" class="form-control">
-              </div>
 
               <div class="mb-2">
                 <label>Payment Method</label>
-                <select class="form-select">
+                <select class="form-select" name="paymentmode">
                   <option>Cash</option>
                 </select>
               </div>
 
-              <div class="mb-2">
-                
-                <input type="text" class="form-control" value="Rs. 0" readonly>
-              </div>
+              
 
               <div class="mb-2">
                 <label>Remaining Amt</label>
-                <input type="text" class="form-control" value="Rs. 0" readonly>
+                <input type="text" class="form-control" name="reamainingamt" value="Rs. 0" readonly>
               </div>
 
               <div class="mb-2">
                 <label>Bill Date</label>
-                <input type="date" class="form-control" value="2025-03-18">
+                <input type="date" class="form-control" name="billdate" value="2025-03-18">
               </div>
 
               <div class="bg-danger text-white p-2 text-center mb-3">
-                <strong>Total Amount: ₹0</strong>
+                <strong id="totalamount" name="totalamt">Total Amount: ₹
+                  <input type="text" style="border: none;" value="0" id="totalAmount" name="total_amount">
+                </strong>
               </div>
 
               <div class="d-flex justify-content-between">
-                <button type="submit" class="btn btn-primary">Save Bill</button>
+                <button type="submit" name="submit" class="btn btn-primary">Save Bill</button>
                 <button type="reset" class="btn btn-secondary">Clear</button>
               </div>
-            </form>
+
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </form>
 
     <!-- Footer Summary -->
     <div class="row mt-3">
@@ -119,6 +223,35 @@
     </div>
   </div>
 
+  <!-- <script>
+      $(document).ready(function() {
+        // Fetch product names for datalist
+        function fetchProductNames() {
+          $.ajax({
+            url: "/get-product-names/",
+            method: "GET",
+            success: function(response) {
+              let productList = $("#productList");
+              productList.empty();  // Clear existing options
+
+              response.products.forEach(product => {
+                let option = `<option value="${product.product_name}">`;
+                productList.append(option);
+              });
+            }
+          });
+        }
+
+        // Fetch product names on page load
+        fetchProductNames();
+      });   
+    </script> -->
+
+  <script>
+
+
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

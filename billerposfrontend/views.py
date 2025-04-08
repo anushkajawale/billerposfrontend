@@ -16,13 +16,18 @@ from Users.models import Users
 from tax.models import Tax
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout as auth_logout
+from tbl_master.models import Master
 
 
 from Employees.models import Employees
 
 from Unit.models import Unit
+
+from Sales.models import Sales
+
 from Expenses.models import Expenses
 from OtherCharge.models import OtherCharge
+
 
 from product.models import Product
 from RewardPOints.models import RewardPoints
@@ -38,7 +43,6 @@ from RewardPOints.models import RewardPoints
 
 def index (request):
     return render(request,"index.html")
-
 
 
 
@@ -58,6 +62,17 @@ def login(request):
 
     return render(request, 'login.html')
 
+
+
+
+
+
+
+
+
+
+
+
 def logout(request):  
     auth_logout(request)  
     messages.success(request, "Logged out successfully!")
@@ -72,6 +87,10 @@ def login (request):
 
 def register (request):
     return render(request,"register.html")
+
+def editemployee(request):
+    return render(request,"editemployee.html")
+
 
 def category(request):
 
@@ -229,7 +248,10 @@ def AddUnit(request):
         return redirect('/unit/')
     else:
         return render(request,'AddUnit.html')
-   
+
+
+    
+
 
 def expenseslist(request):
     list = Expenses.objects.all()
@@ -250,7 +272,11 @@ def insertexpenses(request):
         return redirect('/AddExpenses/')
     else:
         return render(request,'AddExpenses.html')
+
    
+
+    
+
 def chargelist(request):
     listdata = OtherCharge.objects.all()
     data = {
@@ -261,9 +287,11 @@ def chargelist(request):
 def insertcharge(request):
     if request.method=='POST':
         chargename=request.POST.get('chargename')
+        
+
 
         insertcharge=OtherCharge(
-            charge_name=chargename
+            othercharge_name=chargename
         )
         insertcharge.save()
         return redirect('/AddOtherCharge/')
@@ -272,7 +300,10 @@ def insertcharge(request):
 
 
 
-##
+
+
+
+
 
 
 def Customergrouplist(request):
@@ -418,7 +449,11 @@ def productslist(request):
 
 
 def Employee(request):
-    return render(request,'Employee.html')
+    listdata = Employees.objects.all()
+    data = {
+        "list":listdata
+    }
+    return render(request,'Employee.html',data)
 
 
 
@@ -552,13 +587,15 @@ def updatecustomer(request):
         if customer_CreditLimit:
            fetchRecord.customer_CreditLimit=customer_CreditLimit
         if customer_CreditPeriod:
-            fetchRecord.customer_CreditPeriod
+            fetchRecord.customer_CreditPeriod=customer_CreditPeriod
         if customer_Barcode:
             fetchRecord.customer_Barcode=customer_Barcode
 
     
         fetchRecord.save()  
-        return redirect('/Customerpage/')   
+        return redirect('/Customerpage/') 
+
+      
 
 def deleteCustomer(request,id):
     customerdata =Customer.objects.get(customer_id=id)
@@ -580,7 +617,7 @@ def insertsupplier(request):
         supplier_City=request.POST.get("supplier_City")
         supplier_CreditLimit=request.POST.get("supplier_CreditLimit")
         supplier_CreditPeriod=request.POST.get("supplier_CreditPeriod")
-        # supplier_barcode=request.POST.get("supplier_barcode")
+        
         
 
 
@@ -599,8 +636,9 @@ def insertsupplier(request):
         supplier_ShippingAddress=supplier_ShippingAddress,
         supplier_City=supplier_City,
         supplier_CreditLimit=supplier_CreditLimit,
-        supplier_CreditPeriod=supplier_CreditPeriod,
-        # customer_barcode=customer_barcode
+        supplier_CreditPeriod=supplier_CreditPeriod
+
+        
        )
         
         insertquery.save()
@@ -625,7 +663,8 @@ def editsupplier(requset,id):
                 'supplier_ShippingAddress': supplierdata.supplier_ShippingAddress,
                 'supplier_City': supplierdata.supplier_City,
                 'supplier_CreditLimit': supplierdata.supplier_CreditLimit,
-                # 'supplier_CreditPeriod': supplierdata.supplier_CreditPeriod
+                'supplier_CreditPeriod': supplierdata.supplier_CreditPeriod,
+                
             }
         }
         return JsonResponse(edit)
@@ -646,7 +685,8 @@ def updatesupplier(request):
         supplier_ShippingAddress=request.POST.get("supplier_ShippingAddress")
         supplier_City=request.POST.get("supplier_City")
         supplier_CreditLimit=request.POST.get("supplier_CreditLimit")
-        # supplier_CreditPeriod=request.POST.get("supplier_CreditPeriod")
+        supplier_CreditPeriod=request.POST.get("supplier_CreditPeriod")
+        
        
 
 
@@ -685,8 +725,10 @@ def updatesupplier(request):
             fetchRecord.supplier_City=supplier_City
         if supplier_CreditLimit:
            fetchRecord.supplier_CreditLimit=supplier_CreditLimit
-        # if supplier_CreditPeriod:
-        #    fetchRecord.supplier_CreditPeriod
+        if supplier_CreditPeriod:
+            fetchRecord.supplier_CreditPeriod=supplier_CreditPeriod
+
+       
         
 
         
@@ -994,46 +1036,109 @@ def POSBill (request):
 def Salelist (request):
     return render(request,'Salelist.html')
 
-def Salelist (request):
-    return render(request,'Salelist.html')
 
 
+def editAddUnit(request,id):
+    
+    try:
+        unitdata = Unit.objects.get(unit_id=id)
+        edit = {
+            'editunit': {
+                'unit_id': unitdata.unit_id,
+                'unit_name': unitdata.unit_name,  # Adjust field names based on your model
+            }
+        }
+        return JsonResponse(edit)
+    except Unit.DoesNotExist:
 
+
+        return JsonResponse({'error': 'Unit not found'}, status=404)
 
 def updateunit(request):
     if request.method =="POST":
         unit_id=request.POST.get("unit_id")
-        unit_name=request.POST.get("unitName")  
+        unit_name=request.POST.get("unit_name")  
         
+        fetchRecord=Unit.objects.get(unit_id=unit_id)
 
-        fetchRecord=Category.objects.get(unit_id=unit_id)
-        
-
-        fetchRecord.category_name=unit_name
+        fetchRecord.unit_name=unit_name
 
         fetchRecord.save()  
-        return redirect('/unit/')
+        return redirect('/unit/') 
+
+
+def editAddExpenses(request,id):
     
-def updateExpenses(request):
+    try:
+        expensesdata = Expenses.objects.get(expenses_id=id)
+        edit = {
+            'editexpenses': {
+                'expenses_id': expensesdata.expenses_id,
+                'expenses_name': expensesdata.expenses_name,  # Adjust field names based on your model
+            }
+        }
+        return JsonResponse(edit)
+    except Expenses.DoesNotExist:
+        return JsonResponse({'error': 'Expenses not found'}, status=404)
+
+
+def updateexpenses(request):
     if request.method =="POST":
         expenses_id=request.POST.get("expenses_id")
         expenses_name=request.POST.get("expenses_name")  
         
-
         fetchRecord=Expenses.objects.get(expenses_id=expenses_id)
-        
 
         fetchRecord.expenses_name=expenses_name
 
         fetchRecord.save()  
-        return redirect('/AddExpenses/')
+        return redirect('/AddExpenses/') 
+
+
+def editAddOtherCharge(request,id):
     
+    try:
+        otherchargedata = OtherCharge.objects.get(othercharge_id=id)
+        edit = {
+            'editcharge': {
+                'othercharge_id': otherchargedata.othercharge_id,
+                'othercharge_name': otherchargedata.othercharge_name,  # Adjust field names based on your model
+            }
+        }
+        return JsonResponse(edit)
+    except OtherCharge.DoesNotExist:
+        return JsonResponse({'error': 'Expenses not found'}, status=404)
+
+
+def updateAddOtherCharge(request):
+    if request.method =="POST":
+        othercharge_id=request.POST.get("othercharge_id")
+        othercharge_name=request.POST.get("othercharge_name")  
+        
+        fetchRecord=OtherCharge.objects.get(othercharge_id=othercharge_name)
+
+        fetchRecord.othercharge_name=othercharge_name
+
+        fetchRecord.save()  
+        return redirect('/AddOtherCharge/') 
+
+
+
+    
+
+
+
+
+
+
+
+
 def deleteunit(request,id):   
     unitdata=Unit.objects.get(unit_id=id)
 
     unitdata.delete()
 
-    return redirect('/Unit/') 
+    return redirect('/unit/') 
 
 def deleteexpenses(request,id):   
     expensesdata=Expenses.objects.get(expenses_id=id)
@@ -1090,7 +1195,38 @@ def editrewardpointpage(request,id):
         }
         return JsonResponse(edit)
     except RewardPoints.DoesNotExist:
-        return JsonResponse({'error': ' not found'}, status=404)     
+        return JsonResponse({'error': ' not found'}, status=404)  
+    
+def updaterewardpoint(request):
+    if request.method =="POST":
+        RewardPoints_id=request.POST.get("RewardPoints_id")
+        RewardPoints_Minrange=request.POST.get("RewardPoints_Minrange")
+        RewardPoints_Maxrange=request.POST.get("RewardPoints_Maxrange") 
+        RewardPoints_Points=request.POST.get("RewardPoints_Points")
+
+        
+        fetchRecord=RewardPoints.objects.get(RewardPoints_id=RewardPoints_id)
+        if RewardPoints_id:
+            fetchRecord.RewardPoints_id=RewardPoints_id
+        if RewardPoints_Minrange:
+            fetchRecord.RewardPoints_Minrange=RewardPoints_Minrange
+        if RewardPoints_Maxrange:
+            fetchRecord.RewardPoints_Maxrange=RewardPoints_Maxrange
+        if RewardPoints_Points:
+            fetchRecord.RewardPoints_Points=RewardPoints_Points
+
+
+            
+
+        fetchRecord.save()  
+        return redirect('/RewardPoints/')     
+   
+    
+
+def deleteRewardPoints(request,id):
+    RewardPointsdata =RewardPoints.objects.get(RewardPoints_id=id)
+    RewardPointsdata.delete()
+    return redirect('/RewardPoints/')
     
 
 
@@ -1150,10 +1286,10 @@ def Addsale(request):
 def Stock(request):
     return render(request,'stock.html')
 
-
-def insertpaymentmode(request):
+def updateproduct(request):
     if request.method=='POST':
-        Paymentmode_name=request.POST.get('updatepaymentmode_name')
+
+        Paymentmode_name=request.POST.get('ipaymentmode_name')
 
         insertpaymentmode=Paymentmode(
             Paymentmode_name=Paymentmode_name
@@ -1166,63 +1302,77 @@ def insertpaymentmode(request):
     
 
 
-from django.shortcuts import get_object_or_404, redirect
+
 
 def updatepaymentmode(request):
     if request.method == "POST":
-        paymentmode_id = request.POST.get("updatepaymentmode_id")  # Ensure correct name
-        paymentmode_name = request.POST.get("updatepaymentmode_name")  
+        Paymentmode_id = request.POST.get("updatepaymentmode_id")  # Ensure correct name
+        Paymentmode_name = request.POST.get("updatepaymentmode_name")  
 
         # Fetch record safely
-        fetchRecord = get_object_or_404(Paymentmode, Paymentmode_id=paymentmode_id)
+        fetchRecord=Paymentmode.objects.get(Paymentmode_id=Paymentmode_id)
 
         # Update the record
-        fetchRecord.Paymentmode_name = paymentmode_name
+        fetchRecord.Paymentmode_name = Paymentmode_name
+
+        id=request.POST.get('product_id'),    
+        product_name=request.POST.get('Productname'),
+        product_marathi_name=request.POST.get('Marathiname'),
+        product_HSNCode=request.POST.get('HSNCode'),
+        category=request.POST.get('category'),
+        brand=request.POST.get('brand'),
+        taxpercent=request.POST.get('tax_percentage'),
+        tax=request.POST.get('tax'),
+        unit=request.POST.get('unit'),
+        alternateunit=request.POST.get('AlternateUnit'),
+        conversionfact=request.POST.get('conversion'),
+        nos=request.POST.get('unitperprice'),
+        barcode=request.POST.get('barcode'),
+        #qrcode=request.POST.get('mrp'),
+        mrp=request.POST.get('mrp'),
+        sale=request.POST.get('sale'),
+        credit=request.POST.get('credit'),
+        purchase=request.POST.get('Purchase'),
+        wholesaler=request.POST.get('Wholesaler'),
+        distributor=request.POST.get('Distributor'),
+        op_Qty=request.POST.get('Op_Qty'),
+        op_Value=request.POST.get('Op_Value'),
+        mfg_Date=request.POST.get('MfgDate'),
+        exp_Date=request.POST.get('ExpDate')
+
+        fetchRecord=Product.objects.get(product_id=id)
+        fetchRecord.product_name=product_name,
+        fetchRecord.product_marathi_name=product_marathi_name,
+        fetchRecord.product_HSNCode=product_HSNCode,
+        fetchRecord.category=category,
+        fetchRecord.brand=brand,
+        fetchRecord.tax=tax,
+        fetchRecord.taxpercent=taxpercent,
+        fetchRecord.unit=unit,
+        fetchRecord.alternateunit=alternateunit,
+        fetchRecord.conversionfact=conversionfact,
+        fetchRecord.nos=nos,
+        fetchRecord.barcode=barcode,
+        fetchRecord.qrcode=brand,
+        fetchRecord.mrp=mrp,
+        fetchRecord.sale=sale,
+        fetchRecord.credit=credit,
+        fetchRecord.purchase=purchase,
+        fetchRecord.wholesaler=wholesaler,
+        fetchRecord.distributor=distributor,
+        fetchRecord.op_Qty=op_Qty,
+        fetchRecord.op_Value=op_Value,
+        fetchRecord.mfg_Date=mfg_Date,
+        fetchRecord.exp_Date=exp_Date
+
         fetchRecord.save()
+        return redirect('/products/')
 
-        return redirect('/paymentmode/')  # Redirect back to the list page
-    return redirect('/paymentmode/')  # Handle non-POST requests
-    
-def deletepaymentmode(request,id):   
-    Paymentmodedata=Paymentmode.objects.get(Paymentmode_id=id)
-
-    Paymentmodedata.delete()
-
-    return redirect('/paymentmode/') 
-
-def deletepaymentterms(request,id):   
-    Paymenttermsdata=Paymentterms.objects.get(Paymentterms_id=id)
-
-    Paymenttermsdata.delete()
-
-    return redirect('/Paymentterms/') 
-
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse
+    else:
+        return render(request,'productlist.html')    
 
 
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse
-
-def updatepaymentterms(request, id):
-    """Fetch and update payment terms."""
-    paymentterms = get_object_or_404(Paymentterms, Paymentterms_id=id)
-
-    if request.method == 'POST':
-        new_name = request.POST.get('updatepaymentterms_name')
-        if new_name:
-            paymentterms.Paymentterms_name = new_name
-            paymentterms.save()
-            return redirect('/Paymentterms/')  # Redirect after successful update
-
-    # If request is GET, return JSON data for the modal
-    if request.method == 'GET':
-        return JsonResponse({
-            "Paymentterms_id": paymentterms.Paymentterms_id,
-            "Paymentterms_name": paymentterms.Paymentterms_name
-        })
-
-def deleteproduct(request,id):
+def deleteproduct(request,id):  
     productdata=Product.objects.get(product_id=id)
 
 
@@ -1256,33 +1406,28 @@ from django.http import HttpResponse
 def updateuser(request):
     if request.method == "POST":
         users_id = request.POST.get("updateuser_id")
-        if not users_id or not users_id.isdigit():
-            return HttpResponse("Invalid User ID", status=400)  # Handle missing or invalid ID
 
-        users_name = request.POST.get("updateuser_name")  
-        users_email = request.POST.get("updateUser_email")
-        users_mobile = request.POST.get("update_mob") 
-        users_role = request.POST.get("update_role")
-        users_pass = request.POST.get("update_pass")
+        if not users_id:
+            messages.error(request, "User ID missing from request.")
+            return redirect('/Users/')
 
-        # Fetch record safely
-        fetchRecord = get_object_or_404(Users, users_id=int(users_id))
+        try:
+            fetchRecord = Users.objects.get(users_id=users_id)
+            fetchRecord.users_name = request.POST.get("updateuser_name")
+            fetchRecord.users_email = request.POST.get("updateuser_email")
+            fetchRecord.users_mobile = request.POST.get("updatemob")
+            fetchRecord.users_role = request.POST.get("updateRole")
+            fetchRecord.users_pass = request.POST.get("update_pass")
+            fetchRecord.save()
+            messages.success(request, "User updated successfully.")
+        except Users.DoesNotExist:
+            messages.error(request, "User not found.")
 
-        # Update fields if provided
-        if users_mobile:
-            fetchRecord.users_mobile = users_mobile
-        if users_email:
-            fetchRecord.users_email = users_email
-        if users_role:
-            fetchRecord.users_role = users_role
-        if users_pass:
-            fetchRecord.users_pass = users_pass
+        return redirect('/Users/')
+    
+    return redirect('/Users/')
 
-        fetchRecord.users_name = users_name  # Name should always update
-        fetchRecord.save()
 
-        return redirect('/Users/')  # Redirect to the user list
-    return redirect('/Users/')  # Handle non-POST requests
 
 def deleteusers(request,id):   
     Usersdata=Users.objects.get(users_id=id)
@@ -1314,81 +1459,112 @@ def  PrintBillWiseReport(request):
     
 
 def adduser(request):
-    if request.method=='POST':
-        users_name=request.POST.get('updateuser_name')
-        users_email=request.POST.get('updateUser_email')
-        users_mobile=request.POST.get('update_mob')
-        users_role=request.POST.get('update_role')
-        users_pass=request.POST.get('update_pass')
-        
+    if request.method == 'POST':
+        users_name = request.POST.get('updateuser_name')
+        users_email = request.POST.get('updateuser_email')
+        users_mobile = request.POST.get('updatemob')
+        users_role = request.POST.get('update_Role')  # ✅ fixed name here
+        users_pass = request.POST.get('update_pass')
 
-
-
-        adduser=Users(
+        adduser = Users(
             users_name=users_name,
             users_email=users_email,
             users_mobile=users_mobile,
             users_role=users_role,
             users_pass=users_pass
-
-
         )
-
 
         adduser.save()
         return redirect('/Users/')
     else:
-        return render(request,'Users.html')
+        return render(request, 'Users.html')
 
+
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from datetime import datetime
 
 
 def insertemployee(request):
     if request.method == "POST":
-        Employees_firstname = request.POST.get("Employees_firstname")
-        Employees_middlename = request.POST.get("Employees_middlename")
-        Employees_lastname = request.POST.get("Employees_lastname")
-        Employees_dateof_birth = request.POST.get("Employees_dateof_birth")
-        Employees_gender = request.POST.get("Employees_gender")
-        Employees_address = request.POST.get("Employees_address")
-        Employees_mobile_number = request.POST.get("Employees_mobile_number")
-        Employees_email = request.POST.get("Employees_email")
+        Employees_firstname = request.POST.get("first_name")
+        Employees_middlename = request.POST.get("middle_name") 
+        Employees_lastname = request.POST.get("last_name")
+        Employees_dateof_birth = request.POST.get("date_birth")
+        Employees_gender = request.POST.get("Gender")
+        Employees_address = request.POST.get("address")
+        Employees_mobile_number = request.POST.get("mob")
+        Employees_email = request.POST.get("email_add")
 
-        Employees_highesteducation = request.POST.get("Employees_highesteducation")
-        Employees_institutionsattended = request.POST.get("Employees_institutionsattended")
-        Employees_degreesearned = request.POST.get("Employees_degreesearned")
-        Employees_certifications = request.POST.get("Employees_certifications")
+        Employees_highesteducation = request.POST.get("high_education")
+        Employees_institutionsattended = request.POST.get("institution_attended")
+        Employees_degreesearned = request.POST.get("degrees_earned")
+        Employees_certifications = request.POST.get("certifications")
 
-        Employees_vacationleave_balance = request.POST.get("Employees_vacationleave_balance")
-        Employees_sickleave_balance = request.POST.get("Employees_sickleave_balance")
-        Employees_leavetypes = request.POST.get("Employees_leavetypes")
+        Employees_vacationleave_balance = request.POST.get("v_leave_balance")
+        Employees_sickleave_balance = request.POST.get("s_leave_balance")
+        Employees_leavetypes = request.POST.get("types_leave")
 
-        Employees_salary = request.POST.get("Employees_salary")
-        Employees_payfrequency = request.POST.get("Employees_payfrequency")
-        Employees_accountnumber = request.POST.get("Employees_accountnumber")
-        Employees_ifsccode = request.POST.get("Employees_ifsccode")
-        Employees_accountholder_name = request.POST.get("Employees_accountholder_name")
+        Employees_salary = request.POST.get("salary")
+        Employees_payfrequency = request.POST.get("pay_frequency")
+        Employees_accountnumber = request.POST.get("acc_no")
+        Employees_ifsccode = request.POST.get("ifsc_code")
+        Employees_accountholder_name = request.POST.get("acc_holder")
 
-        employee_id = request.POST.get("employee_id")
         job_title = request.POST.get("job_title")
-        department = request.POST.get("department")
-        employment_status = request.POST.get("employment_status")
+        department = request.POST.get("dept")
+        employment_status = request.POST.get("emp_status")
         hire_date = request.POST.get("hire_date")
         termination_date = request.POST.get("termination_date")
+        employee_id = request.POST.get("emp_id")
 
-        Employees_emergencycontact_name = request.POST.get("Employees_emergencycontact_name")
-        Employees_emergencycontact_relationship = request.POST.get("Employees_emergencycontact_relationship")
-        Employees_emergencycontact_phone = request.POST.get("Employees_emergencycontact_phone")
+        Employees_emergencycontact_name = request.POST.get("e_name")
+        Employees_emergencycontact_relationship = request.POST.get("relationship")
+        Employees_emergencycontact_phone = request.POST.get("phone_no")
 
-        Employees_previous_employers = request.POST.get("Employees_previous_employers")
-        Employees_previous_jobtitles = request.POST.get("Employees_previous_jobtitles")
-        Employees_previous_responsibilities = request.POST.get("Employees_previous_responsibilities")
+        Employees_previous_employers = request.POST.get("p_emp")
+        Employees_previous_jobtitles = request.POST.get("job_titles")
+        Employees_previous_responsibilities = request.POST.get("responsibilities")
 
-        Employees_resume = request.POST.get("Employees_resume")
-        Employees_iddocument = request.POST.get("Employees_iddocument")
-        Employees_certificationsdocument = request.POST.get("Employees_certificationsdocument")
+        Employees_resume = request.FILES.get("resume")
+        Employees_iddocument = request.FILES.get("id")
+        Employees_certificationsdocument = request.FILES.get("d_certification")
 
-        # Create a new Employee instance
-        new_employee = Employees(
+        department_name = request.POST.get("d_name")
+        department_birth = request.POST.get("d_birth")
+        d_relationship = request.POST.get("d_relationship")
+
+        
+
+        # Convert date fields safely
+        try:
+            if Employees_dateof_birth:
+                Employees_dateof_birth = datetime.strptime(Employees_dateof_birth, '%Y-%m-%d').date()
+        except ValueError:
+            Employees_dateof_birth = None
+
+        try:
+            if hire_date:
+                hire_date = datetime.strptime(hire_date, '%Y-%m-%d').date()
+        except ValueError:
+            hire_date = None
+
+        try:
+            if termination_date:
+                termination_date = datetime.strptime(termination_date, '%Y-%m-%d').date()
+        except ValueError:
+            termination_date = None
+
+        # Convert department_birth safely
+        try:
+            if department_birth:
+                department_birth = datetime.strptime(department_birth, '%Y-%m-%d').date()
+        except ValueError:
+            department_birth = None
+
+
+        # Create new Employees instance
+        insertemployee = Employees(
             Employees_firstname=Employees_firstname,
             Employees_middlename=Employees_middlename,
             Employees_lastname=Employees_lastname,
@@ -1397,6 +1573,7 @@ def insertemployee(request):
             Employees_address=Employees_address,
             Employees_mobile_number=Employees_mobile_number,
             Employees_email=Employees_email,
+            employee_id = employee_id,
 
             Employees_highesteducation=Employees_highesteducation,
             Employees_institutionsattended=Employees_institutionsattended,
@@ -1413,7 +1590,6 @@ def insertemployee(request):
             Employees_ifsccode=Employees_ifsccode,
             Employees_accountholder_name=Employees_accountholder_name,
 
-            employee_id=employee_id,
             job_title=job_title,
             department=department,
             employment_status=employment_status,
@@ -1430,19 +1606,119 @@ def insertemployee(request):
 
             Employees_resume=Employees_resume,
             Employees_iddocument=Employees_iddocument,
-            Employees_certificationsdocument=Employees_certificationsdocument
+            Employees_certificationsdocument=Employees_certificationsdocument,
+
+            department_name=department_name,
+            department_birth=department_birth,
+            d_relationship=d_relationship
         )
 
-        new_employee.save()  # Save the employee data to the database
+        insertemployee.save()
 
-        return redirect("/Employees/")  # Redirect to the employees list page
+        return redirect("/Employee/")
     else:
-        return render(request, 'Employees.html')  # Render the employee form page
+        return render(request, 'Employee.html')
+    
+def addsale(request):
+    if request.method == 'POST':
+        # Collecting form data
+        Sales_name = request.POST.get('Sales_name')
+        invoice_no = request.POST.get('Sales_invoice_no')
+        cash_sale = bool(request.POST.get('Sales_addcashsale'))
+        credit_sale = bool(request.POST.get('Sales_add_creditsale'))
+        cash = request.POST.get('Sales_addcash') or 0
+        credit = request.POST.get('Sales_addcredit') or 0
+        invoice_date = request.POST.get('Sales_addinvoicedate') 
+        due_days = request.POST.get('Sales_add_duedays') or 0
+        due_date = request.POST.get('Sales_add_duedate') or invoice_date
+        product_name = request.POST.get('Sales_addproductname')
+        qty = request.POST.get('Sales_qty') or 0
+        payment_term = request.POST.get('Sales_payment_term')
+        grand_total = request.POST.get('Sales_grand_total') or 0
+
+        # Save to DB
+        sale = Sales.objects.create(
+            Sales_name=Sales_name,
+            Sales_invoice_no=invoice_no,
+            Sales_addcashsale=cash_sale,
+            Sales_add_creditsale=credit_sale,
+            Sales_addcash=cash,
+            Sales_addcredit=credit,
+            Sales_addinvoicedate=invoice_date,
+            Sales_add_duedays=due_days,
+            Sales_add_duedate=due_date,
+            Sales_addproductname=product_name,
+            Sales_qty=qty,
+            Sales_payment_term=payment_term,
+            Sales_grand_total=grand_total,
+        )
+        sale.save()
+
+
+        messages.success(request, "Sale added successfully!")
+        return redirect('/Sales/')
+
+    return render(request, 'addsale.html')
+
+
+# 👉 Sale List View
+def salelist(request):
+    sales = Sales.objects.all().order_by('-Sales_id')
+    return render(request, 'sales/sale_list.html', {'sales': sales})
+
     
 
-           
+def posview(request):
+    query = request.GET.get('search', '')  # Get search input from request
+    customer=Customer.objects.all()
+    products = Product.objects.filter(name__icontains=query) if query else Product.objects.all()
+    return render(request,'Pos1.html',{'products': products, 'search_query': query,'customer':customer})
 
-    productdata.delete()
-    return redirect("/products/")
- 
+
+def get_product_names(request):
+    products = list(Product.objects.values_list('name', flat=True))  # Get only product names
+    return JsonResponse({'products': products})
+
+def get_customer_details(request,id):
+    customer = get_object_or_404(Customer, customer_id=id)
+    data = {
+        "mobile_no": customer.customer_mobile,
+        "address": customer.customer_ShippingAddress,
+        "credit_amt": customer.customer_CreditLimit,
+    }
+    return JsonResponse(data)
+
+def insertpos(request):
+    if request.method=="POST":
+        productname=request.POST.get('productname')
+        productqty=request.POST.get('productqty')
+        productmrp=request.POST.get('mrp')
+        productsale=request.POST.get('sale')
+        totalprice=request.POST.get('totalprice')
+        customer_id=int(request.POST.get('customername'))
+        paymentmode=request.POST.get('paymentmode')
+        billdate=request.POST.get('billdate')
+        total_amount=request.POST.get('total_amount')
+
+        insertdata=Master(
+            customer_id=Customer.objects.get(customer_id = customer_id),
+            master_itemname=productname,
+            master_qty=productqty,
+            master_mrp=productmrp,
+            master_sale_price=productsale,
+            master_total=totalprice,
+            master_payment_mode=paymentmode,
+            master_billdate=billdate,
+            master_totalAmount=total_amount    
+
+        )
+
+        insertdata.save()
+        return redirect('/posview/')
+    else:
+        return render(request,'Pos1.html')
+
+
+
+       
 
