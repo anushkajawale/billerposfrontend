@@ -168,7 +168,7 @@
             <form action="/updateAddOtherCharge/" method="post">
             <div class="col-6">
               <label for="chargename" class="form-label">Other Charge Name</label>
-              <input type="text" class="form-control" id="chargename" name="chargename" required>
+              <input type="text" class="form-control" id="othercharge_name" name="othercharge_name" required>
               <input type="hidden" id="Charge_id" name="updateCharge_id">
             </div>
             <div class="col-6">
@@ -253,24 +253,23 @@
 </div>
 
 <script>
-  function loadEditModal(AddOtherCharge) {console.log(AddOtherCharge);
-      fetch(`/editAddOtherCharge/${Charge_name}/`)
-      .then(response => { return response.json(); })
-      .then(html => {
-        console.log(html);
-        let editCharge = html.editCharge;
-        var editModalContent = new bootstrap.Modal(document.getElementById('editAddOtherCharge'));
-        document.getElementById("editAddOtherCharge_name").value = AddOtherCharge.AddOtherCharge;
+  function loadEditModal(othercharge_id) {console.log(othercharge_id);
+  
+    fetch(`/editAddOtherCharge/${othercharge_id}/`)
+        .then(response =>{return response.json();})
+        .then(html => {
+          console.log(html);
+          let OtherCharge = html.editAddOtherCharge;
+            var editModalContent = new bootstrap.Modal(document.getElementById('editAddOtherCharge'));
 
-        document.getElementById("Charge_id").value = editOtherCharge.othercharge_id;
-        document.getElementById("updateAddOtherCharge_name").value = editCharge.othercharge_name;
+            document.getElementById("updateAddOtherChargeId").value=OtherCharge.othercharge_id;
+            
+            document.getElementById("updateAddOtherCharge_name").value=OtherCharge.othercharge_name;
+            
+            editModalContent.show();
+        })
+        .catch(error => console.error('Error loading modal content:', error));
+      }
 
-        editModalContent.show();
-      })
-      .catch(error => console.error('Error loading modal content:', error));
-  }
-
-</script>
-
-
+</script> 
 {% endblock %}
