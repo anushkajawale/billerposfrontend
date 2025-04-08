@@ -124,9 +124,11 @@ urlpatterns = [
     path('POSBill/',views.POSBill),
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
+    path('Roles/deleteRoles/<id>',views.deleteRoles),
+  
 
 
-    path('EditRole/',views.EditRoles),
+    path('EditRole/<id>/',views.EditRoles),
     path('insertroles/',views.insertroles),
     path('Dashboard/',views.Dashboard),
     path('logout/',views.logout),
@@ -135,8 +137,9 @@ urlpatterns = [
 
 
 
-    path('EditRole/',views.EditRolelist),
+    path('EditRole/',views.updateroles),
     path('insertroles/',views.insertroles),
+
     path('Dashboard/',views.Dashboard),
     path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
 

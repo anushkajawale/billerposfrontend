@@ -35,6 +35,7 @@ from RewardPOints.models import RewardPoints
 
 
 
+
 def index (request):
     return render(request,"index.html")
 
@@ -228,7 +229,7 @@ def AddUnit(request):
         return redirect('/unit/')
     else:
         return render(request,'AddUnit.html')
-    #########################
+   
 
 def expenseslist(request):
     list = Expenses.objects.all()
@@ -249,7 +250,7 @@ def insertexpenses(request):
         return redirect('/AddExpenses/')
     else:
         return render(request,'AddExpenses.html')
-    #########################
+   
 def chargelist(request):
     listdata = OtherCharge.objects.all()
     data = {
@@ -271,7 +272,7 @@ def insertcharge(request):
 
 
 
-#######################################
+##
 
 
 def Customergrouplist(request):
@@ -752,16 +753,14 @@ def role_list(request):
     Roles = Roles.objects.all()  # Fetch all roles
     return render(request, 'role_list.html')
 
-def EditRoles(request):
-    if request.method == "POST":
-        id = request.POST.get("id")
-        Roles_name = request.POST.get("Rolesname")
 
-      
-        fetchRecord = Roles.objects.get(id=id)
+def updateroles(request):
+    if request.method == "POST":
+        id=request.POST.get('id')
+        Roles_name = request.POST.get("Roles_name")
 
         if Roles_name:
-            fetchRecord.Roles_name = request.POST.get('Rolesname', False)
+            fetchRecord = Roles.objects.get(id=id)
             fetchRecord.Roles_Dashboard = request.POST.get('RolesDashboard', False)
             fetchRecord.Roles_UserProfile = request.POST.get('RolesUserProfile', False)
             fetchRecord.Roles_BusinessProfile = request.POST.get('RolesBusinessProfile', False)
@@ -827,15 +826,86 @@ def EditRoles(request):
         fetchRecord.save()
 
         return redirect("/Roles/")
-    return render(request, "EditRole.html")
-  
-   
+    
 
+def EditRoles(request,id):
+       try:
+            rolesdata=Roles.objects.get(id=id)
+            data= {
+                    'id': rolesdata.id,
+                    'Roles_name': rolesdata.Roles_name,
+                    'Dashboard':rolesdata.Roles_Dashboard,
+                    'UserProfile':rolesdata.Roles_UserProfile,
+                    'BusinessProfile':rolesdata.Roles_BusinessProfile,
+                    'HRDepartment':rolesdata.Roles_HRDepartment,
+                    'Stock':rolesdata.Roles_Stock,
+                    'BarcodePrint':rolesdata.Roles_BarcodePrint,
+                    'POS':rolesdata.Roles_POS,
+                    'Sale':rolesdata.Roles_Sale,
+                    'Purchase':rolesdata.Roles_Purchase,
+                    'RewardPoint':rolesdata.Roles_RewardPoint,
+                    'Supplier':rolesdata.Roles_Supplier,
+                    'POSList':rolesdata.Roles_POSList,
+                    'POSCreate':rolesdata.Roles_POSCreate,
+                    'Sale':rolesdata.Roles_Sale,
+                    'SaleList':rolesdata.Roles_SaleList,
+                    'SaleCreate':rolesdata.Roles_SaleCreate,
+                    'SaleUpdate':rolesdata.Roles_SaleUpdate,
+                    'SaleDelete':rolesdata.Roles_SaleDelete,
+                    'Purchase':rolesdata.Roles_Purchase,
+                    'PurchaseList':rolesdata.Roles_PurchaseList,
+                    'PurchaseCreate':rolesdata.Roles_PurchaseCreate,
+                    'PurchaseUpdate':rolesdata.Roles_PurchaseUpdate,
+                    'PurchaseDelete':rolesdata.Roles_PurchaseDelete,
+                    'Supplier':rolesdata.Roles_Supplier,
+                    'SupplierList':rolesdata.Roles_SupplierList,
+                    'SupplierCreate':rolesdata.Roles_SupplierCreate,
+                    'SupplierUpdate':rolesdata.Roles_SupplierUpdate,
+                    'SupplierDelete':rolesdata.Roles_SupplierDelete,
+                    'Settings':rolesdata.Roles_Settings,
+                    'Category':rolesdata.Roles_Category,
+                    'Brand':rolesdata.Roles_Brand,
+                    'Taxes':rolesdata.Roles_Taxes,
+                    'Units':rolesdata.Roles_Units,
+                    'ExpensesTypes':rolesdata.Roles_ExpensesTypes,
+                    'PaymentModes':rolesdata.Roles_PaymentModes,
+                    'PaymentTerms':rolesdata.Roles_PaymentTerms,
+                    'CustomerGroup':rolesdata.Roles_CustomerGroup,
+                    'SupplierGroup':rolesdata.Roles_SupplierGroup,
+                    'BarcodeSettings':rolesdata.Roles_BarcodeSettings,
+                    'PrinterSettings':rolesdata.Roles_PrinterSettings,
+                    'BillingSettings':rolesdata.Roles_BillingSettings,
+                    'LanguageSettings':rolesdata.Roles_LanguageSettings,
+                    'Reports':rolesdata.Roles_Reports,
+                    'BillWiseProfit':rolesdata.BillWiseProfit,
+                    'OutStandingReports':rolesdata.Roles_OutStandingReport,
+                    'LedgerReports':rolesdata.Roles_LedgerReport,
+                    'POSRegisterReports':rolesdata.Roles_POSRegisterReport,
+                    'Customer':rolesdata.Roles_Customer,
+                    'CustomerList ':rolesdata.Roles_CustomerList, 
+                    'CustomerCreate ':rolesdata.Roles_CustomerCreate, 
+                    'CustomerUpdate ':rolesdata.Roles_CustomerUpdate, 
+                    'CustomerDelete ':rolesdata.Roles_CustomerDelete,
+                    'PaymentReciept ':rolesdata.Roles_PaymentReceipt,
+                    'UserManagement':rolesdata.Roles_UserManagement ,
+                    'Roles':rolesdata.Roles_Roles ,
+                    'User':rolesdata.Roles_User ,
+                    'Product':rolesdata.Roles_Product ,
+                    'ProductList':rolesdata.Roles_ProductList ,
+                    'ProductCreate':rolesdata.Roles_ProductCreate,
+                    'ProductUpdate':rolesdata.Roles_ProductUpdate,
+                    'ProductDelete':rolesdata.Roles_ProductDelete,
+                }
+            return render(request, "EditRole.html",data)
+       except Roles.DoesNotExist:
+        return HttpResponse("Role not found", status=404)
+ 
+
+    
 def insertroles(request):
     if request.method=="POST":
-        insert_query = Roles(
-            id=request.POST.get('Roles_id',False),
-            Roles_name=request.POST.get('Roles_name',False),
+        insert_query = Roles( 
+            Roles_name=request.POST.get('Roles_name'),
             Roles_Dashboard=request.POST.get('RolesDashboard', False),
             Roles_UserProfile=request.POST.get('RolesUserProfile', False),
             Roles_BusinessProfile=request.POST.get('RolesBusinessProfile', False),
@@ -905,7 +975,11 @@ def insertroles(request):
     return render(request, "insertroles.html")
 
 
-        
+def deleteRoles(request,id):
+    rolesdata =Roles.objects.get(id=id)
+    rolesdata.delete()
+    return redirect('/Roles/') 
+     
 
         
     
@@ -1371,5 +1445,4 @@ def insertemployee(request):
     productdata.delete()
     return redirect("/products/")
  
-
 
