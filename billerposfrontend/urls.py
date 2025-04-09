@@ -206,17 +206,6 @@ urlpatterns = [
    # path("get-customer-details/<id>/", views.get_customer_details),
 
     #path("get-customer-details/<id>/", views.get_customer_details),
-<<<<<<< HEAD
-   
-=======
-
->>>>>>> adc9e3da3aa6e60c6ca256ed08af20f162db2c55
- 
-
-   
-
-    
-
 
 ]
 
