@@ -34,12 +34,13 @@
                             <tbody class="table-hover">
                                 {% for i in list %}
                                 <tr>
-                                    <td>{{ i.Roles_id}}</td>
+                                    <td>{{ i.id}}</td>
                                     <td>{{ i.Roles_name}}</td>
                                     <td>
-                                        <a href="/EditRoles/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#EditRoles">
+                                        <a href="/EditRole/{{i.id}}" class="btn btn-sm mx-1 btn-outline-success">
                                             <i class="fa fa-pen"></i>
                                         </a>
+                                        <a href="deleteRoles/{{ i.id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
 
                                         <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
                                         data-bs-whatever="@mdo"><i class="fa fa-pen"></i></button> -->
@@ -64,13 +65,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/insertrole/" method="post">
+                <form action="/insertroles/" method="post">
                     {% csrf_token %}
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-6">
                                 <label for="Rolename" class="form-label">Role Name</label>
-                                <input type="text" class="form-control" id="chargename" placeholder="Role name" name="Rolesname"
+                                <input type="text" class="form-control" id="chargename" placeholder="Role name" name="Roles_name"
                                     required>
                             </div>         
                         </div>
@@ -220,7 +221,7 @@
                                         <div class="card-body checkbox-heading">
 
                                             <input type="checkbox" value="True"  name="RolesBillWiseProfit"> Bill Wise Profit <br>
-                                            <input type="checkbox"  value="True" name="RolesOutstanding Report ">Outstanding Report <br>
+                                            <input type="checkbox"  value="True" name="RolesOutstandingReport">Outstanding Report <br>
                                             <input type="checkbox"  value="True" name="RolesLedgerReports"> Ledger Reports <br>
                                             <input type="checkbox"  value="True" name="RolesPOSRegisterReport"> POS Register Report
                                         </div>
@@ -291,242 +292,5 @@
         </div>
     </div>
 </div>
-<!--update-->
-
-<div class="content-wrapper" id="EditRoles" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="content-header">
-        <div class="container-fluid">
-        <form id="Update" action="/EditRoles/" method="post">
-                {% csrf_token %}
-            <div class="card  border border-success">
-                <div class="card-header">
-                    <div class="d-flex justify-content-between">
-                        
-                        <h3>
-                            Role
-                        </h3>
-                        
-                
-                        <div class="row mt-3">
-                            <div class="col-md-4">
-                                <div class="card checkbox-card shadow-sm">
-                                    <div class="card-header bg-info text-white">DASHBOARD</div>
-                                    <div class="card-body checkbox-heading">
-                                        <input type="checkbox" value="True" name="RolesDashboard"> Dashboard
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card checkbox-card shadow-sm">
-                                    <div class="card-header bg-info text-white">USER PROFIE</div>
-                                    <div class="card-body checkbox-heading">
-                                        <input type="checkbox" value="True" name="RolesUserProfile"> UserProfile
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card checkbox-card shadow-sm">
-                                    <div class="card-header bg-info text-white">BUSINESSPROFILE</div>
-                                    <div class="card-body checkbox-heading">
-                                        <input type="checkbox"  value="True" name="RolesCompanyProfile"> Company Profile
-                                </div>
-                            </div>
-                        </div>
-                                 
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="card checkbox-card shadow-sm">
-                                    <div class="card-header bg-info text-white">HR DEPARTMENT</div>
-                                    <div class="card-body checkbox-heading">
-                                        <input type="checkbox"  value="True" name="RolesEmployee"> Employee
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="card checkbox-card shadow-sm">
-                                    <div class="card-header bg-info text-white">STOCK</div>
-                                    <div class="card-body checkbox-heading">
-                                        <input type="checkbox" value="True" name="RolesStock"> Stock
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="card checkbox-card shadow-sm">
-                                    <div class="card-header bg-info text-white">BARCODEPRINT</div>
-                                    <div class="card-body checkbox-heading">
-                                        <input type="checkbox" value="True" name="RolesBarcodePrint"> Barcode Print
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="card checkbox-card shadow-sm">
-                                    <div class="card-header bg-info text-white">POS</div>
-                                    <div class="card-body checkbox-heading">
-
-                                        <input type="checkbox"  value="True" name="RolesPOSList"> POS List <br>
-                                        <input type="checkbox" value="True" name="RolesPOSCreate"> POS Create <br>
-                                        <input type="checkbox"  value="True" name="RolesPOSUpdate"> POS Update<br>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-4">
-                                <div class="card checkbox-card shadow-sm">
-                                    <div class="card-header bg-info text-white">SALE</div>
-                                    <div class="card-body checkbox-heading">
-
-                                        <input type="checkbox" value="True" name="RolesSaleList" value="true"> Sale List <br>
-                                        <input type="checkbox" value="True" name="RolesSaleCreate"> Sale Create <br>
-                                        <input type="checkbox" value="True" name="RolesSaleUpdate"> Sale Update <br>
-                                        <input type="checkbox"  value="True"name="RolesSaleDelete"> Sale Delete
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-
-                                <div class="card checkbox-card shadow-sm">
-                                    <div class="card-header bg-info text-white">PURCHASE</div>
-                                    <div class="card-body checkbox-heading">
-
-                                        <input type="checkbox" value="True" name="RolesPurchaseList"> Purchase List <br>
-                                        <input type="checkbox" value="True"  name="RolesPurchaseCreate"> Purchase Create <br>
-                                        <input type="checkbox"  value="True" name="RolesPurchaseUpdate"> Purchase Update <br>
-                                        <input type="checkbox"  value="True" name="RolesPurchaseDelete"> Purchase Delete
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="card checkbox-card shadow-sm">
-                                        <div class="card-header bg-info text-white">SUPPLIER</div>
-                                        <div class="card-body checkbox-heading">
-                                            <input type="checkbox" value="True" name="RolesSupplierList"> List <br>
-                                            <input type="checkbox"  value="True" name="RolesSupplierCreate"> Create <br>
-                                            <input type="checkbox" value="True" name="RolesSupplierUpdate"> Update <br>
-                                            <input type="checkbox" value="True" name="RolesSupplierDelete"> Delete
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-4">
-                                    <div class="card checkbox-card shadow-sm">
-                                        <div class="card-header bg-info text-white">REWARD-POINT</div>
-                                        <div class="card-body checkbox-heading">
-                                            <input type="checkbox"  value="True" name="RolesLoyalityPoints"> Loyality Points
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="card checkbox-card shadow-sm">
-                                        <div class="card-header bg-info text-white">SETTINGS</div>
-                                        <div class="card-body checkbox-heading">
-                                            <input type="checkbox"  value="True" name="Rolescategory"> category <br>
-                                            <input type="checkbox"  value="True" name="RolesBrand"> Brand <br>
-                                            <input type="checkbox"  value="True" name="RolesTaxes"> Taxes <br>
-                                            <input type="checkbox"  value="True"  name="RolesUnit"> Unit<br>
-                                            <input type="checkbox"  value="True" name="RolesExpensestypes"> Expenses types<br>
-                                            <input type="checkbox"  value="True" name="RolesPaymentmode"> Payment mode <br>
-                                            <input type="checkbox"  value="True" name="RolesPaymentsTerms"> Payments Terms <br>
-                                            <input type="checkbox"  value="True" name="RolesCustomerGroup"> Customer Group <br>
-                                            <input type="checkbox"  value="True" name="RolesSupplierGroup"> Supplier Group<br>
-                                            <input type="checkbox"  value="True" name="RolesBarcodeSetting"> Barcode Setting<br>
-                                            <input type="checkbox" value="True" name="RolesPrinterSetting"> Printer Setting<br>
-                                            <input type="checkbox" value="True" name="RolesBillingSetting"> Billing Setting<br>
-                                            <input type="checkbox" value="True"name="RoleslanguageSetting"> language Setting<br>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="card checkbox-card shadow-sm">
-                                        <div class="card-header bg-info text-white">REPORTS</div>
-                                        <div class="card-body checkbox-heading">
-
-                                            <input type="checkbox" value="True"  name="RolesBillWiseProfit"> Bill Wise Profit <br>
-                                            <input type="checkbox"  value="True" name="RolesOutstandingReport">Outstanding Report <br>
-                                            <input type="checkbox"  value="True" name="RolesLedgerReports"> Ledger Reports <br>
-                                            <input type="checkbox"  value="True" name="RolesPOSRegisterReport"> POS Register Report
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="card checkbox-card shadow-sm">
-                                        <div class="card-header bg-info text-white">CUSTOMER</div>
-                                        <div class="card-body checkbox-heading">
-
-                                            <input type="checkbox" value="True" name="RolesCustomerList"> List <br>
-                                            <input type="checkbox" value="True" name="RolesCustomerCreate"> Create <br>
-                                            <input type="checkbox"  value="True" name="RolesCustomerUpdate"> Update <br>
-                                            <input type="checkbox" value="True" name="RolesCustomerDelete"> Delete
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="card checkbox-card shadow-sm">
-                                        <div class="card-header bg-info text-white">PAYMENT-RECIEPT</div>
-                                        <div class="card-body checkbox-heading">
-
-                                            <input type="checkbox" value="True" name="RolesPayment"> Payment <br>
-                                            <input type="checkbox" value="True" name="RolesReciept"> Reciept
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="card checkbox-card shadow-sm">
-                                        <div class="card-header bg-info text-white">USER-MANAGEMENT</div>
-                                        <div class="card-body checkbox-heading">
-
-                                            <input type="checkbox"  value="True" name="RolesRole"> Role <br>
-                                            <input type="checkbox" value="True" name="RolesUser"> User <br>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="card checkbox-card shadow-sm">
-                                        <div class="card-header bg-info text-white">PRODUCTS</div>
-                                        <div class="card-body checkbox-heading">
-
-                                            <input type="checkbox"  value="True" name="RolesProductList"> Product List <br>
-                                            <input type="checkbox" value="True" name="RolesProductCreate"> Product Create <br>
-                                            <input type="checkbox"  value="True" name="RolesProductUpdate"> Product Update <br>
-                                            <input type="checkbox"  value="True" name="RolesProductDelete"> Product Delete
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                    <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i
-                                        class="fas fa-times"></i>
-
-                                    Close
-                                </button>
-                                <button type="submit" name="submit" class="btn btn-success">Save
-
-                                </button>
-                        
-                    </div>
-
-                    </form>
-                    </div>
-              
-            </div>
-        </div>
-        
-
 {% endblock %}
+
