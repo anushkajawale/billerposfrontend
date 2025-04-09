@@ -33,10 +33,9 @@
                 <td>{{ i.Employees_id}}</td>
                   <td>{{ i.Employees_firstname}}</td>
                   <td>
-                    <a href="/updateemployee/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editEmployeeModal" 
-                    data-bs-whatever="@mdo" onclick="loadEditModal('{{ i.Employees_id }}')" >
+                    <button href="/updateemployee/" class="btn btn-sm mx-1 btn-outline-success" onclick="loadEditModal('{{ i.Employees_id }}')" >
                       <i class="fa fa-pen"></i>
-                      </a>
+                      </button>
                       <a href="deleteemployee/{{ i.Employees_id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
         
                       
@@ -375,7 +374,7 @@
                 <div class="row mb-3">
                   <div class="col-4">
                     <label class="form-label">First Name *</label>
-                    <input type="text" class="form-control" id="ufirst_name" name="ufirst_name"  value="Employees_id">
+                    <input type="text" class="form-control" id="ufirst_name" name="ufirst_name"  >
                     <input type="hidden" name="Employee_id" id="Employee_id" required >
                   </div>
                   <div class="col-4">
@@ -629,14 +628,14 @@
   </div>
   
 <script>
-  function loadEditModal(Employees_id) {
-    console.log(Employees_id);
+  function loadEditModal(Employeeid) {
+    console.log(Employeeid);
 
-    fetch(`/editEmployeeModal/${Employees_id}/`)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            let Employees = data.Employee;
+    fetch(`/editEmployee/${Employeeid}/`)
+        .then(response => { return response.json(); })
+        .then(html => {
+            console.log(html);
+            let Employees = html.editemployee;
 
             var editModal = new bootstrap.Modal(document.getElementById('editEmployeeModal'));
 

@@ -47,6 +47,23 @@ def index (request):
 
 
 def login(request):
+
+    if request.method=="POST":
+       email=request.POST.get('email') 
+       password=request.POST.get('password')
+    if email == 'admin123@gmail.com' and password == 'admin':
+           
+            request.session['username'] = email
+            return redirect('Dashboard')
+    else:
+            error = "Invalid credentials"
+            return render(request, 'login.html')
+    
+
+           
+       
+#session
+
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -63,10 +80,13 @@ def login(request):
     return render(request, 'login.html')
 
 
+
 def logout(request):  
-    auth_logout(request)  
-    messages.success(request, "Logged out successfully!")
-    return redirect('login')  
+    if 'username' in request.session:
+        del request.session['username']
+        return redirect("/login/")
+
+     
 
 def insertpaymentmode (request):
     return render(request,"insertpaymentmode.html")
@@ -84,7 +104,7 @@ def editEmployeeModal(request,id):
         employeedata = Employees.objects.get(Employees_id=id)
         edit = {
             'editemployee' : {
-                'Employees_id':employeedata.Employees_id,
+                'Employee_id':employeedata.Employees_id,
                 'Employees_firstname':employeedata.Employees_firstname,
                 'Employees_middlename':employeedata.Employees_middlename,
                 'Employees_lastname':employeedata.Employees_lastname,
@@ -105,7 +125,6 @@ def editEmployeeModal(request,id):
                 'Employees_accountnumber':employeedata.Employees_accountnumber,
                 'Employees_ifsccode':employeedata.Employees_ifsccode,
                 'Employees_accountholder_name':employeedata.Employees_accountholder_name,
-                'Employees_id':employeedata.Employees_id,
                 'department':employeedata.department,
                 'employment_status':employeedata.employment_status,
                 'hire_dat':employeedata.hire_date,
@@ -118,19 +137,13 @@ def editEmployeeModal(request,id):
                 'Employees_previous_responsibilities': employeedata.Employees_previous_responsibilities,
                 'department_name' : employeedata.department_name,
                 'department_birth' : employeedata.department_birth,
-                'Employees_resume' : employeedata.Employees_resume,
-                'Employees_iddocument': employeedata.Employees_iddocument,
-                'd_relationship': employeedata.d_relationship,
-
-
-                
-
+                'Employees_resume' : employeedata.Employees_resume.url if employeedata.Employees_resume else None,
+                'Employees_iddocument': employeedata.Employees_iddocument.url if employeedata.Employees_iddocument else None,
+                'd_relationship': employeedata.d_relationship
             }
-            
-
         }
         return JsonResponse(edit)
-    except Users.DoesNotExist:
+    except Employees.DoesNotExist:
         return JsonResponse({'error': 'Employee not found'}, status=404)
 
 
@@ -271,7 +284,7 @@ def deleteBrand(requset,id):
 from Unit.models import Unit
 from Expenses.models import Expenses
 from OtherCharge.models import OtherCharge
-#########################################
+
 def unitlist(request):
     list = Unit.objects.all()
     data = {
@@ -695,7 +708,7 @@ def editsupplier(requset,id):
         edit = {
             'editsupplier': {
                 'supplier_id': supplierdata.supplier_id,
-                'supplier_name': supplierdata.supplier_name,  # Adjust field names based on your model
+                'supplier_name': supplierdata.supplier_name, 
                 'supplier_mobile': supplierdata.supplier_mobile,
                 'supplier_email': supplierdata.supplier_email,
                 'supplier_gstno': supplierdata.supplier_gstno,
@@ -1909,7 +1922,7 @@ def updateemployee(request):
 
             fetchRecord.save()
             messages.success(request, "Employee updated successfully.")
-            return redirect('/Employees/')
+            return redirect('/Employee/')
 
         except Employees.DoesNotExist:
             messages.error(request, "Employee not found.")
