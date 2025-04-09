@@ -29,7 +29,7 @@
                 </tr>
               </thead>
               <tbody class="table-hover">
-                {% for i in list %}
+                {% for i in usersdata %}
                 <tr>
                   <td>{{ i.users_id}}</td>
                   <td>{{ i.users_email}}</td>
@@ -131,13 +131,13 @@
           <div class="row mb-3">
             <div class="col-6">
               <label for="UserName" class="form-label"> User Name</label>
-              <input type="text" class="form-control" id="updateuser_name" name="updateuser_name" required>
-              <input type="hidden" class="form-control" id="updateuser_id" name="updateuser_id">
+              <input type="text" class="form-control" id="update_user_name" name="update_user_name" required>
+              <input type="hidden" class="form-control" id="update_user_id" name="update_user_id">
             </div>
 
             <div class="col-6">
               <label for="usersemail" class="form-label">User Email</label>
-              <input type="text" class="form-control" id="updateuser_email" name="updateuser_email" required>
+              <input type="text" class="form-control" id="update_user_email" name="update_user_email" required>
 
             </div>
             
@@ -145,19 +145,19 @@
           <div class="row mt-3">
             <div class="col-6">             
               <label for="mobileno" class="form-label">Mobile Number</label>
-              <input type="text" class="form-control" id="updatemob" name="updatemob" placeholder="Mobile Number" required>
+              <input type="text" class="form-control" id="update_mob" name="update_mob" placeholder="Mobile Number" required>
             </div>
 
             <div class="col-6">             
               <label for="Role" class="form-label">Role</label>
-              <input type="text" class="form-control" id="updateRole" name="updateRole" placeholder="Role" required>
+              <input type="text" class="form-control" id="update_role" name="update_role" placeholder="Role" required>
             </div>
           </div>
 
           <div class="row  mt-3">
             <div class="col-12">             
               <label for="mobileno" class="form-label">Password</label>
-              <input type="text" class="form-control" id="update_pass" name="update_pass" placeholder="Password" required>
+              <input type="text" class="form-control" id="update_Pass" name="update_Pass" placeholder="Password" required>
             </div>
 
           </div>
@@ -175,10 +175,10 @@
 </div>
 
 <script>
-  function loadEditModal(usersId) {
-    console.log("Fetching user data for ID:", usersId);
+  function loadEditModal(users_id) {
+    console.log("Fetching user data for ID:", users_id);
 
-    fetch(`/updateuser/${usersId}/`)
+    fetch(`/edituser/${users_id}/`)
         .then(response => response.json())
         .then(data => {
             console.log("Received user data:", data);
@@ -186,12 +186,12 @@
             let Users = data.edituser;
 
             if (Users) {
-                document.getElementById("updateuser_id").value = Users.users_id;
-                document.getElementById("updateuser_name").value = Users.users_name;
-                document.getElementById("updateuser_email").value = Users.users_email;
-                document.getElementById("updatemob").value = Users.users_mobile;
-                document.getElementById("updateRole").value = Users.users_role;
-                document.getElementById("update_pass").value = Users.users_pass;
+                document.getElementById("update_user_id").value = Users.users_id;
+                document.getElementById("update_user_name").value = Users.users_name;
+                document.getElementById("update_user_email").value = Users.users_email;
+                document.getElementById("update_mob").value = Users.users_mobile;
+                document.getElementById("update_role").value = Users.users_role;
+                document.getElementById("update_Pass").value = Users.users_pass;
 
                 let editModal = new bootstrap.Modal(document.getElementById('edituser'));
                 editModal.show();

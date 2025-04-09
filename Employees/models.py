@@ -1,8 +1,6 @@
 from django.db import models
 class Employees(models.Model):
   
-
-
     # Basic Information
     Employees_id = models.AutoField(primary_key=True)
     Employees_firstname = models.CharField(max_length=100)
@@ -23,7 +21,7 @@ class Employees(models.Model):
     Employees_certifications = models.CharField(max_length=200, blank=True, null=True)
 
     # Leave & Time Off
-    Employees_vacationleave_balance = models.IntegerField(default=0)
+    Employees_vacationleave_balance = models.IntegerField(null=True, blank=True)
     Employees_sickleave_balance = models.IntegerField(default=0)
     Employees_leavetypes = models.TextField(blank=True, null=True)
 
