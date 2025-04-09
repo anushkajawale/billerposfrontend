@@ -47,6 +47,23 @@ def index (request):
 
 
 def login(request):
+
+    if request.method=="POST":
+       email=request.POST.get('email') 
+       password=request.POST.get('password')
+    if email == 'admin123@gmail.com' and password == 'admin':
+           
+            request.session['username'] = email
+            return redirect('Dashboard')
+    else:
+            error = "Invalid credentials"
+            return render(request, 'login.html')
+    
+
+           
+       
+#session
+
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -63,10 +80,13 @@ def login(request):
     return render(request, 'login.html')
 
 
+
 def logout(request):  
-    auth_logout(request)  
-    messages.success(request, "Logged out successfully!")
-    return redirect('login')  
+    if 'username' in request.session:
+        del request.session['username']
+        return redirect("/login/")
+
+     
 
 def insertpaymentmode (request):
     return render(request,"insertpaymentmode.html")
@@ -264,7 +284,7 @@ def deleteBrand(requset,id):
 from Unit.models import Unit
 from Expenses.models import Expenses
 from OtherCharge.models import OtherCharge
-#########################################
+
 def unitlist(request):
     list = Unit.objects.all()
     data = {
@@ -688,7 +708,7 @@ def editsupplier(requset,id):
         edit = {
             'editsupplier': {
                 'supplier_id': supplierdata.supplier_id,
-                'supplier_name': supplierdata.supplier_name,  # Adjust field names based on your model
+                'supplier_name': supplierdata.supplier_name, 
                 'supplier_mobile': supplierdata.supplier_mobile,
                 'supplier_email': supplierdata.supplier_email,
                 'supplier_gstno': supplierdata.supplier_gstno,
