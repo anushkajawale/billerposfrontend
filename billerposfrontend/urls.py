@@ -130,7 +130,7 @@ urlpatterns = [
     
 
     path('Employee/',views.Employee),
-    path('editEmployeeModal/<id>/',views.editEmployeeModal),
+    path('editEmployee/<id>/',views.editEmployeeModal),
     path('Users/',views.Userslist),
     path('POSBill/',views.POSBill),
     path('printpage/',views.printpage),
@@ -186,7 +186,7 @@ urlpatterns = [
     path('updatepaymentterms/', views.updatepaymentterms),
     path('adduser/',views.adduser),
     path('updateuser/',views.updateuser),
-    path('editEmployeeModal/<id>/',views.editEmployeeModal),
+    
     path('insertemployee/',views.insertemployee),
     path('editpaymentterms/<id>/',views.editpaymentterms),
     path('Employee/deleteemployee/<id>',views.deleteemployee),
@@ -201,6 +201,7 @@ urlpatterns = [
     path('adduser/',views.adduser),
     path('updateuser/',views.updateuser),
     #path("get-customer-details/<id>/", views.get_customer_details),
+   
  
 
    
