@@ -65,17 +65,16 @@ urlpatterns = [
     path('insertexpenses/',views.insertexpenses),
     path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
 
-<<<<<<< HEAD
+
    # path('updateExpenses/',views.updateExpenses),
      path('saveExpenses/',views.expenseslist), 
     path('AddExpenses/',views.expenseslist),
     path('insertexpenses/',views.insertexpenses),
     path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
-=======
+
  
     
     
->>>>>>> 53e4df65132ac940ce17a0b51dea422878794880
 
     path('AddOtherCharge/',views.chargelist),  
     path('updateAddOtherCharge/',views.updateAddOtherCharge),
