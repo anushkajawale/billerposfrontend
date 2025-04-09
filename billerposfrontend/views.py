@@ -46,19 +46,7 @@ def index (request):
 
 
 
-def login(request):
 
-    if request.method=="POST":
-       email=request.POST.get('email') 
-       password=request.POST.get('password')
-    if email == 'admin123@gmail.com' and password == 'admin':
-           
-            request.session['username'] = email
-            return redirect('Dashboard')
-    else:
-            error = "Invalid credentials"
-            return render(request, 'login.html')
-    
 
            
        
@@ -93,6 +81,8 @@ def insertpaymentmode (request):
 
 def login (request):
     return render(request,"login.html")
+
+
 
 
 def register (request):
