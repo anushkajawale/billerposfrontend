@@ -23,3 +23,4 @@ class Sales(models.Model):
 
     def __str__(self):
         return self.Sales_name
+    

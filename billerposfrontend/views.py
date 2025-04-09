@@ -61,16 +61,6 @@ def login(request):
     return render(request, 'login.html')
 
 
-
-
-
-
-
-
-
-
-
-
 def logout(request):  
     auth_logout(request)  
     messages.success(request, "Logged out successfully!")
@@ -86,8 +76,61 @@ def login (request):
 def register (request):
     return render(request,"register.html")
 
-def editemployee(request):
-    return render(request,"editemployee.html")
+def editEmployeeModal(request,id):
+    try:
+
+        employeedata = Employees.objects.get(Employees_id=id)
+        edit = {
+            'editemployee' : {
+                'Employees_id':employeedata.Employees_id,
+                'Employees_firstname':employeedata.Employees_firstname,
+                'Employees_middlename':employeedata.Employees_middlename,
+                'Employees_lastname':employeedata.Employees_lastname,
+                'Employees_dateof_birth':employeedata.Employees_dateof_birth,
+                'Employees_gender': employeedata.Employees_gender,
+                'Employees_address':employeedata.Employees_address,
+                'Employees_mobile_number':employeedata.Employees_mobile_number,
+                'Employees_email':employeedata.Employees_email,
+                'Employees_highesteducation':employeedata.Employees_highesteducation,
+                'Employees_institutionsattended':employeedata.Employees_institutionsattended,
+                'Employees_degreesearned':employeedata.Employees_degreesearned,
+                'Employees_certifications':employeedata.Employees_certifications,
+                'Employees_vacationleave_balance':employeedata.Employees_vacationleave_balance,
+                'Employees_sickleave_balance':employeedata.Employees_sickleave_balance,
+                'Employees_leavetypes':employeedata.Employees_leavetypes,
+                'Employees_salary':employeedata.Employees_salary,
+                'Employees_payfrequency':employeedata.Employees_payfrequency,
+                'Employees_accountnumber':employeedata.Employees_accountnumber,
+                'Employees_ifsccode':employeedata.Employees_ifsccode,
+                'Employees_accountholder_name':employeedata.Employees_accountholder_name,
+                'Employees_id':employeedata.Employees_id,
+                'department':employeedata.department,
+                'employment_status':employeedata.employment_status,
+                'hire_dat':employeedata.hire_date,
+                'termination_date':employeedata.termination_date,
+                'Employees_emergencycontact_name':employeedata.Employees_emergencycontact_name,
+                'Employees_emergencycontact_relationship':employeedata.Employees_emergencycontact_relationship,
+                'Employees_emergencycontact_phone':employeedata.Employees_emergencycontact_phone,
+                'Employees_previous_employers' :employeedata.Employees_previous_employers,
+                'Employees_previous_jobtitles' :employeedata.Employees_previous_jobtitles,
+                'Employees_previous_responsibilities': employeedata.Employees_previous_responsibilities,
+                'department_name' : employeedata.department_name,
+                'department_birth' : employeedata.department_birth,
+                'Employees_resume' : employeedata.Employees_resume,
+                'Employees_iddocument': employeedata.Employees_iddocument,
+                'd_relationship': employeedata.d_relationship,
+
+
+                
+
+            }
+            
+
+        }
+        return JsonResponse(edit)
+    except Users.DoesNotExist:
+        return JsonResponse({'error': 'Employee not found'}, status=404)
+
 
 
 def category(request):
@@ -413,9 +456,9 @@ def deleteSuppliergroup(request,id):
     
 
 def Paymenttermslist(request):
-    listdata = Paymentterms.objects.all()
+    paymenttermsdata = Paymentterms.objects.all()
     data = {
-        "list":listdata
+        "paymenttermsdata":paymenttermsdata
     }
     return render(request,'Paymentterms.html',data)
 
@@ -437,9 +480,9 @@ def productslist(request):
 
 
 def Employee(request):
-    listdata = Employees.objects.all()
+    employeedata = Employees.objects.all()
     data = {
-        "list":listdata
+        "employeedata":employeedata
     }
     return render(request,'Employee.html',data)
 
@@ -737,16 +780,17 @@ def deleteSupplier(request,id):
 
 
 def paymentmodelist(request):
-    listdata = Paymentmode.objects.all()
-    data = {
-        "list":listdata
+    paymentmodedata=Paymentmode.objects.all()
+    data={
+
+        'paymentmodedata':paymentmodedata
     }
     return render(request,'paymentmode.html',data)
 
 def Userslist(request):
-    listdata = Users.objects.all()
+    usersdata = Users.objects.all()
     data = {
-        "list":listdata
+        "usersdata":usersdata
     }
     return render(request,'Users.html',data)
 
@@ -936,11 +980,6 @@ def insertroles(request):
     return render(request, "insertroles.html")
 
 
-        
-
-        
-    
-
 def Dashboard(request):
     
     return render(request, 'Dashboard.html') 
@@ -948,10 +987,13 @@ def Dashboard(request):
 def POSBill (request):
     return render(request,'POSBills.html')
 
-def Salelist (request):
-    return render(request,'Salelist.html')
+def Salelist(request):
+    saledata=Sales.objects.all()
+    data={
 
-
+        'saledata':saledata
+    }
+    return render(request,'salelist.html',data)
 
 def editAddUnit(request,id):
     
@@ -1194,42 +1236,63 @@ def editproduct(request,id):
 def stock(request):
     return render(request,'stock.html')
 
-def Addsale(request):
-    return render(request,'Addsale.html')
+
 
 
 def Stock(request):
     return render(request,'stock.html')
 
-def updateproduct(request):
+def updatepaymentmode(request):
     if request.method=='POST':
+        Paymentmode_id = request.POST.get('updatepaymentmode_id')
+        Paymentmode_name=request.POST.get('updatepaymentmode_name')
 
-        Paymentmode_name=request.POST.get('ipaymentmode_name')
+        fetchrecord = Paymentmode.objects.get(Paymentmode_id=Paymentmode_id)
+        fetchrecord.Paymentmode_name=Paymentmode_name
 
-        insertpaymentmode=Paymentmode(
-            Paymentmode_name=Paymentmode_name
-        )
-
-        insertpaymentmode.save()
+        fetchrecord.save()
         return redirect('/paymentmode/')
     else:
         return render(request,'paymentmode.html')
     
+def editpaymentmode(request, id):
+    try:
+        paymentmodedata = Paymentmode.objects.get(Paymentmode_id=id)
+        edit = {
+            'editpaymentmode': {  # 👈 Make sure this matches what JS expects
+                'Paymentmode_id': paymentmodedata.Paymentmode_id,
+                'Paymentmode_name': paymentmodedata.Paymentmode_name,
+            }
+        }
+        return JsonResponse(edit)
+    except Paymentmode.DoesNotExist:
+        return JsonResponse({'error': 'Payment mode not found'}, status=404)
+       
+    
 
+def insertpaymentmode(request):
+    if request.method=='POST':
+        Paymentmode_name=request.POST.get('ipaymentmode_name')
 
+        insertpaymentterms=Paymentmode(
+            Paymentmode_name=Paymentmode_name
+        )
 
+        insertpaymentterms.save()
+        return redirect('/paymentmode/')
+    else:
+        return render(request,'Paymentmode.html')
+    
+def deletepaymentmode(request,id):
+    Paymentmodedata=Paymentmode.objects.get(Paymentmode_id=id)
 
-def updatepaymentmode(request):
+    Paymentmodedata.delete()
+
+    return redirect('/paymentmode/')
+    
+def updateproduct(request):
     if request.method == "POST":
-        Paymentmode_id = request.POST.get("updatepaymentmode_id")  # Ensure correct name
-        Paymentmode_name = request.POST.get("updatepaymentmode_name")  
-
-        # Fetch record safely
-        fetchRecord=Paymentmode.objects.get(Paymentmode_id=Paymentmode_id)
-
-        # Update the record
-        fetchRecord.Paymentmode_name = Paymentmode_name
-
+       
         id=request.POST.get('product_id'),    
         product_name=request.POST.get('Productname'),
         product_marathi_name=request.POST.get('Marathiname'),
@@ -1314,9 +1377,46 @@ def insertpaymentterms(request):
     else:
         return render(request,'Paymentterms.html')
     
-from django.shortcuts import get_object_or_404, redirect
-from django.http import HttpResponse
- # Ensure the model is imported
+def deletepaymentterms(request,id):
+    Paymenttermsdata=Paymentterms.objects.get(Paymentterms_id=id)
+
+    Paymenttermsdata.delete()
+
+    return redirect('/Paymentterms/') 
+
+def updatepaymentterms(request):
+    if request.method == 'POST':
+        Paymentterms_id = request.POST.get('update_paymentterms_id')  # ✅ underscore
+        Paymentterms_name = request.POST.get('update_paymentterms_name')
+
+        try:
+            fetchrecord = Paymentterms.objects.get(Paymentterms_id=Paymentterms_id)
+            fetchrecord.Paymentterms_name = Paymentterms_name
+            fetchrecord.save()
+        except Paymentterms.DoesNotExist:
+            return JsonResponse({'error': 'Paymentterms not found'}, status=404)
+
+        return redirect('/Paymentterms/')
+    else:
+        return render(request, 'paymentterms.html')
+
+    
+def editpaymentterms(request, id):
+    try:
+        paymenttermsdata = Paymentterms.objects.get(Paymentterms_id=id)
+        edit = {
+            'editpaymentterms': {  # 👈 Make sure this matches what JS expects
+                'Paymentterms_id': paymenttermsdata.Paymentterms_id,
+                'Paymentterms_name': paymenttermsdata.Paymentterms_name,
+            }
+        }
+        return JsonResponse(edit)
+    except Paymentterms.DoesNotExist:
+        return JsonResponse({'error': 'Paymentterms not found'}, status=404)
+    
+from django.shortcuts import redirect
+from django.contrib import messages
+
 
 def updateuser(request):
     if request.method == "POST":
@@ -1328,11 +1428,13 @@ def updateuser(request):
 
         try:
             fetchRecord = Users.objects.get(users_id=users_id)
-            fetchRecord.users_name = request.POST.get("updateuser_name")
-            fetchRecord.users_email = request.POST.get("updateuser_email")
-            fetchRecord.users_mobile = request.POST.get("updatemob")
-            fetchRecord.users_role = request.POST.get("updateRole")
-            fetchRecord.users_pass = request.POST.get("update_pass")
+            fetchRecord.users_name = request.POST.get("update_user_name")
+            fetchRecord.users_email = request.POST.get("update_user_email")
+            fetchRecord.users_mobile = request.POST.get("update_mob")
+            fetchRecord.users_role = request.POST.get("update_role")
+            fetchRecord.users_pass = request.POST.get("update_Pass")
+            
+            # Save the updated record
             fetchRecord.save()
             messages.success(request, "User updated successfully.")
         except Users.DoesNotExist:
@@ -1341,6 +1443,27 @@ def updateuser(request):
         return redirect('/Users/')
     
     return redirect('/Users/')
+
+
+       
+def edituser(request, id):
+    try:
+        usersdata = Users.objects.get(users_id=id)
+        edit = {
+            'edituser': {
+                'users_name': usersdata.users_name,
+                'users_id': usersdata.users_id,
+                'users_email': usersdata.users_email,
+                'users_mobile': usersdata.users_mobile,
+                'users_role': usersdata.users_role,
+                'users_pass': usersdata.users_pass
+            }
+        }
+        return JsonResponse(edit)
+    except Users.DoesNotExist:
+        return JsonResponse({'error': 'User not found'}, status=404)
+
+
 
 
 
@@ -1396,20 +1519,34 @@ def adduser(request):
 
 
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from datetime import datetime
+from django.http import HttpResponse
+
+
+def parse_date(date_str):
+    try:
+        if date_str:
+            # Match HTML date input format
+            return datetime.strptime(date_str, "%Y-%m-%d").date()
+    except (ValueError, TypeError):
+        pass
+    return None
 
 
 def insertemployee(request):
+    
     if request.method == "POST":
+        # Get data from POST request
+        
         Employees_firstname = request.POST.get("first_name")
         Employees_middlename = request.POST.get("middle_name") 
         Employees_lastname = request.POST.get("last_name")
         Employees_dateof_birth = request.POST.get("date_birth")
-        Employees_gender = request.POST.get("Gender")
+        Employees_gender = request.POST.get("Gender") or "Not Specified"
+
         Employees_address = request.POST.get("address")
         Employees_mobile_number = request.POST.get("mob")
-        Employees_email = request.POST.get("email_add")
+        Employees_email = request.POST.get("email_Add")
 
         Employees_highesteducation = request.POST.get("high_education")
         Employees_institutionsattended = request.POST.get("institution_attended")
@@ -1449,37 +1586,57 @@ def insertemployee(request):
         department_birth = request.POST.get("d_birth")
         d_relationship = request.POST.get("d_relationship")
 
-        
+        if Employees.objects.filter(Employees_email=Employees_email).exists():
+            return HttpResponse("Email already exists!")
 
-        # Convert date fields safely
+
+        # Convert date fields safely using the format yyyy/dd/mm
         try:
             if Employees_dateof_birth:
-                Employees_dateof_birth = datetime.strptime(Employees_dateof_birth, '%Y-%m-%d').date()
+                Employees_dateof_birth = datetime.strptime(Employees_dateof_birth, '%Y/%d/%m').date()
         except ValueError:
             Employees_dateof_birth = None
 
         try:
             if hire_date:
-                hire_date = datetime.strptime(hire_date, '%Y-%m-%d').date()
+                hire_date = datetime.strptime(hire_date, '%Y/%d/%m').date()
         except ValueError:
             hire_date = None
 
         try:
             if termination_date:
-                termination_date = datetime.strptime(termination_date, '%Y-%m-%d').date()
+                termination_date = datetime.strptime(termination_date, '%Y/%d/%m').date()
         except ValueError:
             termination_date = None
 
         # Convert department_birth safely
         try:
             if department_birth:
-                department_birth = datetime.strptime(department_birth, '%Y-%m-%d').date()
+                department_birth = datetime.strptime(department_birth, '%Y/%d/%m').date()
         except ValueError:
             department_birth = None
+
+        try:
+            Employees_vacationleave_balance = int(request.POST.get("v_leave_balance") or 0)
+        except ValueError:
+            Employees_vacationleave_balance = 0
+
+        try:
+            Employees_sickleave_balance = int(request.POST.get("s_leave_balance") or 0)
+        except ValueError:
+            Employees_sickleave_balance = 0
+
+        try:
+            Employees_salary = float(request.POST.get("salary") or 0)
+        except (ValueError, TypeError):
+            Employees_salary = 0
+
+
 
 
         # Create new Employees instance
         insertemployee = Employees(
+           
             Employees_firstname=Employees_firstname,
             Employees_middlename=Employees_middlename,
             Employees_lastname=Employees_lastname,
@@ -1488,7 +1645,7 @@ def insertemployee(request):
             Employees_address=Employees_address,
             Employees_mobile_number=Employees_mobile_number,
             Employees_email=Employees_email,
-            employee_id = employee_id,
+            employee_id=employee_id,
 
             Employees_highesteducation=Employees_highesteducation,
             Employees_institutionsattended=Employees_institutionsattended,
@@ -1534,54 +1691,187 @@ def insertemployee(request):
     else:
         return render(request, 'Employee.html')
     
-def addsale(request):
-    if request.method == 'POST':
-        # Collecting form data
-        Sales_name = request.POST.get('Sales_name')
-        invoice_no = request.POST.get('Sales_invoice_no')
-        cash_sale = bool(request.POST.get('Sales_addcashsale'))
-        credit_sale = bool(request.POST.get('Sales_add_creditsale'))
-        cash = request.POST.get('Sales_addcash') or 0
-        credit = request.POST.get('Sales_addcredit') or 0
-        invoice_date = request.POST.get('Sales_addinvoicedate') 
-        due_days = request.POST.get('Sales_add_duedays') or 0
-        due_date = request.POST.get('Sales_add_duedate') or invoice_date
-        product_name = request.POST.get('Sales_addproductname')
-        qty = request.POST.get('Sales_qty') or 0
-        payment_term = request.POST.get('Sales_payment_term')
-        grand_total = request.POST.get('Sales_grand_total') or 0
+def deleteemployee(request,id):
+    employeedata =Employees.objects.get(Employees_id=id)
+    employeedata.delete()
+    return redirect('/Salelist/')
 
-        # Save to DB
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from datetime import datetime
+
+
+def updateemployee(request):
+    if request.method == "POST":
+        Employees_id = request.POST.get("Employee_id")
+
+        try:
+            fetchRecord = Employees.objects.get(Employees_id=Employees_id)
+
+            # Handle date conversions
+            try:
+                fetchRecord.Employees_dateof_birth = datetime.strptime(request.POST.get("Date_birth"), "%Y-%d-%m").date()
+            except:
+                fetchRecord.Employees_dateof_birth = None
+
+            try:
+                fetchRecord.hire_date = datetime.strptime(request.POST.get("Hire_date"), "%Y-%d-%m").date()
+            except:
+                fetchRecord.hire_date = None
+
+            try:
+                fetchRecord.termination_date = datetime.strptime(request.POST.get("Termination_date"), "%Y-%d-%m").date()
+            except:
+                fetchRecord.termination_date = None
+
+            try:
+                fetchRecord.department_birth = datetime.strptime(request.POST.get("D_birth"), "%Y-%d-%m").date()
+            except:
+                fetchRecord.department_birth = None
+
+            # Update fields
+            fetchRecord.Employees_firstname = request.POST.get("ufirst_name")
+            fetchRecord.Employees_middlename = request.POST.get("Middle_name")
+            fetchRecord.Employees_lastname = request.POST.get("Last_name")
+            fetchRecord.Employees_gender = request.POST.get("Gender")
+
+            fetchRecord.Employees_address = request.POST.get("Address")
+            fetchRecord.Employees_mobile_number = request.POST.get("Mob")
+            fetchRecord.Employees_email = request.POST.get("email_add")
+
+            fetchRecord.Employees_highesteducation = request.POST.get("High_education")
+            fetchRecord.Employees_institutionsattended = request.POST.get("Institution_attended")
+            fetchRecord.Employees_degreesearned = request.POST.get("Degrees_earned")
+            fetchRecord.Employees_certifications = request.POST.get("Certifications")
+
+            fetchRecord.Employees_vacationleave_balance = int(request.POST.get("V_leave_balance") or 0)
+            fetchRecord.Employees_sickleave_balance = int(request.POST.get("S_leave_balance") or 0)
+            fetchRecord.Employees_leavetypes = request.POST.get("Types_leave")
+
+            fetchRecord.Employees_salary = float(request.POST.get("Salary") or 0)
+            fetchRecord.Employees_payfrequency = request.POST.get("Pay_frequency")
+            fetchRecord.Employees_accountnumber = request.POST.get("Acc_no")
+            fetchRecord.Employees_ifsccode = request.POST.get("IFSC_code")
+            fetchRecord.Employees_accountholder_name = request.POST.get("Acc_holder")
+
+            fetchRecord.employee_id = request.POST.get("Emp_id")
+            fetchRecord.job_title = request.POST.get("Job_title")
+            fetchRecord.department = request.POST.get("Dept")
+            fetchRecord.employment_status = request.POST.get("Emp_status")
+
+            fetchRecord.Employees_emergencycontact_name = request.POST.get("E_name")
+            fetchRecord.Employees_emergencycontact_relationship = request.POST.get("Relationship")
+            fetchRecord.Employees_emergencycontact_phone = request.POST.get("Phone_no")
+
+            fetchRecord.department_name = request.POST.get("D_name")
+            fetchRecord.d_relationship = request.POST.get("D_relationship")
+
+            fetchRecord.Employees_previous_employers = request.POST.get("P_emp")
+            fetchRecord.Employees_previous_jobtitles = request.POST.get("Job_titles")
+            fetchRecord.Employees_previous_responsibilities = request.POST.get("Responsibilities")
+
+            # Handle file uploads (case-sensitive field names)
+            if 'resume' in request.FILES:
+                fetchRecord.Employees_resume = request.FILES['resume']
+            if 'id' in request.FILES:
+                fetchRecord.Employees_iddocument = request.FILES['id']
+            if 'd_certification' in request.FILES:
+                fetchRecord.Employees_certificationsdocument = request.FILES['d_certification']
+
+            fetchRecord.save()
+            messages.success(request, "Employee updated successfully.")
+            return redirect('/Employees/')
+
+        except Employees.DoesNotExist:
+            messages.error(request, "Employee not found.")
+            return redirect('/Employees/')
+
+
+def Addsale(request):
+    if request.method == 'POST':
+        Sales_name = request.POST.get('Sales_name')  # dropdown with "Cash Sale" / "Credit Sale"
+        invoice_no = request.POST.get('Sales_invoice_no')
+
+        payment_term = request.POST.get('sales_mode')  # Cash or Credit
+        invoice_date = request.POST.get('add_invoicedate')
+        due_days = request.POST.get('add_duedays') or 0
+        due_date = request.POST.get('add_duedate') or invoice_date
+        product_name = request.POST.get('add_productname')
+        qty = request.POST.get('Sales_qty') or 0  # make sure this exists in your form!
+        grand_total = request.POST.get('Sales_grand_total') or 0  # same here
+
         sale = Sales.objects.create(
             Sales_name=Sales_name,
             Sales_invoice_no=invoice_no,
-            Sales_addcashsale=cash_sale,
-            Sales_add_creditsale=credit_sale,
-            Sales_addcash=cash,
-            Sales_addcredit=credit,
+            Sales_payment_term=payment_term,
             Sales_addinvoicedate=invoice_date,
             Sales_add_duedays=due_days,
             Sales_add_duedate=due_date,
             Sales_addproductname=product_name,
             Sales_qty=qty,
-            Sales_payment_term=payment_term,
             Sales_grand_total=grand_total,
         )
         sale.save()
-
+        
 
         messages.success(request, "Sale added successfully!")
-        return redirect('/Sales/')
+        return redirect('/Salelist/')
 
     return render(request, 'addsale.html')
 
+def deletesale(request,id):
+    saledata =Sales.objects.get(Sales_id=id)
+    saledata.delete()
+    return redirect('/Salelist/')
 
-# 👉 Sale List View
-def salelist(request):
-    sales = Sales.objects.all().order_by('-Sales_id')
-    return render(request, 'sales/sale_list.html', {'sales': sales})
-
+def updatesale(request):
     
+    if request.method == "POST":
+        Sales_id = request.POST.get("updatesale_id")
+
+        if not Sales_id:
+            messages.error(request, "Sale ID  missing from request.")
+            return redirect('/Salelist/')
+
+        try:
+            fetchRecord = Sales.objects.get(Sales_id=Sales_id)
+            fetchRecord.Sales_name = request.POST.get("Sales_name")
+            fetchRecord.Sales_payment_term = request.POST.get("sales_mode")
+            fetchRecord.Sales_addinvoicedate = request.POST.get("add_invoicedate")
+            fetchRecord.Sales_add_duedays = request.POST.get("add_duedays")
+            fetchRecord.Sales_add_duedate = request.POST.get("add_duedate")
+            fetchRecord.Sales_addproductname = request.POST.get("add_productname")
+            
+            # Save the updated record
+            fetchRecord.save()
+            messages.success(request, "Sale updated successfully.")
+        except Sales.DoesNotExist:
+            messages.error(request, "Sale not found.")
+
+        return redirect('/Salelist/')
+    
+ 
+def editsale(request, id):
+    try:
+        saledata = Sales.objects.get(Sales_id=id)
+        edit = {
+            'editsale': {
+                'Sales_name': saledata.Sales_name,
+                'Sales_id': saledata.Sales_id,
+                'Sales_payment_term': saledata.Sales_payment_term,
+                'Sales_addinvoicedate': saledata.Sales_addinvoicedate.strftime('%Y-%m-%d') if saledata.Sales_addinvoicedate else '',
+                'Sales_add_duedays': saledata.Sales_add_duedays,
+                'Sales_addproductname': saledata.Sales_addproductname,
+                'Sales_add_duedate':saledata.Sales_add_duedate
+            }
+        }
+        return JsonResponse(edit)
+    except Sales.DoesNotExist:
+        return JsonResponse({'error': 'Sale not found'}, status=404)
+
+
+
+
 
 def posview(request):
     query = request.GET.get('search', '')  # Get search input from request
