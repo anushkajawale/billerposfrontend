@@ -95,6 +95,10 @@
                   <label for="ExpensesName" class="form-label">Unit Name</label>
                   <input type="text" class="form-control" id="updateexpenses_name" name="ExpensesName" value="" required>
                   <input type="hidden" id="Expenses_id" name="updateExpenses_id">
+                </div>
+      
+              </div>
+            </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" name="submit" class="btn btn-success">Save</button>
@@ -106,12 +110,10 @@
 
           </div>
         </div>
-        
-      </div>
-    </div>
-  </div>
   <script>
-    function loadEditModal(Expenses_id) { console.log(Expenses_id);
+    function loadEditModal(Expenses_id) 
+    { 
+      console.log(Expenses_id);
       fetch(`/editAddExpenses/${Expenses_id}/`)
         .then(response => { return response.json(); })
         .then(html => {

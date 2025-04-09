@@ -1128,8 +1128,8 @@ def editAddExpenses(request,id):
 
 def updateexpenses(request):
     if request.method =="POST":
-        expenses_id=request.POST.get("expenses_id")
-        expenses_name=request.POST.get("expenses_name")  
+        expenses_name=request.POST.get("ExpensesName")
+        expenses_id=request.POST.get("updateExpenses_id")  
         
         fetchRecord=Expenses.objects.get(expenses_id=expenses_id)
 
@@ -1142,24 +1142,24 @@ def updateexpenses(request):
 def editAddOtherCharge(request,id):
     
     try:
-        otherchargedata = OtherCharge.objects.get(othercharge_id=id)
+        expensesdata = OtherCharge.objects.get(othercharge_id=id)
         edit = {
-            'editcharge': {
-                'othercharge_id': otherchargedata.othercharge_id,
-                'othercharge_name': otherchargedata.othercharge_name,  # Adjust field names based on your model
+            'editAddOtherCharge': {
+                'othercharge_id': expensesdata.othercharge_id,
+                'othercharge_name': expensesdata.othercharge_name,  # Adjust field names based on your model
             }
         }
         return JsonResponse(edit)
     except OtherCharge.DoesNotExist:
-        return JsonResponse({'error': 'Expenses not found'}, status=404)
+        return JsonResponse({'error': 'OtherCharge not found'}, status=404)
 
 
 def updateAddOtherCharge(request):
     if request.method =="POST":
-        othercharge_id=request.POST.get("othercharge_id")
-        othercharge_name=request.POST.get("othercharge_name")  
+        othercharge_name=request.POST.get("OtherChargeName")
+        othercharge_id=request.POST.get("updateAddOtherCharge_id")  
         
-        fetchRecord=OtherCharge.objects.get(othercharge_id=othercharge_name)
+        fetchRecord=OtherCharge.objects.get(othercharge_id=othercharge_id)
 
         fetchRecord.othercharge_name=othercharge_name
 
@@ -1168,7 +1168,49 @@ def updateAddOtherCharge(request):
 
 
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
