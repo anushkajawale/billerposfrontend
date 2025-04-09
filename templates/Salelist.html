@@ -27,23 +27,24 @@
         </tr>
       </thead>
       <tbody class="table-hover">
-        {% for i in list %}
+        {% for i in saledata %}
         <tr>
           <td>{{ i.Sales_id }}</td>
-          <td>{{ i.Sales_addinvoicedate }}</td>
+          <td>{{ i.Sales_addinvoicedate|date:"Y/d/m" }}</td>
+
           <td>{{ i.Sales_invoice_no }}</td> <!-- Assuming slug is used as invoice number -->
           <td>{{ i.Sales_name }}</td>
           <td>{{ i.Sales_qty }}</td>
           <td>{{ i.Sales_payment_term }}</td>
           <td>{{ i.Sales_grand_total }}</td>
           <td>
-            <a href="/updatesalr/" class="btn btn-sm mx-1 btn-outline-success"
+            <a href="/updatesale/" class="btn btn-sm mx-1 btn-outline-success"
 onclick="loadEditModal('{{ i.Sales_id }}')"
-data-bs-toggle="modal" data-bs-target="#edituser">
+data-bs-toggle="modal" data-bs-target="#editsale">
 <i class="fa fa-pen"></i>
 </a>
 
-              <a href="deleteusers/{{i.users_id}}" class="btn btn-sm mx-1 btn-outline-success" onclick="return confirm('are you sure?')">
+              <a href="deletesale/{{i.Sales_id}}" class="btn btn-sm mx-1 btn-outline-success" onclick="return confirm('are you sure?')">
               <i class="fas fa-trash"></i></a>
 
               <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editcategory"
@@ -64,4 +65,92 @@ data-bs-toggle="modal" data-bs-target="#edituser">
   </div>
 </div>
 
+<!--Update-->
+<div class="modal fade" id="editsale" tabindex="-1" aria-labelledby="editSaleLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content p-3">
+      <form action="/updatesale/" method="post">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="editSaleLabel">Edit Sale</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <div class="modal-body">
+          <!-- Your form fields (same as before) -->
+          <input type="hidden" id="updatesale_id" name="updatesale_id">
+
+          <div class="row mb-3">
+            <div class="col-md-3">
+              <label class="form-label">Customer Name</label>
+              <input type="text" class="form-control" name="Sales_name" id="updatesale_name">
+               
+            
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">Payment Term</label>
+              <select class="form-select" name="sales_mode" >
+                <option value="add_cash">Cash</option>
+                <option value="add_credit">Credit</option>
+              </select>
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">Invoice Date</label>
+              <input type="date" class="form-control" id="add_invoicedate" name="add_invoicedate" value="True">
+              <input type="hidden" class="form-control" id="invoice_no" name="invoice_no">
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">Due Days</label>
+              <input type="number" class="form-control" id="add_duedays" name="add_duedays" value="True">
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">Due Date</label>
+              <input type="date" class="form-control" id="add_duedate" name="add_duedate" value="True">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Product Name</label>
+              <input type="text" class="form-control" id="add_productname" name="add_productname" value="True">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+function loadEditModal(Sales_id) {
+  fetch(`/editsale/${Sales_id}/`)
+    .then(response => response.json())
+    .then(data => {
+      const Sales = data.editsale;
+      if (Sales) {
+        document.getElementById("updatesale_id").value = Sales.Sales_id;
+        document.getElementById("updatesale_name").value = Sales.Sales_name;
+        document.querySelector('select[name="sales_mode"]').value = Sales.Sales_payment_term;
+        document.getElementById("add_invoicedate").value = Sales.Sales_addinvoicedate;
+        document.getElementById("add_duedays").value = Sales.Sales_add_duedays;
+        document.getElementById("add_duedate").value = Sales.Sales_add_duedate;
+        document.getElementById("add_productname").value = Sales.Sales_addproductname;
+
+        new bootstrap.Modal(document.getElementById('editsale')).show();
+      } else {
+        console.error("Sales data not found");
+      }
+    })
+    .catch(error => console.error('Error loading modal content:', error));
+}
+</script>
 {% endblock %}

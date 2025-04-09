@@ -1,18 +1,17 @@
 {% extends 'index.html' %}
 {% block content %}
 <div class="card p-3">
-                <form action="/Salelist/" method="post">
+                <form action="/Addsale/" method="post">
                     {% csrf_token %}
                     <div class="row mb-3">
                         <div class="col-md-3">
                             <label class="form-label">Customer Name</label>
                             <i class="fa fa-plus " style="margin-left: 125px;"></i>
                             <input type="hidden" id="updatesale_id" name="updatesale_id">
-                            <select class="form-select" name="Sales_name">
-                                <option  value="add_cashsale">Cash Sale</option>
-                                <option value="add_creditsale">Credit Sale</option>
+                            <input type="text" class="form-control" name="Sales_name">
+                               
                                 
-                            </select>
+                           
                             
                         </div>
                         <div class="col-md-2">
@@ -27,6 +26,7 @@
                         <div class="col-md-2">
                             <label class="form-label">Invoice Date</label>
                             <input type="date" class="form-control" value="2025-03-26" id="add_invoicedate" name="add_invoicedate">
+                            <input type="hidden" class="form-control" id="invoice_no" name="invoice_no">
                         </div>
                         <div class="col-md-2">
                             <label class="form-label">Due Days</label>
@@ -71,8 +71,21 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr><td colspan="12">No Items Added</td></tr>
+                        <tbody class="table-hover">
+                            {% for i in saledata %}
+                            <tr>
+                                <td>{{ i.Sales_id }}</td>
+                                <td>{{ i.Sales_addproductname }}</td>
+                                <td>{{ i.Sales_qty}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                {% endfor %}
                         </tbody>
                     </table>
                     
@@ -93,46 +106,8 @@
   </div>
   </div>
 
-  <script>
-    function loadEditModal(salesId) {
-      console.log(salesId);
-      
-      fetch(`/editsale/${salesId}/`)
-          .then(response => response.json())
-          .then(data => {
-              console.log(data);
-              let paymentmode = data.editsale;
-              
-              if (Sales) {
-                  document.getElementById("updatesale_id").value = Sales.Sales_id;
-                  document.getElementById("updatesale_name").value = Sales.Sales_name;
-                  document.getElementById("add_cashsale").value = Sales.Sales_addcashsale;
-                  document.getElementById("add_creditsale").value = Sales.add_creditsale;
-                  document.getElementById("add_cash").value = Sales.Sales_addcash;
-                  document.getElementById("add_credit").value = Sales.Sales_addcredit;
-                  document.getElementById("add_invoicedate").value = Sales.Sales_addinvoicedate;
-                  document.getElementById("add_duedays").value = Sales.Sales_add_duedays;
-                  document.getElementById("add_duedate").value = Sales.Sales_add_duedate;
-                  document.getElementById("add_productname").value = Sales.Sales_addproducrname;
-
-
-
-
-
-
-
-
-                  
-                  let editModal = new bootstrap.Modal(document.getElementById('editsale'));
-                  editModal.show();
-              } else {
-                  console.error("Sales data not found");
-              }
-          })
-          .catch(error => console.error('Error loading modal content:', error));
-  }
   
+
   
-  </script>
     
 {% endblock %}

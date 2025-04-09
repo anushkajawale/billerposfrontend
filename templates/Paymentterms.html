@@ -26,13 +26,13 @@
                 </tr>
               </thead>
               <tbody class="table-hover">
-                {% for i in list %}
+                {% for i in paymenttermsdata %}
                 <tr>
                   <td>{{ i.Paymentterms_id }}</td>
                   <td>{{ i.Paymentterms_name }}</td>
                   <td>
                     <a href="/insertpaymentterms/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editpaymentterms"
-                    data-bs-whatever="@mdo">
+                    data-bs-whatever="@mdo" onclick="loadEditModal('{{ i.Paymentterms_id }}')" >
                       <i class="fa fa-pen"></i></a>
                       <a href="deletepaymentterms/{{ i.Paymentterms_id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
         
@@ -88,10 +88,10 @@
       <div class="modal-body">
         <form action="/updatepaymentterms/" method="post">
           {% csrf_token %}
-          <input type="hidden" id="updatepaymentterms_id" name="updatepaymentterms_id">
+          <input type="hidden" id="update_paymentterms_id" name="update_paymentterms_id">
           <div class="mb-3">
             <label class="form-label">Payment Terms Name</label>
-            <input type="text" class="form-control" id="updatepaymentterms_name" name="updatepaymentterms_name" required>
+            <input type="text" class="form-control" id="update_paymentterms_name" name="update_paymentterms_name" required>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -104,24 +104,22 @@
 </div>
 
 <script>
-  function loadEditModal(paymenttermsId) {
-    console.log("Loading edit modal for ID:", paymenttermsId);
+  function loadEditModal(Paymentterms_id) {
+    console.log("Loading edit modal for ID:", Paymentterms_id);
 
-    fetch(`/editpaymentterms/${paymenttermsId}/`)
+    fetch(`/editpaymentterms/${Paymentterms_id}/`)
       .then(response => response.json())
       .then(data => {
         console.log("Data received:", data);
         let paymentterms = data.editpaymentterms;
         
         if (paymentterms) {
-          document.getElementById("updatepaymentterms_id").value = paymentterms.Paymentterms_id;
-          document.getElementById("updatepaymentterms_name").value = paymentterms.Paymentterms_name;
+          document.getElementById("update_paymentterms_id").value = paymentterms.Paymentterms_id;
+          document.getElementById("update_paymentterms_name").value = paymentterms.Paymentterms_name;
 
           let editModal = new bootstrap.Modal(document.getElementById('editpaymentterms'));
           editModal.show();
-        } else {
-          console.error("Payment mode data not found");
-        }
+        } 
       })
       .catch(error => console.error("Error loading modal content:", error));
   }
