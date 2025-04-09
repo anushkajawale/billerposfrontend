@@ -200,7 +200,7 @@ urlpatterns = [
     # path('updatepaymentterms/<int:id>/', views.updatepaymentterms),
     path('adduser/',views.adduser),
     path('updateuser/',views.updateuser),
-    path("get-customer-details/<id>/", views.get_customer_details),
+    #path("get-customer-details/<id>/", views.get_customer_details),
  
 
    
