@@ -168,7 +168,7 @@
             <form action="/updateAddOtherCharge/" method="post">
             <div class="col-6">
               <label for="chargename" class="form-label">Other Charge Name</label>
-              <input type="text" class="form-control" id="chargename" name="chargename" required>
+              <input type="text" class="form-control" id="othercharge_name" name="othercharge_name" required>
               <input type="hidden" id="Charge_id" name="updateCharge_id">
             </div>
             <div class="col-6">
@@ -254,6 +254,7 @@
 
 <script>
   function loadEditModal(othercharge_id) {console.log(othercharge_id);
+
       fetch(`/editAddOtherCharge/${othercharge_id}/`)
       .then(response => { return response.json(); })
       .then(html => {
@@ -272,5 +273,23 @@
 
 </script>
 
+  
+    fetch(`/editAddOtherCharge/${othercharge_id}/`)
+        .then(response =>{return response.json();})
+        .then(html => {
+          console.log(html);
+          let OtherCharge = html.editAddOtherCharge;
+            var editModalContent = new bootstrap.Modal(document.getElementById('editAddOtherCharge'));
 
+
+            document.getElementById("updateAddOtherChargeId").value=OtherCharge.othercharge_id;
+            
+            document.getElementById("updateAddOtherCharge_name").value=OtherCharge.othercharge_name;
+            
+            editModalContent.show();
+        })
+        .catch(error => console.error('Error loading modal content:', error));
+      }
+
+</script> 
 {% endblock %}

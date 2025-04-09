@@ -8,8 +8,7 @@ class Master(models.Model):
     master_mrp=models.CharField(max_length=255)
     master_sale_price=models.CharField(max_length=255)
     master_total =models.IntegerField()
-    master_payment_mode =models.CharField(max_length=255)
-    master_remaingamt =models.IntegerField()
+    master_payment_mode =models.CharField(max_length=255)    
     master_billdate =models.DateTimeField()
     master_totalAmount=models.IntegerField()
 

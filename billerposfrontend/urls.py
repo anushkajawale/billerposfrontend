@@ -65,11 +65,9 @@ urlpatterns = [
     path('insertexpenses/',views.insertexpenses),
     path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
 
-    #path('updateExpenses/',views.updateExpenses),
-    # path('saveExpenses/',views.expenseslist), 
-    path('AddExpenses/',views.expenseslist),
-    path('insertexpenses/',views.insertexpenses),
-    path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
+ 
+    
+    
 
     path('AddOtherCharge/',views.chargelist),  
     path('updateAddOtherCharge/',views.updateAddOtherCharge),
@@ -131,9 +129,11 @@ urlpatterns = [
     path('POSBill/',views.POSBill),
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
+    path('Roles/deleteRoles/<id>',views.deleteRoles),
+  
 
 
-    path('EditRole/',views.EditRoles),
+    path('EditRole/<id>/',views.EditRoles),
     path('insertroles/',views.insertroles),
     path('Dashboard/',views.Dashboard),
     path('logout/',views.logout),
@@ -142,10 +142,14 @@ urlpatterns = [
 
 
 
-    path('EditRole/',views.EditRolelist),
+    path('EditRole/',views.updateroles),
     path('insertroles/',views.insertroles),
+
     path('Dashboard/',views.Dashboard),
+
+    # path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
     #path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
+
 
     path('Barcode/',views.Barcodepage),
     path('stock/',views.stock),
@@ -169,6 +173,14 @@ urlpatterns = [
 
 
 
+ 
+    # path('Paymentterms/deletepaymentterms/<id>',views.deletepaymentterms),
+    # path('updatepaymentmode/',views.updatepaymentmode),
+    # path('updatepaymentterms/<int:id>/', views.updatepaymentterms),
+    path('adduser/',views.adduser),
+    path('updateuser/',views.updateuser),
+    path("get-customer-details/<id>/", views.get_customer_details),
+ 
     #path('Paymentterms/deletepaymentterms/<id>',views.deletepaymentterms),
     #path('updatepaymentmode/',views.updatepaymentmode),
     #path('updatepaymentterms/<int:id>/', views.updatepaymentterms),
@@ -176,6 +188,7 @@ urlpatterns = [
     path('updateuser/',views.updateuser),
     path('editemployee/',views.editemployee),
    # path('insertemployee/',views.insertemployee)
+
    
     
 
