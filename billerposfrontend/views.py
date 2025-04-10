@@ -25,6 +25,7 @@ from Unit.models import Unit
 
 from Sales.models import Sales
 
+
 from Expenses.models import Expenses
 from OtherCharge.models import OtherCharge
 
@@ -41,44 +42,40 @@ from RewardPOints.models import RewardPoints
 
 
 
+
 def index (request):
     return render(request,"index.html")
 
 
 
-def login(request):
 
-    if request.method=="POST":
-       email=request.POST.get('email') 
-       password=request.POST.get('password')
-    if email == 'admin123@gmail.com' and password == 'admin':
-           
-            request.session['username'] = email
-            return redirect('Dashboard')
-    else:
-            error = "Invalid credentials"
-            return render(request, 'login.html')
+def login(request):
+    error_message = ""
+    if request.method == "POST":
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+         
+        try:
+            Employee = Employees.objects.get(Employees_email=email, Employees_mobile_number=password)
+
+
+            request.session['user_name'] = email
+         
+
+            request.session['user_id'] = str(Employees.Employees_id)
+            print(f"DEBUG: Employee ID from session: {request.session.get('Employees_id')}")
+  
+
+            return redirect("/Dashboard/")  
+        except Employees.DoesNotExist:
+            error_message = "Invalid email or password. Please try again."
     
+    return render(request, 'login.html', {"error": error_message})
+
 
            
        
 #session
-
-    if request.method == "POST":
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-
-        user = authenticate(request, username=email, password=password)
-
-        if user is not None:
-            login(request, user)
-            messages.success(request, "Login successful!")
-            return redirect('dashboard')  # Change 'dashboard' to your actual home page
-        else:
-            messages.error(request, "Invalid email or password")
-
-    return render(request, 'login.html')
-
 
 
 def logout(request):  
@@ -91,8 +88,7 @@ def logout(request):
 def insertpaymentmode (request):
     return render(request,"insertpaymentmode.html")
 
-def login (request):
-    return render(request,"login.html")
+
 
 
 def register (request):
@@ -1087,9 +1083,7 @@ def deleteRoles(request,id):
     rolesdata.delete()
     return redirect('/Roles/') 
      
-def Dashboard(request):
-    
-    return render(request, 'Dashboard.html') 
+
 
 def POSBill (request):
     return render(request,'POSBills.html')
