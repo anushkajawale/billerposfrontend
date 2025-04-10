@@ -58,10 +58,11 @@ data-bs-toggle="modal" data-bs-target="#editsale">
     </table>
   </div>
 
-  <div class="d-flex justify-content-between align-items-center p-3 w-500 " style= "color: white; font-weight: bold">
-    <span class="flex-fill text-center bg-success p-4">QTY: 0.00</span>
-    <span class="flex-fill text-center bg-primary p-4 ">Total Amount: ₹ 0.00</span>
+  <div class="d-flex justify-content-between align-items-center p-3 w-500 " style="color: white; font-weight: bold">
+    <span id="qty_total" class="flex-fill text-center bg-success p-4">QTY: 0.00</span>
+    <span id="amount_total" class="flex-fill text-center bg-primary p-4">Total Amount: ₹ 0.00</span>
   </div>
+  
   </div>
 </div>
 
@@ -153,4 +154,28 @@ function loadEditModal(Sales_id) {
     .catch(error => console.error('Error loading modal content:', error));
 }
 </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let totalQty = 0;
+    let totalAmount = 0;
+
+    document.querySelectorAll("table tbody tr").forEach(function (row) {
+      const qtyCell = row.querySelector("td:nth-child(5)");
+      const amountCell = row.querySelector("td:nth-child(7)");
+
+      if (qtyCell && amountCell) {
+        const qty = parseFloat(qtyCell.textContent.trim()) || 0;
+        const amt = parseFloat(amountCell.textContent.trim()) || 0;
+
+        totalQty += qty;
+        totalAmount += amt;
+      }
+    });
+
+    document.getElementById("qty_total").textContent = "QTY: " + totalQty.toFixed(2);
+    document.getElementById("amount_total").textContent = "Total Amount: ₹ " + totalAmount.toFixed(2);
+  });
+</script>
+
 {% endblock %}
