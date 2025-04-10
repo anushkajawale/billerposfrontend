@@ -28,16 +28,15 @@
                 </tr>
               </thead>
               <tbody class="table-hover">
-                {% for i in list %}
+                {% for i in employeedata %}
                 <tr>
                 <td>{{ i.Employees_id}}</td>
                   <td>{{ i.Employees_firstname}}</td>
                   <td>
-                    <a href="/Employees/" class="btn btn-sm mx-1 btn-outline-success" data-bs-toggle="modal" data-bs-target="#editEmployeeModal" 
-                    data-bs-whatever="@mdo" onclick="loadEditModal('{{ i.Employees_id }}')" >
+                    <button href="/updateemployee/" class="btn btn-sm mx-1 btn-outline-success" onclick="loadEditModal('{{ i.Employees_id }}')" >
                       <i class="fa fa-pen"></i>
-                      </a>
-                      <a href="deleteemployee/{{ i.id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
+                      </button>
+                      <a href="deleteemployee/{{ i.Employees_id }}" onclick="return confirm('Are you sure?')" class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
         
                       
         
@@ -61,7 +60,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addEmployeeModalLabel">Add Employee </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-enclose" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <ul class="nav nav-tabs" id="employeeTab" role="tablist">
@@ -79,21 +78,22 @@
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <label class="form-label">First Name *</label>
-                                    <input type="text" class="form-control" placeholder="Enter First Name"  id="first_name" name="first_name">
+                                    <input type="text" class="form-control" placeholder="Enter First Name"  id="first_name" name="first_name" required>
+                                    <input type="hidden" id="iemployee_id" name="iemployee_id">
                                 </div>
                                 <div class="col-4">
                                     <label class="form-label">Middle Name</label>
-                                    <input type="text" class="form-control" placeholder="Enter Middle Name"  id="middle_name" name="middle_name" >
+                                    <input type="text" class="form-control" placeholder="Enter Middle Name"  id="middle_name" name="middle_name" required>
                                 </div>
                                 <div class="col-4">
                                     <label class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" placeholder="Last Name"  id="last_name" name="last_name">
+                                    <input type="text" class="form-control" placeholder="Last Name"  id="last_name" name="last_name" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <label class="form-label">Date Of Birth</label>
-                                    <input type="date"  class="form-control" id="date_birth" name="date_birth" placeholder="Date of Birth">
+                                    <input type="date"  class="form-control" id="date_birth" name="date_birth" placeholder="Date of Birth" value="2025-03-26" required>
                                 </div>
                                 <div class="col-4">
                                     <label class="form-label">Gender</label>
@@ -111,15 +111,15 @@
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label class="form-label">Address (Home / Current)</label>
-                                            <input type="text" class="form-control" placeholder="Address"  id="address" name="address">
+                                            <input type="text" class="form-control" placeholder="Address"  id="address" name="address" required>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="form-label">Mobile Number</label>
-                                            <input type="text" class="form-control" placeholder="Mobile Number"  id="mob" name="mob">
+                                            <input type="text" class="form-control" placeholder="Mobile Number"  id="mob" name="mob" required>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="form-label">Email Address</label>
-                                            <input type="email" class="form-control" placeholder="Email Address"  id="email_add" name="email_add">
+                                            <input type="email" class="form-control" placeholder="Email Address"  id="email_Add" name="email_Add" required>
                                         </div>
                                     </div>
                                 </div>
@@ -132,22 +132,22 @@
                                     <div class="row mb-3">
                                         <div class="col-md-4">
                                             <label class="form-label">Highest Education Level Attained</label>
-                                            <input type="text" class="form-control" placeholder="Highest Education"  id="high_education" name="high_education">
+                                            <input type="text" class="form-control" placeholder="Highest Education"  id="high_education" name="high_education" required>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Institutions Attended</label>
-                                            <input type="text" class="form-control" placeholder="Institution Attended"   id="institution_attended" name="institution_attended">
+                                            <input type="text" class="form-control" placeholder="Institution Attended"   id="institution_attended" name="institution_attended" required>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Degrees Earned</label>
-                                            <input type="text" class="form-control" placeholder="Degree Earned" id="degrees_earned" name="degrees_earned">
+                                            <input type="text" class="form-control" placeholder="Degree Earned" id="degrees_earned" name="degrees_earned" required>
                                         </div>
                                     </div>
                 
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label class="form-label">Certifications or Licenses</label>
-                                            <input type="text" class="form-control" placeholder="Certification" id="certifications" name="certifications">
+                                            <input type="text" class="form-control" placeholder="Certification" id="certifications" name="certifications" required>
                                         </div>
                                     </div>
                                 </div>
@@ -158,15 +158,15 @@
                                     <div class="row mb-3">
                                         <div class="col-md-4">
                                             <label class="form-label">Vacation Leave Balance</label>
-                                            <input type="text" class="form-control" placeholder="Middle Name" id="v_leave_balance" name="v_leave_balance">
+                                            <input type="number" class="form-control" placeholder="Middle Name" id="v_leave_balance" name="v_leave_balance" required>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Sick Leave Balance</label>
-                                            <input type="text" class="form-control" placeholder="Sick Leave Balance"  id="s_leave_balance" name="s_leave_balance">
+                                            <input type="number" class="form-control" placeholder="Sick Leave Balance"  id="s_leave_balance" name="s_leave_balance" required>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Types of leaves</label>
-                                            <input type="text" class="form-control" placeholder="Leave Type"  id="types_leave" name="types_leave">
+                                            <input type="text" class="form-control" placeholder="Leave Type"  id="types_leave" name="types_leave" required>
                                         </div>
                                     </div>
                         
@@ -179,23 +179,23 @@
                                     <div class="row mb-3">
                                         <div class="col-md-4">
                                             <label class="form-label">Salary (Home / Current) </label>
-                                            <input type="text" class="form-control" placeholder="Salary"  id="Salary" name="salary">
+                                            <input type="text" class="form-control" placeholder="Salary"  id="Salary" name="salary" required>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Pay Frequency </label>
-                                            <input type="text" class="form-control" placeholder="Pay Frequency" id="pay_frequency" name="pay_frequency" >
+                                            <input type="text" class="form-control" placeholder="Pay Frequency" id="pay_frequency" name="pay_frequency" required >
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Account Number</label>
-                                            <input type="text" class="form-control" placeholder="Account Number"  id="acc_no" name="acc_no">
+                                            <input type="text" class="form-control" placeholder="Account Number"  id="acc_no" name="acc_no" required>
                                         </div>
                                         <div class="col-md-4 mt-3">
                                             <label class="form-label">IFSC Code</label>
-                                            <input type="text" class="form-control" placeholder="IFSC Code"  id="ifsc_code" name="ifsc_code">
+                                            <input type="text" class="form-control" placeholder="IFSC Code"  id="ifsc_code" name="ifsc_code" required>
                                         </div>
                                         <div class="col-md-4 mt-3">
                                             <label class="form-label">Account Holder Name</label>
-                                            <input type="text" class="form-control" placeholder="Account Holder Name"  id="acc_holder" name="acc_holder">
+                                            <input type="text" class="form-control" placeholder="Account Holder Name"  id="acc_holder" name="acc_holder" required>
                                         </div>
                                     </div>
                         
@@ -211,30 +211,30 @@
                             <div class="row mb-3">
                                 <div class="col-md-4">
                                     <label class="form-label">Employee ID</label>
-                                    <input type="text" class="form-control" placeholder="Employee ID"  id="emp_id" name="emp_id">
+                                    <input type="text" class="form-control" placeholder="Employee ID"  id="emp_id" name="emp_id" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Job Title</label>
-                                    <input type="text" class="form-control" placeholder="Job Title"  id="job_title" name="job_title">
+                                    <input type="text" class="form-control" placeholder="Job Title"  id="job_title" name="job_title" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Department</label>
-                                    <input type="text" class="form-control" placeholder="Employee Department"  id="dept" name="dept">
+                                    <input type="text" class="form-control" placeholder="Employee Department"  id="dept" name="dept" required>
                                 </div>
                             </div>
     
                             <div class="row mb-3">
                                 <div class="col-md-4">
                                     <label class="form-label">Employment Status</label>
-                                    <input type="text" class="form-control" placeholder="Employment Status" id="emp_status" name="emp_status">
+                                    <input type="text" class="form-control" placeholder="Employment Status" id="emp_status" name="emp_status" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Hire Date</label>
-                                    <input type="date"  class="form-control"  id="hire_date" name="hire_date" placeholder="Hire Date">
+                                    <input type="date"  class="form-control"  id="hire_date" name="hire_date" placeholder="Hire Date" value="2025-03-26" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Termination Date (if applicable)</label>
-                                    <input type="date"  class="form-control"  id="termination_date" name="termination_date" placeholder="Termination date">
+                                    <input type="date"  class="form-control"  id="termination_date" name="termination_date" placeholder="Termination date" value="2025-03-26" required>
                                 </div>
                             </div>
     
@@ -246,17 +246,17 @@
                         <div class="col-md-6">
 
                                     <label class="form-label">Name</label>
-                                    <input type="text" class="form-control" placeholder="Enter Name"  id="e_name" name="e_name">
+                                    <input type="text" class="form-control" placeholder="Enter Name"  id="e_name" name="e_name" required>
                                 </div>
 
                                 <div class="col-md-4">
                                     <label class="form-label">Relationship</label>
-                                    <input type="text" class="form-control" placeholder="Relationship"  id="relationship" name="relationship">
+                                    <input type="text" class="form-control" placeholder="Relationship"  id="relationship" name="relationship" required>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-4">
                                     <label class="form-label">Phone Number</label>
-                                    <input type="text" class="form-control" placeholder="Mobile Number"  id="phone_no" name="phone_no">
+                                    <input type="text" class="form-control" placeholder="Mobile Number"  id="phone_no" name="phone_no" required>
                                 </div>
                             </div>
                         </div>
@@ -271,16 +271,16 @@
                         <div class="col-md-6">
 
                                     <label class="form-label">Name</label>
-                                    <input type="text" class="form-control" placeholder="Middle Name"  id="d_name" >
+                                    <input type="text" class="form-control" placeholder="Middle Name"  id="d_name" name="d_name" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Date of Birth</label>
-                                    <input type="date" class="form-control"  id="d_birth" name="d_birth" placeholder="Date of Birth">
+                                    <input type="date" class="form-control"  id="d_birth" name="d_birth" placeholder="Date of Birth" value="2025-03-26" required>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-4">
                                     <label class="form-label">Relationship (Spouse, Child, etc.)</label>
-                                    <input type="text" class="form-control" placeholder="Relationship"  id="d_relationship" name="d_relationship">
+                                    <input type="text" class="form-control" placeholder="Relationship"  id="d_relationship" name="d_relationship" required>
                                
                             </div>
                         </div>
@@ -294,15 +294,15 @@
                                 <div class="col-md-4">
         
                                             <label class="form-label">Previous Employees</label>
-                                            <input type="text" class="form-control" placeholder="Previous Employees"  id="p_emp" name="p_emp">
+                                            <input type="text" class="form-control" placeholder="Previous Employees"  id="p_emp" name="p_emp" required>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Job Titles</label>
-                                            <input type="text" class="form-control" placeholder="Job Titles"  id="job_titles" name="job_titles">
+                                            <input type="text" class="form-control" placeholder="Job Titles"  id="job_titles" name="job_titles" required>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Responsibilities</label>
-                                            <input type="text" class="form-control" placeholder="Job Responsibilities"  id="responsibilities" name="responsibilities">
+                                            <input type="text" class="form-control" placeholder="Job Responsibilities"  id="responsibilities" name="responsibilities" required>
                                         </div>
                                     </div>
                                 </div>
@@ -317,23 +317,20 @@
                                     <div class="row mb-3">
                                         <div class="col-md-4">
                                                 <label class="form-label">Resume</label>
-                                                <input type="text" class="form-control" placeholder="Resume"  id="resume" name="resume">
+                                                <input type="file" class="form-control" placeholder="Resume"  id="resume" name="resume" required>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="form-label">ID</label>
-                                                <input type="text" class="form-control" placeholder="ID" id="id" name="id">
+                                                <input type="text" class="form-control" placeholder="ID" id="id" name="id" required>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="form-label">Certification</label>
-                                                <input type="text" class="form-control" placeholder="Certification" id="d_certification" name="d_certification">
+                                                <input type="text" class="form-control" placeholder="Certification" id="d_certification" name="d_certification" required>
                                             </div>
                                         
                                         </div>
                                     </div>
                                 </div>
-                        
-                    
-                                  
                                 </div>
                             </div>
                         </div>
@@ -344,8 +341,6 @@
                
                 </div>  
         
-        
-              
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save</button>
@@ -379,28 +374,29 @@
                 <div class="row mb-3">
                   <div class="col-4">
                     <label class="form-label">First Name *</label>
-                    <input type="text" class="form-control" id="first_name" name="first_name">
+                    <input type="text" class="form-control" id="ufirst_name" name="ufirst_name"  >
+                    <input type="hidden" name="Employee_id" id="Employee_id" required >
                   </div>
                   <div class="col-4">
                     <label class="form-label">Middle Name</label>
-                    <input type="text" class="form-control" id="middle_name" name="middle_name">
+                    <input type="text" class="form-control" id="Middle_name" name="Middle_name" required>
                   </div>
                   <div class="col-4">
                     <label class="form-label">Last Name</label>
-                    <input type="text" class="form-control" id="last_name" name="last_name">
+                    <input type="text" class="form-control" id="Last_name" name="Last_name" required>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <div class="col-4">
                     <label class="form-label">Date Of Birth</label>
-                    <input type="date" class="form-control" id="date_birth" name="date_birth">
+                    <input type="date" class="form-control" id="Date_birth" name="Date_birth" value="2025-03-26" required>
                   </div>
                   <div class="col-4">
                     <label class="form-label">Gender</label>
                     <div class="d-flex gap-2">
-                      <input type="radio" id="male" name="Gender" value="Male"> Male
-                      <input type="radio" id="Female" name="Gender" value="Female"> Female
-                      <input type="radio" id="other" name="Gender" value="Other"> Other
+                      <input type="radio" id="male" name="Gender_choice" value="Male"> Male
+                      <input type="radio" id="Female" name="Gender_choice" value="Female"> Female
+                      <input type="radio" id="other" name="Gender_choice" value="Other"> Other
                     </div>
                   </div>
                 </div>
@@ -413,15 +409,15 @@
                     <div class="row mb-3">
                       <div class="col-md-6">
                         <label class="form-label">Address (Home / Current)</label>
-                        <input type="text" class="form-control" id="address" name="address">
+                        <input type="text" class="form-control" id="Address" name="Address" required>
                       </div>
                       <div class="col-md-3">
                         <label class="form-label">Mobile Number</label>
-                        <input type="text" class="form-control" id="mob" name="mob">
+                        <input type="text" class="form-control" id="Mob" name="Mob" required>
                       </div>
                       <div class="col-md-3">
                         <label class="form-label">Email Address</label>
-                        <input type="email" class="form-control" id="email_add" name="email_add">
+                        <input type="email" class="form-control" id="email_add" name="email_add" required>
                       </div>
                     </div>
                   </div>
@@ -434,21 +430,21 @@
                     <div class="row mb-3">
                       <div class="col-md-4">
                         <label class="form-label">Highest Education Level Attained</label>
-                        <input type="text" class="form-control" id="high_education" name="high_education">
+                        <input type="text" class="form-control" id="High_education" name="high_education" required>
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Institutions Attended</label>
-                        <input type="text" class="form-control" id="institution_attended" name="institution_attended">
+                        <input type="text" class="form-control" id="Institution_attended" name="Institution_attended" required>
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Degrees Earned</label>
-                        <input type="text" class="form-control" id="degrees_earned" name="degrees_earned">
+                        <input type="text" class="form-control" id="Degrees_earned" name="Degrees_earned" required>
                       </div>
                     </div>
                     <div class="row mb-3">
                       <div class="col-md-6">
                         <label class="form-label">Certifications or Licenses</label>
-                        <input type="text" class="form-control" id="certifications" name="certifications">
+                        <input type="text" class="form-control" id="Certifications" name="Certifications" required>
                       </div>
                     </div>
                   </div>
@@ -461,15 +457,15 @@
                     <div class="row mb-3">
                       <div class="col-md-4">
                         <label class="form-label">Vacation Leave Balance</label>
-                        <input type="text" class="form-control" id="v_leave_balance" name="v_leave_balance">
+                        <input type="text" class="form-control" id="V_leave_balance" name="V_leave_balance" required>
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Sick Leave Balance</label>
-                        <input type="text" class="form-control" id="s_leave_balance" name="s_leave_balance">
+                        <input type="text" class="form-control" id="S_leave_balance" name="S_leave_balance" required>
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Types of leaves</label>
-                        <input type="text" class="form-control" id="types_leave" name="types_leave">
+                        <input type="text" class="form-control" id="Types_leave" name="Types_leave" required>
                       </div>
                     </div>
                   </div>
@@ -482,23 +478,23 @@
                     <div class="row mb-3">
                       <div class="col-md-4">
                         <label class="form-label">Salary</label>
-                        <input type="text" class="form-control" id="Salary" name="salary">
+                        <input type="text" class="form-control" id="Salary" name="Salary" required>
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Pay Frequency</label>
-                        <input type="text" class="form-control" id="pay_frequency" name="pay_frequency">
+                        <input type="text" class="form-control" id="Pay_frequency" name="Pay_frequency" required value="True">
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Account Number</label>
-                        <input type="text" class="form-control" id="acc_no" name="acc_no">
+                        <input type="text" class="form-control" id="Acc_no" name="Acc_no" required>
                       </div>
                       <div class="col-md-4 mt-3">
                         <label class="form-label">IFSC Code</label>
-                        <input type="text" class="form-control" id="ifsc_code" name="ifsc_code">
+                        <input type="text" class="form-control" id="IFSC_code" name="IFSC_code" required>
                       </div>
                       <div class="col-md-4 mt-3">
                         <label class="form-label">Account Holder Name</label>
-                        <input type="text" class="form-control" id="acc_holder" name="acc_holder">
+                        <input type="text" class="form-control" id="Acc_holder" name="Acc_holder" required>
                       </div>
                     </div>
                   </div>
@@ -510,29 +506,29 @@
                 <div class="row mb-3">
                   <div class="col-md-4">
                     <label class="form-label">Employee ID</label>
-                    <input type="text" class="form-control" id="emp_id" name="emp_id">
+                    <input type="text" class="form-control" id="Emp_id" name="Emp_id" required>
                   </div>
                   <div class="col-md-4">
                     <label class="form-label">Job Title</label>
-                    <input type="text" class="form-control" id="job_title" name="job_title">
+                    <input type="text" class="form-control" id="Job_title" name="Job_title" required>
                   </div>
                   <div class="col-md-4">
                     <label class="form-label">Department</label>
-                    <input type="text" class="form-control" id="dept" name="dept">
+                    <input type="text" class="form-control" id="Dept" name="Dept" required>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <div class="col-md-4">
                     <label class="form-label">Employment Status</label>
-                    <input type="text" class="form-control" id="emp_status" name="emp_status">
+                    <input type="text" class="form-control" id="Emp_status" name="Emp_status" required>
                   </div>
                   <div class="col-md-4">
                     <label class="form-label">Hire Date</label>
-                    <input type="date" class="form-control" id="hire_date" name="hire_date">
+                    <input type="date" class="form-control" id="Hire_date" name="Hire_date" value="2025-03-26" required>
                   </div>
                   <div class="col-md-4">
                     <label class="form-label">Termination Date</label>
-                    <input type="date" class="form-control" id="termination_date" name="termination_date">
+                    <input type="date" class="form-control" id="Termination_date" name="Termination_date" value="2025-03-26" required>
                   </div>
                 </div>
   
@@ -543,15 +539,15 @@
                     <div class="row mb-3">
                       <div class="col-md-6">
                         <label class="form-label">Name</label>
-                        <input type="text" class="form-control" id="e_name" name="e_name">
+                        <input type="text" class="form-control" id="E_name" name="E_name" required>
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Relationship</label>
-                        <input type="text" class="form-control" id="relationship" name="relationship">
+                        <input type="text" class="form-control" id="Relationship" name="Relationship" required>
                       </div>
                       <div class="col-4 mt-3">
                         <label class="form-label">Phone Number</label>
-                        <input type="text" class="form-control" id="phone_no" name="phone_no">
+                        <input type="text" class="form-control" id="Phone_no" name="Phone_no" required>
                       </div>
                     </div>
                   </div>
@@ -564,15 +560,15 @@
                     <div class="row mb-3">
                       <div class="col-md-6">
                         <label class="form-label">Name</label>
-                        <input type="text" class="form-control" id="d_name">
+                        <input type="text" class="form-control" id="D_name" name="D_name" required>
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Date of Birth</label>
-                        <input type="date" class="form-control" id="d_birth" name="d_birth">
+                        <input type="date" class="form-control" id="D_birth" name="D_birth" value="2025-03-26" required>
                       </div>
                       <div class="col-4 mt-3">
                         <label class="form-label">Relationship</label>
-                        <input type="text" class="form-control" id="d_relationship" name="d_relationship">
+                        <input type="text" class="form-control" id="D_relationship" name="D_relationship" required>
                       </div>
                     </div>
                   </div>
@@ -585,15 +581,15 @@
                     <div class="row mb-3">
                       <div class="col-md-4">
                         <label class="form-label">Previous Employees</label>
-                        <input type="text" class="form-control" id="p_emp" name="p_emp">
+                        <input type="text" class="form-control" id="P_emp" name="P_emp" required>
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Job Titles</label>
-                        <input type="text" class="form-control" id="job_titles" name="job_titles">
+                        <input type="text" class="form-control" id="Job_titles" name="Job_titles" required>
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Responsibilities</label>
-                        <input type="text" class="form-control" id="responsibilities" name="responsibilities">
+                        <input type="text" class="form-control" id="Responsibilities" name="Responsibilities" required>
                       </div>
                     </div>
                   </div>
@@ -606,15 +602,15 @@
                     <div class="row mb-3">
                       <div class="col-md-4">
                         <label class="form-label">Resume</label>
-                        <input type="text" class="form-control" id="resume" name="resume">
+                        <input type="File" class="form-control" id="resume" name="resume" required>
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">ID</label>
-                        <input type="text" class="form-control" id="id" name="id">
+                        <input type="text" class="form-control" id="Id" name="Id" required>
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Certification</label>
-                        <input type="text" class="form-control" id="d_certification" name="d_certification">
+                        <input type="text" class="form-control" id="D_certification" name="D_certification" required>
                       </div>
                     </div>
                   </div>
@@ -631,71 +627,92 @@
     </div>
   </div>
   
-
 <script>
-  
-  function loadEditModal(employeeId) {
-    console.log(employeeId);
+  function loadEditModal(Employeeid) {
+    console.log(Employeeid);
 
-    fetch(`/editemployee/${employeeId}/`)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            let Employees = data.Employees;  // Ensure it matches your API response
+    fetch(`/editEmployee/${Employeeid}/`)
+        .then(response => { return response.json(); })
+        .then(html => {
+            console.log(html);
+            let Employees = html.editemployee;
 
             var editModal = new bootstrap.Modal(document.getElementById('editEmployeeModal'));
 
-            document.getElementById("first_name").value = Employees.Employees_firstname;
-            document.getElementById("middle_name").value = Employees.Employees_middlename;
-            document.getElementById("last_name").value = Employees.Employees_lastname;
-            document.getElementById("date_birth").value = Employees.Employees_dateof_birth;
-            document.getElementById("male").checked = Employees.Employees_gender ==="Male";
-            document.getElementById("Female").checked = Employees.Employees_gender === "Female";
-            document.getElementById("other").checked = Employees.Employees_gender ==="Other";
-            document.getElementById("address").value = Employees.Employees_address;
-            document.getElementById("mob").value = Employees.Employees_mobile_number;
-            document.getElementById("email_add").value = Employees.Employees_email;
-            document.getElementById("high_education").value = Employees.Employees_highesteducation;
-            document.getElementById("institution_attended").value = Employees.Employees_institutionsattended;
-            document.getElementById("degrees_earned").value = Employees.Employees_degreesearned;
-            document.getElementById("certifications").value = Employees.Employees_certifications;
-            document.getElementById("v_leave_balance").value = Employees.Employees_vacationleave_balance;
-            document.getElementById("s_leave_balance").value = Employees.Employees_sickleave_balance;
-            document.getElementById("types_leave").value = Employees.Employees_leavetypes;
-            document.getElementById("Salary").value = Employees.Employees_salary;
-            document.getElementById("pay_frequency").value = Employees.Employees_payfrequency;
-            document.getElementById("acc_no").value = Employees.Employees_accountnumber;
-            document.getElementById("ifsc_code").value = Employees.Employees_ifsccode;
-            document.getElementById("acc_holder").value = Employees.Employees_accountholder_name;
-            document.getElementById("emp_id").value = Employees.employee_id;
-            document.getElementById("job_title").value = Employees.job_title;
-            document.getElementById("dept").value = Employees.department;
-            document.getElementById("emp_status").value = Employees.employment_status;
-            document.getElementById("hire_date").value = Employees.hire_date;
-            document.getElementById("termination_date").value = Employees.termination_date;
-            document.getElementById("e_name").value = Employees.Employees_emergencycontact_name;
-            document.getElementById("relationship").value = Employees.Employees_emergencycontact_relationship;
-            document.getElementById("phone_no").value = Employees.Employees_emergencycontact_phone;
-            document.getElementById("d_name").value = Employees.department_name;
-            document.getElementById("d_birth").value = Employees.department_birth;
-            document.getElementById("d_relationship").value = Employees.d_relationship;
-            document.getElementById("p_emp").value = Employees.Employees_previous_employers;
-            document.getElementById("job_titles").value=Employees.Employees_previous_jobtitles
-            document.getElementById("responsibilities").value = Employees.Employees_previous_responsibilities;
-            document.getElementById("resume").value = Employees.Employees_resume;
-            document.getElementById("id").value = Employees.Employees_iddocument;
-            document.getElementById("d_certification").value = Employees.Employees_certificationsdocument;
+            // Basic Information
+            document.getElementById('Employee_id').value = Employees.Employees_id;
+            document.getElementById("ufirst_name").value = Employees.Employees_firstname;
+            document.getElementById("Middle_name").value = Employees.Employees_middlename;
+            document.getElementById("Last_name").value = Employees.Employees_lastname;
+            document.getElementById("Date_birth").value = Employees.Employees_dateof_birth;
 
+            // Gender Radio Buttons
+            if (Employees.Employees_gender === "Male") {
+                document.getElementById("male").checked = true;
+            } else if (Employees.Employees_gender === "Female") {
+                document.getElementById("Female").checked = true;
+            } else {
+                document.getElementById("other").checked = true;
+            }
+
+            // Contact Info
+            document.getElementById("Address").value = Employees.Employees_address;
+            document.getElementById("Mob").value = Employees.Employees_mobile_number;
+            document.getElementById("email_add").value = Employees.Employees_email;
+
+            // Education
+            document.getElementById("High_education").value = Employees.Employees_highesteducation;
+            document.getElementById("Institution_attended").value = Employees.Employees_institutionsattended;
+            document.getElementById("Degrees_earned").value = Employees.Employees_degreesearned;
+            document.getElementById("Certifications").value = Employees.Employees_certifications;
+
+            // Leave
+            document.getElementById("V_leave_balance").value = Employees.Employees_vacationleave_balance;
+            document.getElementById("S_leave_balance").value = Employees.Employees_sickleave_balance;
+            document.getElementById("Types_leave").value = Employees.Employees_leavetypes;
+
+            // Compensation
+            document.getElementById("Salary").value = Employees.Employees_salary;
+            document.getElementById("Pay_frequency").value = Employees.Employees_payfrequency;
+            document.getElementById("Acc_no").value = Employees.Employees_accountnumber;
+            document.getElementById("IFSC_code").value = Employees.Employees_ifsccode;
+            document.getElementById("Acc_holder").value = Employees.Employees_accountholder_name;
+
+            // Employment Advance Info
+            document.getElementById("Emp_id").value = Employees.employee_id;
+            document.getElementById("Job_title").value = Employees.job_title;
+            document.getElementById("Dept").value = Employees.department;
+            document.getElementById("Emp_status").value = Employees.employment_status;
+            document.getElementById("Hire_date").value = Employees.hire_date;
+            document.getElementById("Termination_date").value = Employees.termination_date;
+
+            // Emergency Contact
+            document.getElementById("E_name").value = Employees.Employees_emergencycontact_name;
+            document.getElementById("Relationship").value = Employees.Employees_emergencycontact_relationship;
+            document.getElementById("Phone_no").value = Employees.Employees_emergencycontact_phone;
+
+            // Dependent Info
+            document.getElementById("D_name").value = Employees.department_name;
+            document.getElementById("D_birth").value = Employees.department_birth;
+            document.getElementById("D_relationship").value = Employees.d_relationship;
+
+            // Work History
+            document.getElementById("P_emp").value = Employees.Employees_previous_employers;
+            document.getElementById("Job_titles").value = Employees.Employees_previous_jobtitles;
+            document.getElementById("Responsibilities").value = Employees.Employees_previous_responsibilities;
+
+            // Documents
+            document.getElementById("Id").value = Employees.Employees_id_proof;
+            document.getElementById("D_certification").value = Employees.Employees_doc_certification;
+
+            // Finally, show the modal
             editModal.show();
         })
-        .catch(error => console.error('Error loading modal content:', error));
+        .catch(error => {
+            console.error('Error fetching employee data:', error);
+        });
 }
-
-   
-  
-  
-  </script>
-  
+</script>
   
         {% endblock %}
     

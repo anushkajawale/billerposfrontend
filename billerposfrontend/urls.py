@@ -59,17 +59,22 @@ urlpatterns = [
     path('unit/deleteunit/<id>',views.deleteunit),
 
 
-    path('updateexpenses/',views.updateexpenses),
-    path('editAddExpenses/<id>/',views.editAddExpenses),
+    #path('updateexpenses/',views.updateexpenses),
+    #path('editAddExpenses/<id>/',views.editAddExpenses),
     path('AddExpenses/',views.expenseslist),
     path('insertexpenses/',views.insertexpenses),
     path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
 
-    #path('updateExpenses/',views.updateExpenses),
-    # path('saveExpenses/',views.expenseslist), 
+
+   # path('updateExpenses/',views.updateExpenses),
+     path('saveExpenses/',views.expenseslist), 
     path('AddExpenses/',views.expenseslist),
     path('insertexpenses/',views.insertexpenses),
     path('AddExpenses/deleteexpenses/<id>',views.deleteexpenses),
+
+ 
+    
+    
 
     path('AddOtherCharge/',views.chargelist),  
     path('updateAddOtherCharge/',views.updateAddOtherCharge),
@@ -77,10 +82,6 @@ urlpatterns = [
     path('AddOtherCharge/deleteothercharge/<id>',views.deleteothercharge),
 
     path('editAddOtherCharge/<id>',views.editAddOtherCharge),
-
-
-
-
 
     path('Customergrouplist/',views.Customergrouplist),
     path('insertcustomergroup/',views.insertcustomergroup),
@@ -96,10 +97,12 @@ urlpatterns = [
     path('Customerpage/deleteCustomer/<id>',views.deleteCustomer),
     path('insertsuppliergroup/',views.insertsuppliergroup),
     path('paymentmode/',views.paymentmodelist),
+    path('editpaymentmode/<id>/',views.editpaymentmode),
     path('Paymentterms/',views.Paymenttermslist),
     path('insertpaymentmode/',views.insertpaymentmode),
     path('insertpaymentterms/',views.insertpaymentterms),
     path('Users/deleteusers/<id>',views.deleteusers),
+    path('edituser/<id>/',views.edituser),
     path('Supplierlist/',views.Supplierpage),
     path('RewardPoints/',views.RewardPointslist),
     path('RewardPoints/',views.RewardPoints), 
@@ -127,27 +130,38 @@ urlpatterns = [
     
 
     path('Employee/',views.Employee),
+    path('editEmployee/<id>/',views.editEmployeeModal),
     path('Users/',views.Userslist),
     path('POSBill/',views.POSBill),
     path('printpage/',views.printpage),
     path('Roles/',views.Roleslist),
+    path('Roles/deleteRoles/<id>',views.deleteRoles),
+  
 
 
-    path('EditRole/',views.EditRoles),
+    path('EditRole/<id>/',views.EditRoles),
     path('insertroles/',views.insertroles),
     path('Dashboard/',views.Dashboard),
     path('logout/',views.logout),
+    path('updateemployee/<int:id>',views.updateemployee),
+    
+
     
    
 
 
 
-    path('EditRole/',views.EditRolelist),
+    path('EditRole/',views.updateroles),
     path('insertroles/',views.insertroles),
+
     path('Dashboard/',views.Dashboard),
+
+    path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
+    
 
     # path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
     #path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
+
 
 
     path('Barcode/',views.Barcodepage),
@@ -169,8 +183,18 @@ urlpatterns = [
     path('PrintPOSRegisterReport/',views.PrintPOSRegisterReport),
     path('PrintBillWiseReport/',views.PrintBillWiseReport),
 
-
-
+    path('Paymentterms/deletepaymentterms/<id>',views.deletepaymentterms),
+    path('updatepaymentmode/',views.updatepaymentmode),
+    path('updatepaymentterms/', views.updatepaymentterms),
+    path('adduser/',views.adduser),
+    path('updateuser/',views.updateuser),
+    
+    path('insertemployee/',views.insertemployee),
+    path('editpaymentterms/<id>/',views.editpaymentterms),
+    path('Employee/deleteemployee/<id>',views.deleteemployee),
+    path('Salelist/deletesale/<id>',views.deletesale),
+    path('updatesale/',views.updatesale),
+    path('editsale/<id>/',views.editsale),
 
  
     # path('Paymentterms/deletepaymentterms/<id>',views.deletepaymentterms),
@@ -178,19 +202,10 @@ urlpatterns = [
     # path('updatepaymentterms/<int:id>/', views.updatepaymentterms),
     path('adduser/',views.adduser),
     path('updateuser/',views.updateuser),
-    path("get-customer-details/<id>/", views.get_customer_details),
- 
-    #path('Paymentterms/deletepaymentterms/<id>',views.deletepaymentterms),
-    #path('updatepaymentmode/',views.updatepaymentmode),
-    #path('updatepaymentterms/<int:id>/', views.updatepaymentterms),
-    path('adduser/',views.adduser),
-    path('updateuser/',views.updateuser),
-    path('editemployee/',views.editemployee),
-   # path('insertemployee/',views.insertemployee)
 
-   
-    
+   # path("get-customer-details/<id>/", views.get_customer_details),
 
+    #path("get-customer-details/<id>/", views.get_customer_details),
 
 ]
 

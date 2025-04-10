@@ -28,7 +28,7 @@
                 </tr>
               </thead>
               <tbody class="table-hover">
-                {% for i in list %}
+                {% for i in paymentmodedata %}
                 <tr>
                   <td>{{ i.Paymentmode_id}}</td>
                   <td>{{ i.Paymentmode_name}}</td>
@@ -116,25 +116,29 @@
   
 <script>
 
-function loadEditModal(paymentmodeId) {
-  console.log("Fetching payment mode with ID:", paymentmodeId);
+function loadEditModal(Paymentmode_id) {
+  console.log("Fetching payment mode with ID:", Paymentmode_id);
   
     
-    fetch(`/editpaymentmode/${paymentmodeId}/`)
+    fetch(`/editpaymentmode/${Paymentmode_id}/`)
         .then(response => response.json())
         .then(data => {
             console.log(data);
             let paymentmode = data.editpaymentmode;
-            
-            if (paymentmode) {
+
+            if (!paymentmode) {
+                console.error("Error: paymentmode data is missing!");
+                return;
+            }
+            var editModal = new bootstrap.Modal(document.getElementById('editpaymentmode'));
+
+        
                 document.getElementById("updatepaymentmode_id").value = paymentmode.Paymentmode_id;
                 document.getElementById("updatepaymentmode_name").value = paymentmode.Paymentmode_name;
                 
-                let editModal = new bootstrap.Modal(document.getElementById('editpaymentmode'));
+                
                 editModal.show();
-            } else {
-                console.error("Payment mode data not found");
-            }
+            
         })
         .catch(error => console.error('Error loading modal content:', error));
 }
