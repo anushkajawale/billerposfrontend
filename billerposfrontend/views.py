@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,HttpResponse
+from django.shortcuts import render,redirect,HttpResponse,get_object_or_404
 from Customergroup.models import Customergroup
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -1998,9 +1998,6 @@ def editsale(request, id):
         return JsonResponse({'error': 'Sale not found'}, status=404)
 
 
-
-
-
 def posview(request):
     query = request.GET.get('search', '')  # Get search input from request
     customer=Customer.objects.all()
@@ -2012,14 +2009,14 @@ def get_product_names(request):
     products = list(Product.objects.values_list('name', flat=True))  # Get only product names
     return JsonResponse({'products': products})
 
-"""def get_customer_details(request,id):
+def get_customer_details(request,id):
     customer = get_object_or_404(Customer, customer_id=id)
     data = {
         "mobile_no": customer.customer_mobile,
         "address": customer.customer_ShippingAddress,
         "credit_amt": customer.customer_CreditLimit,
     }
-    return JsonResponse(data)"""
+    return JsonResponse(data)
 
 from poschild.models import Poschild
 
@@ -2041,7 +2038,7 @@ def insertpos(request):
         paymentmode=request.POST.get('paymentmode')
         billdate=request.POST.get('billdate')
         total_amount=request.POST.get('total_amount')
-        print("Hello ",request.POST.get('total_amount'))
+    
         insertdata=Master(
             customer_id=Customer.objects.get(customer_id = customer_id),             
             master_payment_mode=paymentmode,
@@ -2054,7 +2051,7 @@ def insertpos(request):
         print(len(productid))
         productid = list(productid)
         try:
-            for i in range(0,len(productid)):
+            for i in range(len(productid)):
                 chliddata=Poschild(
                     master_id= insertdata,
                     customer_id=Customer.objects.get(customer_id = customer_id), 
@@ -2063,20 +2060,49 @@ def insertpos(request):
                     item_qty=productqty[i],
                     item_mrp=productmrp[i],
                     item_saleprice=productsale[i],
-                    item_total=totalprice[i]
+                    item_total=totalprice[i]    
                 )
                 chliddata.save()
+                id=insertdata.master_id
 
-            bill_data = {
-                'master': insertdata
-            }
+            return redirect('POSBillshow', id=insertdata.master_id)     
 
-            # Redirect to POSBills with the bill data
-            return render(request, 'POSBills.html', {'bill': bill_data})
-            
         except Exception as e:
-            print("Error saving Poschild:", e)  
+            print("Error saving Poschild:", e) 
+            return render(request,'pos1.html') 
     
     else:
-        return render(request,'pos1.html')
+        return redirect('POSBillshow', id=id)   
          
+
+
+def POSBillshow(request, id):
+    # Get the master bill record
+    master = get_object_or_404(Master, master_id=id)
+    
+    # Get all child items for this bill
+    
+    
+    context = {
+        'master': master
+         
+    }
+    
+    return render(request, 'POSBills.html', context)
+
+def posview(request):
+    from_date = request.GET.get('from_date')
+    to_date = request.GET.get('to_date')
+    
+    master = Master.objects.all().order_by('-master_billdate')
+    
+    if from_date and to_date:
+        master = master.filter(
+            master_billdate__gte=from_date,
+            master_billdate__lte=to_date
+        )
+    
+    context = {
+        'master': master,
+    }
+    return render(request, 'POSBills.html', context)
