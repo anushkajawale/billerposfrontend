@@ -16,7 +16,8 @@ from Users.models import Users
 from tax.models import Tax
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout as auth_logout
-from tbl_master.models import Master
+from master.models import Master
+# from poschlid.models import Poschild
 
 
 from Employees.models import Employees
@@ -24,6 +25,7 @@ from Employees.models import Employees
 from Unit.models import Unit
 
 from Sales.models import Sales
+
 
 from Expenses.models import Expenses
 from OtherCharge.models import OtherCharge
@@ -41,12 +43,41 @@ from RewardPOints.models import RewardPoints
 
 
 
+
 def index (request):
     return render(request,"index.html")
 
 
 
+
+
 def login(request):
+    error_message = ""
+    if request.method == "POST":
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+         
+        try:
+            Employee = Employees.objects.get(Employees_email=email, Employees_mobile_number=password)
+
+
+            request.session['user_name'] = email
+         
+
+            request.session['user_id'] = str(Employees.Employees_id)
+            print(f"DEBUG: Employee ID from session: {request.session.get('Employees_id')}")
+  
+
+            return redirect("/Dashboard/")  
+        except Employees.DoesNotExist:
+            error_message = "Invalid email or password. Please try again."
+    
+    return render(request, 'login.html', {"error": error_message})
+
+
+           
+       
+#session
 
     if request.method=="POST":
        email=request.POST.get('email') 
@@ -58,26 +89,7 @@ def login(request):
     else:
             error = "Invalid credentials"
             return render(request, 'login.html')
-    
 
-           
-       
-#session
-
-    if request.method == "POST":
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-
-        user = authenticate(request, username=email, password=password)
-
-        if user is not None:
-            login(request, user)
-            messages.success(request, "Login successful!")
-            return redirect('dashboard')  # Change 'dashboard' to your actual home page
-        else:
-            messages.error(request, "Invalid email or password")
-
-    return render(request, 'login.html')
 
 
 
@@ -91,8 +103,7 @@ def logout(request):
 def insertpaymentmode (request):
     return render(request,"insertpaymentmode.html")
 
-def login (request):
-    return render(request,"login.html")
+
 
 
 def register (request):
@@ -1080,9 +1091,7 @@ def deleteRoles(request,id):
     rolesdata.delete()
     return redirect('/Roles/') 
      
-def Dashboard(request):
-    
-    return render(request, 'Dashboard.html') 
+
 
 def POSBill (request):
     return render(request,'POSBills.html')
@@ -1987,6 +1996,11 @@ def deletesale(request,id):
     saledata.delete()
     return redirect('/Salelist/')
 
+# 👉 Sale List View
+def salelist(request):
+    sales = Sales.objects.all().order_by('-Sales_id')
+    return render(request, 'sales/sale_list.html', {'sales': sales})
+
 def updatesale(request):
     
     if request.method == "POST":
@@ -2068,37 +2082,62 @@ def get_product_names(request):
     }
     return JsonResponse(data)"""
 
+from poschild.models import Poschild
+
 def insertpos(request):
     if request.method=="POST":
-        productname=request.POST.get('productname')
-        productqty=request.POST.get('productqty')
-        productmrp=request.POST.get('mrp')
-        productsale=request.POST.get('sale')
-        totalprice=request.POST.get('totalprice')
+
+        productname=request.POST.getlist('productname[]')
+        productid=request.POST.getlist('productid[]')
+       
+        productqty=request.POST.getlist('productqty[]')
+     
+        productmrp=request.POST.getlist('mrp[]')
+        
+        productsale=request.POST.getlist('sale[]')
+       
+        totalprice=request.POST.getlist('totalprice[]')  
+        
         customer_id=int(request.POST.get('customername'))
         paymentmode=request.POST.get('paymentmode')
         billdate=request.POST.get('billdate')
         total_amount=request.POST.get('total_amount')
-
+        print("Hello ",request.POST.get('total_amount'))
         insertdata=Master(
-            customer_id=Customer.objects.get(customer_id = customer_id),
-            master_itemname=productname,
-            master_qty=productqty,
-            master_mrp=productmrp,
-            master_sale_price=productsale,
-            master_total=totalprice,
+            customer_id=Customer.objects.get(customer_id = customer_id),             
             master_payment_mode=paymentmode,
             master_billdate=billdate,
-            master_totalAmount=total_amount    
-
+            master_totalAmount=total_amount
         )
+        insertdata.save() 
 
-        insertdata.save()
-        return redirect('/posview/')
+
+        print(len(productid))
+        productid = list(productid)
+        try:
+            for i in range(0,len(productid)):
+                chliddata=Poschild(
+                    master_id= insertdata,
+                    customer_id=Customer.objects.get(customer_id = customer_id), 
+                    product_id=Product.objects.get(product_id = int(productid[i])), 
+                    item_name=productname[i],
+                    item_qty=productqty[i],
+                    item_mrp=productmrp[i],
+                    item_saleprice=productsale[i],
+                    item_total=totalprice[i]
+                )
+                chliddata.save()
+
+            bill_data = {
+                'master': insertdata
+            }
+
+            # Redirect to POSBills with the bill data
+            return render(request, 'POSBills.html', {'bill': bill_data})
+            
+        except Exception as e:
+            print("Error saving Poschild:", e)  
+    
     else:
-        return render(request,'Pos1.html')
-
-
-
-       
-
+        return render(request,'pos1.html')
+         
