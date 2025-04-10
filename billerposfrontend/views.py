@@ -16,7 +16,8 @@ from Users.models import Users
 from tax.models import Tax
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout as auth_logout
-from tbl_master.models import Master
+from master.models import Master
+# from poschlid.models import Poschild
 
 
 from Employees.models import Employees
@@ -49,6 +50,7 @@ def index (request):
 
 
 
+
 def login(request):
     error_message = ""
     if request.method == "POST":
@@ -77,6 +79,19 @@ def login(request):
        
 #session
 
+    if request.method=="POST":
+       email=request.POST.get('email') 
+       password=request.POST.get('password')
+    if email == 'admin123@gmail.com' and password == 'admin':
+           
+            request.session['username'] = email
+            return redirect('Dashboard')
+    else:
+            error = "Invalid credentials"
+            return render(request, 'login.html')
+
+
+
 
 def logout(request):  
     if 'username' in request.session:
@@ -100,7 +115,7 @@ def editEmployeeModal(request,id):
         employeedata = Employees.objects.get(Employees_id=id)
         edit = {
             'editemployee' : {
-                'Employees_id':employeedata.Employees_id,
+                'Employee_id':employeedata.Employees_id,
                 'Employees_firstname':employeedata.Employees_firstname,
                 'Employees_middlename':employeedata.Employees_middlename,
                 'Employees_lastname':employeedata.Employees_lastname,
@@ -121,7 +136,6 @@ def editEmployeeModal(request,id):
                 'Employees_accountnumber':employeedata.Employees_accountnumber,
                 'Employees_ifsccode':employeedata.Employees_ifsccode,
                 'Employees_accountholder_name':employeedata.Employees_accountholder_name,
-                'Employees_id':employeedata.Employees_id,
                 'department':employeedata.department,
                 'employment_status':employeedata.employment_status,
                 'hire_dat':employeedata.hire_date,
@@ -134,19 +148,13 @@ def editEmployeeModal(request,id):
                 'Employees_previous_responsibilities': employeedata.Employees_previous_responsibilities,
                 'department_name' : employeedata.department_name,
                 'department_birth' : employeedata.department_birth,
-                'Employees_resume' : employeedata.Employees_resume,
-                'Employees_iddocument': employeedata.Employees_iddocument,
-                'd_relationship': employeedata.d_relationship,
-
-
-                
-
+                'Employees_resume' : employeedata.Employees_resume.url if employeedata.Employees_resume else None,
+                'Employees_iddocument': employeedata.Employees_iddocument.url if employeedata.Employees_iddocument else None,
+                'd_relationship': employeedata.d_relationship
             }
-            
-
         }
         return JsonResponse(edit)
-    except Users.DoesNotExist:
+    except Employees.DoesNotExist:
         return JsonResponse({'error': 'Employee not found'}, status=404)
 
 
@@ -1923,7 +1931,7 @@ def updateemployee(request):
 
             fetchRecord.save()
             messages.success(request, "Employee updated successfully.")
-            return redirect('/Employees/')
+            return redirect('/Employee/')
 
         except Employees.DoesNotExist:
             messages.error(request, "Employee not found.")
@@ -1966,6 +1974,11 @@ def deletesale(request,id):
     saledata =Sales.objects.get(Sales_id=id)
     saledata.delete()
     return redirect('/Salelist/')
+
+# 👉 Sale List View
+def salelist(request):
+    sales = Sales.objects.all().order_by('-Sales_id')
+    return render(request, 'sales/sale_list.html', {'sales': sales})
 
 def updatesale(request):
     
@@ -2036,37 +2049,62 @@ def get_product_names(request):
     }
     return JsonResponse(data)"""
 
+from poschild.models import Poschild
+
 def insertpos(request):
     if request.method=="POST":
-        productname=request.POST.get('productname')
-        productqty=request.POST.get('productqty')
-        productmrp=request.POST.get('mrp')
-        productsale=request.POST.get('sale')
-        totalprice=request.POST.get('totalprice')
+
+        productname=request.POST.getlist('productname[]')
+        productid=request.POST.getlist('productid[]')
+       
+        productqty=request.POST.getlist('productqty[]')
+     
+        productmrp=request.POST.getlist('mrp[]')
+        
+        productsale=request.POST.getlist('sale[]')
+       
+        totalprice=request.POST.getlist('totalprice[]')  
+        
         customer_id=int(request.POST.get('customername'))
         paymentmode=request.POST.get('paymentmode')
         billdate=request.POST.get('billdate')
         total_amount=request.POST.get('total_amount')
-
+        print("Hello ",request.POST.get('total_amount'))
         insertdata=Master(
-            customer_id=Customer.objects.get(customer_id = customer_id),
-            master_itemname=productname,
-            master_qty=productqty,
-            master_mrp=productmrp,
-            master_sale_price=productsale,
-            master_total=totalprice,
+            customer_id=Customer.objects.get(customer_id = customer_id),             
             master_payment_mode=paymentmode,
             master_billdate=billdate,
-            master_totalAmount=total_amount    
-
+            master_totalAmount=total_amount
         )
+        insertdata.save() 
 
-        insertdata.save()
-        return redirect('/posview/')
+
+        print(len(productid))
+        productid = list(productid)
+        try:
+            for i in range(0,len(productid)):
+                chliddata=Poschild(
+                    master_id= insertdata,
+                    customer_id=Customer.objects.get(customer_id = customer_id), 
+                    product_id=Product.objects.get(product_id = int(productid[i])), 
+                    item_name=productname[i],
+                    item_qty=productqty[i],
+                    item_mrp=productmrp[i],
+                    item_saleprice=productsale[i],
+                    item_total=totalprice[i]
+                )
+                chliddata.save()
+
+            bill_data = {
+                'master': insertdata
+            }
+
+            # Redirect to POSBills with the bill data
+            return render(request, 'POSBills.html', {'bill': bill_data})
+            
+        except Exception as e:
+            print("Error saving Poschild:", e)  
+    
     else:
-        return render(request,'Pos1.html')
-
-
-
-       
-
+        return render(request,'pos1.html')
+         
