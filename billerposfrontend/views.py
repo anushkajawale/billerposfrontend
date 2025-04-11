@@ -1,4 +1,8 @@
+
 from django.shortcuts import render,redirect,HttpResponse,get_list_or_404
+
+from django.shortcuts import render,redirect,HttpResponse,get_object_or_404
+
 from Customergroup.models import Customergroup
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -66,6 +70,12 @@ def Dashboard(request):
     return render(request, 'Dashboard.html')
 
 
+
+           
+       
+#session
+
+
 def login(request):
     error_message = ""
     if request.method == "POST":
@@ -90,24 +100,6 @@ def login(request):
     return render(request, 'login.html', {"error": error_message})
 
 
-           
-       
-#session
-
-    if request.method=="POST":
-       email=request.POST.get('email') 
-       password=request.POST.get('password')
-    if email == 'admin123@gmail.com' and password == 'admin':
-           
-            request.session['username'] = email
-            return redirect('Dashboard')
-    else:
-            error = "Invalid credentials"
-            return render(request, 'login.html')
-
-
-
-
 def logout(request):  
     if 'username' in request.session:
         del request.session['username']
@@ -117,6 +109,8 @@ def logout(request):
 
 def insertpaymentmode (request):
     return render(request,"insertpaymentmode.html")
+
+
 
 
 
@@ -1708,7 +1702,7 @@ def insertemployee(request):
         Employees_middlename = request.POST.get("middle_name") 
         Employees_lastname = request.POST.get("last_name")
         Employees_dateof_birth = request.POST.get("date_birth")
-        Employees_gender = request.POST.get("Gender") or "Not Specified"
+        Employees_gender = request.POST.get("gender") or "Not Specified"
 
         Employees_address = request.POST.get("address")
         Employees_mobile_number = request.POST.get("mob")
@@ -1745,8 +1739,8 @@ def insertemployee(request):
         Employees_previous_responsibilities = request.POST.get("responsibilities")
 
         Employees_resume = request.FILES.get("resume")
-        Employees_iddocument = request.FILES.get("id")
-        Employees_certificationsdocument = request.FILES.get("d_certification")
+        Employees_iddocument = request.POST.get("id")
+        Employees_certificationsdocument = request.POST.get("d_certification")
 
         department_name = request.POST.get("d_name")
         department_birth = request.POST.get("d_birth")
@@ -1759,26 +1753,28 @@ def insertemployee(request):
         # Convert date fields safely using the format yyyy/dd/mm
         try:
             if Employees_dateof_birth:
-                Employees_dateof_birth = datetime.strptime(Employees_dateof_birth, '%Y/%d/%m').date()
+                Employees_dateof_birth = datetime.strptime(Employees_dateof_birth, '%Y-%m-%d').date()
+
+
         except ValueError:
             Employees_dateof_birth = None
 
         try:
             if hire_date:
-                hire_date = datetime.strptime(hire_date, '%Y/%d/%m').date()
+                hire_date = datetime.strptime(hire_date, '%Y-%m-%d').date()
         except ValueError:
             hire_date = None
 
         try:
             if termination_date:
-                termination_date = datetime.strptime(termination_date, '%Y/%d/%m').date()
+                termination_date = datetime.strptime(termination_date, '%Y-%m-%d').date()
         except ValueError:
             termination_date = None
 
         # Convert department_birth safely
         try:
             if department_birth:
-                department_birth = datetime.strptime(department_birth, '%Y/%d/%m').date()
+                department_birth = datetime.strptime(department_birth, '%Y-%m-%d').date()
         except ValueError:
             department_birth = None
 
@@ -1912,7 +1908,7 @@ def updateemployee(request):
 
             fetchRecord.Employees_vacationleave_balance = int(request.POST.get("V_leave_balance") or 0)
             fetchRecord.Employees_sickleave_balance = int(request.POST.get("S_leave_balance") or 0)
-            fetchRecord.Employees_leavetypes = request.POST.get("Types_leave")
+            fetchRecord.Employees_leavetypes = request.POST.get("types_leave")
 
             fetchRecord.Employees_salary = float(request.POST.get("Salary") or 0)
             fetchRecord.Employees_payfrequency = request.POST.get("Pay_frequency")
@@ -1963,8 +1959,20 @@ def Addsale(request):
         due_days = request.POST.get('add_duedays') or 0
         due_date = request.POST.get('add_duedate') or invoice_date
         product_name = request.POST.get('add_productname')
-        qty = request.POST.get('Sales_qty') or 0  # make sure this exists in your form!
-        grand_total = request.POST.get('Sales_grand_total') or 0  # same here
+        qty = int(request.POST.get('Sales_qty') or 0)
+        sale_price = float(request.POST.get('Sales_price') or 0)
+
+        mrp = float(request.POST.get('Sales_mrp') or 0)
+        dis_percent = float(request.POST.get('Sales_discount_percent') or 0)
+        gst_percent = float(request.POST.get('Sales_gst_percent') or 0)
+
+        # Calculations
+        discount_value = (mrp * qty) * (dis_percent / 100)
+        basic_total = (mrp * qty) - discount_value
+        gst_value = basic_total * (gst_percent / 100)
+        grand_total = basic_total + gst_value
+        grand_total = request.POST.get('Sales_grand_total') or 0
+
 
         sale = Sales.objects.create(
             Sales_name=Sales_name,
@@ -1975,15 +1983,22 @@ def Addsale(request):
             Sales_add_duedate=due_date,
             Sales_addproductname=product_name,
             Sales_qty=qty,
-            Sales_grand_total=grand_total,
+             Sales_price=sale_price, 
+             Sales_mrp=mrp,
+            Sales_discount_percent=dis_percent,
+            Sales_discount_value=discount_value,
+            Sales_basic_total=basic_total,
+            Sales_gst_percent=gst_percent,
+            Sales_gst_value=gst_value,
+            Sales_grand_total=grand_total
         )
         sale.save()
         
 
         messages.success(request, "Sale added successfully!")
         return redirect('/Salelist/')
-
-    return render(request, 'addsale.html')
+    saledata = Sales.objects.all().order_by('-Sales_id')
+    return render(request, 'addsale.html', {'saledata': saledata})
 
 def deletesale(request,id):
     saledata =Sales.objects.get(Sales_id=id)
@@ -2022,6 +2037,10 @@ def updatesale(request):
         return redirect('/Salelist/')
     
  
+from django.http import JsonResponse
+
+
+
 def editsale(request, id):
     try:
         saledata = Sales.objects.get(Sales_id=id)
@@ -2032,17 +2051,22 @@ def editsale(request, id):
                 'Sales_payment_term': saledata.Sales_payment_term,
                 'Sales_addinvoicedate': saledata.Sales_addinvoicedate.strftime('%Y-%m-%d') if saledata.Sales_addinvoicedate else '',
                 'Sales_add_duedays': saledata.Sales_add_duedays,
+                'Sales_add_duedate': saledata.Sales_add_duedate.strftime('%Y-%m-%d') if saledata.Sales_add_duedate else '',
                 'Sales_addproductname': saledata.Sales_addproductname,
-                'Sales_add_duedate':saledata.Sales_add_duedate
+                'Sales_qty': saledata.Sales_qty,
+                'Sales_mrp': float(saledata.Sales_mrp or 0),
+                'Sales_discount_percent': float(saledata.Sales_discount_percent or 0),
+                'Sales_discount_value': float(saledata.Sales_discount_value or 0),
+                'Sales_basic_total': float(saledata.Sales_basic_total or 0),
+                'Sales_gst_percent': float(saledata.Sales_gst_percent or 0),
+                'Sales_gst_value': float(saledata.Sales_gst_value or 0),
+                'Sales_grand_total': float(saledata.Sales_grand_total or 0),
             }
         }
         return JsonResponse(edit)
+
     except Sales.DoesNotExist:
         return JsonResponse({'error': 'Sale not found'}, status=404)
-
-
-
-
 
 def posview(request):
     query = request.GET.get('search', '')  # Get search input from request
@@ -2056,7 +2080,11 @@ def get_product_names(request):
     return JsonResponse({'products': products})
 
 def get_customer_details(request,id):
+
     customer = get_list_or_404(Customer, customer_id=id)
+
+    customer = get_object_or_404(Customer, customer_id=id)
+
     data = {
         "mobile_no": customer.customer_mobile,
         "address": customer.customer_ShippingAddress,
@@ -2084,7 +2112,7 @@ def insertpos(request):
         paymentmode=request.POST.get('paymentmode')
         billdate=request.POST.get('billdate')
         total_amount=request.POST.get('total_amount')
-        print("Hello ",request.POST.get('total_amount'))
+    
         insertdata=Master(
             customer_id=Customer.objects.get(customer_id = customer_id),             
             master_payment_mode=paymentmode,
@@ -2097,7 +2125,7 @@ def insertpos(request):
         print(len(productid))
         productid = list(productid)
         try:
-            for i in range(0,len(productid)):
+            for i in range(len(productid)):
                 chliddata=Poschild(
                     master_id= insertdata,
                     customer_id=Customer.objects.get(customer_id = customer_id), 
@@ -2106,20 +2134,49 @@ def insertpos(request):
                     item_qty=productqty[i],
                     item_mrp=productmrp[i],
                     item_saleprice=productsale[i],
-                    item_total=totalprice[i]
+                    item_total=totalprice[i]    
                 )
                 chliddata.save()
+                id=insertdata.master_id
 
-            bill_data = {
-                'master': insertdata
-            }
+            return redirect('POSBillshow', id=insertdata.master_id)     
 
-            # Redirect to POSBills with the bill data
-            return render(request, 'POSBills.html', {'bill': bill_data})
-            
         except Exception as e:
-            print("Error saving Poschild:", e)  
+            print("Error saving Poschild:", e) 
+            return render(request,'pos1.html') 
     
     else:
-        return render(request,'pos1.html')
+        return redirect('POSBillshow', id=id)   
          
+
+
+def POSBillshow(request, id):
+    # Get the master bill record
+    master = get_object_or_404(Master, master_id=id)
+    
+    # Get all child items for this bill
+    
+    
+    context = {
+        'master': master
+         
+    }
+    
+    return render(request, 'POSBills.html', context)
+
+# def posview(request):
+#     from_date = request.GET.get('from_date')
+#     to_date = request.GET.get('to_date')
+    
+#     master = Master.objects.all().order_by('-master_billdate')
+    
+#     if from_date and to_date:
+#         master = master.filter(
+#             master_billdate__gte=from_date,
+#             master_billdate__lte=to_date
+#         )
+    
+#     context = {
+#         'master': master,
+#     }
+#     return render(request, 'POSBills.html', context)
