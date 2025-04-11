@@ -161,13 +161,13 @@ urlpatterns = [
     path('EditRole/',views.updateroles),
     path('insertroles/',views.insertroles),
 
-    # path('Dashboard/',views.Dashboard),
+
 
     path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
     
 
-    # path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
-    #path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
+    path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
+    path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
 
 
 
