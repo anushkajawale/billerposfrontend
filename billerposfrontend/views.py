@@ -75,13 +75,6 @@ def login(request):
     return render(request, 'login.html', {"error": error_message})
 
 
-           
-       
-
-
-
-
-
 def logout(request):  
     if 'username' in request.session:
         del request.session['username']
@@ -2140,19 +2133,19 @@ def POSBillshow(request, id):
     
     return render(request, 'POSBills.html', context)
 
-def posview(request):
-    from_date = request.GET.get('from_date')
-    to_date = request.GET.get('to_date')
+# def posview(request):
+#     from_date = request.GET.get('from_date')
+#     to_date = request.GET.get('to_date')
     
-    master = Master.objects.all().order_by('-master_billdate')
+#     master = Master.objects.all().order_by('-master_billdate')
     
-    if from_date and to_date:
-        master = master.filter(
-            master_billdate__gte=from_date,
-            master_billdate__lte=to_date
-        )
+#     if from_date and to_date:
+#         master = master.filter(
+#             master_billdate__gte=from_date,
+#             master_billdate__lte=to_date
+#         )
     
-    context = {
-        'master': master,
-    }
-    return render(request, 'POSBills.html', context)
+#     context = {
+#         'master': master,
+#     }
+#     return render(request, 'POSBills.html', context)
