@@ -159,7 +159,7 @@ urlpatterns = [
     path('EditRole/',views.updateroles),
     path('insertroles/',views.insertroles),
 
-   # path('Dashboard/',views.Dashboard),
+   path('Dashboard/',views.Dashboard),
 
 
     path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
