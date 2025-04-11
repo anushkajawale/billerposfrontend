@@ -51,6 +51,12 @@ def index (request):
 
 
 
+
+           
+       
+#session
+
+
 def login(request):
     error_message = ""
     if request.method == "POST":
@@ -84,6 +90,8 @@ def logout(request):
 
 def insertpaymentmode (request):
     return render(request,"insertpaymentmode.html")
+
+
 
 
 
