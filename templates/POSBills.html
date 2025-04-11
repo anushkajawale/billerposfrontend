@@ -8,10 +8,10 @@
             <!-- Search and Filter Section -->
             <div class="row mb-3">  
                 <div class="col-md-3">
-                    <input type="date" class="form-control" id="fromDate" value="2025-03-18">
+                    <input type="date" class="form-control" id="fromDate">
                 </div>
                 <div class="col-md-3">
-                    <input type="date" class="form-control" id="toDate" value="2025-03-18">
+                    <input type="date" class="form-control" id="toDate">
                 </div>
                <div class="col-md-6 text-end">
                      
@@ -38,21 +38,21 @@
                         </tr>
                     </thead>
                     <tbody>
+                        
                         <tr>
-                            <td>1</td>
+                            <td> </td>
                             <td>Super Admin</td>
                             <td>A-3</td>
-                            <td>Cash Sale</td>
-                            <td>18/03/2025</td>
+                            <td>{{master.customer_id}}</td>
+                            <td>{{master.master_billdate}}</td>
                             <td>2</td>
-                            <td>₹ 0</td>
-                            <td>Cash</td>
-                            <td>
-                                
+                            <td>₹ {{master.master_totalAmount}}</td>
+                            <td>{{master.master_payment_mode}}</td>
+                            <td>                                
                                 <button class="btn btn-warning btn-sm"><i class="fa fa-pen"></i></button>
                             </td>
                         </tr>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
@@ -65,6 +65,24 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set default dates (today)
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('fromDate').value = today;
+        document.getElementById('toDate').value = today;
+        
+        // Filter functionality
+        document.getElementById('filterBtn').addEventListener('click', function() {
+            const fromDate = document.getElementById('fromDate').value;
+            const toDate = document.getElementById('toDate').value;
+            
+            if (fromDate && toDate) {
+                window.location.href = `/posview/?from_date=${fromDate}&to_date=${toDate}`;
+            }
+        });
+    });
+    </script>
 
 
 {% endblock %}

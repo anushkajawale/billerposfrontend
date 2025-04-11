@@ -74,17 +74,20 @@
                         <tbody class="table-hover">
                             {% for i in saledata %}
                             <tr>
-                                <td>{{ i.Sales_id }}</td>
+                                <td>{{ forloop.counter }}</td>
                                 <td>{{ i.Sales_addproductname }}</td>
-                                <td>{{ i.Sales_qty}}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ i.Sales_qty }}</td>
+                                <td>{{ i.Sales_sale }}</td>
+                                <td>{{ i.Sales_mrp }}</td>
+                                <td>{{ i.Sales_discount_percent }}</td>
+                                <td>{{ i.Sales_discount_value }}</td>
+                                <td>{{ i.Sales_basic_total }}</td>
+                                <td>{{ i.Sales_gst_percent }}</td>
+                                <td>{{ i.Sales_gst_value }}</td>
+                                <td>{{ i.Sales_grand_total }}</td>
+                                <td> <!-- Action buttons can go here --> </td>
+                            </tr>
+                            
                                 {% endfor %}
                         </tbody>
                     </table>
@@ -96,18 +99,51 @@
     </div>
 
     <div class="d-flex justify-content-between align-items-center p-3 w-500 " style= "color: white; font-weight: bold">
-    <span class="flex-fill text-center bg-success p-4">QTY 0</span>
-    <span class="flex-fill text-center bg-secondary p-4">Sale Amt: ₹ 0.00</span>
-    <span class="flex-fill text-center bg-danger p-4">Basic Amt: ₹ 0.00</span>
-    <span class="flex-fill text-center bg-warning p-4">Discount Amt: ₹ 0.00</span>
-    <span class="flex-fill text-center bg-info p-4">GST Amt: ₹ 0.00</span>
-    <span class="flex-fill text-center bg-primary p-4">Total Bill: ₹ 0.00</span>
+    <span  id="qtyTotal" class="flex-fill text-center bg-success p-4">QTY 0</span>
+    <span  id="saleAmt" class="flex-fill text-center bg-secondary p-4">Sale Amt: ₹ 0.00</span>
+    <span  id="basicAmt" class="flex-fill text-center bg-danger p-4">Basic Amt: ₹ 0.00</span>
+    <span  id="discountAmt" class="flex-fill text-center bg-warning p-4">Discount Amt: ₹ 0.00</span>
+    <span  id="gstAmt" class="flex-fill text-center bg-info p-4">GST Amt: ₹ 0.00</span>
+    <span  id="totalBill" class="flex-fill text-center bg-primary p-4">Total Bill: ₹ 0.00</span>
 
   </div>
   </div>
 
   
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let totalQty = 0;
+        let saleAmt = 0;
+        let basicAmt = 0;
+        let discountAmt = 0;
+        let gstAmt = 0;
+        let totalBill = 0;
 
-  
+        document.querySelectorAll("table tbody tr").forEach(function (row) {
+            let qty = parseFloat(row.children[2]?.textContent) || 0;              // Qty
+            let sale = parseFloat(row.children[3]?.textContent) || 0;             // Sale
+            let basic = parseFloat(row.children[7]?.textContent) || 0;            // Basic Total
+            let discount = parseFloat(row.children[6]?.textContent) || 0;         // Discount Value
+            let gst = parseFloat(row.children[9]?.textContent) || 0;              // GST Value
+            let total = parseFloat(row.children[10]?.textContent) || 0;           // Grand Total
+
+            totalQty += qty;
+            saleAmt += sale;
+            basicAmt += basic;
+            discountAmt += discount;
+            gstAmt += gst;
+            totalBill += total;
+        });
+
+        // Update the spans with calculated values
+        document.getElementById("qtyTotal").textContent = "QTY " + totalQty.toFixed(2);
+        document.getElementById("saleAmt").textContent = "Sale Amt: ₹ " + saleAmt.toFixed(2);
+        document.getElementById("basicAmt").textContent = "Basic Amt: ₹ " + basicAmt.toFixed(2);
+        document.getElementById("discountAmt").textContent = "Discount Amt: ₹ " + discountAmt.toFixed(2);
+        document.getElementById("gstAmt").textContent = "GST Amt: ₹ " + gstAmt.toFixed(2);
+        document.getElementById("totalBill").textContent = "Total Bill: ₹ " + totalBill.toFixed(2);
+    });
+</script>
+
     
 {% endblock %}

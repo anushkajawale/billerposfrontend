@@ -17,6 +17,8 @@ class Customer(models.Model):
     class Meta:
         db_table = "tbl_customer"
 
+    def __str__(self):
+        return self.customer_name  
 
 
  

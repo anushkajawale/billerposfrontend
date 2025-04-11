@@ -54,22 +54,14 @@ class Employees(models.Model):
 
     # Documents & Attachments
     Employees_resume = models.FileField(upload_to='resumes/', blank=True, null=True)
-    Employees_iddocument = models.FileField(upload_to='id_documents/', blank=True, null=True)
-    Employees_certificationsdocument = models.FileField(upload_to='certifications/', blank=True, null=True)
- 
-    def __str__(self):
-        return f"{self.Employees_firstname} {self.Employees_lastname}"
-
- 
+    Employees_iddocument = models.TextField( blank=True, null=True)
+    Employees_certificationsdocument = models.TextField( blank=True, null=True)
     d_relationship = models.CharField(max_length=100, null=True, blank=True)
 
-    
- 
-    
     class Meta:
         db_table = "tbl_Employees"
     
     def __str__(self):
-        return self.Employees_firstname
+        return f"{self.Employees_firstname} {self.Employees_lastname}"
 
 # Create your models here.

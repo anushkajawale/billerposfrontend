@@ -14,8 +14,15 @@ class Sales(models.Model):
     Sales_add_duedate = models.DateField(null=True, blank=True)
     Sales_addproductname = models.CharField(max_length=255, null=True, blank=True)
     Sales_qty = models.IntegerField(null=True, blank=True)  # NEW: Quantity
-    Sales_payment_term = models.CharField(max_length=100, null=True, blank=True)  # NEW: Payment Term
-    Sales_grand_total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)  # NEW: Grand Total
+    Sales_payment_term = models.CharField(max_length=100, null=True, blank=True) 
+    Sales_price = models.FloatField(default=0) # NEW: Payment Term
+    Sales_mrp = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    Sales_discount_percent = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    Sales_discount_value = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    Sales_basic_total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    Sales_gst_percent = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    Sales_gst_value = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    Sales_grand_total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     Sales_slug = AutoSlugField(populate_from="Sales_name", unique=True)
 
     class Meta:
@@ -23,4 +30,5 @@ class Sales(models.Model):
 
     def __str__(self):
         return self.Sales_name
+    
     

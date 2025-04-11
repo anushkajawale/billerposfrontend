@@ -4,31 +4,32 @@
 <head>
   <meta charset="UTF-8">
   <title>POS System</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
   <div class="container-fluid mt-3">
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h4>POS </h4>
+      <h4>POS System</h4>
       <div>
-        <button class="btn btn-primary me-2">Dashboard</button>
+        <a href="/Dashboard/" class="btn btn-primary me-2">Dashboard</a>
         <a href="/posview/" class="btn btn-info text-white">POS Bills List</a>
       </div>
     </div>
+
     <form action="/insertpos/" method="post">
       {% csrf_token %}
       <div class="row">
-        <!-- Product Table -->
+        <!-- Left: Products -->
         <div class="col-md-8">
-          <!-- Search Input with datalist -->
           <input list="productList" id="searchProduct" class="form-control mb-2" placeholder="Search Products...">
           <datalist id="productList">
             {% for product in products %}
-            <option value="{{ product.product_name }}"  data-price="{{ product.sale }}" data-mrp="{{ product.mrp }}">
-              {% endfor %}
+              <option value="{{ product.product_name }}" data-price="{{ product.sale }}" data-mrp="{{ product.mrp }}" data-id="{{ product.product_id }}">
+            {% endfor %}
           </datalist>
           <button type="button" class="btn btn-success mb-3" onclick="addProduct()">Add Product</button>
+
           <table class="table table-bordered" id="productTable">
             <thead class="table-light">
               <tr>
@@ -41,127 +42,24 @@
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
-
-            </tbody>
+            <tbody></tbody>
           </table>
         </div>
-        <script>
-          let productCount = 0;
 
-          function addProduct() {
-            let searchInput = document.getElementById("searchProduct");
-            let productName = searchInput.value;
-            let productList = document.getElementById("productList").options;
-
-            let found = false;
-            let salePrice = 0, mrp = 0;
-
-            for (let option of productList) {
-              if (option.value === productName) {
-                salePrice = option.getAttribute("data-price") || 0;
-                mrp = option.getAttribute("data-mrp") || 0;
-                found = true;
-                break;
-              }
-            }
-
-            if (!found) {
-              alert("Product not found!");
-              return;
-            }
-
-            productCount++;
-
-            let table = document.getElementById("productTable").getElementsByTagName('tbody')[0];
-            let newRow = table.insertRow();
-            newRow.innerHTML = `
-              <td>${productCount}</td>
-              <td name="productname">${productName}</td>
-              <td><input type="number" value="1" min="1" class="form-control qty-input" oninput="updateTotal(this)" name="productqty"></td>
-              <td name="mrp[]">₹${mrp}</td>
-              <td name="sale[]">₹${salePrice}</td>
-              <td class="total-price" name="totalprice[]"> ₹${salePrice}</td>
-              <td><button type="button" class="btn btn-danger btn-sm" onclick="removeProduct(this)">Remove</button></td>
-            `;
-            // document.getElementById("noProducts").style.display = "none";
-            searchInput.value = ""; // Clear input
-            updateGrandTotal();
-
-
-          }
-          const updateGrandTotal = ()=>{
-            let totalPrices = document.querySelectorAll(".total-price");
-            let grandTotal = 0;
-
-            totalPrices.forEach(priceCell => {
-              let price = parseFloat(priceCell.textContent.replace("₹", "")) || 0;
-              grandTotal += price;
-            });
-
-            document.getElementById("totalamount").textContent = `Total Amount: ₹${grandTotal.toFixed(2)}`;
-          }
-
-          function removeProduct(button) {
-            let row = button.parentNode.parentNode;
-            row.parentNode.removeChild(row);
-            productCount--;
-
-            if (productCount === 0) {
-              document.getElementById("noProducts").style.display = "table-row";
-            }
-            updateGrandTotal();
-          }
-
-          function updateTotal(input) {
-            let row = input.parentNode.parentNode;
-            let salePrice = parseFloat(row.cells[4].textContent.replace("₹", ""));
-            let qty = parseInt(input.value);
-            row.cells[5].textContent = "₹" + (salePrice * qty).toFixed(2);
-            updateGrandTotal();
-          }
-        </script>
-
-        <!-- Customer Details -->
+        <!-- Right: Customer -->
         <div class="col-md-4">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title d-flex justify-content-between align-items-center">
-                Customer Details
-
-              </h5>
-
+              <h5 class="card-title">Customer Details</h5>
 
               <div class="mb-2">
-                <label>Customer Add</label>
+                <label>Customer</label>
                 <select class="form-select" name="customername">
                   {% for i in customer %}
-                  <option value="{{i.customer_id}}">{{i.customer_name}}</option>
+                    <option value="{{ i.customer_id }}">{{ i.customer_name }}</option>
                   {% endfor %}
                 </select>
-              </div>      
-              <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                  document.querySelector("[name='customername']").addEventListener("change", function () {
-                    let customerId = this.value;  // Get selected customer ID
-
-                    if (customerId) {
-                      console.log(customerId);
-                      fetch(`/get-customer-details/${customerId}/`)   // Django URL to fetch customer details
-
-                        .then(response => response.json())
-                        .then(data => {
-                          console.log(data);
-                          document.querySelector("[name='mobaileno']").value = data.mobile_no || "";
-                          document.querySelector("[name='address']").value = data.address || "";
-                          document.querySelector("[name='creditamt']").value = data.credit_amt || "0";
-                        })
-                        .catch(error => console.error("Error fetching customer details:", error));
-                    }
-                  });
-                });
-              </script>
-  
+              </div>
 
               <div class="mb-2">
                 <label>Mobile No</label>
@@ -178,44 +76,34 @@
                 <input type="text" class="form-control" name="creditamt" value="0" readonly>
               </div>
 
-
               <div class="mb-2">
                 <label>Payment Method</label>
                 <select class="form-select" name="paymentmode">
-                  <option>Cash</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Card">Card</option>
+                  <option value="UPI">UPI</option>
                 </select>
-              </div>
-
-              
-
-              <div class="mb-2">
-                <label>Remaining Amt</label>
-                <input type="text" class="form-control" name="reamainingamt" value="Rs. 0" readonly>
               </div>
 
               <div class="mb-2">
                 <label>Bill Date</label>
-                <input type="date" class="form-control" name="billdate" value="2025-03-18">
+                <input type="date" class="form-control" name="billdate" id="dateformate" readonly>
               </div>
 
               <div class="bg-danger text-white p-2 text-center mb-3">
-                <strong id="totalamount" name="totalamt">Total Amount: ₹
-                  <input type="text" style="border: none;" value="0" id="totalAmount" name="total_amount">
-                </strong>
+                <strong>Total Amount: ₹ <input type="text" style="border: none; background: transparent;" value="0" id="totalAmount" name="total_amount" readonly></strong>
               </div>
 
               <div class="d-flex justify-content-between">
-                <button type="submit" name="submit" class="btn btn-primary">Save Bill</button>
+                <button type="submit" class="btn btn-primary">Save Bill</button>
                 <button type="reset" class="btn btn-secondary">Clear</button>
               </div>
-
             </div>
           </div>
         </div>
       </div>
     </form>
 
-    <!-- Footer Summary -->
     <div class="row mt-3">
       <div class="col text-center bg-light p-2">
         <small>Last Bill: 2 | Amt: ₹700 | Total Qty: 0 | Total MRP: ₹0.00 | Total Dis: ₹0.00 | Total Bill: ₹0</small>
@@ -223,35 +111,104 @@
     </div>
   </div>
 
-  <!-- <script>
-      $(document).ready(function() {
-        // Fetch product names for datalist
-        function fetchProductNames() {
-          $.ajax({
-            url: "/get-product-names/",
-            method: "GET",
-            success: function(response) {
-              let productList = $("#productList");
-              productList.empty();  // Clear existing options
-
-              response.products.forEach(product => {
-                let option = `<option value="${product.product_name}">`;
-                productList.append(option);
-              });
-            }
-          });
-        }
-
-        // Fetch product names on page load
-        fetchProductNames();
-      });   
-    </script> -->
-
+  <!-- Scripts -->
   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const today = new Date().toISOString().split("T")[0];
+      document.getElementById('dateformate').value = today;
 
+      document.querySelector("[name='customername']").addEventListener("change", function () {
+        const customerId = this.value;
+        if (customerId) {
+          fetch(`/get-customer-details/${customerId}/`)
+            .then(res => res.json())
+            .then(data => {
+              document.querySelector("[name='mobaileno']").value = data.mobile_no || "";
+              document.querySelector("[name='address']").value = data.address || "";
+              document.querySelector("[name='creditamt']").value = data.credit_amt || "0";
+            })
+            .catch(err => console.error("Error fetching customer:", err));
+        }
+      });
+    });
 
+    let productCount = 0;
+
+    function addProduct() {
+      const input = document.getElementById("searchProduct");
+      const productName = input.value;
+      const productList = document.getElementById("productList").options;
+
+      let found = false, productId = "", salePrice = 0, mrp = 0;
+      for (let option of productList) {
+        if (option.value === productName) {
+          productId = option.getAttribute("data-id");
+          salePrice = parseFloat(option.getAttribute("data-price"));
+          mrp = parseFloat(option.getAttribute("data-mrp"));
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        alert("Product not found!");
+        return;
+      }
+
+      productCount++;
+      const tbody = document.querySelector("#productTable tbody");
+      const row = tbody.insertRow();
+
+      row.innerHTML = `
+        <td>${productCount}</td>
+        <td>
+          ${productName}
+          <input type="hidden" name="productid[]" value="${productId}">
+          <input type="hidden" name="productname[]" value="${productName}">
+        </td>
+        <td><input type="number" class="form-control qty-input" name="productqty[]" value="1" min="1" oninput="updateTotal(this)"></td>
+        <td>
+          ₹${mrp.toFixed(2)}
+          <input type="hidden" name="mrp[]" value="${mrp}">
+        </td>
+        <td>
+          ₹${salePrice.toFixed(2)}
+          <input type="hidden" name="sale[]" value="${salePrice}">
+        </td>
+        <td class="total-price">₹${salePrice.toFixed(2)}<input type="hidden" name="totalprice[]" value="${salePrice}"></td>
+        <td><button type="button" class="btn btn-danger btn-sm" onclick="removeProduct(this)">Remove</button></td>
+      `;
+
+      input.value = "";
+      updateGrandTotal();
+    }
+
+    function updateTotal(input) {
+      const row = input.closest("tr");
+      const qty = parseInt(input.value);
+      const price = parseFloat(row.querySelector("input[name='sale[]']").value);
+      const total = (qty * price).toFixed(2);
+
+      row.querySelector(".total-price").innerHTML = `₹${total}<input type="hidden" name="totalprice[]" value="${total}">`;
+      updateGrandTotal();
+    }
+
+    function removeProduct(btn) {
+      const row = btn.closest("tr");
+      row.remove();
+      productCount--;
+      updateGrandTotal();
+    }
+
+    function updateGrandTotal() {
+      const totalFields = document.querySelectorAll("input[name='totalprice[]']");
+      let grandTotal = 0;
+      totalFields.forEach(input => {
+        grandTotal += parseFloat(input.value) || 0;
+      });
+      document.getElementById("totalAmount").value = parseInt(grandTotal);
+    }
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

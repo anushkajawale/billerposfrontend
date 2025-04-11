@@ -25,8 +25,13 @@ from product.views import insertproduct
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
+
+    path('', views.login),
     path('index/', views.index),
+
+    path('', views.index),
+    path('index/', views.index),    
+
     path('login/', views.login),
     path('register/', views.register),
     path('category/',views.category),
@@ -130,7 +135,7 @@ urlpatterns = [
     
 
     path('Employee/',views.Employee),
-    path('editEmployeeModal/<id>/',views.editEmployeeModal),
+    path('editEmployee/<id>/',views.editEmployeeModal),
     path('Users/',views.Userslist),
     path('POSBill/',views.POSBill),
     path('printpage/',views.printpage),
@@ -188,7 +193,7 @@ urlpatterns = [
     path('updatepaymentterms/', views.updatepaymentterms),
     path('adduser/',views.adduser),
     path('updateuser/',views.updateuser),
-    path('editEmployeeModal/<id>/',views.editEmployeeModal),
+    
     path('insertemployee/',views.insertemployee),
     path('editpaymentterms/<id>/',views.editpaymentterms),
     path('Employee/deleteemployee/<id>',views.deleteemployee),
@@ -197,21 +202,14 @@ urlpatterns = [
     path('editsale/<id>/',views.editsale),
 
  
-    # path('Paymentterms/deletepaymentterms/<id>',views.deletepaymentterms),
-    # path('updatepaymentmode/',views.updatepaymentmode),
-    # path('updatepaymentterms/<int:id>/', views.updatepaymentterms),
+    path('Paymentterms/deletepaymentterms/<id>',views.deletepaymentterms),
+    path('updatepaymentmode/',views.updatepaymentmode),
+    path('updatepaymentterms/<int:id>/', views.updatepaymentterms),
     path('adduser/',views.adduser),
     path('updateuser/',views.updateuser),
 
-   # path("get-customer-details/<id>/", views.get_customer_details),
-
-    #path("get-customer-details/<id>/", views.get_customer_details),
-
- 
-
-   
-
-    
+    path("get-customer-details/<id>/", views.get_customer_details),
+    path('POSBill/<int:id>/', views.POSBillshow, name='POSBillshow')
 
 
 ]
