@@ -125,6 +125,8 @@ urlpatterns = [
     path('Customerpage/',views.Customerpage),
     path('insertcustomer/',views.insertcustomer),
     path('editcustomer/<id>/',views.editcustomer),
+    
+    path('Customerpage/deleteCustomer/<id>',views.deleteCustomer),
     path('Supplierpage/',views.Supplierpage),
     path('insertsupplier/',views.insertsupplier),
     path('editsupplier/<id>/',views.editsupplier),
@@ -159,7 +161,7 @@ urlpatterns = [
     path('EditRole/',views.updateroles),
     path('insertroles/',views.insertroles),
 
-    
+
 
     path('paymentmode/deletepaymentmode/<id>',views.deletepaymentmode),
     
