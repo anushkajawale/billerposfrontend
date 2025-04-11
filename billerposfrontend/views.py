@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,HttpResponse
+from django.shortcuts import render,redirect,HttpResponse,get_list_or_404
 from Customergroup.models import Customergroup
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -17,7 +17,7 @@ from tax.models import Tax
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout as auth_logout
 from master.models import Master
-# from poschlid.models import Poschild
+from poschild.models import Poschild
 
 
 from Employees.models import Employees
@@ -48,7 +48,22 @@ def index (request):
     return render(request,"index.html")
 
 
+def Dashboard(request):
+    if 'user_id' not in request.session:
+        return redirect('login')
 
+    total_bills = Poschild.objects.count()
+    total_products = Product.objects.count()
+    total_customers = Customer.objects.count()
+    # total_receipts = Receipt.objects.count() 
+
+    context = {
+        'total_bills': total_bills,
+        'total_products': total_products,
+        'total_customers': total_customers,
+    
+    }
+    return render(request, 'Dashboard.html')
 
 
 def login(request):
@@ -2040,14 +2055,14 @@ def get_product_names(request):
     products = list(Product.objects.values_list('name', flat=True))  # Get only product names
     return JsonResponse({'products': products})
 
-"""def get_customer_details(request,id):
-    customer = get_object_or_404(Customer, customer_id=id)
+def get_customer_details(request,id):
+    customer = get_list_or_404(Customer, customer_id=id)
     data = {
         "mobile_no": customer.customer_mobile,
         "address": customer.customer_ShippingAddress,
         "credit_amt": customer.customer_CreditLimit,
     }
-    return JsonResponse(data)"""
+    return JsonResponse(data)
 
 from poschild.models import Poschild
 
