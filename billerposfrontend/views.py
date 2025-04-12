@@ -1,4 +1,8 @@
+
+from django.shortcuts import render,redirect,HttpResponse,get_list_or_404
+
 from django.shortcuts import render,redirect,HttpResponse,get_object_or_404
+
 from Customergroup.models import Customergroup
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -48,7 +52,22 @@ def index (request):
     return render(request,"index.html")
 
 
+def Dashboard(request):
+    if 'user_id' not in request.session:
+        return redirect('login')
 
+    total_bills = Poschild.objects.count()
+    total_products = Product.objects.count()
+    total_customers = Customer.objects.count()
+    # total_receipts = Receipt.objects.count() 
+
+    context = {
+        'total_bills': total_bills,
+        'total_products': total_products,
+        'total_customers': total_customers,
+    
+    }
+    return render(request, 'Dashboard.html')
 
 
 
@@ -2060,7 +2079,11 @@ def get_product_names(request):
     return JsonResponse({'products': products})
 
 def get_customer_details(request,id):
+
+    customer = get_list_or_404(Customer, customer_id=id)
+
     customer = get_object_or_404(Customer, customer_id=id)
+
     data = {
         "mobile_no": customer.customer_mobile,
         "address": customer.customer_ShippingAddress,
