@@ -820,8 +820,7 @@ def Userslist(request):
     }
     return render(request,'Users.html',data)
 
-def POSBill(request):
-    return render(request,'POSBills.html')
+
 
 def printpage(request):
     return render(request,'printpage.html')
@@ -2066,6 +2065,9 @@ def get_customer_details(request,id):
         "mobile_no": customer.customer_mobile,
         "address": customer.customer_ShippingAddress,
         "credit_amt": customer.customer_CreditLimit,
+    #      "mobile_no": "9876543210",
+    #     "address": "123 Street",
+    #    "credit_amt": "100.00"
     }
     return JsonResponse(data)
 
@@ -2147,7 +2149,7 @@ def POSBillshow(request, id):
     
 #     master = Master.objects.all().order_by('-master_billdate')
     
-#     if from_date and to_date:
+#     if from_date and to_date: 
 #         master = master.filter(
 #             master_billdate__gte=from_date,
 #             master_billdate__lte=to_date
@@ -2157,3 +2159,6 @@ def POSBillshow(request, id):
 #         'master': master,
 #     }
 #     return render(request, 'POSBills.html', context)
+
+def Dashboard(request):
+    return render(request,'Dashboard.html')
