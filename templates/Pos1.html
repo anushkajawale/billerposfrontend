@@ -55,6 +55,7 @@
               <div class="mb-2">
                 <label>Customer</label>
                 <select class="form-select" name="customername">
+                  <option value="">Select Customer</option>
                   {% for i in customer %}
                     <option value="{{ i.customer_id }}">{{ i.customer_name }}</option>
                   {% endfor %}
@@ -87,7 +88,7 @@
 
               <div class="mb-2">
                 <label>Bill Date</label>
-                <input type="date" class="form-control" name="billdate" id="dateformate" readonly>
+                <input type="date" class="form-control" name="billdate" id="dateformate">
               </div>
 
               <div class="bg-danger text-white p-2 text-center mb-3">

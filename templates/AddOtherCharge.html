@@ -274,22 +274,5 @@
 </script>
 
   
-    fetch(`/editAddOtherCharge/${othercharge_id}/`)
-        .then(response =>{return response.json();})
-        .then(html => {
-          console.log(html);
-          let OtherCharge = html.editAddOtherCharge;
-            var editModalContent = new bootstrap.Modal(document.getElementById('editAddOtherCharge'));
-
-
-            document.getElementById("updateAddOtherChargeId").value=OtherCharge.othercharge_id;
-            
-            document.getElementById("updateAddOtherCharge_name").value=OtherCharge.othercharge_name;
-            
-            editModalContent.show();
-        })
-        .catch(error => console.error('Error loading modal content:', error));
-      }
-
-</script> 
+    
 {% endblock %}

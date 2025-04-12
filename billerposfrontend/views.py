@@ -1,4 +1,8 @@
+
+from django.shortcuts import render,redirect,HttpResponse,get_list_or_404
+
 from django.shortcuts import render,redirect,HttpResponse,get_object_or_404
+
 from Customergroup.models import Customergroup
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -48,7 +52,22 @@ def index (request):
     return render(request,"index.html")
 
 
+def Dashboard(request):
+    if 'user_id' not in request.session:
+        return redirect('login')
 
+    total_bills = Poschild.objects.count()
+    total_products = Product.objects.count()
+    total_customers = Customer.objects.count()
+    # total_receipts = Receipt.objects.count() 
+
+    context = {
+        'total_bills': total_bills,
+        'total_products': total_products,
+        'total_customers': total_customers,
+    
+    }
+    return render(request, 'Dashboard.html')
 
 
 
@@ -820,8 +839,7 @@ def Userslist(request):
     }
     return render(request,'Users.html',data)
 
-def POSBill(request):
-    return render(request,'POSBills.html')
+
 
 def printpage(request):
     return render(request,'printpage.html')
@@ -2061,11 +2079,17 @@ def get_product_names(request):
     return JsonResponse({'products': products})
 
 def get_customer_details(request,id):
+
+    
     customer = get_object_or_404(Customer, customer_id=id)
+
     data = {
         "mobile_no": customer.customer_mobile,
         "address": customer.customer_ShippingAddress,
         "credit_amt": customer.customer_CreditLimit,
+    #      "mobile_no": "9876543210",
+    #     "address": "123 Street",
+    #    "credit_amt": "100.00"
     }
     return JsonResponse(data)
 
@@ -2147,7 +2171,7 @@ def POSBillshow(request, id):
     
 #     master = Master.objects.all().order_by('-master_billdate')
     
-#     if from_date and to_date:
+#     if from_date and to_date: 
 #         master = master.filter(
 #             master_billdate__gte=from_date,
 #             master_billdate__lte=to_date
@@ -2157,3 +2181,6 @@ def POSBillshow(request, id):
 #         'master': master,
 #     }
 #     return render(request, 'POSBills.html', context)
+
+def Dashboard(request):
+    return render(request,'Dashboard.html')
