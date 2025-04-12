@@ -2080,8 +2080,7 @@ def get_product_names(request):
 
 def get_customer_details(request,id):
 
-    customer = get_list_or_404(Customer, customer_id=id)
-
+    
     customer = get_object_or_404(Customer, customer_id=id)
 
     data = {

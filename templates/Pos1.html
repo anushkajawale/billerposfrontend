@@ -12,7 +12,7 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h4>POS System</h4>
       <div>
-        <a href="#" class="btn btn-primary me-2">Dashboard</a>
+        <a href="/Dashboard/" class="btn btn-primary me-2">Dashboard</a>
         <a href="/posview/" class="btn btn-info text-white">POS Bills List</a>
       </div>
     </div>
@@ -55,6 +55,7 @@
               <div class="mb-2">
                 <label>Customer</label>
                 <select class="form-select" name="customername">
+                  <option value="">Select Customer</option>
                   {% for i in customer %}
                     <option value="{{ i.customer_id }}">{{ i.customer_name }}</option>
                   {% endfor %}
