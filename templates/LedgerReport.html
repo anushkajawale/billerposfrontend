@@ -36,24 +36,43 @@
                         <th>DEBIT</th>
                         <th>CREDIT</th>
                         <th>BALANCE</th>
+                       
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td colspan="7" class="text-center py-4">No data available</td>
-                    </tr>
-                </tbody>
+                    <tbody class="table-hover">
+                        {% for report in ledgredata %}
+                        <tr>
+                            <td>{{ report.date }}</td>
+                            <td>{{ report.sale_type }}</td>
+                            <td>{{ report.name }}</td>
+                            <td>{{ report.invoice_no }}</td>
+                            <td>{{ report.debit }}</td>
+                            <td>{{ report.credit }}</td>
+                            <td>{{ report.balance }}</td>
+                           
+                        </tr>
+                        
+                            {% endfor %}
+                    </tbody>
             </table>
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col text-white bg-dark p-2 text-center">Opening Balance : ₹0.00</div>
-        <div class="col text-white bg-primary p-2 text-center">Total Debit Amt : ₹0.00</div>
-        <div class="col text-white bg-warning p-2 text-center">Total Credit Amt : ₹0.00</div>
-        <div class="col text-white bg-info p-2 text-center">Balance Amt : ₹0.00</div>
+        <div class="col text-white text-center py-4" style="background: #5a2bbd;">
+            <span id="openBalance">Open Balance: ₹ 0.00</span>
+        </div>
+        <div class="col text-white text-center py-4" style="background: #f4a621;">
+            <span id="debitAmt">Total Debit Amt: ₹ 0.00</span>
+        </div>
+        <div class="col text-white text-center py-4" style="background: #1e1e1e;">
+            <span id="creditAmt">Total Credit Amt: ₹ 0.00</span>
+        </div>
+        <div class="col text-white text-center py-4" style="background: #2672ff;">
+            <span id="balanceAmt">Balance Amt: ₹ 0.00</span>
+        </div>
     </div>
 </div>
-
 
 <script>
     function openPrintPage() {
@@ -61,4 +80,31 @@
     }
 </script>
 
+<script>
+   document.addEventListener("DOMContentLoaded", function () {
+    let totalDebit = 0;
+    let totalCredit = 0;
+    let openingBalance = 0;
+    let balance = 0;
+
+    document.querySelectorAll("table tbody tr").forEach(function (row) {
+        let debit = parseFloat(row.children[4]?.textContent) || 0;  // Corrected index for debit
+        let credit = parseFloat(row.children[5]?.textContent) || 0; // Corrected index for credit
+
+        openingBalance += parseFloat(row.children[6]?.textContent) || 0; // Example using balance (corrected column)
+        totalDebit += debit;
+        totalCredit += credit;
+    });
+
+    balance =totalCredit - totalDebit ;
+
+    document.getElementById("openBalance").textContent = "Open Balance: ₹ " + openingBalance.toFixed(2);
+    document.getElementById("debitAmt").textContent = "Total Debit Amt: ₹ " + totalDebit.toFixed(2);
+    document.getElementById("creditAmt").textContent = "Total Credit Amt: ₹ " + totalCredit.toFixed(2);
+    document.getElementById("balanceAmt").textContent = "Balance Amt: ₹ " + balance.toFixed(2);
+});
+
+</script>
 {% endblock %}
+
+

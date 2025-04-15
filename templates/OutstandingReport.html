@@ -23,33 +23,46 @@
             <table class="table table-bordered mb-0">
                 <thead class="bg-light">
                     <tr>
-                        <th>DATE</th>
-                        <th>BILL NO.</th>
-                        <th>NAME</th>
-                        <th>QUANTITY</th>
-                        <th>MRP</th>
-                        <th>PURCHASE PRICE</th>
-                        <th>SALE PRICE</th>
-                        <th>PROFIT/LOSS</th>
-                        <th>PERCENTAGE</th>
+                        <th>SR NO</th>
+                        <th>CUSTOMER NAME</th>
+                        <th>CITY</th>
+                        <th>MOBILE </th>
+                        <th>BALANCE</th>
+                       
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td colspan="9" class="text-center py-5">No Data Available</td>
-                    </tr>
-                </tbody>
+                    <tbody class="table-hover">
+                        {% for report in Outstandingdata %}
+                        <tr>
+
+                           
+                            <td>{{ report.customer_name }}</td>
+                            <td>{{ report.customer_name }}</td>
+                            <td>{{ report.city }}</td>
+                            <td>{{ report.mobile }}</td>
+                            <td>{{ report.balance }}</td>
+                           
+                        </tr>
+                        
+                            {% endfor %}
+                    </tbody>
+              
             </table>
         </div>
     </div>
 
     <div class="row mt-3">
-        <div class="col text-white text-center py-4" style="background: #5a2bbd;">Qty: 14</div>
-        <div class="col text-white text-center py-4" style="background: #f4a621;">Purchase Price: ₹ 526.25</div>
-        <div class="col text-white text-center py-4" style="background: #1e1e1e;">MRP: ₹ 684</div>
-        <div class="col text-white text-center py-4" style="background: #2672ff;">Sale Price: ₹ 700</div>
-        <div class="col text-white text-center py-4" style="background: #28a745;">Profit: ₹ 173.75</div>
+       
+        <div class="col text-white text-center py-4" style="background: #1e1e1e;">
+            <span id="basicAmt">MRP: ₹ 0.00</span>
+        </div>
+        
+       
+        
+        </div>
     </div>
+    
 </form>
 </div>
 <script>
@@ -57,4 +70,27 @@
         window.open('/PrintOutStandingReport/', '_blank'); 
     }
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+       
+        let totalMrp = 0;
+       
+
+        document.querySelectorAll("table tbody tr").forEach(function (row) {
+            
+            let mrp = parseFloat(row.children[4]?.textContent) || 0;
+           
+            totalMrp += mrp;
+           
+        });
+
+      
+        document.getElementById("basicAmt").textContent = "MRP: ₹ " + totalMrp.toFixed(2);
+      
+    });
+</script>
+
+
+
 {% endblock %}

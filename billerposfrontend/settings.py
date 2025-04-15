@@ -59,9 +59,12 @@ INSTALLED_APPS = [
     'posbill',
     'poschild',
     'BillWiselist',
-    'OutstandingReport',
+   'ReportOutstanding',
     'Sales',    
     'Employees',
+    'LedgerReport',
+    'POSRegistrationReport'
+   
 
 
 

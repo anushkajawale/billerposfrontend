@@ -163,15 +163,15 @@ urlpatterns = [
     path('get-product-names/', views.get_product_names, name='get_product_names'),
     path('insertpos/',views.insertpos),
 
-    path('BillWiselist/',views.BillWiselist),
-    path('OutstandingReport/',views.OutstandingReport),
-    path('LedgerReport/',views.LedgerReport),
-    path('POSRegisterReport/',views.POSRegisterReport),
+    path('BillWiselist/',views.BillWiselistpage),
+    path('OutstandingReport/',views.OutstandingReportpage),
+    path('LedgerReport/',views.LedgerReportpage),
+    
     path('PrintLedgerReport/',views.PrintLedgerReport),
     path('PrintOutStandingReport/',views.PrintOutStandingReport),
     path('PrintPOSRegisterReport/',views.PrintPOSRegisterReport),
     path('PrintBillWiseReport/',views.PrintBillWiseReport),
-
+    path('POSRegisterReport/',views.POSRegisterReportpage),
     path('Paymentterms/deletepaymentterms/<id>',views.deletepaymentterms),
     path('updatepaymentmode/',views.updatepaymentmode),
     path('updatepaymentterms/', views.updatepaymentterms),

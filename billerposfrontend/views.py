@@ -22,6 +22,10 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import logout as auth_logout
 from master.models import Master
 from poschild.models import Poschild
+from POSRegistrationReport.models import POSRegistrationReport
+from LedgerReport.models import LedgerReport
+from BillWiselist.models import BillWiselist
+
 
 
 from Employees.models import Employees
@@ -37,6 +41,7 @@ from OtherCharge.models import OtherCharge
 
 from product.models import Product
 from RewardPOints.models import RewardPoints
+from ReportOutstanding.models import ReportOutstanding
 
 
 
@@ -1513,15 +1518,33 @@ def deleteproduct(request,id):
     productdata=Product.objects.get(product_id=id)
 
 
-def BillWiselist(request):
-    return render(request,'BillWiselist.html')
+def BillWiselistpage(request):
+    BillWiselistdata=BillWiselist.objects.all()
+    data={
 
-def OutstandingReport(request):
-    return render(request,'OutstandingReport.html')
+        'BillWiselistdata':BillWiselistdata
+    }
+
+    return render(request,'BillWiselist.html',data)
+
+def POSRegisterReportpage(request):
+    POSRegisterdata = POSRegistrationReport.objects.all()
+    data = {
+        'POSRegisterdata': POSRegisterdata
+    }
+    
+    return render(request,'POSRegisterReport.html',data)
+
+def OutstandingReportpage(request):
+    Outstandingdata=ReportOutstanding.objects.all()
+    data={
+
+        'Outstandingdata':Outstandingdata
+    }
+
+    return render(request,'OutstandingReport.html',data)
 
 
-def POSRegisterReport(request):
-    return render(request,'POSRegisterReport.html')
 
 def insertpaymentterms(request):
     if request.method=='POST':
@@ -1634,24 +1657,39 @@ def deleteusers(request,id):
     return redirect('/Users/') 
 
 
-def LedgerReport(request):
-    return render(request,'LedgerReport.html')
+def LedgerReportpage(request):
+     ledgredata=LedgerReport.objects.all()
+     data={
+
+        'ledgredata':ledgredata
+    }
+     return render(request,'LedgerReport.html',data)
 
 
-def POSRegistrationReport(request):
-    return render(request,'POSRegistrationReport.html')
+"""def POSRegistrationReport(request):
+      posdata=POSregisterreport.objects.all()
+      data={
+
+        'posdata':posdata
+    }
+      return render(request,'POSRegistrationReport.html',data)"""
 
 def PrintLedgerReport(request):
-    return render(request,'PrintLedgerReport.html')
+    bill_data = LedgerReport.objects.all()  # Or apply filtering if needed
+    return render(request, 'printLedgerReport.html', {'ledgredata': bill_data})
+
 
 def PrintOutStandingReport(request):
-    return render(request,'PrintOutStandingReport.html')
+    bill_data = ReportOutstanding.objects.all()  # Or apply filtering if needed
+    return render(request, 'printOutStandingReport.html', {'Outstandingdata': bill_data})
    
 def  PrintPOSRegisterReport(request):
-    return render(request,'PrintPOSRegisterReport.html')
+   bill_data = POSRegistrationReport.objects.all()  # Or apply filtering if needed
+   return render(request, 'PrintPOSRegisterReport.html', {'POSRegisterdata': bill_data})
    
-def  PrintBillWiseReport(request):
-    return render(request,'PrintBillWiseReport.html')
+def PrintBillWiseReport(request):
+    bill_data = BillWiselist.objects.all()  # Or apply filtering if needed
+    return render(request, 'printbillwisereport.html', {'BillWiselistdata': bill_data})
 
     
 

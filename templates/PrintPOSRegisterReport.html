@@ -14,10 +14,9 @@
 <body>
     <div class="container mt-3">
         <h3 class="text-center">POS Register Report</h3>
-        <table class="table table-bordered">
-            <thead>
+        <table class="table table-bordered text-center">
+            <thead class="table-light">
                 <tr>
-                    <th>SR NO</th>
                     <th>DATE</th>
                     <th>TYPE</th>
                     <th>NAME</th>
@@ -27,18 +26,18 @@
                     <th>BALANCE</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>29/03/25</td>
-                    <td>FOOD</td>
-                    <td>12345</td>
-                    <td>000</td>
-                    
-                </tr>
-                <tr>
-                    <td colspan="7" class="text-center py-4">No data available</td>
-                </tr>
+            <tbody class="table-hover">
+                {% for report in POSRegisterdata %}
+                    <tr>
+                        <td>{{ report.date }}</td>
+                        <td>{{ report.sale_type }}</td>
+                        <td>{{ report.name }}</td>
+                        <td>{{ report.invoice_no }}</td>
+                        <td>{{ report.debit }}</td>
+                        <td>{{ report.credit }}</td>
+                        <td>{{ report.balance }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

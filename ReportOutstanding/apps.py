@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class OutstandingreportConfig(AppConfig):
+class ReportoutstandingConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'OutstandingReport'
+    name = 'ReportOutstanding'
