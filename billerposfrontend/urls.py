@@ -192,7 +192,8 @@ urlpatterns = [
     path('adduser/',views.adduser),
     path('updateuser/',views.updateuser),   
     path("get-customer-details/<id>/", views.get_customer_details),
-    path('POSBill/<int:id>/', views.POSBillshow, name='POSBillshow')
+    path('POSBill/<int:id>/', views.POSBillshow, name='POSBillshow'),
+    path('receipt/', views.receipt_view, name='receipt'),
 
 
 ]
