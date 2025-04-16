@@ -41,7 +41,7 @@
                             <td>{{ forloop.counter }}</td>
                             <td>{{ i.customer_id.customer_name }}</td>                          
                             <td>#{{ i.master_id }}</td>
-                            <td>{{ i.master_billdate }}</td>
+                            <td>{{ i.master_billdate|date:"d-m-Y" }}</td>
                             <td>₹ {{i.master_totalAmount}}</td>
                             <td>{{i.master_payment_mode}}</td>
                             
