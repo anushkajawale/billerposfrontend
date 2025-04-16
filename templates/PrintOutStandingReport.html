@@ -14,30 +14,34 @@
 <body>
     <div class="container mt-3">
         <h3 class="text-center">OutStanding Report</h3>
-        <table class="table table-bordered">
-            <thead>
+        <table class="table table-bordered mb-0">
+            <thead class="bg-light">
                 <tr>
                     <th>SR NO</th>
                     <th>CUSTOMER NAME</th>
                     <th>CITY</th>
-                    <th>MOBILE NO</th>
+                    <th>MOBILE </th>
                     <th>BALANCE</th>
-                    
+                   
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>XYZ</td>
-                    <td>BARAMATI</td>
-                    <td>123456789</td>
-                    <td>1856</td>
+                <tbody class="table-hover">
+                    {% for report in Outstandingdata %}
+                    <tr>
+
+                        
+                        <td>{{ report.customer_name }}</td>
+                        <td>{{ report.customer_name }}</td>
+                        <td>{{ report.city }}</td>
+                        <td>{{ report.mobile }}</td>
+                        <td>{{ report.balance }}</td>
+                       
+                    </tr>
                     
-                </tr>
-                <tr>
-                    <td colspan="7" class="text-center py-4">No data available</td>
-                </tr>
-            </tbody>
+                        {% endfor %}
+                </tbody>
+          
         </table>
     </div>
 </body>

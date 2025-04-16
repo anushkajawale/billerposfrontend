@@ -22,6 +22,10 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import logout as auth_logout
 from master.models import Master
 from poschild.models import Poschild
+from POSRegistrationReport.models import POSRegistrationReport
+from LedgerReport.models import LedgerReport
+from BillWiselist.models import BillWiselist
+
 
 
 from Employees.models import Employees
@@ -37,6 +41,7 @@ from OtherCharge.models import OtherCharge
 
 from product.models import Product
 from RewardPOints.models import RewardPoints
+from ReportOutstanding.models import ReportOutstanding
 
 
 
@@ -1101,8 +1106,6 @@ def deleteRoles(request,id):
      
 
 
-def POSBill (request):
-    return render(request,'POSBills.html')
 
 def Salelist(request):
     saledata=Sales.objects.all()
@@ -1513,15 +1516,33 @@ def deleteproduct(request,id):
     productdata=Product.objects.get(product_id=id)
 
 
-def BillWiselist(request):
-    return render(request,'BillWiselist.html')
+def BillWiselistpage(request):
+    BillWiselistdata=BillWiselist.objects.all()
+    data={
 
-def OutstandingReport(request):
-    return render(request,'OutstandingReport.html')
+        'BillWiselistdata':BillWiselistdata
+    }
+
+    return render(request,'BillWiselist.html',data)
+
+def POSRegisterReportpage(request):
+    POSRegisterdata = POSRegistrationReport.objects.all()
+    data = {
+        'POSRegisterdata': POSRegisterdata
+    }
+    
+    return render(request,'POSRegisterReport.html',data)
+
+def OutstandingReportpage(request):
+    Outstandingdata=ReportOutstanding.objects.all()
+    data={
+
+        'Outstandingdata':Outstandingdata
+    }
+
+    return render(request,'OutstandingReport.html',data)
 
 
-def POSRegisterReport(request):
-    return render(request,'POSRegisterReport.html')
 
 def insertpaymentterms(request):
     if request.method=='POST':
@@ -1572,6 +1593,8 @@ def editpaymentterms(request, id):
         return JsonResponse(edit)
     except Paymentterms.DoesNotExist:
         return JsonResponse({'error': 'Paymentterms not found'}, status=404)
+    
+
     
 from django.shortcuts import redirect
 from django.contrib import messages
@@ -1634,24 +1657,39 @@ def deleteusers(request,id):
     return redirect('/Users/') 
 
 
-def LedgerReport(request):
-    return render(request,'LedgerReport.html')
+def LedgerReportpage(request):
+     ledgredata=LedgerReport.objects.all()
+     data={
+
+        'ledgredata':ledgredata
+    }
+     return render(request,'LedgerReport.html',data)
 
 
-def POSRegistrationReport(request):
-    return render(request,'POSRegistrationReport.html')
+"""def POSRegistrationReport(request):
+      posdata=POSregisterreport.objects.all()
+      data={
+
+        'posdata':posdata
+    }
+      return render(request,'POSRegistrationReport.html',data)"""
 
 def PrintLedgerReport(request):
-    return render(request,'PrintLedgerReport.html')
+    bill_data = LedgerReport.objects.all()  # Or apply filtering if needed
+    return render(request, 'printLedgerReport.html', {'ledgredata': bill_data})
+
 
 def PrintOutStandingReport(request):
-    return render(request,'PrintOutStandingReport.html')
+    bill_data = ReportOutstanding.objects.all()  # Or apply filtering if needed
+    return render(request, 'printOutStandingReport.html', {'Outstandingdata': bill_data})
    
 def  PrintPOSRegisterReport(request):
-    return render(request,'PrintPOSRegisterReport.html')
+   bill_data = POSRegistrationReport.objects.all()  # Or apply filtering if needed
+   return render(request, 'PrintPOSRegisterReport.html', {'POSRegisterdata': bill_data})
    
-def  PrintBillWiseReport(request):
-    return render(request,'PrintBillWiseReport.html')
+def PrintBillWiseReport(request):
+    bill_data = BillWiselist.objects.all()  # Or apply filtering if needed
+    return render(request, 'printbillwisereport.html', {'BillWiselistdata': bill_data})
 
     
 
@@ -2094,6 +2132,10 @@ def get_customer_details(request,id):
     return JsonResponse(data)
 
 from poschild.models import Poschild
+from django.template.loader import render_to_string
+
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 
 def insertpos(request):
     if request.method=="POST":
@@ -2138,22 +2180,58 @@ def insertpos(request):
                     item_total=totalprice[i]    
                 )
                 chliddata.save()
-                id=insertdata.master_id
+                            # Prepare receipt data for session
+            customer = Customer.objects.get(customer_id=customer_id)
+            receipt_data = {
+                'bill_id': insertdata.master_id,
+                'customer_name': customer.customer_name,
+                'mobile_no': customer.customer_mobile,
+                'address': customer.customer_ShippingAddress,
+                'payment_mode': paymentmode,
+                'bill_date': billdate,
+                'total_amount': total_amount,
+                'products': []
+            }
 
-            return redirect('POSBillshow', id=insertdata.master_id)     
+            # Add products to receipt data
+            for i in range(len(productid)):
+                receipt_data['products'].append({
+                    'name': productname[i],
+                    'qty': productqty[i],
+                    'price': productsale[i],
+                    'total': totalprice[i]
+                })
+
+            # Store in session for receipt page
+            request.session['receipt_data'] = receipt_data
+
+            # Redirect to receipt page
+            return redirect('receipt')
+   
 
         except Exception as e:
             print("Error saving Poschild:", e) 
             return render(request,'pos1.html') 
     
     else:
-        return redirect('POSBillshow', id=id)   
-         
-
+        return redirect('POSBillshow', id=id) 
 
 def POSBillshow(request, id):
     # Get the master bill record
-    master = get_object_or_404(Master, master_id=id)
+    master = Master.objects.all()
+    
+    # Get all child items for this bill
+    
+    
+    context = {
+        'master': master
+         
+    }
+    
+    return render(request, 'POSBills.html', context)
+def POSBill (request):
+    # Get the master bill record
+    master = Master.objects.all()
     
     # Get all child items for this bill
     
@@ -2184,3 +2262,10 @@ def POSBillshow(request, id):
 
 def Dashboard(request):
     return render(request,'Dashboard.html')
+
+def receipt_view(request):
+    receipt_data = request.session.get('receipt_data', None)
+    if not receipt_data:
+        return redirect('pos_view')  # Redirect to POS if no receipt data
+    
+    return render(request, 'receipt.html', {'receipt': receipt_data})
