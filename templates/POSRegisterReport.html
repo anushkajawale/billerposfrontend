@@ -5,67 +5,111 @@
         <div class="card border-0 shadow">
             <div class="card-body">
                 <h5 class="fw-bold">POS Register Report</h5>
-         <form  id="POSRegisterform" action="/PrintPOSRegisterReport/"  method="post">
-                 {% csrf_token %}
-                <div class="row g-2 align-items-center">
-                    <div class="col-md-3">
-                        <select class="form-select">
-                            <option selected>Select Customer</option>
-                            <option>Customer 1</option>
-                            <option>Customer 2</option>
-                        </select>
+                <form id="POSRegisterform" action="/PrintPOSRegisterReport/" method="post">
+                    {% csrf_token %}
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-3">
+                            <select class="form-select">
+                                <option selected>Select Customer</option>
+                                <option>Customer 1</option>
+                                <option>Customer 2</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control">
+                        </div>
+                        <div class="col-md-3 text-end">
+                            <button class="btn btn-primary me-2" type="button" onclick="openPrintPage()">Print</button>
+                           
+                        </div>
                     </div>
-                    <div class="col-md-3">
-                        <input type="date" class="form-control">
-                    </div>
-                    <div class="col-md-3">
-                        <input type="date" class="form-control">
-                    </div>
-                    <div class="col-md-3 text-end">
-                        
-                        <button class="btn btn-primary me-2">Print</button>
-                        <button class="btn btn-info">Export</button>
-                    </div>
-                </div>
 
-                <!-- Table -->
-                <div class="table-responsive mt-3">
-                    <table class="table table-bordered text-center">
-                        <thead class="table-light">
-                            <tr>
-                                <th>SR NO</th>
-                                <th>DATE</th>
-                                <th>TYPE</th>
-                                <th>NAME</th>
-                                <th>INVOICE NO</th>
-                                <th>DEBIT</th>
-                                <th>CREDIT</th>
-                                <th>BALANCE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td colspan="8" class="text-muted">No data available</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <!-- Table -->
+                    <div class="table-responsive mt-3">
+                        <table class="table table-bordered text-center">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>DATE</th>
+                                    <th>TYPE</th>
+                                    <th>NAME</th>
+                                    <th>INVOICE NO</th>
+                                    <th>DEBIT</th>
+                                    <th>CREDIT</th>
+                                    <th>BALANCE</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-hover">
+                                {% for report in POSRegisterdata %}
+                                    <tr>
+                                        <td>{{ report.date }}</td>
+                                        <td>{{ report.sale_type }}</td>
+                                        <td>{{ report.name }}</td>
+                                        <td>{{ report.invoice_no }}</td>
+                                        <td>{{ report.debit }}</td>
+                                        <td>{{ report.credit }}</td>
+                                        <td>{{ report.balance }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Summary Row -->
+            <div class="row mt-3">
+                <div class="col text-white text-center py-4" style="background: #5a2bbd;">
+                    <span id="openBalance">Open Balance: ₹ 0.00</span>
+                </div>
+                <div class="col text-white text-center py-4" style="background: #f4a621;">
+                    <span id="debitAmt">Total Debit Amt: ₹ 0.00</span>
+                </div>
+                <div class="col text-white text-center py-4" style="background: #1e1e1e;">
+                    <span id="creditAmt">Total Credit Amt: ₹ 0.00</span>
+                </div>
+                <div class="col text-white text-center py-4" style="background: #2672ff;">
+                    <span id="balanceAmt">Balance Amt: ₹ 0.00</span>
                 </div>
             </div>
         </div>
-
-        <!-- Footer Summary -->
-        <div class="row mt-3">
-            <div class="col-md-3 bg-dark text-white p-3 text-center rounded">Opening Balance: ₹</div>
-            <div class="col-md-3 bg-primary text-white p-3 text-center rounded">Total Debit Amt: ₹</div>
-            <div class="col-md-3 bg-warning text-dark p-3 text-center rounded">Total Credit Amt: ₹</div>
-            <div class="col-md-3 bg-info text-white p-3 text-center rounded">Balance Amt: ₹</div>
-        </div>
-    </form>
     </div>
+
     <script>
         function openPrintPage() {
             window.open('/PrintPOSRegisterReport/', '_blank'); 
         }
     </script>
-    {% endblock %}
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let totalDebit = 0;
+            let totalCredit = 0;
+            let openingBalance = 0;
+            let balance = 0;
+
+            // Loop over all rows and calculate totals for debit, credit, and balance
+            document.querySelectorAll("table tbody tr").forEach(function (row) {
+                let debit = parseFloat(row.children[4]?.textContent) || 0;  // Debit in 5th column
+                let credit = parseFloat(row.children[5]?.textContent) || 0; // Credit in 6th column
+                let rowBalance = parseFloat(row.children[6]?.textContent) || 0; // Balance in 7th column
+
+                totalDebit += debit;
+                totalCredit += credit;
+                openingBalance += rowBalance; // For Open Balance calculation, we sum all balances
+            });
+
+            // Calculate the total balance
+            balance = totalCredit - totalDebit;
+
+            // Update the spans with the calculated totals
+            document.getElementById("openBalance").textContent = "Open Balance: ₹ " + openingBalance.toFixed(2);
+            document.getElementById("debitAmt").textContent = "Total Debit Amt: ₹ " + totalDebit.toFixed(2);
+            document.getElementById("creditAmt").textContent = "Total Credit Amt: ₹ " + totalCredit.toFixed(2);
+            document.getElementById("balanceAmt").textContent = "Balance Amt: ₹ " + balance.toFixed(2);
+        });
+    </script>
+
+{% endblock %}

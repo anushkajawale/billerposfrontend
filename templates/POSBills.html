@@ -27,40 +27,34 @@
                     <thead class="table-light">
                         <tr>
                             <th>SR. NO</th>
-                            <th>USER</th>
-                            <th>INVOICE NO.</th>
                             <th>CUSTOMER NAME</th>
-                            <th>BILL DATE</th>
-                            <th>QTY</th>
+                            <th>INVOICE NO.</th>                          
+                            <th>BILL DATE</th>                            
                             <th>GRAND TOTAL</th>
                             <th>PAYMENT MODE</th>
-                            <th>ACTIONS</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        {% for i in master %}
                         <tr>
-                            <td> </td>
-                            <td>Super Admin</td>
-                            <td>A-3</td>
-                            <td>{{master.customer_id}}</td>
-                            <td>{{master.master_billdate}}</td>
-                            <td>2</td>
-                            <td>₹ {{master.master_totalAmount}}</td>
-                            <td>{{master.master_payment_mode}}</td>
-                            <td>                                
-                                <button class="btn btn-warning btn-sm"><i class="fa fa-pen"></i></button>
-                            </td>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ i.customer_id.customer_name }}</td>                          
+                            <td>#{{ i.master_id }}</td>
+                            <td>{{ i.master_billdate|date:"d-m-Y" }}</td>
+                            <td>₹ {{i.master_totalAmount}}</td>
+                            <td>{{i.master_payment_mode}}</td>
+                            
                         </tr>
-                        
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
         
             
             <div class="d-flex justify-content-between bg-light mb-8 p-2">
-                <div>QTY: 2.00</div>
-                <div>Total Amount: ₹ 0.00</div>
+                <div>Total Amount:</div>
+                <div> ₹ 0.00</div>
             </div>
         </div>
     </div>
