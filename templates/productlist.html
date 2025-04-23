@@ -32,7 +32,7 @@
                             <tbody class="table-hover">
                                 {% for i in products %}
                                 <tr>
-                                    <td>{{i.product_id}}</td>
+                                    <td>{{forloop.counter}}</td>
                                     <td>{{i.product_name}}</td>
                                     <td>{{i.product_marathi_name}}</td>
                                     <td>
@@ -48,7 +48,7 @@
                                             <i class="fa fa-pen"></i>
                                         </button>
 
-                                        <a type="button" href="/deleteproduct/{{ i.product_id }}/"
+                                        <a type="button" href="/deleteproduct/{{ i.product_id }}/" onclick="return confirm('are you sure?')"
                                             class="btn btn-sm mx-1 btn-outline-danger"><i class="fa fa-trash"></i></a>
 
                                     </td>
