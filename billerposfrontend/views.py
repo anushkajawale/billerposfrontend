@@ -1514,6 +1514,11 @@ def updateproduct(request):
 
 def deleteproduct(request,id):  
     productdata=Product.objects.get(product_id=id)
+    productdata.delete()
+
+    return redirect('/products/')
+
+
 
 
 def BillWiselistpage(request):

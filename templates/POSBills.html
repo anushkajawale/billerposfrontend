@@ -27,28 +27,24 @@
                     <thead class="table-light">
                         <tr>
                             <th>SR. NO</th>
-                            <th>USER</th>
-                            <th>INVOICE NO.</th>
                             <th>CUSTOMER NAME</th>
+                            <th>INVOICE NO.</th>                          
                             <th>BILL DATE</th>                            
                             <th>GRAND TOTAL</th>
                             <th>PAYMENT MODE</th>
-                            <th>ACTIONS</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
                         {% for i in master %}
                         <tr>
-                            <td>{{ i.customer_id.customer_name }}</td>
-                            <td>Super Admin</td>
-                            <td>A-3</td>
-                            <td>{{ i.customer_id }}</td>
-                            <td>{ {i.master_billdate} }</td>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ i.customer_id.customer_name }}</td>                          
+                            <td>#{{ i.master_id }}</td>
+                            <td>{{ i.master_billdate|date:"d-m-Y" }}</td>
                             <td>₹ {{i.master_totalAmount}}</td>
                             <td>{{i.master_payment_mode}}</td>
-                            <td>                                
-                                <button class="btn btn-warning btn-sm"><i class="fa fa-pen"></i></button>
-                            </td>
+                            
                         </tr>
                         {% endfor %}
                     </tbody>
